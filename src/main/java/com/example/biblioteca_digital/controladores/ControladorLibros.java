@@ -1,9 +1,9 @@
-package com.example.biblioteca_digital;
+package com.example.biblioteca_digital.controladores;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ControladorLibros {
     @FXML
     private Label welcomeText;
 
