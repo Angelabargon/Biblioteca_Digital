@@ -1,4 +1,4 @@
 package com.example.biblioteca_digital.controladores;
 
-public class ControladorPrestamos {
+public class ControladorPrestamos{
 }
