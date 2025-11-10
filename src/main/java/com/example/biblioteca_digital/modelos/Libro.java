@@ -45,7 +45,7 @@ public class Libro {
         return contraseña;
     }
 
-    public String getRol() {
+    public Enum getRol() {
         return rol;
     }
 
