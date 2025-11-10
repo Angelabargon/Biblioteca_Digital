@@ -8,4 +8,6 @@ module com.example.biblioteca_digital {
     exports com.example.biblioteca_digital;
     exports com.example.biblioteca_digital.controladores;
     opens com.example.biblioteca_digital.controladores to javafx.fxml;
+    exports com.example.biblioteca_digital.modelos;
+    opens com.example.biblioteca_digital.modelos to javafx.fxml;
 }
