@@ -55,7 +55,7 @@ public class Prestamo
     public int getId_libro() {return id_libro;}
     public Date getFecha_inicio() {return fecha_inicio;}
     public Date getFecha_fin() {return fecha_fin;}
-    public Estado getEstado() {return estado;}
+    public String getEstado() {return estado.toString();}
 
     /*
         Setters de los atributos de una reseña
@@ -71,7 +71,7 @@ public class Prestamo
     public void setId_libro(int id_libro) {this.id_libro = id_libro;}
     public void setFecha_inicio(Date fecha_inicio) {this.fecha_inicio = fecha_inicio;}
     public void setFecha_fin(Date fecha_fin) {this.fecha_fin = fecha_fin;}
-    public void setEstado(Estado estado) {this.estado = estado;}
+    public void setEstado(String estado) {this.estado = Estado.valueOf(estado);}
 
     /*
         ToString para imprimir la clase y sus atributos
