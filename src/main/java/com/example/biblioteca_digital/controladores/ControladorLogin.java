@@ -1,10 +1,32 @@
 package com.example.biblioteca_digital.controladores;
 
+import com.example.biblioteca_digital.controladores.Crud;
+import javafx.fxml.FXML;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+
 import java.util.List;
 import java.util.Optional;
 
-public class ControladorLogin<T, ID> implements Crud<T, ID>
-{
+
+
+public class ControladorLogin<T, ID> implements Crud<T, ID> {
+
+    @FXML
+    private ToggleButton tbt_usuario;
+
+    @FXML
+    private ToggleButton tbt_admin;
+
+    @FXML
+    private ToggleGroup grupoRol;
+
+    @FXML
+    public void initialize() {
+        grupoRol = new ToggleGroup();
+        tbt_usuario.setToggleGroup(grupoRol);
+        tbt_admin.setToggleGroup(grupoRol);
+    }
 
     /**
      * @param entity
@@ -48,3 +70,4 @@ public class ControladorLogin<T, ID> implements Crud<T, ID>
 
     }
 }
+
