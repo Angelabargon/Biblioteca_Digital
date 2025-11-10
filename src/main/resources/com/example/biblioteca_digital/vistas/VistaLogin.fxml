@@ -39,21 +39,21 @@
                   <Insets top="10.0" />
                </VBox.margin>
                <children>
-                  <ToggleButton id="tbt_usuario" prefWidth="100.0" text="Usuario" />
-                  <ToggleButton id="tbt_admin" prefWidth="100.0" text="Administrador" />
+                  <ToggleButton fx:id="tbt_usuario" prefWidth="100.0" text="Usuario" />
+                  <ToggleButton fx:id="tbt_admin" prefWidth="100.0" text="Administrador" />
                </children>
             </HBox>
-            <TextField id="tf_email" maxWidth="200.0" promptText="Email">
+            <TextField fx:id="tf_email" maxWidth="200.0" promptText="Email">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField id="tf_contraseña" maxWidth="200.0" promptText="Contraseña">
+            <TextField fx:id="tf_contraseña" maxWidth="200.0" promptText="Contraseña">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" text="Iniciar Sesión como usuario">
+            <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" text="Iniciar Sesión como Usuario">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
