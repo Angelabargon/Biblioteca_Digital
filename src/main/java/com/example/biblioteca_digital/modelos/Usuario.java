@@ -1,24 +1,43 @@
 package com.example.biblioteca_digital.modelos;
 
 /*
+Importamos lo necesario para usuario.
+ */
+import java.util.Date;
+
+/*
 Creamos la clas Usuario que representará a los clientes que entren a esta aplicación.
  */
 public class Usuario {
 
     /*
-    Definimos los atributos del usuario.
+    Definimos los atributos del usuario:
+    
+    * id
+    * nombre
+    * correo
+    * contrasena
+    * rol
+    * fechaRegistro
      */
     private int id;
     private String nombre;
     private String correo;
     private String contrasena;
     private String rol;
-    private String fechaRegistro;
+    private Date fechaRegistro;
 
     /*
-    Creamos el constructor e iniciamos sus atributos.
+    Creamos el constructor e iniciamos sus atributos:
+    
+    * id
+    * nombre
+    * correo
+    * contrasena
+    * rol
+    * fechaRegistro
      */
-    public Usuario(int id, String nombre, String correo, String contrasena, String rol, String fechaRegistro) {
+    public Usuario(int id, String nombre, String correo, String contrasena, String rol, Date fechaRegistro) {
 
         this.id = id;
         this.nombre = nombre;
@@ -37,7 +56,14 @@ public class Usuario {
     }
 
     /*
-    Generamos los getters y setters.
+    Generamos los getters y setters:
+    
+    * getId y setId
+    * getNombre y setNombre
+    * getCorreo y setCorreo
+    * getContrasena y setContrasena
+    * getRol y setRol
+    * getFechaRegistro y setFechaRegistro
      */
     public int getId() {
         return id;
@@ -79,11 +105,11 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getFechaRegistro() {
+    public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(String fechaRegistro) {
+    public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

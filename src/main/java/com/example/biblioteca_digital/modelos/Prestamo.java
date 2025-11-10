@@ -8,7 +8,14 @@ import java.util.Date;
  */
 public class Prestamo
 {
-    int id, id_usuario, id_libro;
+    /*
+        Atributos de un préstamo
+     */
+    Libro libro;
+    Usuario usuario;
+    int id;
+    int id_usuario = usuario.getId();
+    int id_libro = libro.getId();
     Date fecha_inicio, fecha_fin;
     Estado estado;
     /*
@@ -78,6 +85,6 @@ public class Prestamo
                 "]\n[Fecha de Inicio=" + fecha_inicio +
                 "]\n[Fecha de Fin=" + fecha_fin +
                 "]\n[Estado=" + estado +
-                "]" + '}';
+                "]";
     }
 }
