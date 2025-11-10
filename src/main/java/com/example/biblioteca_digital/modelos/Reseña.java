@@ -1,15 +1,15 @@
 package com.example.biblioteca_digital.modelos;
 /*
-    Imports de la clase Reseña
+ *Imports de la clase Reseña
  */
 import java.util.Date;
 /*
-    Clase Reseña
+ *Clase Reseña
  */
 public class Reseña
 {
     /*
-        Atributos de una reseña
+     *Atributos de una reseña
      */
     Libro libro;
     Usuario usuario;
@@ -21,19 +21,19 @@ public class Reseña
     int calificacion;
 
     /*
-        Constructor reseña vacío
+     *Constructor reseña vacío
      */
     public Reseña() {
     }
 
     /*
-        Constructor de reseña con atributos:
-        *@param ID
-        *@param ID_Libro
-        *@param ID_Usuario
-        *@param Fecha
-        *@param Contenido
-        *@param Calificacion
+     *Constructor de reseña con atributos:
+     *@param ID
+     *@param ID_Libro
+     *@param ID_Usuario
+     *@param Fecha
+     *@param Contenido
+     *@param Calificacion
      */
     public Reseña(int id, int id_libro, int id_usuario, Date fecha, String contenido, int calificacion) {
         this.id = id;
@@ -45,8 +45,8 @@ public class Reseña
     }
 
     /*
-        Getters de los atributos
-        @return
+     *Getters de los atributos
+     *@return
      */
     public int getId() {return id;}
     public int getId_libro() {return id_libro;}
@@ -56,7 +56,7 @@ public class Reseña
     public int getCalificacion() {return calificacion;}
 
     /*
-        Setters de los atributos
+     *Setters de los atributos
      */
     public void setId(int id) {this.id = id;}
     public void setId_libro(int id_libro) {this.id_libro = id_libro;}
@@ -66,8 +66,8 @@ public class Reseña
     public void setCalificacion(int calificacion) {this.calificacion = calificacion;}
 
     /*
-        ToString de una reseña
-        @return
+     *ToString de una reseña
+     *@return
      */
     @Override
     public String toString() {
