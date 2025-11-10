@@ -31,7 +31,7 @@ public class ConexionBD {
                 System.out.println("Conexion cerrada");
             }
         } catch (SQLException e) {
-            System.out.println("Eror al cerrar la conexión");
+            System.out.println("Error al cerrar la conexión");
         }
     }
 

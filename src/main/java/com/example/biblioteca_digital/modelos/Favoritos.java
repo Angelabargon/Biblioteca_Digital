@@ -1,6 +1,6 @@
 package com.example.biblioteca_digital.modelos;
 
-public class Prestamo
+public class Favoritos
 {
 
 }
