@@ -28,12 +28,12 @@ public class Reseña
 
     /*
         Constructor de reseña con atributos:
-        *ID
-        *ID_Libro
-        *ID_Usuario
-        *Fecha
-        *Contenido
-        *Calificacion
+        *@param ID
+        *@param ID_Libro
+        *@param ID_Usuario
+        *@param Fecha
+        *@param Contenido
+        *@param Calificacion
      */
     public Reseña(int id, int id_libro, int id_usuario, Date fecha, String contenido, int calificacion) {
         this.id = id;
@@ -45,13 +45,8 @@ public class Reseña
     }
 
     /*
-        Getters de los atributos:
-        *getID
-        *getID_Libro
-        *getID_Usuario
-        *getFecha
-        *getContenido
-        *getCalificacion
+        Getters de los atributos
+        @return
      */
     public int getId() {return id;}
     public int getId_libro() {return id_libro;}
@@ -61,13 +56,7 @@ public class Reseña
     public int getCalificacion() {return calificacion;}
 
     /*
-        Setters de los atributos:
-        *getID
-        *getID_Libro
-        *getID_Usuario
-        *getFecha
-        *getContenido
-        *getCalificacion
+        Setters de los atributos
      */
     public void setId(int id) {this.id = id;}
     public void setId_libro(int id_libro) {this.id_libro = id_libro;}
@@ -78,8 +67,8 @@ public class Reseña
 
     /*
         ToString de una reseña
+        @return
      */
-
     @Override
     public String toString() {
         return "Reseña:\n" +

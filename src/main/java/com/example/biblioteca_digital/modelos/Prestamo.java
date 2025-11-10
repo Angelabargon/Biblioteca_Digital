@@ -25,12 +25,12 @@ public class Prestamo
     }
     /*
         Constructor de préstamo con atributos
-        *ID
-        *ID_Usuario
-        *ID_Libro
-        *Fecha_Inicio
-        *Fecha_Fin
-        *Estado
+        *@param ID
+        *@param ID_Usuario
+        *@param ID_Libro
+        *@param Fecha_Inicio
+        *@param Fecha_Fin
+        *@param Estado
      */
     public Prestamo(int id, int id_usuario, int id_libro, Date fecha_inicio, Date fecha_fin, Estado estado) {
         this.id = id;
@@ -42,13 +42,8 @@ public class Prestamo
     }
 
     /*
-        Getters de los atributos de una reseña
-         *getID
-         *getID_Usuario
-         *getID_Libro
-         *getFecha_Inicio
-         *getFecha_Fin
-         *getEstado
+        Getters de los atributos de un prestamo
+        @return
      */
     public int getId() {return id;}
     public int getId_usuario() {return id_usuario;}
@@ -58,13 +53,7 @@ public class Prestamo
     public String getEstado() {return estado.toString();}
 
     /*
-        Setters de los atributos de una reseña
-         *setID
-         *setID_Usuario
-         *setID_Libro
-         *setFecha_Inicio
-         *setFecha_Fin
-         *setEstado
+        Setters de los atributos de un pestamo
      */
     public void setId(int id) {this.id = id;}
     public void setId_usuario(int id_usuario) {this.id_usuario = id_usuario;}
@@ -75,6 +64,7 @@ public class Prestamo
 
     /*
         ToString para imprimir la clase y sus atributos
+        @return
      */
     @Override
     public String toString() {
