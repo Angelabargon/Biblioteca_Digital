@@ -8,6 +8,7 @@ public class Libro {
     String nombre;
     String correo;
     String contraseña;
+    Enum rol;
     Date fecha_registro;
 
     //Constructor vacio
@@ -16,12 +17,13 @@ public class Libro {
     }
 
     //Constructor
-    public void Libro (int id ,String nombre, String correo, String contraseña, Date fecha_registro) {
+    public void Libro (int id ,String nombre, String correo, String contraseña, Enum rol, Date fecha_registro) {
 
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
         this.contraseña =  contraseña;
+        this.rol = rol;
         this.fecha_registro = fecha_registro;
 
     }
@@ -41,6 +43,10 @@ public class Libro {
 
     public String getContraseña() {
         return contraseña;
+    }
+
+    public String getRol() {
+        return rol;
     }
 
     public Date getFecha_registro() {
@@ -66,11 +72,16 @@ public class Libro {
         this.contraseña = contraseña;
     }
 
+    public void setRol(Enum rol) {
+        this.rol = rol;
+    }
+
     public void setFecha_registro(Date fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
 
     //toString
+
     @Override
     public String toString() {
         return "Libro{" +
@@ -78,6 +89,7 @@ public class Libro {
                 ", nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
                 ", contraseña='" + contraseña + '\'' +
+                ", rol=" + rol +
                 ", fecha_registro=" + fecha_registro +
                 '}';
     }
