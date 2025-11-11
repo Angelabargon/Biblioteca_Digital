@@ -2,6 +2,7 @@ module com.example.biblioteca_digital {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.desktop;
 
 
     opens com.example.biblioteca_digital to javafx.fxml;
