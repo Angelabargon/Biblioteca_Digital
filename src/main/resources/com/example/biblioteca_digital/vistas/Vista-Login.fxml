@@ -6,76 +6,94 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.Image?>
-<AnchorPane id="ap_login" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
+<AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
    <children>
-      <VBox id="vb_login" alignment="TOP_CENTER" layoutX="150.0" layoutY="30.0" prefHeight="340.0" prefWidth="300.0" style="-fx-border-color: #a67c52;">
+      <ImageView id="iv_fondoLogin" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+           <Image url="@../imagenes/Fondo Biblioteca.png" />
+          </image>
+      </ImageView>
+      <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" style="-fx-border-color: #a67c52;">
          <children>
-            <HBox id="hb_imagen" prefHeight="100.0" prefWidth="200.0">
+            <HBox id="hb_imagen" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Region id="region1" prefHeight="200.0" prefWidth="100.0" />
-                  <ImageView id="iv_icono" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                  <Region id="region2" prefHeight="100.0" prefWidth="30.0" HBox.hgrow="ALWAYS" />
-                  <Button id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" prefWidth="50.0" text="Ayuda">
+                  <Region id="region1" prefHeight="200.0" prefWidth="182.0" />
+                  <ImageView id="iv_icono" fitHeight="150.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" />
+                  <Region id="region2" prefHeight="100.0" prefWidth="67.0" HBox.hgrow="ALWAYS" />
+                  <Button id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>
-            <Label id="lb_titulo" alignment="CENTER" text="BIBLIOTECA DIGITAL">
+            <Label id="lb_titulo" alignment="CENTER" prefWidth="138.0" text="BIBLIOTECA DIGITAL">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Label id="lb_subtitulo" alignment="CENTER" text="El conocimiento al alcance de tus manos" />
+            <Label id="lb_subtitulo" alignment="CENTER" text="El conocimiento al alcance de tus manos">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
             <HBox id="hb_tbg" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
                <children>
-                  <ToggleButton fx:id="tbt_usuario" prefWidth="90.0" text="Usuario">
+                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario">
                      <graphic>
-                        <ImageView id="iv_iconoUsuario" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                              <image>
-                                <Image url="@/com/example/biblioteca_digital/imagenes/IconoUsuario.png" />
+                                <Image url="@../imagenes/IconoUsuario.png" />
                              </image>
                         </ImageView>
-                     </graphic></ToggleButton>
-                  <ToggleButton fx:id="tbt_admin" prefWidth="110.0" text="Administrador">
+                     </graphic>
+                     <font>
+                        <Font size="15.0" />
+                     </font></ToggleButton>
+                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Administrador">
                      <graphic>
-                        <ImageView id="iv_iconoAdmin" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="@/com/example/biblioteca_digital/imagenes/IconoUsuario.png" />
+                             <Image url="@../imagenes/IconoAdministrador.png" />
                          </image>
                         </ImageView>
-                     </graphic></ToggleButton>
+                     </graphic>
+                     <font>
+                        <Font size="15.0" />
+                     </font></ToggleButton>
                </children>
             </HBox>
-            <TextField fx:id="tf_email" maxWidth="200.0" promptText="Email">
+            <TextField fx:id="tf_email" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Email">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="tf_contraseña" maxWidth="200.0" promptText="Contraseña">
+            <TextField fx:id="tf_contraseña" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Contraseña">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" text="Iniciar Sesión como Usuario">
+            <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="Iniciar Sesión como Usuario">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </Button>
          </children>
          <padding>
-            <Insets top="20.0" />
+            <Insets top="40.0" />
          </padding>
          <effect>
             <DropShadow blurType="GAUSSIAN" />
