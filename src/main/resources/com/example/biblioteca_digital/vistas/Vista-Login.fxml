@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <AnchorPane id="ap_login" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
    <children>
       <VBox id="vb_login" alignment="TOP_CENTER" layoutX="150.0" layoutY="30.0" prefHeight="340.0" prefWidth="300.0" style="-fx-border-color: #a67c52;">
@@ -39,8 +40,22 @@
                   <Insets top="10.0" />
                </VBox.margin>
                <children>
-                  <ToggleButton fx:id="tbt_usuario" prefWidth="100.0" text="Usuario" />
-                  <ToggleButton fx:id="tbt_admin" prefWidth="100.0" text="Administrador" />
+                  <ToggleButton fx:id="tbt_usuario" prefWidth="90.0" text="Usuario">
+                     <graphic>
+                        <ImageView id="iv_iconoUsuario" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                             <image>
+                                <Image url="@/Imagenes/IconoUsuario.png" />
+                             </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+                  <ToggleButton fx:id="tbt_admin" prefWidth="110.0" text="Administrador">
+                     <graphic>
+                        <ImageView id="iv_iconoAdmin" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@/Imagenes/IconoUsuario.png" />
+                         </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
                </children>
             </HBox>
             <TextField fx:id="tf_email" maxWidth="200.0" promptText="Email">
