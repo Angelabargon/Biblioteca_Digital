@@ -18,7 +18,7 @@
    <children>
       <ImageView id="iv_fondoLogin" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
           <image>
-           <Image url="@../imagenes/Fondo Biblioteca.png" />
+           <Image url="@../imagenes/fondo-biblioteca.png" />
           </image>
       </ImageView>
       <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" style="-fx-border-color: #a67c52;">
@@ -26,15 +26,22 @@
             <HBox id="hb_imagen" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <Region id="region1" prefHeight="200.0" prefWidth="182.0" />
-                  <ImageView id="iv_icono" fitHeight="150.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" />
-                  <Region id="region2" prefHeight="100.0" prefWidth="67.0" HBox.hgrow="ALWAYS" />
-                  <Button id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
+                   <ImageView id="iv_icono" fitHeight="150.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" />
+                   <Region id="region2" prefHeight="100.0" prefWidth="67.0" HBox.hgrow="ALWAYS" />
+                   <Button fx:id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" text="Ayuda" onAction="#mostrarAyuda" >
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <graphic>
+                        <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" >
+                            <image>
+                                <Image url="@../imagenes/IconoInterrogacion.png" />
+                            </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </HBox>
