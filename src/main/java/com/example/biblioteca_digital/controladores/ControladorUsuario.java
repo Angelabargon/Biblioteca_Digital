@@ -13,6 +13,10 @@ import java.util.Optional;
 public class ControladorUsuario<T, ID> implements Crud<T, ID>
 {
 
+    public void initializeCuenta(Usuario cuenta) {
+
+    }
+
     public static Optional<Usuario> autenticar(String correo, String contrasena, String rol) {
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? AND rol = ?";
 

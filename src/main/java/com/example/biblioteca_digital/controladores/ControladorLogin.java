@@ -41,7 +41,7 @@ public class ControladorLogin {
     private Button bt_ayuda;
 
         @FXML
-        public void initialize() {
+        public void initializeLogin() {
             grupoRol = new ToggleGroup();
             tbt_usuario.setToggleGroup(grupoRol);
             tbt_admin.setToggleGroup(grupoRol);
@@ -90,9 +90,9 @@ public class ControladorLogin {
                 return;
             }
 
-            Optional<Usuario> usuarioAutenticado = ControladorUsuario.autenticar(email, contraseña, rol);
+            Optional<Usuario> cuentaAutenticada = ControladorUsuario.autenticar(email, contraseña, rol);
 
-            if (usuarioAutenticado.isPresent()) {
+            if (cuentaAutenticada.isPresent()) {
                 String vistaDestino = rol.equals("Usuario") ?
                         "/com/example/biblioteca_digital/vistas/Vista-Usuario.fxml" :
                         "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
@@ -101,12 +101,19 @@ public class ControladorLogin {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
                     Parent root = loader.load();
 
+                    if (rol.equals("Usuario")) {
+                    ControladorUsuario controlador = loader.getController();
+                    controlador.initializeCuenta(cuentaAutenticada.get());
+                    } else if (rol.equals("Administrador")) {
+                        ControladorAdministrador controlador = loader.getController();
+                        controlador.initializeCuenta(cuentaAutenticada.get());
+                    }
+
                     Stage stage = new Stage();
                     stage.setTitle("Bienvenido");
                     stage.setScene(new Scene(root));
                     stage.show();
 
-                    // Cerrar la ventana de login
                     ((Stage) bt_inicioUsuario.getScene().getWindow()).close();
 
                 } catch (IOException e) {
