@@ -44,7 +44,7 @@
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                              <image>
-                                <Image url="@/Imagenes/IconoUsuario.png" />
+                                <Image url="@/com/example/biblioteca_digital/imagenes/IconoUsuario.png" />
                              </image>
                         </ImageView>
                      </graphic></ToggleButton>
@@ -52,7 +52,7 @@
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="@/Imagenes/IconoUsuario.png" />
+                             <Image url="@/com/example/biblioteca_digital/imagenes/IconoUsuario.png" />
                          </image>
                         </ImageView>
                      </graphic></ToggleButton>

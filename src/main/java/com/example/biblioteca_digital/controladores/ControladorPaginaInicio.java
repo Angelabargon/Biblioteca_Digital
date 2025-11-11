@@ -10,6 +10,9 @@ import java.io.IOException;
 
 public class ControladorPaginaInicio
 {
+    public ControladorPaginaInicio() {
+    }
+
     /**
      * Manejo de botón de inicio de sesión
      * @param event

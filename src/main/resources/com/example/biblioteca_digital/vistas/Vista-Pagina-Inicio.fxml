@@ -8,13 +8,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
-<?import java.awt.Image?>
 <AnchorPane prefHeight="397.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorPaginaInicio">
    <children>
       <ImageView fitHeight="397.0" fitWidth="602.0" pickOnBounds="true" preserveRatio="true">
           <image>
-               <Image url="@/Imagenes/FondoPantallaInicial.jpg" />
+              <Image url="@/com/example/biblioteca_digital/imagenes/pantalla-inicio.jpg" />
           </image>
       </ImageView>
       <Label layoutX="313.0" layoutY="102.0" prefHeight="58.0" prefWidth="274.0" text="¡BIENVENIDO A TU BIBLIOTECA DIGITAL!" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS">
