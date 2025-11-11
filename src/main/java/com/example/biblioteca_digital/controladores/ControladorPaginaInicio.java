@@ -3,6 +3,7 @@ package com.example.biblioteca_digital.controladores;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +11,17 @@ import java.io.IOException;
 
 public class ControladorPaginaInicio
 {
-    public ControladorPaginaInicio() {
-    }
+    public Button registro;
+    public Button login;
+
+    public ControladorPaginaInicio()
+    {}
 
     /**
      * Manejo de botón de inicio de sesión
      * @param event
      */
-    public void irALogin(ActionEvent event)
+    public void irALogin(javafx.event.ActionEvent event)
     {
         try
         {
@@ -39,7 +43,7 @@ public class ControladorPaginaInicio
      * Manejo del botón de registro de un nuevo usuario.
      * @param event
      */
-    public void irARegistro(ActionEvent event)
+    public void irARegistro(javafx.event.ActionEvent event)
     {
         try
         {
