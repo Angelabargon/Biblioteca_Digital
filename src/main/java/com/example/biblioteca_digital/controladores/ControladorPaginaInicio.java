@@ -18,7 +18,7 @@ public class ControladorPaginaInicio
     {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("com/example/biblioteca_digital/vistas/VistaPaginaInicio.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Login.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Login");
@@ -36,11 +36,11 @@ public class ControladorPaginaInicio
      * Manejo del botón de registro de un nuevo usuario.
      * @param event
      */
-    public void goToRegister(ActionEvent event)
+    public void irARegistro(ActionEvent event)
     {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("com/example/biblioteca_digital/vistas/VistaRegistro.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Registro.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Registro");
