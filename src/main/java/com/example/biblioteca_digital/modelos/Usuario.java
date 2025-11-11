@@ -3,7 +3,7 @@ package com.example.biblioteca_digital.modelos;
 /*
 Importamos lo necesario para usuario.
  */
-import java.util.Date;
+import java.time.LocalDate;
 
 /*
 Creamos la clas Usuario que representará a los clientes que entren a esta aplicación.
@@ -26,7 +26,7 @@ public class Usuario {
     private String correo;
     private String contrasena;
     private String rol;
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 
     /*
     Creamos el constructor e iniciamos sus atributos:
@@ -38,7 +38,7 @@ public class Usuario {
     * rol
     * fechaRegistro
      */
-    public Usuario(int id, String nombre, String primerApellido, String correo, String contrasena, String rol, Date fechaRegistro) {
+    public Usuario(int id, String nombre, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro) {
 
         this.id = id;
         this.nombre = nombre;
@@ -81,8 +81,8 @@ public class Usuario {
     public void setContrasena(String contrasena) {this.contrasena = contrasena;}
     public String getRol() {return rol;}
     public void setRol(String rol) {this.rol = rol;}
-    public Date getFechaRegistro() {return fechaRegistro;}
-    public void setFechaRegistro(Date fechaRegistro) {this.fechaRegistro = fechaRegistro;}
+    public LocalDate getFechaRegistro() {return fechaRegistro;}
+    public void setFechaRegistro(LocalDate fechaRegistro) {this.fechaRegistro = fechaRegistro;}
 
     /*
     Creamos un toString para mostrar los datos.

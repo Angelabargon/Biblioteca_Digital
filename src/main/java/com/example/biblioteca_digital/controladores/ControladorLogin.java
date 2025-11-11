@@ -1,5 +1,6 @@
 package com.example.biblioteca_digital.controladores;
 
+import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -75,6 +76,44 @@ public class ControladorLogin {
 
             } catch (IOException e) {
                 System.out.println("Error al cargar la ayuda.");
+            }
+        }
+
+        @FXML
+        private void iniciarSesion(ActionEvent event) {
+            String email = tf_email.getText().trim();
+            String contraseña = tf_contraseña.getText().trim();
+            String rol = tbt_usuario.isSelected() ? "Usuario" : "Administrador";
+
+            if (email.isEmpty() || contraseña.isEmpty()) {
+                System.out.println("Rellena todos los campos.");
+                return;
+            }
+
+            Optional<Usuario> usuarioAutenticado = ControladorUsuario.autenticar(email, contraseña, rol);
+
+            if (usuarioAutenticado.isPresent()) {
+                String vistaDestino = rol.equals("Usuario") ?
+                        "/com/example/biblioteca_digital/vistas/Vista-Usuario.fxml" :
+                        "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
+                    Parent root = loader.load();
+
+                    Stage stage = new Stage();
+                    stage.setTitle("Bienvenido");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                    // Cerrar la ventana de login
+                    ((Stage) bt_inicioUsuario.getScene().getWindow()).close();
+
+                } catch (IOException e) {
+                    System.out.println("Error, no se pudo cargar la vista de " + rol.toLowerCase() + ".");
+                }
+            } else {
+                System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }
     }
