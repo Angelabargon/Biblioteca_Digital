@@ -3,6 +3,7 @@ module com.example.biblioteca_digital {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires javafx.graphics;
 
 
     opens com.example.biblioteca_digital to javafx.fxml;
