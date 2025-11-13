@@ -14,8 +14,8 @@ public class Prestamo
     Libro libro;
     Usuario usuario;
     int id;
-    int id_usuario = usuario.getId();
-    int id_libro = libro.getId();
+    int id_usuario;
+    int id_libro;
     Date fecha_inicio, fecha_fin;
     Estado estado;
     /*

@@ -26,6 +26,8 @@ public class Usuario {
     private String primerApellido;
     private String correo;
     private String contrasena;
+
+    public enum Rol { ADMIN, USUARIO }
     private String rol;
     private LocalDate fechaRegistro;
 

@@ -19,7 +19,7 @@ public class Libro {
     /*
      *Constructor vacío de libro
      */
-    public void Libro() {}
+    public Libro() {}
 
     /*
      *Constructor de libro con atributos
@@ -32,7 +32,7 @@ public class Libro {
      *@param cantidad
      *@param disponible
      */
-    public void Libro (int id ,String titulo, String autor, String genero, String isbn, String foto, int cantidad, boolean disponible) {
+    public Libro (int id ,String titulo, String autor, String genero, String isbn, String foto, int cantidad, boolean disponible) {
 
         this.id = id;
         this.titulo = titulo;

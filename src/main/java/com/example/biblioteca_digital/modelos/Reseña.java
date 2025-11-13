@@ -14,8 +14,8 @@ public class Reseña
     Libro libro;
     Usuario usuario;
     int id;
-    int id_libro = libro.getId();
-    int id_usuario = usuario.getId();
+    int id_libro;
+    int id_usuario;
     Date fecha;
     String contenido;
     int calificacion;
@@ -23,8 +23,7 @@ public class Reseña
     /*
      *Constructor reseña vacío
      */
-    public Reseña() {
-    }
+    public Reseña() {}
 
     /*
      *Constructor de reseña con atributos:
