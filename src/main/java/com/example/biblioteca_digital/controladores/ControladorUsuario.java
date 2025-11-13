@@ -1,6 +1,7 @@
 package com.example.biblioteca_digital.controladores;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
+import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
 
 import java.sql.Connection;
@@ -37,7 +38,7 @@ public class ControladorUsuario<T, ID> implements Crud<T, ID>
                 usuario.setPrimerApellido(rs.getString("primer_apellido"));
                 usuario.setCorreo(rs.getString("correo"));
                 usuario.setContrasena(rs.getString("contrasena"));
-                usuario.setRol(rs.getString("rol"));
+                usuario.setRol(Rol.valueOf(rs.getString("rol")));
                 usuario.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
 
                 return Optional.of(usuario);

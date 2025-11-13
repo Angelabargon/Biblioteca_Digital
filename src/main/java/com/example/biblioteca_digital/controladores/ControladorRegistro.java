@@ -1,6 +1,7 @@
 package com.example.biblioteca_digital.controladores;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
+import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +16,12 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 
+import static com.example.biblioteca_digital.modelos.Rol.usuario;
+
 public class ControladorRegistro
 {
+
+    static LocalDate fechaActual = LocalDate.now();
     /**
      * Clase para agrupar las consultas SQL al guardar un nuevo usuario
      */
@@ -75,7 +80,7 @@ public class ControladorRegistro
                 stmt.setString(4, usuario.getPrimerApellido());
                 stmt.setString(5, usuario.getCorreo());
                 stmt.setString(6, usuario.getContrasena());
-                stmt.setString(7, usuario.getRol());
+                stmt.setString(7, usuario.getRol().toString());
                 stmt.setDate(8, Date.valueOf(usuario.getFechaRegistro()));
                 stmt.executeUpdate();
             } catch (SQLException e)
@@ -120,7 +125,7 @@ public class ControladorRegistro
     @FXML private TextField primerApellido;
     @FXML private TextField correo;
     @FXML private TextField contrasena;
-    @FXML private PasswordField repetirContrasena;
+    @FXML private TextField repetirContrasena;
     @FXML private CheckBox aceptoTerminos;
     @FXML private Label mensajeError;
     private final Consultas consultas = new Consultas();
@@ -160,8 +165,7 @@ public class ControladorRegistro
             return;
         }
         int idUsuario = consultas.siguienteId();
-        LocalDate fechaActual = LocalDate.now();
-        Usuario nuevoUsuario = construirObjetoUsuario(idUsuario, nombreUsuario1, nombre1, primerApellido1, correo1, contrasena1, "USUARIO", fechaActual);
+        Usuario nuevoUsuario = construirObjetoUsuario(idUsuario, nombre1, nombreUsuario1, primerApellido1, correo1, contrasena1, usuario, fechaActual);
         guardarDatosUsuario(nuevoUsuario);
         volver(event);
     }
@@ -193,9 +197,9 @@ public class ControladorRegistro
         consultas.guardarUsuario(usuario);
     }
 
-    private Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro)
+    private Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro)
     {
-        return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, rol, fechaRegistro);
+        return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, usuario, fechaRegistro);
     }
     private boolean compararContrasenas(String contrasena, String repetir)
     {
