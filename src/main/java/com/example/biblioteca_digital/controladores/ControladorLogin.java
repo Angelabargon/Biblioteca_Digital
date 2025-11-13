@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 public class ControladorLogin {
@@ -72,7 +71,7 @@ public class ControladorLogin {
 
         public void mostrarAyuda(ActionEvent event) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml"));
                 Parent root = loader.load();
 
                 Stage stage = new Stage();
