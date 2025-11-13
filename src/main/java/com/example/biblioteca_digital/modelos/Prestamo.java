@@ -4,7 +4,7 @@ package com.example.biblioteca_digital.modelos;
  */
 import java.util.Date;
 /*
- *Clase préstamo de un libtro
+ *Clase préstamo de un libro
  */
 public class Prestamo
 {
@@ -53,7 +53,7 @@ public class Prestamo
     public String getEstado() {return estado.toString();}
 
     /*
-     *Setters de los atributos de un pestamo
+     *Setters de los atributos de un prestamo
      */
     public void setId(int id) {this.id = id;}
     public void setId_usuario(int id_usuario) {this.id_usuario = id_usuario;}
