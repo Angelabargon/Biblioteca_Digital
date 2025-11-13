@@ -16,8 +16,6 @@ public class Usuario {
     
     * id
     * nombre
-    * nombreUsuario
-    * primerApellido
     * correo
     * contrasena
     * rol
@@ -25,11 +23,12 @@ public class Usuario {
      */
     private int id;
     private String nombre;
-    private String nombreUsuario;
     private String primerApellido;
     private String correo;
     private String contrasena;
-    private Rol rol;
+
+    public enum Rol { ADMIN, USUARIO }
+    private String rol;
     private LocalDate fechaRegistro;
 
     /*
@@ -37,18 +36,15 @@ public class Usuario {
     
     * id
     * nombre
-    * nombreUsuario
-    * primerApellido
     * correo
     * contrasena
     * rol
     * fechaRegistro
      */
-    public Usuario(int id, String nombre, String nombreUsuario, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
+    public Usuario(int id, String nombre, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro) {
 
         this.id = id;
         this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
         this.primerApellido = primerApellido;
         this.correo = correo;
         this.contrasena = contrasena;
@@ -73,7 +69,6 @@ public class Usuario {
     * getId y setId
     * getNombre y setNombre
     * getPrimerApellido y setPrimerApellido
-    * getNombreUsuario y setNombreUsuario
     * getCorreo y setCorreo
     * getContrasena y setContrasena
     * getRol y setRol
@@ -83,16 +78,15 @@ public class Usuario {
     public void setId(int id) {this.id = id;}
     public String getNombre() {return nombre;}
     public void setNombre(String nombre) {this.nombre = nombre;}
+
     public String getPrimerApellido() {return primerApellido;}
     public void setPrimerApellido(String primerApellido) {this.primerApellido = primerApellido;}
-    public String getNombreUsuario() {return nombreUsuario;}
-    public void setNombreUsuario(String nombreUsuario) {this.nombreUsuario = nombreUsuario;}
     public String getCorreo() {return correo;}
     public void setCorreo(String correo) {this.correo = correo;}
     public String getContrasena() {return contrasena;}
     public void setContrasena(String contrasena) {this.contrasena = contrasena;}
-    public Rol getRol() {return rol;}
-    public void setRol(Rol rol) {this.rol = rol;}
+    public String getRol() {return rol;}
+    public void setRol(String rol) {this.rol = rol;}
     public LocalDate getFechaRegistro() {return fechaRegistro;}
     public void setFechaRegistro(LocalDate fechaRegistro) {this.fechaRegistro = fechaRegistro;}
 
@@ -104,7 +98,6 @@ public class Usuario {
 
         return "Usuario: " + id +
                 "\nNombre: " + nombre +
-                "\nNomrbre de usuario: " + nombreUsuario +
                 "\nPrimer Apellido " + primerApellido +
                 "\nCorreo: " + correo +
                 "\nContraseña: " + contrasena +
