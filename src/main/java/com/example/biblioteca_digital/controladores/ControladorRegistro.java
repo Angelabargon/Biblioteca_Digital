@@ -20,27 +20,63 @@ public class ControladorRegistro
     /**
      * Clase para agrupar las consultas SQL al guardar un nuevo usuario
      */
-    static class Consultas {
+    static class Consultas
+    {
+        /**
+         * Consulta para obtener el ID mayor para que los ID de los usuarios sean uno mayor
+         * @return
+         */
+        public int siguienteId()
+        {
+            String sql = "SELECT MAX(id) FROM Usuarios";
+            Connection conn = null;
+            int nextId = 1;
+            try
+            {
+                conn = ConexionBD.getConexion();
+                try (PreparedStatement stmt = conn.prepareStatement(sql);
+                     ResultSet rs = stmt.executeQuery())
+                {
+                    if (rs.next())
+                    {
+                        nextId = rs.getInt(1) + 1;
+                    }
+                }
+            }
+            catch (SQLException e)
+            {
+                System.err.println("Error al obtener el siguiente ID de la BD: " + e.getMessage());
+                return 1;
+            }
+            finally
+            {
+                ConexionBD.cerrarConexion();
+            }
+            return nextId;
+        }
         /**
          * Guarda el usuario en la base de datos.
          * @param usuario
          */
         public void guardarUsuario(Usuario usuario)
         {
-            String sql = "INSERT INTO Usuarios (nombre, primerApellido, correo, contrasena, rol, fechaRegistro) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Usuarios (id, nombre_usuario , nombre, primer_apellido, correo, contrasena, rol, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection conn = ConexionBD.getConexion();
-                 PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
+                 PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null)
+            {
                 if (stmt == null)
                 {
                     System.err.println("Error: La conexión es nula. No se pudo preparar la sentencia SQL.");
                     return;
                 }
-                stmt.setString(1, usuario.getNombre());
-                stmt.setString(2, usuario.getPrimerApellido());
-                stmt.setString(3, usuario.getCorreo());
-                stmt.setString(4, usuario.getContrasena());
-                stmt.setString(5, usuario.getRol());
-                stmt.setDate(6, Date.valueOf(usuario.getFechaRegistro()));
+                stmt.setInt(1, usuario.getId());
+                stmt.setString(2, usuario.getNombreUsuario());
+                stmt.setString(2, usuario.getNombre());
+                stmt.setString(4, usuario.getPrimerApellido());
+                stmt.setString(5, usuario.getCorreo());
+                stmt.setString(6, usuario.getContrasena());
+                stmt.setString(7, usuario.getRol());
+                stmt.setDate(8, Date.valueOf(usuario.getFechaRegistro()));
                 stmt.executeUpdate();
             } catch (SQLException e)
             {
@@ -56,7 +92,8 @@ public class ControladorRegistro
         {
             String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre = ?";
             try (Connection conn = ConexionBD.getConexion();
-                 PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
+                 PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null)
+            {
                 if (stmt == null)
                 {
                     System.err.println("Error no se pudo verificar existencia en la base de datos ya que no hay conexión.");
@@ -70,7 +107,8 @@ public class ControladorRegistro
                         return rs.getInt(1) > 0;
                     }
                 }
-            } catch (SQLException e)
+            }
+            catch (SQLException e)
             {
                 System.err.println("Error al verificar existencia de usuario (SQL o Conexión): " + e.getMessage());
             }
@@ -86,7 +124,7 @@ public class ControladorRegistro
     @FXML private CheckBox aceptoTerminos;
     @FXML private Label mensajeError;
     private final Consultas consultas = new Consultas();
-    private int proximoId = 1;
+    private int proximoIdz = 1;
     /**
      * Maneja el clic del botón de registro, realiza validaciones y guarda el usuario.
      * Si el registro es exitoso, navega a la página de inicio.
@@ -121,7 +159,9 @@ public class ControladorRegistro
             mensajeError.setText("Debes aceptar los términos y condiciones.");
             return;
         }
-        Usuario nuevoUsuario = new Usuario(proximoId++, nombreUsuario, primerApellido, correo, contrasena, "USUARIO", LocalDate.now());
+        int idUsuario = consultas.siguienteId();
+        LocalDate fechaActual = LocalDate.now();
+        Usuario nuevoUsuario = construirObjetoUsuario(idUsuario, nombreUsuario1, nombre1, primerApellido1, correo1, contrasena1, "USUARIO", fechaActual);
         guardarDatosUsuario(nuevoUsuario);
         volver(event);
     }
@@ -153,9 +193,9 @@ public class ControladorRegistro
         consultas.guardarUsuario(usuario);
     }
 
-    private Usuario construirObjetoUsuario(int id, String nombreUsuario, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro)
+    private Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro)
     {
-        return new Usuario(id, nombreUsuario, primerApellido, correo, contrasena, rol, fechaRegistro);
+        return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, rol, fechaRegistro);
     }
     private boolean compararContrasenas(String contrasena, String repetir)
     {
