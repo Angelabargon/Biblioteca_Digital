@@ -3,6 +3,7 @@ package com.example.biblioteca_digital.modelos;
 /*
 Importamos lo necesario para usuario.
  */
+import java.awt.*;
 import java.time.LocalDate;
 
 /*
@@ -55,6 +56,9 @@ public class Usuario {
      */
     public Usuario() {
 
+    }
+
+    public Usuario(int id, TextField nombreUsuario, TextField primerApellido, TextField correo, TextField contrasena, String usuario, LocalDate now) {
     }
 
     /*
