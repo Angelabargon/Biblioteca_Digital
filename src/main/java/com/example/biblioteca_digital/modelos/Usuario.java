@@ -16,6 +16,8 @@ public class Usuario {
     
     * id
     * nombre
+    * nombreUsuario
+    * primerApellido
     * correo
     * contrasena
     * rol
@@ -23,6 +25,7 @@ public class Usuario {
      */
     private int id;
     private String nombre;
+    private String nombreUsuario;
     private String primerApellido;
     private String correo;
     private String contrasena;
@@ -34,15 +37,18 @@ public class Usuario {
     
     * id
     * nombre
+    * nombreUsuario
+    * primerApellido
     * correo
     * contrasena
     * rol
     * fechaRegistro
      */
-    public Usuario(int id, String nombre, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro) {
+    public Usuario(int id, String nombre, String nombreUsuario, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro) {
 
         this.id = id;
         this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
         this.primerApellido = primerApellido;
         this.correo = correo;
         this.contrasena = contrasena;
@@ -67,6 +73,7 @@ public class Usuario {
     * getId y setId
     * getNombre y setNombre
     * getPrimerApellido y setPrimerApellido
+    * getNombreUsuario y setNombreUsuario
     * getCorreo y setCorreo
     * getContrasena y setContrasena
     * getRol y setRol
@@ -76,9 +83,10 @@ public class Usuario {
     public void setId(int id) {this.id = id;}
     public String getNombre() {return nombre;}
     public void setNombre(String nombre) {this.nombre = nombre;}
-
     public String getPrimerApellido() {return primerApellido;}
     public void setPrimerApellido(String primerApellido) {this.primerApellido = primerApellido;}
+    public String getNombreUsuario() {return nombreUsuario;}
+    public void setNombreUsuario(String nombreUsuario) {this.nombreUsuario = nombreUsuario;}
     public String getCorreo() {return correo;}
     public void setCorreo(String correo) {this.correo = correo;}
     public String getContrasena() {return contrasena;}
@@ -96,6 +104,7 @@ public class Usuario {
 
         return "Usuario: " + id +
                 "\nNombre: " + nombre +
+                "\nNomrbre de usuario: " + nombreUsuario +
                 "\nPrimer Apellido " + primerApellido +
                 "\nCorreo: " + correo +
                 "\nContraseña: " + contrasena +
