@@ -3,9 +3,6 @@ package com.example.biblioteca_digital.modelos;
 /*
 Importamos lo necesario para usuario.
  */
-import javafx.scene.control.PasswordField;
-
-import java.awt.*;
 import java.time.LocalDate;
 
 /*
@@ -57,9 +54,9 @@ public class Usuario {
     Creamos un segundo constructor vacío por si acaso.
      */
     public Usuario() {
+
     }
-    public Usuario(int i, TextField nombreUsuario, TextField primerApellido, TextField correo, TextField contrasena, String usuario, LocalDate now) {
-    }
+
     /*
     Generamos los getters y setters:
     

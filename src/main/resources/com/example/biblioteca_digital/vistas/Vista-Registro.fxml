@@ -38,7 +38,7 @@
             <Label prefHeight="39.0" prefWidth="254.0" text="Repita contraseña" />
             <TextField prefHeight="41.0" prefWidth="226.0" />
             <Region prefHeight="44.0" prefWidth="255.0" />
-            <Button mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="42.0" prefWidth="256.0" text="Guardar y registrar" />
+            <Button mnemonicParsing="false" onAction="#guardarYVolver" prefHeight="42.0" prefWidth="256.0" text="Guardar y registrar" />
          </children>
       </VBox>
       <CheckBox layoutX="623.0" layoutY="730.0" mnemonicParsing="false" text="Aceptar los Términos de Privacidad" />
