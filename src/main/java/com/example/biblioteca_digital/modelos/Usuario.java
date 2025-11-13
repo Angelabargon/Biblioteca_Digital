@@ -29,7 +29,7 @@ public class Usuario {
     private String primerApellido;
     private String correo;
     private String contrasena;
-    private String rol;
+    private Rol rol;
     private LocalDate fechaRegistro;
 
     /*
@@ -44,7 +44,7 @@ public class Usuario {
     * rol
     * fechaRegistro
      */
-    public Usuario(int id, String nombre, String nombreUsuario, String primerApellido, String correo, String contrasena, String rol, LocalDate fechaRegistro) {
+    public Usuario(int id, String nombre, String nombreUsuario, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
 
         this.id = id;
         this.nombre = nombre;
@@ -91,8 +91,8 @@ public class Usuario {
     public void setCorreo(String correo) {this.correo = correo;}
     public String getContrasena() {return contrasena;}
     public void setContrasena(String contrasena) {this.contrasena = contrasena;}
-    public String getRol() {return rol;}
-    public void setRol(String rol) {this.rol = rol;}
+    public Rol getRol() {return rol;}
+    public void setRol(Rol rol) {this.rol = rol;}
     public LocalDate getFechaRegistro() {return fechaRegistro;}
     public void setFechaRegistro(LocalDate fechaRegistro) {this.fechaRegistro = fechaRegistro;}
 
