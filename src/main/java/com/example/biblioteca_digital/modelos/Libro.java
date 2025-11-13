@@ -1,96 +1,90 @@
 package com.example.biblioteca_digital.modelos;
-
+/*
+ *Imports de la clase libro
+ */
 import java.util.Date;
 
+/*
+ *Clase libro
+ */
 public class Libro {
 
-    int id;
-    String nombre;
-    String correo;
-    String contraseña;
-    Enum rol;
-    Date fecha_registro;
+    /*
+     *Atributos de un libro
+     */
+    private int id, cantidad;
+    private String titulo, autor, genero, isbn, foto;
+    private boolean disponible;
 
-    //Constructor vacio
-    public void Libro() {
+    /*
+     *Constructor vacío de libro
+     */
+    public void Libro() {}
 
-    }
-
-    //Constructor
-    public void Libro (int id ,String nombre, String correo, String contraseña, Enum rol, Date fecha_registro) {
+    /*
+     *Constructor de libro con atributos
+     *@param id
+     *@param titulo
+     *@param autor
+     *@param genero
+     *@param isbn
+     *@param foto
+     *@param cantidad
+     *@param disponible
+     */
+    public void Libro (int id ,String titulo, String autor, String genero, String isbn, String foto, int cantidad, boolean disponible) {
 
         this.id = id;
-        this.nombre = nombre;
-        this.correo = correo;
-        this.contraseña =  contraseña;
-        this.rol = rol;
-        this.fecha_registro = fecha_registro;
-
+        this.titulo = titulo;
+        this.autor = autor;
+        this.genero =  genero;
+        this.isbn = isbn;
+        this.foto = foto;
+        this.cantidad = cantidad;
+        this.disponible = disponible;
     }
 
-    //Getters
-    public int getId() {
-        return id;
-    }
+    /*
+     *Getters de los atributos de un libro
+     *@return
+     */
+    public int getId() { return id; }
+    public String getTitulo() { return titulo; }
+    public String getAutor() { return autor; }
+    public String getGenero() { return genero; }
+    public String getIsbn() { return isbn; }
+    public String getFoto() { return foto; }
+    public int getCantidad() { return cantidad; }
+    public boolean getDisponible() { return disponible; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    /*
+     *Setters de los atributos de un libro
+     */
+    public void setId(int id) { this.id = id; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setAutor(String autor) { this.autor = autor; }
+    public void setGenero(String genero) { this.genero = genero; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public void setFoto(String foto) { this.foto = foto; }
+    public void setRol(int cantidad) { this.cantidad = cantidad; }
+    public void setDisponible(boolean disponible) { this.disponible = disponible; }
 
-    public String getCorreo() {
-        return correo;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public Enum getRol() {
-        return rol;
-    }
-
-    public Date getFecha_registro() {
-        return fecha_registro;
-    }
-
-
-    //Setters
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public void setRol(Enum rol) {
-        this.rol = rol;
-    }
-
-    public void setFecha_registro(Date fecha_registro) {
-        this.fecha_registro = fecha_registro;
-    }
-
-    //toString
+    /*
+     *ToString para imprimir la clase y sus atributos
+     *@return
+     */
 
     @Override
     public String toString() {
         return "Libro{" +
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", correo='" + correo + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                ", rol=" + rol +
-                ", fecha_registro=" + fecha_registro +
+                ", cantidad=" + cantidad +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", genero='" + genero + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", foto='" + foto + '\'' +
+                ", disponible=" + disponible +
                 '}';
     }
 }
