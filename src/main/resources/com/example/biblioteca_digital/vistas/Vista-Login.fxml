@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
    <children>
       <ImageView id="iv_fondoLogin" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
@@ -92,11 +93,11 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="tf_contraseña" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Contraseña">
+             <PasswordField fx:id="pf_contraseña" promptText="Contraseña" prefHeight="35.0" maxWidth="300.0" >
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
-            </TextField>
+            </PasswordField>
             <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="35.0" prefWidth="250.0" text="Iniciar Sesión como Usuario">
                <VBox.margin>
                   <Insets top="30.0" />

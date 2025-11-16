@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
@@ -37,7 +34,7 @@ public class ControladorLogin {
     private TextField tf_email;
 
     @FXML
-    private TextField tf_contraseña;
+    private PasswordField pf_contraseña;
 
     @FXML
     private Button bt_inicioUsuario;
@@ -61,11 +58,11 @@ public class ControladorLogin {
 
                     if (rol.equals("Administrador")) {
                         tf_email.setPromptText("Email de Administrador");
-                        tf_contraseña.setPromptText("Contraseña de Administrador");
+                        pf_contraseña.setPromptText("Contraseña de Administrador");
                         bt_inicioUsuario.setText("Iniciar Sesión como Administrador");
                     } else {
                         tf_email.setPromptText("Email");
-                        tf_contraseña.setPromptText("Contraseña");
+                        pf_contraseña.setPromptText("Contraseña");
                         bt_inicioUsuario.setText("Iniciar Sesión como Usuario");
                     }
                 }
@@ -90,7 +87,7 @@ public class ControladorLogin {
         @FXML
         private void iniciarSesion(ActionEvent event) {
             String email = tf_email.getText().trim();
-            String contraseña = tf_contraseña.getText().trim();
+            String contraseña = pf_contraseña.getText().trim();
             String rol = tbt_usuario.isSelected() ? "Usuario" : "Administrador";
 
             if (email.isEmpty() || contraseña.isEmpty()) {
