@@ -45,6 +45,9 @@ public class ControladorLogin {
     @FXML
     private Button bt_ayuda;
 
+    @FXML
+    private Button bt_volver;
+
         @FXML
         public void initializeLogin() {
             grupoRol = new ToggleGroup();
@@ -160,6 +163,22 @@ public class ControladorLogin {
         }
 
         return Optional.empty();
+    }
+
+    @FXML
+    private void volverAtras(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-PaginaInicio.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) bt_volver.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+
+        } catch (IOException e) {
+            System.out.println("Error al volver a la pantalla de inicio: " + e.getMessage());
+        }
     }
 
     }

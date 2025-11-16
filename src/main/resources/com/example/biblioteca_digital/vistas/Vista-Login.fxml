@@ -21,7 +21,7 @@
            <Image url="@../imagenes/fondo-biblioteca.png" />
           </image>
       </ImageView>
-      <VBox id="vb_login" style="-fx-background-color: white;" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0">
+      <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" style="-fx-background-color: white;">
          <children>
             <HBox id="hb_imagen" prefHeight="150.0" prefWidth="200.0">
                <children>
@@ -102,6 +102,28 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </Button>
+            <HBox id="hb_volver" prefWidth="200.0">
+               <children>
+                  <Button id="bt_volver" fx:id="bt_ayuda1" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/icono-volver.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </HBox>
          </children>
          <padding>
             <Insets top="40.0" />
