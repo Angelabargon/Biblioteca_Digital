@@ -8,9 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -54,9 +56,9 @@ public class ControladorLogin {
             grupoRol.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     ToggleButton seleccionado = (ToggleButton) newToggle;
-                    String rol = seleccionado.getText();
+                    String rol = seleccionado.getText().toLowerCase();
 
-                    if (rol.equals("Administrador")) {
+                    if (rol.equals("administrador")) {
                         tf_email.setPromptText("Email de Administrador");
                         pf_contraseña.setPromptText("Contraseña de Administrador");
                         bt_inicioUsuario.setText("Iniciar Sesión como Administrador");
@@ -74,10 +76,13 @@ public class ControladorLogin {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml"));
                 Parent root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setTitle("Ayuda");
-                stage.setScene(new Scene(root));
-                stage.show();
+                Stage ayudaStage = new Stage();
+                ayudaStage.setTitle("Guía");
+                ayudaStage.setScene(new Scene(root));
+                ayudaStage.initModality(Modality.APPLICATION_MODAL);
+                ayudaStage.initStyle(StageStyle.UTILITY);
+                ayudaStage.setResizable(false);
+                ayudaStage.showAndWait();
 
             } catch (IOException e) {
                 System.out.println("Error al cargar la ayuda.");
@@ -88,7 +93,7 @@ public class ControladorLogin {
         private void iniciarSesion(ActionEvent event) {
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
-            String rol = tbt_usuario.isSelected() ? "Usuario" : "Administrador";
+            String rol = tbt_usuario.isSelected() ? "usuario" : "administrador";
 
             if (email.isEmpty() || contraseña.isEmpty()) {
                 System.out.println("Rellena todos los campos.");
@@ -98,7 +103,7 @@ public class ControladorLogin {
             Optional<Usuario> cuentaAutenticada = ControladorUsuario.autenticar(email, contraseña, rol);
 
             if (cuentaAutenticada.isPresent()) {
-                String vistaDestino = rol.equals("Usuario") ?
+                String vistaDestino = rol.equals("usuario") ?
                         "/com/example/biblioteca_digital/vistas/Vista-Usuario.fxml" :
                         "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
 
@@ -106,10 +111,10 @@ public class ControladorLogin {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
                     Parent root = loader.load();
 
-                    if (rol.equals("Usuario")) {
+                    if (rol.equals("usuario")) {
                     ControladorUsuario controlador = loader.getController();
                     controlador.initializeCuenta(cuentaAutenticada.get());
-                    } else if (rol.equals("Administrador")) {
+                    } else if (rol.equals("administrador")) {
                         ControladorAdministrador controlador = loader.getController();
                         controlador.initializeCuenta(cuentaAutenticada.get());
                     }
