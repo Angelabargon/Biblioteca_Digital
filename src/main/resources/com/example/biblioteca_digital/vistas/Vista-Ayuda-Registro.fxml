@@ -27,19 +27,19 @@
             </graphic>
         </Label>
 
-        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫ Paso 1" textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫ Introduce el nombre que tendrá tu usuario junto con tu nombre y apellidos reales y un correo asociado a este." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
         </Label>
 
-        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ Paso 2" textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ Introduce una contraseña que puedas recordar y confirmala en el segundo campo." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
         </Label>
 
-        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Paso 3" textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Acepta los Términos de Privacidad y pulsa Guardar y registrar para registrate con los datos introducidos." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
