@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="ap_ayudaLogin" prefHeight="400.0" prefWidth="546.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorAyuda">
+
     <children>
 
         <Label id="lb_tituloAyuda" layoutX="45.0" layoutY="40.0" prefWidth="450.0" style="-fx-font-weight: bold;" text="Guía de Inicio de Sesión" wrapText="true">
@@ -40,7 +41,8 @@
                 <Font size="17.5" />
             </font>
         </Label>
-      <Button id="bt_cerrarAyuda" alignment="CENTER" layoutX="230.0" layoutY="323.0" mnemonicParsing="false" onAction="#cerrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Volver">
+
+      <Button id="bt_cerrarAyuda" alignment="CENTER" layoutX="230.0" layoutY="323.0" mnemonicParsing="false" onAction="#cerrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Cerrar">
         <font>
             <Font size="15.0" />
         </font>

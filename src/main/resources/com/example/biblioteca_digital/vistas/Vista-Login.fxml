@@ -15,24 +15,35 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.PasswordField?>
+
 <AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
-   <children>
+
+    <children>
+
       <ImageView id="iv_fondoLogin" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
           <image>
            <Image url="@../imagenes/fondo-biblioteca.png" />
           </image>
       </ImageView>
+
       <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" style="-fx-background-color: white;">
-         <children>
+
+          <children>
+
             <HBox id="hb_imagen" prefHeight="150.0" prefWidth="200.0">
+
                <children>
+
                   <Region id="region1" prefHeight="200.0" prefWidth="195.0" />
+
                    <ImageView id="iv_icono" fitHeight="150.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
                        <image>
                            <Image url="@../imagenes/icono-app-login.png" />
                        </image>
                    </ImageView>
+
                    <Region id="region2" maxWidth="67.0" prefHeight="100.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+
                    <Button fx:id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -48,22 +59,29 @@
                         </ImageView>
                      </graphic>
                   </Button>
+
                </children>
+
             </HBox>
+
             <Label id="lb_titulo" alignment="CENTER" prefWidth="138.0" text="BIBLIOTECA DIGITAL">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
+
             <Label id="lb_subtitulo" alignment="CENTER" text="El conocimiento al alcance de tus manos">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Label>
+
             <HBox id="hb_tbg" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
+
                <children>
+
                   <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario">
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -75,6 +93,7 @@
                      <font>
                         <Font size="15.0" />
                      </font></ToggleButton>
+
                   <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Administrador">
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -86,25 +105,33 @@
                      <font>
                         <Font size="15.0" />
                      </font></ToggleButton>
+
                </children>
+
             </HBox>
+
             <TextField fx:id="tf_email" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Email">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </TextField>
+
              <PasswordField fx:id="pf_contraseña" promptText="Contraseña" prefHeight="35.0" maxWidth="300.0" >
-               <VBox.margin>
+                 <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </PasswordField>
+
             <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="35.0" prefWidth="250.0" text="Iniciar Sesión como Usuario">
-               <VBox.margin>
+                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </Button>
+
             <HBox id="hb_volver" prefWidth="200.0">
+
                <children>
+
                   <Button id="bt_volver" fx:id="bt_ayuda1" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
                      <font>
                         <Font size="15.0" />
@@ -120,18 +147,26 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Button>
+
                </children>
+
                <padding>
                   <Insets top="20.0" />
                </padding>
+
             </HBox>
+
          </children>
+
          <padding>
             <Insets top="40.0" />
          </padding>
          <effect>
             <Bloom threshold="1.0" />
          </effect>
+
       </VBox>
+
    </children>
+
 </AnchorPane>
