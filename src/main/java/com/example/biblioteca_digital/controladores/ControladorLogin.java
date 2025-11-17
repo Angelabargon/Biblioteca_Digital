@@ -100,7 +100,7 @@ public class ControladorLogin {
                 return;
             }
 
-            Optional<Usuario> cuentaAutenticada = ControladorUsuario.autenticar(email, contraseña, rol);
+            Optional<Usuario> cuentaAutenticada = autenticar(email, contraseña, rol);
 
             if (cuentaAutenticada.isPresent()) {
                 String vistaDestino = rol.equals("usuario") ?
