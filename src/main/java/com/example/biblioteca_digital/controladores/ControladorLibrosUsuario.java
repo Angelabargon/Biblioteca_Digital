@@ -3,7 +3,6 @@ package com.example.biblioteca_digital.controladores;
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
-import com.example.biblioteca_digital.modelos.Estado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,10 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.sql.*;
-import java.time.LocalDate;
 
 
-public class ControladorLibros {
+public class ControladorLibrosUsuario {
 
     //Elementos Vista
     @FXML
