@@ -13,7 +13,7 @@ public class Libro {
      *Atributos de un libro
      */
     private int id, cantidad;
-    private String titulo, autor, genero, isbn, foto;
+    private String titulo, autor, genero, isbn, foto, descripcion;
     private boolean disponible;
 
     /*
@@ -32,12 +32,13 @@ public class Libro {
      *@param cantidad
      *@param disponible
      */
-    public Libro (int id ,String titulo, String autor, String genero, String isbn, String foto, int cantidad, boolean disponible) {
+    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, boolean disponible) {
 
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.genero =  genero;
+        this.descripcion = descripcion;
         this.isbn = isbn;
         this.foto = foto;
         this.cantidad = cantidad;
@@ -52,6 +53,7 @@ public class Libro {
     public String getTitulo() { return titulo; }
     public String getAutor() { return autor; }
     public String getGenero() { return genero; }
+    public String getDescripcion() { return descripcion; }
     public String getIsbn() { return isbn; }
     public String getFoto() { return foto; }
     public int getCantidad() { return cantidad; }
@@ -64,6 +66,7 @@ public class Libro {
     public void setTitulo(String titulo) { this.titulo = titulo; }
     public void setAutor(String autor) { this.autor = autor; }
     public void setGenero(String genero) { this.genero = genero; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setIsbn(String isbn) { this.isbn = isbn; }
     public void setFoto(String foto) { this.foto = foto; }
     public void setRol(int cantidad) { this.cantidad = cantidad; }
@@ -82,6 +85,7 @@ public class Libro {
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", genero='" + genero + '\'' +
+                ", genero='" + descripcion + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", foto='" + foto + '\'' +
                 ", disponible=" + disponible +
