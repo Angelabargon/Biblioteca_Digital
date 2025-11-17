@@ -16,7 +16,7 @@ public class ControladorUsuario
 
     private Usuario usuario;
 
-    public void initializeCuenta(Usuario usuario) {
+    public static void initializeCuenta(Usuario usuario) {
         this.usuario = usuario;
     }
 

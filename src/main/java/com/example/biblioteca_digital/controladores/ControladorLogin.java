@@ -2,6 +2,7 @@ package com.example.biblioteca_digital.controladores;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Rol;
+import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,63 +91,65 @@ public class ControladorLogin {
         }
 
         @FXML
-        private void iniciarSesion(ActionEvent event) {
+        private void iniciarSesion(ActionEvent event)
+        {
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
             String rol = tbt_usuario.isSelected() ? "usuario" : "administrador";
-
-            if (email.isEmpty() || contraseña.isEmpty()) {
+            if (email.isEmpty() || contraseña.isEmpty())
+            {
                 System.out.println("Rellena todos los campos.");
                 return;
             }
-
             Optional<Usuario> cuentaAutenticada = autenticar(email, contraseña, rol);
-
-            if (cuentaAutenticada.isPresent()) {
+            if (cuentaAutenticada.isPresent())
+            {
+                Sesion.setUsuario(cuentaAutenticada.get());
                 String vistaDestino = rol.equals("usuario") ?
                         "/com/example/biblioteca_digital/vistas/Vista-Usuario.fxml" :
                         "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
-
-                try {
+                try
+                {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
                     Parent root = loader.load();
-
-                    if (rol.equals("usuario")) {
-                    ControladorUsuario controlador = loader.getController();
-                    controlador.initializeCuenta(cuentaAutenticada.get());
-                    } else if (rol.equals("administrador")) {
+                    if (rol.equals("usuario"))
+                    {
+                        ControladorUsuario controlador = loader.getController();
+                        controlador.initializeCuenta(cuentaAutenticada.get());
+                    }
+                    else if (rol.equals("administrador"))
+                    {
                         ControladorAdministrador controlador = loader.getController();
                         controlador.initializeCuenta(cuentaAutenticada.get());
                     }
-
                     Stage stage = new Stage();
                     stage.setTitle("Bienvenido");
                     stage.setScene(new Scene(root));
                     stage.show();
-
                     ((Stage) bt_inicioUsuario.getScene().getWindow()).close();
-
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     System.out.println("Error, no se pudo cargar la vista de " + rol.toLowerCase() + ".");
                 }
-            } else {
+            }
+            else
+            {
                 System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }
-
-    public static Optional<Usuario> autenticar(String correo, String contrasena, String rol) {
+    public static Optional<Usuario> autenticar(String correo, String contrasena, String rol)
+    {
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? AND rol = ?";
-
         try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(sql))
+        {
             stmt.setString(1, correo);
             stmt.setString(2, contrasena);
             stmt.setString(3, rol);
-
             ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
+            if (rs.next())
+            {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
                 usuario.setNombre(rs.getString("nombre_usuario"));
@@ -156,33 +159,34 @@ public class ControladorLogin {
                 usuario.setContrasena(rs.getString("contrasena"));
                 usuario.setRol(Rol.valueOf(rs.getString("rol")));
                 usuario.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
-
                 return Optional.of(usuario);
             }
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.out.println("Error al autenticar: " + e.getMessage());
         }
-
         return Optional.empty();
     }
 
     @FXML
-    private void volverAtras(ActionEvent event) {
-        try {
+    private void volverAtras(ActionEvent event)
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-PaginaInicio.fxml"));
             Parent root = loader.load();
-
             Stage stage = (Stage) bt_volver.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Login");
             stage.show();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println("Error al volver a la pantalla de inicio: " + e.getMessage());
         }
     }
-
-    }
+}
 
 
