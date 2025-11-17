@@ -51,6 +51,8 @@ public class Prestamo
     public Date getFecha_inicio() {return fecha_inicio;}
     public Date getFecha_fin() {return fecha_fin;}
     public String getEstado() {return estado.toString();}
+    public Libro getLibro() {return libro;}
+
 
     /*
      *Setters de los atributos de un prestamo
@@ -61,7 +63,11 @@ public class Prestamo
     public void setFecha_inicio(Date fecha_inicio) {this.fecha_inicio = fecha_inicio;}
     public void setFecha_fin(Date fecha_fin) {this.fecha_fin = fecha_fin;}
     public void setEstado(String estado) {this.estado = Estado.valueOf(estado);}
+    public void setLibro(Libro libro) {this.libro = libro;}
 
+    public boolean estaActivo() {
+        return ACTIVO && LocalDate.now().isBefore(fecha_fin.plusDays(1));
+    }
     /*
      *ToString para imprimir la clase y sus atributos
      *@return
