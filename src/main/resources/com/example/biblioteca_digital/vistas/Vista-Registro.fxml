@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorRegistro">
    <children>
       <ImageView fitHeight="792.0" fitWidth="1422.0" pickOnBounds="true" preserveRatio="true">
@@ -26,21 +27,21 @@
       <VBox layoutX="618.0" layoutY="113.0" prefHeight="578.0" prefWidth="255.0" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="534.8000000000001" AnchorPane.topAnchor="113.0">
          <children>
             <Label prefHeight="39.0" prefWidth="255.0" text="Nombre de usuario" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <TextField fx:id="nombreUsuario" prefHeight="41.0" prefWidth="226.0" />
             <Label prefHeight="39.0" prefWidth="228.0" text="Nombre" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <TextField fx:id="nombre" prefHeight="41.0" prefWidth="226.0" />
             <Label prefHeight="39.0" prefWidth="228.0" text="Primer Apellido" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <TextField fx:id="primerApellido" prefHeight="41.0" prefWidth="226.0" />
             <Label prefHeight="39.0" prefWidth="228.0" text="Correo electrónico" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <TextField fx:id="correo" prefHeight="41.0" prefWidth="226.0" />
             <Label prefHeight="39.0" prefWidth="254.0" text="Contraseña" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <PasswordField fx:id="contrasena" prefHeight="41.0" prefWidth="226.0" />
             <Label prefHeight="39.0" prefWidth="254.0" text="Repita contraseña" />
-            <TextField prefHeight="41.0" prefWidth="226.0" />
+            <PasswordField fx:id="repetirContrasena" prefHeight="41.0" prefWidth="226.0" />
             <Region prefHeight="44.0" prefWidth="255.0" />
-            <Button mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="42.0" prefWidth="256.0" text="Guardar y registrar" />
+            <Button fx:id="registrar" mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="42.0" prefWidth="256.0" text="Guardar y registrar" />
          </children>
       </VBox>
-      <CheckBox layoutX="623.0" layoutY="730.0" mnemonicParsing="false" text="Aceptar los Términos de Privacidad" />
+      <CheckBox fx:id="aceptoTerminos" layoutX="623.0" layoutY="730.0" mnemonicParsing="false" text="Aceptar los Términos de Privacidad" />
    </children>
 </AnchorPane>

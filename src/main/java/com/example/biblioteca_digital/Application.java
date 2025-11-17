@@ -10,7 +10,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1400, 770);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("BIBLIOTECA DIGITAL");
         stage.setScene(scene);
         stage.show();

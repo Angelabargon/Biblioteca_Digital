@@ -112,16 +112,7 @@ public class ControladorLogin {
                 {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
                     Parent root = loader.load();
-                    if (rol.equals("usuario"))
-                    {
-                        ControladorUsuario controlador = loader.getController();
-                        controlador.initializeCuenta(cuentaAutenticada.get());
-                    }
-                    else if (rol.equals("administrador"))
-                    {
-                        ControladorAdministrador controlador = loader.getController();
-                        controlador.initializeCuenta(cuentaAutenticada.get());
-                    }
+
                     Stage stage = new Stage();
                     stage.setTitle("Bienvenido");
                     stage.setScene(new Scene(root));
@@ -138,6 +129,7 @@ public class ControladorLogin {
                 System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }
+
     public static Optional<Usuario> autenticar(String correo, String contrasena, String rol)
     {
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? AND rol = ?";
@@ -152,7 +144,7 @@ public class ControladorLogin {
             {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
-                usuario.setNombre(rs.getString("nombre_usuario"));
+                usuario.setNombreUsuario(rs.getString("nombre_usuario"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setPrimerApellido(rs.getString("primer_apellido"));
                 usuario.setCorreo(rs.getString("correo"));
@@ -178,7 +170,7 @@ public class ControladorLogin {
             Parent root = loader.load();
             Stage stage = (Stage) bt_volver.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Login");
+            stage.setTitle("Página de Inicio");
             stage.show();
 
         }

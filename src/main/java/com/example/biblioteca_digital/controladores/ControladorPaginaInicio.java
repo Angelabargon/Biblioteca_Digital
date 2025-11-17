@@ -1,18 +1,22 @@
 package com.example.biblioteca_digital.controladores;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class ControladorPaginaInicio
 {
-    public Button registro;
-    public Button login;
+
+    @FXML
+    private Button registro;
+
+    @FXML
+    private Button login;
 
     public ControladorPaginaInicio()
     {}

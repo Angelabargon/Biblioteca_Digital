@@ -7,11 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -76,7 +74,7 @@ public class ControladorRegistro
                 }
                 stmt.setInt(1, usuario.getId());
                 stmt.setString(2, usuario.getNombreUsuario());
-                stmt.setString(2, usuario.getNombre());
+                stmt.setString(3, usuario.getNombre());
                 stmt.setString(4, usuario.getPrimerApellido());
                 stmt.setString(5, usuario.getCorreo());
                 stmt.setString(6, usuario.getContrasena());
@@ -124,10 +122,11 @@ public class ControladorRegistro
     @FXML private TextField nombre;
     @FXML private TextField primerApellido;
     @FXML private TextField correo;
-    @FXML private TextField contrasena;
-    @FXML private TextField repetirContrasena;
+    @FXML private PasswordField contrasena;
+    @FXML private PasswordField repetirContrasena;
     @FXML private CheckBox aceptoTerminos;
-    @FXML private Label mensajeError;
+    @FXML private Label mensajeError; // Debe ser introducido en la vista
+    @FXML private Button registrar;
     private final Consultas consultas = new Consultas();
     private int proximoIdz = 1;
     /**
@@ -149,12 +148,12 @@ public class ControladorRegistro
             mensajeError.setText("Todos los campos son obligatorios.");
             return;
         }
-        if (!compararContrasenas(String.valueOf(contrasena), String.valueOf(repetirContrasena)))
+        if (!compararContrasenas(contrasena1, repetirContrasena1))
         {
             mensajeError.setText("Las contraseñas no coinciden.");
             return;
         }
-        if (verificarUsuarioExistente(String.valueOf(nombreUsuario)))
+        if (verificarUsuarioExistente(nombreUsuario1))
         {
             mensajeError.setText("Ya existe un usuario con ese nombre. Por favor, elige otro.");
             return;
@@ -181,7 +180,7 @@ public class ControladorRegistro
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-PaginaInicio.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Login");
+            stage.setTitle("Página de Inicio");
             stage.setScene(scene);
             stage.show();
             System.out.println("Navegando a la pantalla de inicio.");

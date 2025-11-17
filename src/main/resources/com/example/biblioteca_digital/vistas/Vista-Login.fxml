@@ -132,7 +132,7 @@
 
                <children>
 
-                  <Button id="bt_volver" fx:id="bt_ayuda1" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
+                  <Button fx:id="bt_volver" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
                      <font>
                         <Font size="15.0" />
                      </font>
