@@ -3,12 +3,16 @@ package com.example.biblioteca_digital.controladores;
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.*;
@@ -224,5 +228,23 @@ public class ControladorRegistro
             }
         }
         return true;
+    }
+
+    public void mostrarAyuda(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Registro.fxml"));
+            Parent root = loader.load();
+
+            Stage ayudaStage = new Stage();
+            ayudaStage.setTitle("Guía");
+            ayudaStage.setScene(new Scene(root));
+            ayudaStage.initModality(Modality.APPLICATION_MODAL);
+            ayudaStage.initStyle(StageStyle.UTILITY);
+            ayudaStage.setResizable(false);
+            ayudaStage.showAndWait();
+
+        } catch (IOException e) {
+            System.out.println("Error al cargar la ayuda.");
+        }
     }
 }
