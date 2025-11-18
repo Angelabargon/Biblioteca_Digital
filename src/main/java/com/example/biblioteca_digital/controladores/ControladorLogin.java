@@ -166,7 +166,7 @@ public class ControladorLogin {
     {
         try
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-PaginaInicio.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) bt_volver.getScene().getWindow();
             stage.setScene(new Scene(root));

@@ -14,8 +14,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorMenuUsuario {
+public class ControladorInicioUsuario {
 
+    /*
     private Usuario usuarioActual;
 
     private List<Libro> libros = new ArrayList<>();
@@ -184,48 +185,47 @@ public class ControladorMenuUsuario {
         }
     }
 
+        //Mostrar Libros
+        @FXML
+        private void mostrarLibrosFiltrados() {
+            contenedorLibros.getChildren().clear();
 
-    //Mostrar Libros
-    @FXML
-    private void mostrarLibrosFiltrados() {
-        contenedorLibros.getChildren().clear();
+            String titulo = filtroTitulo.getText().toLowerCase();
+            String autor = filtroAutor.getText().toLowerCase();
+            String genero = filtroGenero.getValue() != null ? filtroGenero.getValue().toLowerCase() : "";
 
-        String titulo = filtroTitulo.getText().toLowerCase();
-        String autor = filtroAutor.getText().toLowerCase();
-        String genero = filtroGenero.getValue() != null ? filtroGenero.getValue().toLowerCase() : "";
+            boolean soloFavoritos = toggleFavoritos.isSelected();
 
-        boolean soloFavoritos = toggleFavoritos.isSelected();
+            for (Libro libro : libros) {
 
-        for (Libro libro : libros) {
+                boolean coincide = libro.getTitulo().toLowerCase().contains(titulo)
+                        && libro.getAutor().toLowerCase().contains(autor)
+                        && (genero.isEmpty() || libro.getGenero().toLowerCase().equals(genero))
+                        && (!soloFavoritos || favoritos.contains(libro.getId()));
 
-            boolean coincide = libro.getTitulo().toLowerCase().contains(titulo)
-                    && libro.getAutor().toLowerCase().contains(autor)
-                    && (genero.isEmpty() || libro.getGenero().toLowerCase().equals(genero))
-                    && (!soloFavoritos || favoritos.contains(libro.getId()));
+                if (!coincide) continue;
 
-            if (!coincide) continue;
-
-            contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
+                contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
+            }
         }
-    }
 
 
-    //Item del Libro (para que sea mas visual)
-    private Parent crearVistaLibroItem(Libro libro) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
-            Parent item = loader.load();
+        //Item del Libro (para que sea mas visual)
+        private Parent crearVistaLibroItem(Libro libro) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
+                Parent item = loader.load();
 
-            ControladorVistaLibroItem controlador = loader.getController();
-            controlador.setDatos(libro, favoritos.contains(libro.getId()), this);
+                ControladorVistaLibroItem controlador = loader.getController();
+                controlador.setDatos(libro, favoritos.contains(libro.getId()), this);
 
-            return item;
+                return item;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-    }
 
     // Método llamado desde VistaLibroItem
     public void clickFavorito(Libro libro) {
@@ -253,5 +253,5 @@ public class ControladorMenuUsuario {
             e.printStackTrace();
         }
     }
+*/
 }
-

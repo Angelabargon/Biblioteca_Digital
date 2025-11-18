@@ -14,7 +14,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 
-public class ControladorLibros {
+public class ControladorLibrosUsuario {
 
     //Elementos Vista
     @FXML

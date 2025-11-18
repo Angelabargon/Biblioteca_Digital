@@ -2,7 +2,11 @@ package com.example.biblioteca_digital.modelos;
 /*
  *Imports de la clase préstamo
  */
+import java.time.LocalDate;
 import java.util.Date;
+
+import static com.example.biblioteca_digital.modelos.Estado.Activo;
+
 /*
  *Clase préstamo de un libro
  */
@@ -65,8 +69,12 @@ public class Prestamo
     public void setEstado(String estado) {this.estado = Estado.valueOf(estado);}
     public void setLibro(Libro libro) {this.libro = libro;}
 
-    public boolean estaActivo() {
-        return ACTIVO && LocalDate.now().isBefore(fecha_fin.plusDays(1));
+    public boolean estaActivo()
+    {
+        boolean elObjetoEstaActivo = this.estado.equals(Activo);
+        java.time.Instant instant = fecha_fin.toInstant();
+        java.time.LocalDate fechaFinLocalDate = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        return elObjetoEstaActivo && java.time.LocalDate.now().isBefore(fechaFinLocalDate.plusDays(1));
     }
     /*
      *ToString para imprimir la clase y sus atributos

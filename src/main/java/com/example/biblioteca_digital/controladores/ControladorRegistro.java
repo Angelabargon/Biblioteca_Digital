@@ -18,8 +18,6 @@ import static com.example.biblioteca_digital.modelos.Rol.usuario;
 
 public class ControladorRegistro
 {
-
-    static LocalDate fechaActual = LocalDate.now();
     /**
      * Clase para agrupar las consultas SQL al guardar un nuevo usuario
      */
@@ -128,7 +126,6 @@ public class ControladorRegistro
     @FXML private Label mensajeError; // Debe ser introducido en la vista
     @FXML private Button registrar;
     private final Consultas consultas = new Consultas();
-    private int proximoIdz = 1;
     /**
      * Maneja el clic del botón de registro, realiza validaciones y guarda el usuario.
      * Si el registro es exitoso, navega a la página de inicio.
@@ -148,6 +145,11 @@ public class ControladorRegistro
             mensajeError.setText("Todos los campos son obligatorios.");
             return;
         }
+        if(contrasena.getCharacters().length() <= 8)
+        {
+            mensajeError.setText("La contraseña debe de tener al menos 8 caracteres");
+            return;
+        }
         if (!compararContrasenas(contrasena1, repetirContrasena1))
         {
             mensajeError.setText("Las contraseñas no coinciden.");
@@ -163,8 +165,9 @@ public class ControladorRegistro
             mensajeError.setText("Debes aceptar los términos y condiciones.");
             return;
         }
+        LocalDate fechaRegistro = LocalDate.now();
         int idUsuario = consultas.siguienteId();
-        Usuario nuevoUsuario = construirObjetoUsuario(idUsuario, nombre1, nombreUsuario1, primerApellido1, correo1, contrasena1, usuario, fechaActual);
+        Usuario nuevoUsuario = construirObjetoUsuario(idUsuario, nombre1, nombreUsuario1, primerApellido1, correo1, contrasena1, usuario, fechaRegistro);
         guardarDatosUsuario(nuevoUsuario);
         volver(event);
     }
@@ -177,13 +180,13 @@ public class ControladorRegistro
     {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-PaginaInicio.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Login.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Página de Inicio");
+            stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
-            System.out.println("Navegando a la pantalla de inicio.");
+            System.out.println("Navegando a la pantalla de inicio de sesion.");
 
         } catch (IOException e)
         {
@@ -195,7 +198,6 @@ public class ControladorRegistro
     {
         consultas.guardarUsuario(usuario);
     }
-
     private Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro)
     {
         return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, usuario, fechaRegistro);
