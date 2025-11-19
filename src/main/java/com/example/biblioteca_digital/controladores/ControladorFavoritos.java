@@ -98,7 +98,7 @@ public class ControladorFavoritos {
                         rs.getString("descripcion"),
                         rs.getString("foto"),
                         rs.getInt("cantidad"),
-                        rs.getBoolean("disponibles")
+                        rs.getBoolean("disponible")
                 );
                 lista.add(libro);
             }

@@ -95,7 +95,7 @@ public class ControladorLogin {
         {
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
-            String rol = tbt_usuario.isSelected() ? "usuario" : "administrador";
+            String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
             if (email.isEmpty() || contraseña.isEmpty())
             {
                 System.out.println("Rellena todos los campos.");

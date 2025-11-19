@@ -94,7 +94,7 @@
                         <Font size="15.0" />
                      </font></ToggleButton>
 
-                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Administrador">
+                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Admin">
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                          <image>

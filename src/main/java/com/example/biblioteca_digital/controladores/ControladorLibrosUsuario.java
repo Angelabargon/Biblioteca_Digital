@@ -123,7 +123,7 @@ public class ControladorLibrosUsuario {
                                         rs.getString("descripcion"),
                                         rs.getString("foto"),
                                         rs.getInt("cantidad"),
-                                        rs.getBoolean("disponibles")
+                                        rs.getBoolean("disponible")
                                 );
                 lista.add(libro);
             }
@@ -158,7 +158,7 @@ public class ControladorLibrosUsuario {
             // Crear préstamo
             PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
-                            "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 'PENDIENTE')");
+                            "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 'activo')");
 
             ps.setInt(1, idUsuario);
             ps.setInt(2, idLibro);
@@ -166,7 +166,7 @@ public class ControladorLibrosUsuario {
 
             // Restar una copia disponible del libro
             PreparedStatement ps2 = conn.prepareStatement(
-                    "UPDATE libros SET copias_disponibles = copias_disponibles - 1 WHERE id = ?");
+                    "UPDATE libros SET cantidad = cantidad - 1 WHERE id = ?");
 
             ps2.setInt(1, idLibro);
             ps2.executeUpdate();
