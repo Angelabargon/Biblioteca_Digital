@@ -49,17 +49,18 @@ public class ControladorLogin {
     private Button bt_volver;
 
         @FXML
-        public void initializeLogin() {
+        public void initialize() {
             grupoRol = new ToggleGroup();
             tbt_usuario.setToggleGroup(grupoRol);
             tbt_admin.setToggleGroup(grupoRol);
+            tbt_usuario.setSelected(true);
 
             grupoRol.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     ToggleButton seleccionado = (ToggleButton) newToggle;
                     String rol = seleccionado.getText().toLowerCase();
 
-                    if (rol.equals("administrador")) {
+                    if (rol.equals("admin")) {
                         tf_email.setPromptText("Email de Administrador");
                         pf_contraseña.setPromptText("Contraseña de Administrador");
                         bt_inicioUsuario.setText("Iniciar Sesión como Administrador");

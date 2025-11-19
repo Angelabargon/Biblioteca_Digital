@@ -82,7 +82,7 @@
 
                <children>
 
-                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario">
+                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario" selected="true">
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                              <image>
