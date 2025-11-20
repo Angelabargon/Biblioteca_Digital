@@ -1,5 +1,8 @@
 package com.example.biblioteca_digital.controladores;
 
+/*
+Hacemos los importes necesarios.
+ */
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Sesion;
@@ -22,6 +25,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/*
+Creamos la clase tras la lógica del controlador.
+ */
 public class ControladorLogin {
 
     @FXML
