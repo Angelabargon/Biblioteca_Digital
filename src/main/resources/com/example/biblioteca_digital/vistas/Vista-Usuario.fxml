@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.QuadCurve?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.biblioteca_digital.controladores.ControladorUsuario"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorUsuario">
+   <children>
+      <Circle fill="#1f93ff00" layoutX="321.0" layoutY="184.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#1f93ff00" layoutX="271.0" layoutY="155.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#1f93ff00" layoutX="334.0" layoutY="155.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+      <QuadCurve controlX="4.5999755859375" controlY="53.59999084472656" endX="53.5999755859375" endY="-1.52587890625E-5" fill="TRANSPARENT" layoutX="308.0" layoutY="207.0" startX="-50.0" stroke="BLACK" strokeType="INSIDE" />
+   </children>
 </AnchorPane>
