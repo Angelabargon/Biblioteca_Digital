@@ -1,20 +1,22 @@
 package com.example.biblioteca_digital.controladores;
 
 import com.example.biblioteca_digital.modelos.Estado;
-import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Prestamo;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,13 +25,52 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControladorPrestamosUsuario implements Initializable {
+public class ControladorPrestamosUsuario implements Initializable
+{
+        @FXML
+        private Label lblNumPrestamos;
 
-    @FXML private Label lblNombreUsuario;
-    @FXML private Label lblNumFavoritos;
-    @FXML private Label lblNumPrestamos;
-    @FXML private VBox vbListaPrestamos;
+        @FXML
+        private VBox vbListaPrestamos;
 
+        @FXML
+        private Label lblNombreUsuario;
+
+        @FXML
+        private ToggleButton tbt_MENU;
+
+        @FXML
+        private ToggleButton tbt_PRESTAMOS;
+
+        @FXML
+        private AnchorPane contenedor;
+
+    @FXML
+    private void cambiarVista(javafx.event.ActionEvent actionEvent)
+    {
+        try {
+            Parent nuevaVista;
+            if (tbt_MENU.isSelected())
+            {
+                nuevaVista = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml"));
+                tbt_PRESTAMOS.setSelected(false);
+            }
+            else if (tbt_PRESTAMOS.isSelected())
+            {
+                nuevaVista = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml"));
+                tbt_PRESTAMOS.setSelected(false);
+            }
+            else
+            {
+                return;
+            }
+            contenedor.getChildren().setAll(nuevaVista);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Usuario usuario = Sesion.getUsuario();

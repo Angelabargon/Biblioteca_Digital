@@ -113,7 +113,7 @@ public class ControladorLogin {
             {
                 Sesion.setUsuario(cuentaAutenticada.get());
                 String vistaDestino = rol.equals("usuario") ?
-                        "/com/example/biblioteca_digital/vistas/Vista-Usuario.fxml" :
+                        "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml" :
                         "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
                 try
                 {
