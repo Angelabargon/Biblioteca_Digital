@@ -129,6 +129,7 @@ public class ControladorRegistro
     @FXML private CheckBox aceptoTerminos;
     @FXML private Label mensajeError; // Debe ser introducido en la vista
     @FXML private Button registrar;
+    @FXML private Button bt_volver;
     private final Consultas consultas = new Consultas();
     /**
      * Maneja el clic del botón de registro, realiza validaciones y guarda el usuario.
@@ -245,6 +246,25 @@ public class ControladorRegistro
 
         } catch (IOException e) {
             System.out.println("Error al cargar la ayuda.");
+        }
+    }
+
+    @FXML
+    private void volverAtras(ActionEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) bt_volver.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Página de Inicio");
+            stage.show();
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error al volver a la pantalla de inicio: " + e.getMessage());
         }
     }
 }

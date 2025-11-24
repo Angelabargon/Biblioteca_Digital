@@ -56,5 +56,19 @@
               </ImageView>
           </graphic>
       </Button>
+
+       <Button fx:id="bt_volver" alignment="CENTER" layoutX="424.0" layoutY="691.0" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
+           <font>
+               <Font size="15.0" />
+           </font>
+           <graphic>
+               <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../imagenes/icono-volver.png" />
+                   </image>
+               </ImageView>
+           </graphic>
+       </Button>
+
    </children>
 </AnchorPane>
