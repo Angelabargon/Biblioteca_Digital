@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ControladorLibrosUsuario {
@@ -37,6 +39,8 @@ public class ControladorLibrosUsuario {
     private Button btnAgregarFavorito;
     @FXML
     private Button btnPedirPrestado;
+    @FXML
+    private ChoiceBox<String> filterChoiceBox;
 
 
     private Usuario usuarioActual;
@@ -133,6 +137,22 @@ public class ControladorLibrosUsuario {
         }
         return lista;
     }
+    public static int contarPrestamosActivos(int idUsuario)
+    {
+        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     // Insertar favorito
     private void insertarFavorito(int idUsuario, int idLibro) {
@@ -152,30 +172,63 @@ public class ControladorLibrosUsuario {
     }
 
     // Crear préstamo
-    private boolean crearPrestamo(int idUsuario, int idLibro) {
-        try (Connection conn = conectar()) {
-
+    private boolean crearPrestamo(int idUsuario, int idLibro)
+    {
+        try (Connection conn = conectar())
+        {
             // Crear préstamo
             PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
                             "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 'activo')");
-
             ps.setInt(1, idUsuario);
             ps.setInt(2, idLibro);
             int filas = ps.executeUpdate();
-
             // Restar una copia disponible del libro
             PreparedStatement ps2 = conn.prepareStatement(
                     "UPDATE libros SET cantidad = cantidad - 1 WHERE id = ?");
-
             ps2.setInt(1, idLibro);
             ps2.executeUpdate();
-
             return filas > 0;
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             return false;
         }
+    }
+    // Obtener favoritos de un usuario
+    public static List<Integer> obtenerFavoritos(int idUsuario)
+    {
+        List<Integer> lista = new ArrayList<>();
+        String sql = "SELECT id_libro FROM favoritos WHERE id_usuario = ?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setInt(1, idUsuario);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getInt("id_libro"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    public void setLibro(Libro libro, Usuario usuarioActual)
+    {
+
+    }
+
+    @FXML
+    public void initialize() {
+        // ... Otra lógica ...
+
+        // Esto establece el valor predeterminado después de que FXML cargó la lista de ítems
+        if (filterChoiceBox.getItems() != null && !filterChoiceBox.getItems().isEmpty()) {
+            filterChoiceBox.setValue("Todas");
+        }
+
+        // ...
     }
 }

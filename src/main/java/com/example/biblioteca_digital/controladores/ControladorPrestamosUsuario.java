@@ -4,6 +4,7 @@ import com.example.biblioteca_digital.modelos.Estado;
 import com.example.biblioteca_digital.modelos.Prestamo;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -181,5 +182,8 @@ public class ControladorPrestamosUsuario implements Initializable
         alert.setContentText(mensaje);
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
+    }
+
+    public void mostrarAyuda(ActionEvent actionEvent) {
     }
 }
