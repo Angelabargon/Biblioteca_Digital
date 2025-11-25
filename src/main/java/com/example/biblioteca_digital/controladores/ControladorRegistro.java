@@ -267,4 +267,15 @@ public class ControladorRegistro
             System.out.println("Error al volver a la pantalla de inicio: " + e.getMessage());
         }
     }
+
+    public void precargarDatos(Usuario usuario) {
+
+        if (usuario == null) return;
+        nombreUsuario.setText(usuario.getNombreUsuario());
+        nombre.setText(usuario.getNombre());
+        correo.setText(usuario.getCorreo());
+
+        contrasena.clear();
+        repetirContrasena.clear();
+    }
 }
