@@ -17,8 +17,6 @@ public class ControladorAyuda
     @FXML
     private void cerrarAyuda(ActionEvent event) {
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        Navegacion.cerrarVentana(event);
     }
-
 }

@@ -124,35 +124,11 @@ public class ControladorPerfilUsuario {
     @FXML
     private void cerrarSesion(ActionEvent event) {
         Sesion.setUsuario(null);
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Página de Inicio");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml", "Página de Inicio");
     }
 
     @FXML
-    private void volverAtras(ActionEvent event)
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Catalogo_Usuario.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) bt_volver.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Catalogo de Usuario");
-            stage.show();
-
-        }
-        catch (IOException e)
-        {
-            System.out.println("Error al volver al catálogo de usuario: " + e.getMessage());
-        }
+    private void cerrarPerfil(ActionEvent event) {
+        Navegacion.cerrarVentana(event);
     }
-
 }

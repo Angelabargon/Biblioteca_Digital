@@ -169,22 +169,8 @@ public class ControladorLogin {
     }
 
     @FXML
-    private void volverAtras(ActionEvent event)
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) bt_volver.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Página de Inicio");
-            stage.show();
-
-        }
-        catch (IOException e)
-        {
-            System.out.println("Error al volver a la pantalla de inicio: " + e.getMessage());
-        }
+    private void volverAtras(ActionEvent event) {
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml", "Página de Inicio");
     }
 }
 
