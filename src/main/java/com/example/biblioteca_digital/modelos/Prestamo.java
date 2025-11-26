@@ -55,6 +55,7 @@ public class Prestamo
     public Date getFecha_inicio() {return fecha_inicio;}
     public Date getFecha_fin() {return fecha_fin;}
     public String getEstado() {return estado.toString();}
+
     public Libro getLibro() {return libro;}
 
 
