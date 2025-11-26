@@ -12,4 +12,10 @@ module com.example.biblioteca_digital {
     opens com.example.biblioteca_digital.controladores to javafx.fxml;
     exports com.example.biblioteca_digital.modelos;
     opens com.example.biblioteca_digital.modelos to javafx.fxml;
+    exports com.example.biblioteca_digital.controladores.admin;
+    opens com.example.biblioteca_digital.controladores.admin to javafx.fxml;
+    exports com.example.biblioteca_digital.DAO;
+    opens com.example.biblioteca_digital.DAO to javafx.fxml;
+    exports com.example.biblioteca_digital.DAO.Admin;
+    opens com.example.biblioteca_digital.DAO.Admin to javafx.fxml;
 }

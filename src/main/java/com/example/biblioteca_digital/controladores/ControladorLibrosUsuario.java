@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.w3c.dom.Text;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class ControladorLibrosUsuario {
     @FXML
     private ImageView imagenLibro;
     @FXML
-    private TextArea descripcionArea;
+    private Text descripcionArea;
     @FXML
     private Button btnAgregarFavorito;
     @FXML
@@ -68,7 +70,7 @@ public class ControladorLibrosUsuario {
         categoriaLabel.setText(libro.getGenero());
         isbnLabel.setText(libro.getIsbn());
         disponiblesLabel.setText(String.valueOf(libro.getDisponible()));
-        descripcionArea.setText(libro.getDescripcion());
+        descripcionArea.setTextContent(libro.getDescripcion());
 
         if (libro.getFoto() != null)
             imagenLibro.setImage(new Image(libro.getFoto()));

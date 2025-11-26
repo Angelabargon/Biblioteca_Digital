@@ -69,7 +69,7 @@ public class Libro {
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setIsbn(String isbn) { this.isbn = isbn; }
     public void setFoto(String foto) { this.foto = foto; }
-    public void setRol(int cantidad) { this.cantidad = cantidad; }
+    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
 
     /*
