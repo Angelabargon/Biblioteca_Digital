@@ -90,36 +90,23 @@ public class ControladorLogin {
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
             String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
-            if (email.isEmpty() || contraseña.isEmpty())
-            {
+
+            if (email.isEmpty() || contraseña.isEmpty()) {
                 System.out.println("Rellena todos los campos.");
                 return;
             }
+
             Optional<Usuario> cuentaAutenticada = autenticar(email, contraseña, rol);
             if (cuentaAutenticada.isPresent())
             {
                 Sesion.setUsuario(cuentaAutenticada.get());
-                String vistaDestino = rol.equals("usuario") ?
-                        "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml" :
-                        "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
-                try
-                {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
-                    Parent root = loader.load();
 
-                    Stage stage = new Stage();
-                    stage.setTitle("Bienvenido");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                    ((Stage) bt_inicioUsuario.getScene().getWindow()).close();
-                }
-                catch (IOException e)
-                {
-                    System.out.println("Error, no se pudo cargar la vista de " + rol.toLowerCase() + ".");
-                }
-            }
-            else
-            {
+                String vistaDestino = rol.equals("usuario")
+                        ? "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml"
+                        : "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
+
+                Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
+            } else {
                 System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }
