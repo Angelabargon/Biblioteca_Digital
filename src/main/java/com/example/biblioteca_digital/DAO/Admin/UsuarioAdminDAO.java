@@ -1,8 +1,8 @@
 package com.example.biblioteca_digital.DAO.Admin;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
-import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
+import com.example.biblioteca_digital.modelos.Rol;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -20,7 +20,16 @@ public class UsuarioAdminDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Usuario u = mapearUsuario(rs);
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id"));
+                u.setNombreUsuario(rs.getString("nombre_usuario"));
+                u.setNombre(rs.getString("nombre"));
+                u.setPrimerApellido(rs.getString("primer_apellido"));
+                u.setCorreo(rs.getString("correo"));
+                u.setContrasena(rs.getString("contrasena"));
+                try { u.setRol(Rol.valueOf(rs.getString("rol"))); } catch (Exception e) { u.setRol(Rol.usuario); }
+                Date d = rs.getDate("fecha_registro");
+                if (d != null) u.setFechaRegistro(d.toLocalDate());
                 lista.add(u);
             }
 
@@ -36,7 +45,19 @@ public class UsuarioAdminDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapearUsuario(rs);
+                if (rs.next()) {
+                    Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
+                    u.setNombreUsuario(rs.getString("nombre_usuario"));
+                    u.setNombre(rs.getString("nombre"));
+                    u.setPrimerApellido(rs.getString("primer_apellido"));
+                    u.setCorreo(rs.getString("correo"));
+                    u.setContrasena(rs.getString("contrasena"));
+                    try { u.setRol(Rol.valueOf(rs.getString("rol"))); } catch (Exception e) { u.setRol(Rol.usuario); }
+                    Date d = rs.getDate("fecha_registro");
+                    if (d != null) u.setFechaRegistro(d.toLocalDate());
+                    return u;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,38 +132,5 @@ public class UsuarioAdminDAO {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public Usuario obtenerPorNombreUsuario(String nombreUsuario) {
-        String sql = "SELECT id, nombre_usuario, nombre, primer_apellido, correo, contrasena, rol, fecha_registro FROM usuarios WHERE nombre_usuario = ?";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, nombreUsuario);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapearUsuario(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private Usuario mapearUsuario(ResultSet rs) throws SQLException {
-        Usuario u = new Usuario();
-        u.setId(rs.getInt("id"));
-        u.setNombreUsuario(rs.getString("nombre_usuario"));
-        u.setNombre(rs.getString("nombre"));
-        u.setPrimerApellido(rs.getString("primer_apellido"));
-        u.setCorreo(rs.getString("correo"));
-        u.setContrasena(rs.getString("contrasena"));
-        String rolStr = rs.getString("rol");
-        try {
-            u.setRol(Rol.valueOf(rolStr));
-        } catch (Exception e) {
-            u.setRol(Rol.usuario);
-        }
-        Date d = rs.getDate("fecha_registro");
-        if (d != null) u.setFechaRegistro(d.toLocalDate());
-        return u;
     }
 }

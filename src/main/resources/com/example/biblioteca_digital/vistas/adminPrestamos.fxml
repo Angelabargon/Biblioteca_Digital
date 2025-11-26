@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorPrestamosAdmin">
+    <top>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <TextField fx:id="txtBuscar" promptText="Buscar préstamo por usuario o libro" HBox.hgrow="ALWAYS"/>
+            <Button text="Buscar" onAction="#buscarPrestamo"/>
+            <Button text="Añadir préstamo" onAction="#abrirAgregarPrestamo" style="-fx-background-color:#10B981; -fx-text-fill:white;"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tablaPrestamos" prefHeight="600">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colUsuario" text="ID Usuario" prefWidth="120"/>
+                <TableColumn fx:id="colLibro" text="ID Libro" prefWidth="120"/>
+                <TableColumn fx:id="colInicio" text="Inicio" prefWidth="160"/>
+                <TableColumn fx:id="colFin" text="Fin" prefWidth="160"/>
+                <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <Button text="Editar" onAction="#editarPrestamo"/>
+            <Button text="Eliminar" onAction="#eliminarPrestamo" style="-fx-background-color:#ef4444; -fx-text-fill:white;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

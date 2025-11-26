@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorCatalogoAdmin">
+    <top>
+        <HBox spacing="8" style="-fx-padding:8;">
+            <TextField fx:id="txtBuscar" promptText="Buscar catálogo" HBox.hgrow="ALWAYS"/>
+            <Button text="Buscar" onAction="#buscarCatalogo"/>
+        </HBox>
+    </top>
+    <center>
+        <SplitPane>
+            <ListView fx:id="listLibros" prefWidth="360"/>
+            <VBox spacing="8" style="-fx-padding:12;">
+                <Label text="Detalle" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+                <TextArea fx:id="areaDescripcion" editable="false" wrapText="true" prefHeight="400"/>
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>

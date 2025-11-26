@@ -18,7 +18,16 @@ public class LibroAdminDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Libro l = mapearLibro(rs);
+                Libro l = new Libro();
+                l.setId(rs.getInt("id"));
+                l.setTitulo(rs.getString("titulo"));
+                l.setAutor(rs.getString("autor"));
+                l.setDescripcion(rs.getString("descripcion"));
+                l.setGenero(rs.getString("genero"));
+                l.setIsbn(rs.getString("isbn"));
+                l.setFoto(rs.getString("foto"));
+                l.setCantidad(rs.getInt("cantidad"));
+                l.setDisponible(rs.getBoolean("disponible"));
                 lista.add(l);
             }
 
@@ -34,7 +43,19 @@ public class LibroAdminDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapearLibro(rs);
+                if (rs.next()) {
+                    Libro l = new Libro();
+                    l.setId(rs.getInt("id"));
+                    l.setTitulo(rs.getString("titulo"));
+                    l.setAutor(rs.getString("autor"));
+                    l.setDescripcion(rs.getString("descripcion"));
+                    l.setGenero(rs.getString("genero"));
+                    l.setIsbn(rs.getString("isbn"));
+                    l.setFoto(rs.getString("foto"));
+                    l.setCantidad(rs.getInt("cantidad"));
+                    l.setDisponible(rs.getBoolean("disponible"));
+                    return l;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,19 +140,5 @@ public class LibroAdminDAO {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    private Libro mapearLibro(ResultSet rs) throws SQLException {
-        Libro l = new Libro();
-        l.setId(rs.getInt("id"));
-        l.setTitulo(rs.getString("titulo"));
-        l.setAutor(rs.getString("autor"));
-        l.setDescripcion(rs.getString("descripcion"));
-        l.setGenero(rs.getString("genero"));
-        l.setIsbn(rs.getString("isbn"));
-        l.setFoto(rs.getString("foto"));
-        l.setCantidad(rs.getInt("cantidad"));
-        l.setDisponible(rs.getBoolean("disponible"));
-        return l;
     }
 }

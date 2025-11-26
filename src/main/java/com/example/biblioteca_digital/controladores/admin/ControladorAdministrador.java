@@ -1,98 +1,75 @@
 package com.example.biblioteca_digital.controladores.admin;
 
 import com.example.biblioteca_digital.DAO.Admin.LibroAdminDAO;
+import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.DAO.Admin.UsuarioAdminDAO;
+import com.example.biblioteca_digital.modelos.Sesion;
+import com.example.biblioteca_digital.DAO.Admin.LibroAdminDAO;
+import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.DAO.Admin.UsuarioAdminDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import servicios.LibroServicio;
-import servicios.UsuarioServicio;
-import servicios.PrestamoServicio;
-
 public class ControladorAdministrador {
 
-    @FXML
-    private AnchorPane panelContenido;
+    @FXML private AnchorPane panelContenido;
+    @FXML private Label lblTotalLibros;
+    @FXML private Label lblTotalUsuarios;
+    @FXML private Label lblPrestamosActivos;
+    @FXML private Label lblPrestamosVencidos;
 
-    @FXML
-    private Label lblTotalLibros;
-    @FXML
-    private Label lblTotalUsuarios;
-    @FXML
-    private Label lblPrestamosActivos;
-    @FXML
-    private Label lblPrestamosVencidos;
+    private final LibroAdminDAO LibroAdminDAO = new LibroAdminDAO();
+    private final UsuarioAdminDAO UsuarioAdminDAO = new UsuarioAdminDAO();
+    private final PrestamoAdminDAO PrestamoAdminDAO = new PrestamoAdminDAO();
 
-
-    // ───────────────────────────────
-    //      INICIALIZACIÓN GENERAL
-    // ───────────────────────────────
     @FXML
     public void initialize() {
         cargarEstadisticas();
-        cargarPanel("admin/LibrosAdmin.fxml"); // carga por defecto
+        mostrarCatalogo();
     }
 
+    private void cargarEstadisticas() {
+        lblTotalLibros.setText(String.valueOf(LibroAdminDAO.contarLibros()));
+        lblTotalUsuarios.setText(String.valueOf(UsuarioAdminDAO.contarUsuarios()));
+        lblPrestamosActivos.setText(String.valueOf(PrestamoAdminDAO.contarPrestamosActivos()));
+        lblPrestamosVencidos.setText(String.valueOf(PrestamoAdminDAO.contarPrestamosVencidos()));
+    }
 
-    // ───────────────────────────────
-    //       CARGA DE SUBPANELES
-    // ───────────────────────────────
-    private void cargarPanel(String ruta) {
+    private void cargarPanel(String recurso) {
         try {
-            Node node = FXMLLoader.load(getClass().getResource("/vistas/" + ruta));
-            panelContenido.getChildren().setAll(node);
-
-            AnchorPane.setTopAnchor(node, 0.0);
-            AnchorPane.setBottomAnchor(node, 0.0);
-            AnchorPane.setLeftAnchor(node, 0.0);
-            AnchorPane.setRightAnchor(node, 0.0);
-
+            Node n = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/" + recurso));
+            panelContenido.getChildren().setAll(n);
+            AnchorPane.setTopAnchor(n, 0.0);
+            AnchorPane.setBottomAnchor(n, 0.0);
+            AnchorPane.setLeftAnchor(n, 0.0);
+            AnchorPane.setRightAnchor(n, 0.0);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    // ───────────────────────────────
-    //  EVENTOS DE LOS BOTONES (tabs)
-    // ───────────────────────────────
-    @FXML
-    private void mostrarLibros() {
-        cargarPanel("admin/LibrosAdmin.fxml");
-    }
+    @FXML public void mostrarLibros() { cargarPanel("adminLibros.fxml"); }
+    @FXML public void mostrarUsuarios() { cargarPanel("adminUsuarios.fxml"); }
+    @FXML public void mostrarPrestamos() { cargarPanel("adminPrestamos.fxml"); }
+    @FXML public void mostrarCatalogo() { cargarPanel("adminCatalogo.fxml"); }
 
     @FXML
-    private void mostrarUsuarios() {
-        cargarPanel("admin/UsuariosAdmin.fxml");
-    }
-
-    @FXML
-    private void mostrarPrestamos() {
-        cargarPanel("admin/PrestamosAdmin.fxml");
-    }
-
-    @FXML
-    private void mostrarCatalogo() {
-        cargarPanel("admin/CatalogoAdmin.fxml");
-    }
-
-
-    // ───────────────────────────────
-    //      ESTADÍSTICAS SUPERIORES
-    // ───────────────────────────────
-    private void cargarEstadisticas() {
-        LibroAdminDAO libroServ = new LibroAdminDAO();
-        UsuarioServicio usuarioServ = new UsuarioServicio();
-        PrestamoServicio prestamoServ = new PrestamoServicio();
-
-        lblTotalLibros.setText(String.valueOf(libroServ.contarLibros()));
-        lblTotalUsuarios.setText(String.valueOf(usuarioServ.contarUsuarios()));
-        lblPrestamosActivos.setText(String.valueOf(prestamoServ.contarPrestamosActivos()));
-        lblPrestamosVencidos.setText(String.valueOf(prestamoServ.contarPrestamosVencidos()));
+    public void cerrarSesion() {
+        Sesion.cerrarSesion();
+        Stage st = (Stage) panelContenido.getScene().getWindow();
+        try {
+            Parent login = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Login.fxml"));
+            st.getScene().setRoot(login);
+        } catch (IOException e) {
+            e.printStackTrace();
+            st.close();
+        }
     }
 }
-
