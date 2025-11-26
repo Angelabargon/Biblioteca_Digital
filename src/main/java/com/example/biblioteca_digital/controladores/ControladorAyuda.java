@@ -28,6 +28,7 @@ public class ControladorAyuda {
             stage.showAndWait();
 
         } catch (Exception e) {
+            System.out.println("Error al cambiar a la vista: " + rutaFXML);
             e.printStackTrace();
         }
     }
