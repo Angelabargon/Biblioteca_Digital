@@ -79,22 +79,9 @@ public class ControladorLogin {
             });
         }
 
+        @FXML
         public void mostrarAyuda(ActionEvent event) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml"));
-                Parent root = loader.load();
-
-                Stage ayudaStage = new Stage();
-                ayudaStage.setTitle("Guía");
-                ayudaStage.setScene(new Scene(root));
-                ayudaStage.initModality(Modality.APPLICATION_MODAL);
-                ayudaStage.initStyle(StageStyle.UTILITY);
-                ayudaStage.setResizable(false);
-                ayudaStage.showAndWait();
-
-            } catch (IOException e) {
-                System.out.println("Error al cargar la ayuda.");
-            }
+            ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml", "Login");
         }
 
         @FXML
