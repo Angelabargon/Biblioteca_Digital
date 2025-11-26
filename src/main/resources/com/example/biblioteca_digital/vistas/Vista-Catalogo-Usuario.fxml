@@ -16,7 +16,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import java.net.URL?>
-<BorderPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorMenuInicioUsuario">
+<BorderPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
     <stylesheets>
         <URL value="@../estilo/estilo.css" />
     </stylesheets>
