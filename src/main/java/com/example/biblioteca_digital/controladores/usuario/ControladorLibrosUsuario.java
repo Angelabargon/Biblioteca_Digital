@@ -1,9 +1,8 @@
-package com.example.biblioteca_digital.controladores;
+package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
-import com.example.biblioteca_digital.modelos.Estado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.scene.image.ImageView;
 import org.w3c.dom.Text;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -219,18 +217,27 @@ public class ControladorLibrosUsuario {
     }
     public void setLibro(Libro libro, Usuario usuarioActual)
     {
+        this.usuarioActual = usuarioActual;
+        tituloLabel.setText(libro.getTitulo());
+        autorLabel.setText(libro.getAutor());
+        categoriaLabel.setText(libro.getGenero());
+        isbnLabel.setText(libro.getIsbn());
+        disponiblesLabel.setText(String.valueOf(libro.getCantidad()));
+        descripcionArea.setTextContent(libro.getDescripcion());
 
+        if (libro.getFoto() != null)
+            imagenLibro.setImage(new Image(libro.getFoto()));
     }
+
 
     @FXML
-    public void initialize() {
-        // ... Otra lógica ...
-
-        // Esto establece el valor predeterminado después de que FXML cargó la lista de ítems
-        if (filterChoiceBox.getItems() != null && !filterChoiceBox.getItems().isEmpty()) {
-            filterChoiceBox.setValue("Todas");
-        }
-
-        // ...
+    public void initialize()
+    {
+        filterChoiceBox.getItems().addListener((javafx.collections.ListChangeListener<String>) change -> {
+            if (!filterChoiceBox.getItems().isEmpty() && filterChoiceBox.getValue() == null) {
+                filterChoiceBox.setValue("Todas");
+            }
+        });
     }
+
 }

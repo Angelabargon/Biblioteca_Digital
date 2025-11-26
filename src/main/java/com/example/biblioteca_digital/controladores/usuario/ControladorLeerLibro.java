@@ -1,0 +1,47 @@
+package com.example.biblioteca_digital.controladores.usuario;
+
+import com.example.biblioteca_digital.modelos.Prestamo;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+public class ControladorLeerLibro
+{
+    @FXML private Label lblTitulo;
+    @FXML private Label lblAutor;
+    @FXML private Label lblDiasRestantes; // El contador en la esquina superior
+    @FXML private TextArea areaContenido;
+    @FXML private HBox headerBar; // Para la barra de color y el botón de cerrar
+
+    /**
+     * Carga el contenido del préstamo en la vista de lectura.
+     */
+    public void cargarContenido(Prestamo prestamo) {
+        // Cargar datos del libro
+        lblTitulo.setText(prestamo.getLibro().getTitulo());
+        lblAutor.setText("por " + prestamo.getLibro().getAutor());
+
+        // Usar la descripción como el "contenido" de lectura (ejemplo simplificado)
+        areaContenido.setText(prestamo.getLibro().getDescripcion() + "\n\n[... Continuación del Capítulo 1 ...]");
+
+        // Calcular y mostrar días restantes, similar al diseño de la imagen
+        long dias = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(), prestamo.getFecha_fin());
+        lblDiasRestantes.setText(String.format("%d días restantes", dias));
+
+        // Opcional: Aplicar un estilo de fondo basado en la cercanía al vencimiento
+        if (dias <= 5) {
+            lblDiasRestantes.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-padding: 5px; -fx-border-radius: 5px;");
+        } else {
+            lblDiasRestantes.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black; -fx-padding: 5px; -fx-border-radius: 5px;");
+        }
+    }
+
+    @FXML
+    private void cerrarVentana() {
+        // Obtener la Stage actual y cerrarla
+        Stage stage = (Stage) lblTitulo.getScene().getWindow();
+        stage.close();
+    }
+}

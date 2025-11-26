@@ -1,10 +1,9 @@
-package com.example.biblioteca_digital.controladores;
+package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.modelos.Prestamo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import java.util.function.Consumer;
 
 public class ControladorPrestamoIndividual
@@ -14,27 +13,31 @@ public class ControladorPrestamoIndividual
     @FXML private Label lblAutor;
     @FXML private Label lblDiasRestantes;
     @FXML private Button btnLeerLibro;
+
     // Atributos internos
     private Prestamo prestamoActual;
-    private Consumer<Prestamo> leerLibroHandler; // Almacena la referencia a handleLeerLibro
+    private Consumer<Prestamo> leerLibroHandler;
+
     /**
      * Establece los datos y el manejador de eventos para esta tarjeta de préstamo.
-     * @param prestamo El objeto Prestamo a mostrar.
-     * @param tiempoRestante La cadena de texto (ej: "10 días restantes").
-     * @param handler La función del controlador principal para manejar el clic en "Leer".
      */
     public void setPrestamo(Prestamo prestamo, String tiempoRestante, Consumer<Prestamo> handler)
     {
         this.prestamoActual = prestamo;
         this.leerLibroHandler = handler;
+
+        // **NOTA:** Asumiendo que Prestamo.getLibro() devuelve el objeto Libro
         lblTitulo.setText(prestamo.getLibro().getTitulo());
         lblAutor.setText(prestamo.getLibro().getAutor());
         lblDiasRestantes.setText(tiempoRestante);
-        if (tiempoRestante.startsWith("Vencido"))
+
+        // Deshabilitar si está vencido, similar al diseño de tu imagen
+        if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy"))
         {
             btnLeerLibro.setDisable(true);
         }
     }
+
     @FXML
     private void handleBotonLeer()
     {

@@ -20,7 +20,7 @@ public class Prestamo
     int id;
     int id_usuario;
     int id_libro;
-    Date fecha_inicio, fecha_fin;
+    LocalDate fecha_inicio, fecha_fin;
     Estado estado;
     /*
      *Constructor vacío de préstamo
@@ -36,12 +36,20 @@ public class Prestamo
      *@param Fecha_Fin
      *@param Estado
      */
-    public Prestamo(int id, int id_usuario, int id_libro, Date fecha_inicio, Date fecha_fin, Estado estado) {
+    public Prestamo(int id, int id_usuario, int id_libro, LocalDate fecha_inicio, LocalDate fecha_fin, Estado estado) {
         this.id = id;
         this.id_usuario = id_usuario;
         this.id_libro = id_libro;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
+        this.estado = estado;
+    }
+
+    public Prestamo(int pid, Libro libro, LocalDate fechaFin, Estado estado)
+    {
+        this.id_libro = pid;
+        this.libro = libro;
+        this.fecha_fin = fechaFin;
         this.estado = estado;
     }
 
@@ -52,8 +60,8 @@ public class Prestamo
     public int getId() {return id;}
     public int getId_usuario() {return id_usuario;}
     public int getId_libro() {return id_libro;}
-    public Date getFecha_inicio() {return fecha_inicio;}
-    public Date getFecha_fin() {return fecha_fin;}
+    public LocalDate getFecha_inicio() {return fecha_inicio;}
+    public LocalDate getFecha_fin() {return fecha_fin;}
     public String getEstado() {return estado.toString();}
     public Libro getLibro() {return libro;}
 
@@ -64,17 +72,16 @@ public class Prestamo
     public void setId(int id) {this.id = id;}
     public void setId_usuario(int id_usuario) {this.id_usuario = id_usuario;}
     public void setId_libro(int id_libro) {this.id_libro = id_libro;}
-    public void setFecha_inicio(Date fecha_inicio) {this.fecha_inicio = fecha_inicio;}
-    public void setFecha_fin(Date fecha_fin) {this.fecha_fin = fecha_fin;}
+    public void setFecha_inicio(LocalDate fecha_inicio) {this.fecha_inicio = fecha_inicio;}
+    public void setFecha_fin(LocalDate fecha_fin) {this.fecha_fin = fecha_fin;}
     public void setEstado(String estado) {this.estado = Estado.valueOf(estado);}
     public void setLibro(Libro libro) {this.libro = libro;}
 
-    public boolean estaActivo()
-    {
-        boolean elObjetoEstaActivo = this.estado.equals(Activo);
-        java.time.Instant instant = fecha_fin.toInstant();
-        java.time.LocalDate fechaFinLocalDate = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-        return elObjetoEstaActivo && java.time.LocalDate.now().isBefore(fechaFinLocalDate.plusDays(1));
+    public boolean estaActivo() {
+        boolean elObjetoEstaActivo = this.estado.equals("Activo");
+
+        return elObjetoEstaActivo &&
+                java.time.LocalDate.now().isBefore(fecha_fin.plusDays(1));
     }
     /*
      *ToString para imprimir la clase y sus atributos
