@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorUsuarioAdmin">
+    <top>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <TextField fx:id="txtBuscar" promptText="Buscar usuarios" HBox.hgrow="ALWAYS"/>
+            <Button text="Buscar" onAction="#buscarUsuario"/>
+            <Button text="Añadir usuario" onAction="#abrirAgregarUsuario" style="-fx-background-color:#10B981; -fx-text-fill:white;"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tablaUsuarios" prefHeight="600">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="200"/>
+                <TableColumn fx:id="colCorreo" text="Correo" prefWidth="260"/>
+                <TableColumn fx:id="colRol" text="Rol" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <Button text="Editar" onAction="#editarUsuario"/>
+            <Button text="Eliminar" onAction="#eliminarUsuario" style="-fx-background-color:#ef4444; -fx-text-fill:white;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

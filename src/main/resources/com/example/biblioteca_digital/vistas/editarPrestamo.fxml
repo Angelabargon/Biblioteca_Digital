@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorEditarPrestamo" spacing="8" style="-fx-padding:12;">
+    <Label text="Editar / Añadir préstamo" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+    <TextField fx:id="comboUsuario" promptText="ID Usuario"/>
+    <TextField fx:id="comboLibro" promptText="ID Libro"/>
+    <DatePicker fx:id="fechaInicio"/>
+    <DatePicker fx:id="fechaFin"/>
+    <ComboBox fx:id="comboEstado"/>
+    <HBox spacing="8">
+        <Button text="Guardar" onAction="#guardar" style="-fx-background-color:#10B981; -fx-text-fill:white;"/>
+        <Button text="Cancelar" onAction="#cancelar"/>
+    </HBox>
+</VBox>

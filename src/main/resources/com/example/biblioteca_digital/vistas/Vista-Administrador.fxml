@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador"
-            prefHeight="400.0" prefWidth="600.0">
-</AnchorPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador">
+    <left>
+        <VBox style="-fx-background-color:#1A1A1A; -fx-padding:20; -fx-spacing:18;" prefWidth="220">
+            <Label text="ADMIN PANEL" style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold;"/>
+            <Button text="Catálogo" onAction="#mostrarCatalogo"/>
+            <Button text="Libros" onAction="#mostrarLibros"/>
+            <Button text="Usuarios" onAction="#mostrarUsuarios"/>
+            <Button text="Préstamos" onAction="#mostrarPrestamos"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="Cerrar sesión" style="-fx-background-color:#ff4444; -fx-text-fill:white;" onAction="#cerrarSesion"/>
+        </VBox>
+    </left>
+    <center>
+        <AnchorPane fx:id="panelContenido"/>
+    </center>
+    <top>
+        <HBox spacing="12" style="-fx-padding:12;">
+            <Label text="Panel administrador" style="-fx-font-size:18; -fx-font-weight:bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="8">
+                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
+                    <Label text="Total libros" style="-fx-text-fill:#9CA3AF;"/>
+                    <Label fx:id="lblTotalLibros" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
+                </VBox>
+                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
+                    <Label text="Total usuarios" style="-fx-text-fill:#9CA3AF;"/>
+                    <Label fx:id="lblTotalUsuarios" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
+                </VBox>
+                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
+                    <Label text="Préstamos activos" style="-fx-text-fill:#9CA3AF;"/>
+                    <Label fx:id="lblPrestamosActivos" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
+                </VBox>
+                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
+                    <Label text="Préstamos vencidos" style="-fx-text-fill:#9CA3AF;"/>
+                    <Label fx:id="lblPrestamosVencidos" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
+                </VBox>
+            </HBox>
+        </HBox>
+    </top>
+</BorderPane>

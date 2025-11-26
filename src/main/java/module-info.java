@@ -5,6 +5,7 @@ module com.example.biblioteca_digital {
     requires java.desktop;
     requires javafx.graphics;
     requires javafx.base;
+    requires com.example.biblioteca_digital;
 
     opens com.example.biblioteca_digital to javafx.fxml;
     exports com.example.biblioteca_digital;

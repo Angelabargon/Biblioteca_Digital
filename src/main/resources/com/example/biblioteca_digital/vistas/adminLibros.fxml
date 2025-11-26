@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibrosAdmin">
+    <top>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <TextField fx:id="txtBuscar" promptText="Buscar por título, autor o género" HBox.hgrow="ALWAYS"/>
+            <Button text="Buscar" onAction="#buscarLibro"/>
+            <Button text="Añadir libro" onAction="#abrirAgregarLibro" style="-fx-background-color:#10B981; -fx-text-fill:white;"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tablaLibros" prefHeight="600">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colTitulo" text="Título" prefWidth="240"/>
+                <TableColumn fx:id="colAutor" text="Autor" prefWidth="180"/>
+                <TableColumn fx:id="colGenero" text="Género" prefWidth="120"/>
+                <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="80"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="8" style="-fx-padding:10;">
+            <Button text="Editar" onAction="#editarLibro"/>
+            <Button text="Eliminar" onAction="#eliminarLibro" style="-fx-background-color:#ef4444; -fx-text-fill:white;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+
