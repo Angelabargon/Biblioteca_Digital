@@ -64,11 +64,11 @@ public class ControladorPerfilUsuario {
         lb_nombreUsuario.setText("Nombre de Usuario: " + usuarioActual.getNombreUsuario());
         lb_nombreReal.setText("Nombre " + usuarioActual.getNombre());
 
-        int numFavoritos = PerfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
-        int numPrestamos = PerfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
+        int numFavoritos = perfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
+        int numPrestamos = perfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
 
-        lb_favoritos.setText("Favoritos " + String.valueOf(numFavoritos));
-        lb_prestamos.setText("Préstamos " + String.valueOf(numPrestamos));
+        lb_favoritos.setText("Favoritos " + numFavoritos);
+        lb_prestamos.setText("Préstamos " + numPrestamos);
 
     }
 
