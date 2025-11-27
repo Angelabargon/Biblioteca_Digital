@@ -3,7 +3,7 @@ package com.example.biblioteca_digital.controladores;
 /*
 Hacemos los imports necesarios.
  */
-import com.example.biblioteca_digital.conexion.ConexionBD;
+import com.example.biblioteca_digital.DAO.usuario.PerfilUsuarioDAO;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
@@ -17,10 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 
 /*
 Creamos la clase de ControladorPerfilUsuario para mostrar una ventana con los datos del usuario
@@ -60,10 +56,11 @@ public class ControladorPerfilUsuario {
 
     @FXML
     public void initialize() {
-
         usuarioActual = Sesion.getUsuario();
         cargarDatosPerfil();
     }
+
+    private final PerfilUsuarioDAO PerfilUsuarioDAO = new PerfilUsuarioDAO();
 
     private void cargarDatosPerfil() {
         if (usuarioActual == null) return;
@@ -71,53 +68,18 @@ public class ControladorPerfilUsuario {
         lb_nombreUsuario.setText("Nombre de Usuario: " + usuarioActual.getNombreUsuario());
         lb_nombreReal.setText("Nombre " + usuarioActual.getNombre());
 
-        int numFavoritos = contarFavoritos(usuarioActual.getId());
-        int numPrestamos = contarPrestamos(usuarioActual.getId());
+        int numFavoritos = PerfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
+        int numPrestamos = PerfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
 
         lb_favoritos.setText("Favoritos " + String.valueOf(numFavoritos));
         lb_prestamos.setText("Préstamos " + String.valueOf(numPrestamos));
-    }
 
-    private int contarFavoritos(int idUsuario) {
-        String sql = "SELECT COUNT(*) FROM favoritos WHERE id_usuario = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) return rs.getInt(1);
-        } catch (Exception e) { e.printStackTrace(); }
-        return 0;
-    }
-
-    private int contarPrestamos(int idUsuario) {
-        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) return rs.getInt(1);
-        } catch (Exception e) { e.printStackTrace(); }
-        return 0;
     }
 
     @FXML
     private void cambiarContrasena(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Registro.fxml"));
-            Parent root = loader.load();
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Registro.fxml", "Cambiar Contraseña");
 
-            ControladorRegistro controlador = loader.getController();
-
-            controlador.precargarDatos(usuarioActual);
-
-            Stage stage = new Stage();
-            stage.setTitle("Cambiar Contraseña");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
