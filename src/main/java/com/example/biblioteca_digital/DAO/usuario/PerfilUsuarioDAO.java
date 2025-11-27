@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class PerfilUsuarioDAO {
 
-    public int contarFavoritos(int idUsuario) {
+    public static int contarFavoritos(int idUsuario) {
         String sql = "SELECT COUNT(*) FROM favoritos WHERE id_usuario = ?";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -19,7 +19,7 @@ public class PerfilUsuarioDAO {
         return 0;
     }
 
-    public int contarPrestamos(int idUsuario) {
+    public static int contarPrestamos(int idUsuario) {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ?";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement pst = con.prepareStatement(sql)) {

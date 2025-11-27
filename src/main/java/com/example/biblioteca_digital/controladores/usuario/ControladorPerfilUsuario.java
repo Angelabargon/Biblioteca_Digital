@@ -1,22 +1,18 @@
-package com.example.biblioteca_digital.controladores;
+package com.example.biblioteca_digital.controladores.usuario;
 
 /*
 Hacemos los imports necesarios.
  */
 import com.example.biblioteca_digital.DAO.usuario.PerfilUsuarioDAO;
+import com.example.biblioteca_digital.controladores.ControladorAyuda;
+import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import java.io.IOException;
 
 /*
 Creamos la clase de ControladorPerfilUsuario para mostrar una ventana con los datos del usuario
@@ -60,7 +56,7 @@ public class ControladorPerfilUsuario {
         cargarDatosPerfil();
     }
 
-    private final PerfilUsuarioDAO PerfilUsuarioDAO = new PerfilUsuarioDAO();
+    private final PerfilUsuarioDAO perfilUsuarioDAO = new PerfilUsuarioDAO();
 
     private void cargarDatosPerfil() {
         if (usuarioActual == null) return;
