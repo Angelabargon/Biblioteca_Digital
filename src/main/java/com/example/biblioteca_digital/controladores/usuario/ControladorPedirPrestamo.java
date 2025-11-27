@@ -27,8 +27,8 @@ public class ControladorPedirPrestamo
         this.leerLibroHandler = handler;
 
         // **NOTA:** Asumiendo que Prestamo.getLibro() devuelve el objeto Libro
-        lblTitulo.setText(prestamo.getLibro().getTitulo());
-        lblAutor.setText(prestamo.getLibro().getAutor());
+        lblTitulo.setText(prestamo.getTituloLibro());
+        lblAutor.setText(prestamo.getTituloLibro().getAutor());
         lblDiasRestantes.setText(tiempoRestante);
 
         // Deshabilitar si está vencido, similar al diseño de tu imagen

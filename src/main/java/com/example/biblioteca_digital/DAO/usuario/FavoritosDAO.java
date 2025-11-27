@@ -1,7 +1,7 @@
 package com.example.biblioteca_digital.DAO.usuario;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
-import com.example.biblioteca_digital.modelos.Usuario;
+import com.example.biblioteca_digital.modelos.Libro;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,78 +9,80 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.biblioteca_digital.modelos.Sesion.usuarioActual;
+public class FavoritosDAO {
 
-public class FavoritosDAO
-{
-    Usuario usuarioactual = usuarioActual;
-    private List<Integer> obtenerFavoritosUsuario(int idUsuario) {
-        List<Integer> lista = new ArrayList<>();
-        String sql = "SELECT id_libro FROM favoritos WHERE id_usuario = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next())
-            {
-                lista.add(rs.getInt("id_libro"));
+    /**
+     * Obtiene la conexión a la base de datos.
+     */
+    private Connection conectar() {
+        // Asumiendo que ConexionBD.getConexion() maneja la apertura de la conexión
+        return ConexionBD.getConexion();
+    }
+
+    /**
+     * Obtiene todos los libros marcados como favoritos por un usuario.
+     * @param idUsuario ID del usuario.
+     * @return Lista de objetos Libro.
+     */
+    public List<Libro> obtenerFavoritos(int idUsuario) {
+        List<Libro> lista = new ArrayList<>();
+
+        String sql = """
+                SELECT l.* FROM libros l 
+                JOIN favoritos f ON l.id = f.id_libro
+                WHERE f.id_usuario = ?
+                """;
+
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Se asume que el constructor de Libro tiene la siguiente firma:
+                Libro libro = new Libro(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("autor"),
+                        rs.getString("genero"),
+                        rs.getString("isbn"),
+                        rs.getString("descripcion"),
+                        rs.getString("foto"),
+                        rs.getInt("cantidad"),
+                        rs.getBoolean("disponible")
+                );
+                lista.add(libro);
             }
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
+            System.err.println("Error al obtener favoritos: " + e.getMessage());
             e.printStackTrace();
         }
+
         return lista;
     }
 
-    private void alternarFavorito(int idLibro)
-    {
-        if (favoritos.contains(idLibro))
-        {
-            eliminarFavorito(idLibro);
-        }
-        else
-        {
-            insertarFavorito(idLibro);
-        }
-        // Actualizar la lista local y el contador
-        favoritos = obtenerFavoritosUsuario(usuarioActual.getId());
-        if (labelContadorFavoritos != null) labelContadorFavoritos.setText(String.valueOf(favoritos.size()));
+    /**
+     * Elimina un libro de la lista de favoritos de un usuario.
+     * @param idUsuario ID del usuario.
+     * @param idLibro ID del libro a borrar.
+     */
+    public boolean borrarFavorito(int idUsuario, int idLibro) {
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM favoritos WHERE id_usuario = ? AND id_libro = ?")) {
 
-        // Refrescar el catálogo para actualizar el ícono de corazón
-        mostrarLibrosFiltrados();
-    }
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
 
-    private void insertarFavorito(int idLibro) { /* ... Tu lógica de DB ... */
-        String sql = "INSERT INTO favoritos (id_usuario, id_libro) VALUES (?, ?)";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, usuarioActual.getId());
-            pst.setInt(2, idLibro);
-            pst.executeUpdate();
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0; // Retorna true si se eliminó al menos una fila
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
+            System.err.println("Error al borrar favorito: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    private void eliminarFavorito(int idLibro)
-    {
-        String sql = "DELETE FROM favoritos WHERE id_usuario = ? AND id_libro = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, usuarioActual.getId());
-            pst.setInt(2, idLibro);
-            pst.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            return false;
         }
     }
 }

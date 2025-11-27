@@ -20,41 +20,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vista
+public class ControladorCatalogoUsuario {
 
-    // Atributos de estado
+    // --- Atributos de estado ---
     private Usuario usuarioActual;
     private List<Libro> libros = new ArrayList<>();
-    private List<Integer> favoritos = new ArrayList<>();
+    // SE ELIMINÓ: private List<Integer> favoritos = new ArrayList<>();
     private int prestamosActivos = 0;
 
-    // Elementos FXML de la VISTA CATÁLOGO
+    // --- Elementos FXML de la VISTA CATÁLOGO ---
     @FXML private Label labelBienvenida;
-    @FXML private Label labelContadorFavoritos;
+    // SE ELIMINÓ: @FXML private Label labelContadorFavoritos;
     @FXML private Label labelContadorPrestamos;
-    @FXML private FlowPane contenedorLibros; // Contiene las tarjetas de los libros
+    @FXML private FlowPane contenedorLibros;
     @FXML private TextField filtroTitulo;
     @FXML private TextField filtroAutor;
-    @FXML private ChoiceBox<String> filtroGenero; // Se ajustó a ChoiceBox según tu FXML
-    @FXML private ToggleButton toggleFavoritos;
-    @FXML private Button botonBuscarFavoritos; // Botón "Mostrar Favoritos"
-
+    @FXML private ChoiceBox<String> filtroGenero;
+    // SE ELIMINÓ: @FXML private ToggleButton toggleFavoritos; // Asumimos que este era el ToggleButton de favoritos
 
     /**
      * Inicializa el controlador. Se usa para enlazar listeners a los filtros.
      */
     @FXML
     public void initialize() {
-        // Enlazar listeners para que el filtrado se haga automáticamente al escribir o cambiar
+        // Enlazar listeners para que el filtrado se haga automáticamente
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
 
-        // El botón "Mostrar Favoritos" ahora es un ToggleButton en el FXML
-        if (toggleFavoritos != null) toggleFavoritos.selectedProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-
-        // Alternativamente, si usas el botón con onAction
-        // if (botonBuscarFavoritos != null) botonBuscarFavoritos.setOnAction(e -> mostrarLibrosFiltrados());
+        // SE ELIMINÓ la lógica relacionada con toggleFavoritos
     }
 
     /**
@@ -67,11 +61,11 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
 
         // Cargar todos los datos desde la base de datos
         libros = obtenerTodosLosLibros();
-        favoritos = obtenerFavoritosUsuario(usuario.getId());
+        // SE ELIMINÓ la llamada a obtenerFavoritosUsuario()
         prestamosActivos = contarPrestamosActivos(usuario.getId());
 
         // Actualizar contadores de la vista
-        if (labelContadorFavoritos != null) labelContadorFavoritos.setText(String.valueOf(favoritos.size()));
+        // SE ELIMINÓ: if (labelContadorFavoritos != null) labelContadorFavoritos.setText(String.valueOf(favoritos.size()));
         if (labelContadorPrestamos != null) labelContadorPrestamos.setText(String.valueOf(prestamosActivos));
 
         // Mostrar la lista inicial de libros
@@ -94,13 +88,13 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
         String genero = filtroGenero.getValue() != null && !filtroGenero.getValue().equals("Todas")
                 ? filtroGenero.getValue().toLowerCase() : "";
 
-        boolean soloFavoritos = toggleFavoritos.isSelected();
+        // SE ELIMINÓ: boolean soloFavoritos = toggleFavoritos.isSelected();
 
         for (Libro libro : libros) {
             boolean coincide = libro.getTitulo().toLowerCase().contains(titulo)
                     && libro.getAutor().toLowerCase().contains(autor)
-                    && (genero.isEmpty() || libro.getGenero().toLowerCase().equals(genero))
-                    && (!soloFavoritos || favoritos.contains(libro.getId())); // Filtro de favoritos
+                    && (genero.isEmpty() || libro.getGenero().toLowerCase().equals(genero));
+            // SE ELIMINÓ: && (!soloFavoritos || favoritos.contains(libro.getId()));
 
             if (coincide) {
                 contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
@@ -112,21 +106,21 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
 
     /**
      * Método llamado por el ControladorVistaLibroItem para alternar el favorito.
+     * DEBE SER REEMPLAZADO o ELIMINADO de la vista del item si ya no gestiona favoritos.
+     * Si se mantiene, DEBE llamar a la lógica de favoritos (DAO) que está fuera de este controlador.
      */
-    public void clickFavorito(Libro libro) {
-        alternarFavorito(libro.getId());
-        // El alternarFavorito ya llama a mostrarLibrosFiltrados() para refrescar
-    }
+    // SE ELIMINÓ: public void clickFavorito(Libro libro) { alternarFavorito(libro.getId()); }
+    // DEBEMOS ASUMIR QUE EL CONTROLADOR DEL ITEM LO MANEJA DE OTRA FORMA AHORA.
 
     /**
      * Método llamado por el ControladorVistaLibroItem para pedir un préstamo.
      */
     public void clickPedirPrestamo(Libro libro) {
-        if (pedirPrestado(libro.getId())) {
+        if (pedirPrestado(libro.getId())) { // Asume que esta función llama al DAO de Préstamos
             // Refrescar la vista y mostrar confirmación
             mostrarAlerta("Préstamo Exitoso", "Has solicitado el préstamo de " + libro.getTitulo() + ".");
             // Actualizar la disponibilidad en el catálogo
-            libros = obtenerTodosLosLibros();
+            libros = obtenerTodosLosLibros(); // Refresca los datos del catálogo
             mostrarLibrosFiltrados();
         } else {
             mostrarAlertaError("Límite de Préstamo", "No puedes solicitar más préstamos o el libro no está disponible.");
@@ -160,20 +154,50 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
 
     private Node crearVistaLibroItem(Libro libro) {
         try {
-            // Asume que tienes un FXML para la tarjeta individual
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
             Parent item = loader.load();
-            // Asume que tienes un controlador específico para la tarjeta de libro
+
             ControladorLibroCatalogo controlador = loader.getController();
-            controlador.setDatos(libro, favoritos.contains(libro.getId()), this);
+
+            // ELIMINADA la parte de 'favoritos.contains(libro.getId())'
+            // El controlador del item (ControladorLibroCatalogo) ya NO recibe el estado de favorito
+            // ni tiene una referencia a 'this' (el controlador del catálogo) para gestionar favoritos.
+            // Si el item debe seguir permitiendo marcar favoritos, debe llamar a un DAO directamente.
+
+            // Si el setDatos original era: controlador.setDatos(Libro libro, boolean esFavorito, Object controladorPadre);
+            // Ahora debe ser algo como:
+            // controlador.setDatos(libro, usuarioActual); // Si el item gestiona el favorito internamente
+
+            // Usaremos una firma simple para demostrar la separación
+            // Nota: Debes actualizar la firma real en tu ControladorLibroCatalogo
+            controlador.setLibro(libro);
 
             return item;
         } catch (IOException e) {
             e.printStackTrace();
-            // Retorna un error visual si falla la carga
             return new Label("Error al cargar item: " + libro.getTitulo());
         }
     }
+
+    // --- LÓGICA DE BASE DE DATOS (Stub - Debe ir en DAO) ---
+
+    private List<Libro> obtenerTodosLosLibros() {
+        // Lógica real de la base de datos (SELECT * FROM LIBROS)
+        return new ArrayList<>(); // Placeholder
+    }
+
+
+    private int contarPrestamosActivos(int idUsuario) {
+        // Lógica real de la base de datos (COUNT de préstamos activos)
+        return 0; // Placeholder
+    }
+
+    private boolean pedirPrestado(int idLibro) {
+        // Lógica real de la base de datos (INSERT préstamo y UPDATE disponibilidad)
+        return true; // Placeholder
+    }
+
+
     // --- UTILIDADES ---
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -9,31 +9,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPrestamosUsuario">
+<?import javafx.scene.control.ToggleGroup?>
+<AnchorPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
     <Label layoutX="269.0" layoutY="34.0" prefHeight="54.0" prefWidth="269.0" text="Biblioteca Digital">
         <font>
             <Font size="36.0" />
         </font>
     </Label>
-   <HBox id="hb_tbg" alignment="CENTER" layoutX="122.0" layoutY="201.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
-      <children>
-         <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" selected="true" text="Catálogo">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </ToggleButton>
-         <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Mis préstamos">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </ToggleButton>
-         <ToggleButton fx:id="tbt_admin1" prefHeight="35.0" prefWidth="150.0" text="Mis favoritos">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </ToggleButton>
-      </children>
-   </HBox>
+    <HBox id="hb_tbg" alignment="CENTER" layoutX="122.0" layoutY="171.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+        <children>
+            <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="150.0" text="Catálogo">
+                <toggleGroup>
+                    <ToggleGroup fx:id="menuGroup" />
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Mis préstamos" toggleGroup="$menuGroup">
+            </ToggleButton>
+            <ToggleButton fx:id="tbt_admin1" prefHeight="35.0" prefWidth="150.0" text="Mis favoritos" toggleGroup="$menuGroup">
+            </ToggleButton>
+        </children>
+    </HBox>
 
     <AnchorPane fx:id="contenedor" layoutX="0" layoutY="237.0" prefHeight="548.0" prefWidth="1410.0">
     </AnchorPane>

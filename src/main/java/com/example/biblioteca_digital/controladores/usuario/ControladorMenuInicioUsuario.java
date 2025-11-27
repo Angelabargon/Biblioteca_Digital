@@ -26,16 +26,19 @@ public class ControladorMenuInicioUsuario {
     @FXML
     private ToggleButton tbt_PRESTAMOS;
     @FXML
+    private ToggleButton tbt_FAVORITOS;
+    @FXML
     private ImageView iv_iconoUsuario;
     @FXML
     private Button bt_ayuda;
 
     private Usuario usuarioActual;
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario)
+    {
         this.usuarioActual = usuario;
         // Cargar la vista inicial (Catálogo)
-        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", true);
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
     }
 
     @FXML
@@ -50,26 +53,7 @@ public class ControladorMenuInicioUsuario {
         });
     }
 
-    @FXML
-    public void cambiarVista(ActionEvent event) {
-        ToggleButton botonSeleccionado = (ToggleButton) event.getSource();
-        String vistaFxml = null;
-        boolean esCatalogo = false;
-
-        if (botonSeleccionado == tbt_MENU) {
-            vistaFxml = "/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml";
-            esCatalogo = true;
-        } else if (botonSeleccionado == tbt_PRESTAMOS) {
-            vistaFxml = "/com/example/biblioteca_digital/vistas/Vista-MisPrestamos-Usuario.fxml";
-            esCatalogo = false;
-        }
-
-        if (vistaFxml != null) {
-            cargarVista(vistaFxml, esCatalogo);
-        }
-    }
-
-    private void cargarVista(String fxmlPath, boolean esCatalogo) {
+    private void cargarVista(String fxmlPath, Class<?> expectedControllerClass) {
         try {
             URL fxmlUrl = getClass().getResource(fxmlPath);
             if (fxmlUrl == null) {
@@ -81,15 +65,19 @@ public class ControladorMenuInicioUsuario {
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent vista = loader.load();
 
-            // Pasar el usuario al controlador de la sub-vista
-            if (esCatalogo) {
-                ControladorCatalogoUsuario controlador = loader.getController();
-                controlador.setUsuario(usuarioActual);
+            // --- INYECCIÓN DEL USUARIO AL CONTROLADOR DE LA SUB-VISTA ---
+            Object subControlador = loader.getController();
+
+            if (subControlador instanceof ControladorCatalogoUsuario && expectedControllerClass.equals(ControladorCatalogoUsuario.class)) {
+                ((ControladorCatalogoUsuario) subControlador).setUsuario(usuarioActual);
+            } else if (subControlador instanceof ControladorPrestamosUsuario && expectedControllerClass.equals(ControladorPrestamosUsuario.class)) {
+                // Asume que tienes este controlador y que tiene el método setUsuario
+                ((ControladorPrestamosUsuario) subControlador).setUsuario(usuarioActual);
+            } else if (subControlador instanceof ControladorFavoritosUsuario && expectedControllerClass.equals(ControladorFavoritosUsuario.class)) {
+                // Asume que tienes este controlador y que tiene el método setUsuario
+                ((ControladorFavoritosUsuario) subControlador).setUsuario(usuarioActual);
             }
-            // else if (vista Prestamos) {
-            //     ControladorPrestamosUsuario controlador = loader.getController();
-            //     controlador.setUsuario(usuarioActual);
-            // }
+            // --- FIN INYECCIÓN ---
 
             contenedor.getChildren().clear();
             AnchorPane.setTopAnchor(vista, 0.0);
@@ -111,10 +99,11 @@ public class ControladorMenuInicioUsuario {
     @FXML
     public void mostrarAyuda(ActionEvent event) {
         ControladorAyuda.mostrarAyuda(
-                "/com/example/biblioteca_digital/vistas/Vista-Ayuda-Usuario.fxml",
+                "/com/example/biblioteca_digital/vistas/Vista-Ayuda-MenuUsuario.fxml",
                 "Usuario"
         );
     }
+
 
     private void mostrarVistaPerfil() throws IOException {
         Stage stage = (Stage) iv_iconoUsuario.getScene().getWindow();
