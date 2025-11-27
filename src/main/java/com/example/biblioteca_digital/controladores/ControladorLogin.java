@@ -3,6 +3,7 @@ package com.example.biblioteca_digital.controladores;
 /*
 Hacemos los importes necesarios.
  */
+import com.example.biblioteca_digital.DAO.LoginDAO;
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Sesion;
@@ -55,6 +56,7 @@ public class ControladorLogin {
             tbt_usuario.setSelected(true);
 
             grupoRol.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+
                 if (newToggle != null) {
                     ToggleButton seleccionado = (ToggleButton) newToggle;
                     String rol = seleccionado.getText().toLowerCase();
@@ -78,8 +80,8 @@ public class ControladorLogin {
         }
 
         @FXML
-        private void iniciarSesion(ActionEvent event)
-        {
+        private void iniciarSesion(ActionEvent event) {
+
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
             String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
@@ -89,9 +91,9 @@ public class ControladorLogin {
                 return;
             }
 
-            Optional<Usuario> cuentaAutenticada = autenticar(email, contraseña, rol);
-            if (cuentaAutenticada.isPresent())
-            {
+            Optional<Usuario> cuentaAutenticada = LoginDAO.autenticar(email, contraseña, rol);
+            if (cuentaAutenticada.isPresent()) {
+
                 Sesion.setUsuario(cuentaAutenticada.get());
 
                 String vistaDestino = rol.equals("usuario")
@@ -99,41 +101,11 @@ public class ControladorLogin {
                         : "/com/example/biblioteca_digital/vistas/admin/Vista-Administrador.fxml";
 
                 Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
+
             } else {
                 System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }
-
-    public static Optional<Usuario> autenticar(String correo, String contrasena, String rol)
-    {
-        String sql = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? AND rol = ?";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql))
-        {
-            stmt.setString(1, correo);
-            stmt.setString(2, contrasena);
-            stmt.setString(3, rol);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-            {
-                Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("id"));
-                usuario.setNombreUsuario(rs.getString("nombre_usuario"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setPrimerApellido(rs.getString("primer_apellido"));
-                usuario.setCorreo(rs.getString("correo"));
-                usuario.setContrasena(rs.getString("contrasena"));
-                usuario.setRol(Rol.valueOf(rs.getString("rol")));
-                usuario.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
-                return Optional.of(usuario);
-            }
-        }
-        catch (SQLException e)
-        {
-            System.out.println("Error al autenticar: " + e.getMessage());
-        }
-        return Optional.empty();
-    }
 
     @FXML
     private void volverAtras(ActionEvent event) {
