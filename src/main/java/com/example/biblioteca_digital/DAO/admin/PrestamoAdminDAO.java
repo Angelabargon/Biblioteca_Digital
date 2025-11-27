@@ -13,7 +13,14 @@ public class PrestamoAdminDAO {
 
     public List<Prestamo> obtenerTodos() {
         List<Prestamo> lista = new ArrayList<>();
-        String sql = "SELECT id, id_usuario, id_libro, fecha_inicio, fecha_fin, estado FROM prestamos ORDER BY fecha_inicio DESC";
+
+        String sql =
+                "SELECT p.id, p.id_usuario, p.id_libro, p.fecha_inicio, p.fecha_fin, p.estado, " +
+                        "u.nombre AS nombreUsuario, l.titulo AS tituloLibro " +
+                        "FROM prestamos p " +
+                        "JOIN usuarios u ON p.id_usuario = u.id " +
+                        "JOIN libros l ON p.id_libro = l.id " +
+                        "ORDER BY p.fecha_inicio DESC";
 
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -21,32 +28,32 @@ public class PrestamoAdminDAO {
 
             while (rs.next()) {
                 Prestamo p = new Prestamo();
+
                 p.setId(rs.getInt("id"));
                 p.setId_usuario(rs.getInt("id_usuario"));
                 p.setId_libro(rs.getInt("id_libro"));
+
                 Date di = rs.getDate("fecha_inicio");
                 Date df = rs.getDate("fecha_fin");
                 if (di != null) p.setFecha_inicio(di.toLocalDate());
                 if (df != null) p.setFecha_fin(df.toLocalDate());
-                String estadoStr = rs.getString("estado");
-                if (estadoStr != null) {
-                    switch (estadoStr.toLowerCase()) {
-                        case "activo": p.setEstado(String.valueOf(Estado.Activo)); break;
-                        case "devuelto": p.setEstado(String.valueOf(Estado.Devuelto)); break;
-                        case "bloqueado": p.setEstado(String.valueOf(Estado.Bloqueado)); break;
-                        default: p.setEstado(String.valueOf(Estado.Activo));
-                    }
-                } else {
-                    p.setEstado(String.valueOf(Estado.Activo));
-                }
+
+                p.setEstado(rs.getString("estado").toUpperCase());
+
+                // CAMPOS NUEVOS
+                p.setNombreUsuario(rs.getString("nombreUsuario"));
+                p.setTituloLibro(rs.getString("tituloLibro"));
+
                 lista.add(p);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return lista;
     }
+
 
     public boolean agregarPrestamo(Prestamo p) {
         String sql = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) VALUES (?,?,?,?,?)";

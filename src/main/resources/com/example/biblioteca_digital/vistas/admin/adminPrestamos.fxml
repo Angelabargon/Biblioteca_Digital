@@ -1,84 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorPrestamosAdmin">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorPrestamosAdmin"
+      spacing="20"
+      style="-fx-background-color:#f6f2ec; -fx-padding:32;">
 
-    <!-- TOP BAR -->
-    <top>
-        <HBox spacing="12" style="-fx-background-color: #F4F6F9;" alignment="CENTER_LEFT">
-            <padding>
-                <Insets top="12" bottom="12" left="20" right="20"/>
-            </padding>
+    <!-- TÍTULO + BOTÓN -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Label text="Gestión de Préstamos"
+               style="-fx-font-size:24px; -fx-font-weight:700; -fx-text-fill:#3a3a3a;"/>
 
-            <Label text="Préstamos"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
 
-            <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+  Nuevo Préstamo"
+                onAction="#nuevoPrestamo"
+                style="
+                    -fx-background-color:#8b4b2e;
+                    -fx-text-fill:white;
+                    -fx-font-weight:600;
+                    -fx-font-size:14px;
+                    -fx-padding:10 22;
+                    -fx-background-radius:12;">
+        </Button>
+    </HBox>
 
-            <Button fx:id="btnAgregarPrestamo"
-                    text="Nuevo Préstamo"
-                    onAction="#nuevoPrestamo"
-                    style="-fx-background-color: #0066FF; -fx-text-fill: white; -fx-background-radius: 8;"
-            >
-                <graphic>
-                    <ImageView fitHeight="18" fitWidth="18"
-                               pickOnBounds="true" preserveRatio="true"
-                               fx:id="iconAdd"/>
-                </graphic>
-            </Button>
+    <!-- TABLA ESTILO FIGMA -->
+    <TableView fx:id="tablaPrestamos"
+               VBox.vgrow="ALWAYS"
+               style="
+                   -fx-background-color:white;
+                   -fx-background-radius:14;
+                   -fx-border-color:#e5e3dd;
+                   -fx-border-radius:14;
+                   -fx-table-cell-border-color: transparent;
+                   -fx-padding:6;
+                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4);
+                   -fx-fixed-cell-size:46;">
 
-        </HBox>
-    </top>
+        <columns>
 
-    <!-- CENTER TABLE -->
-    <center>
-        <VBox spacing="20">
-            <padding>
-                <Insets top="20" left="20" right="20" bottom="20"/>
-            </padding>
+            <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="240"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-            <!-- SEARCH BAR -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <TextField fx:id="txtBuscar"
-                           promptText="Buscar préstamo..."
-                           onKeyReleased="#buscarPrestamo"
-                           style="-fx-background-radius: 8; -fx-padding: 8;"/>
+            <TableColumn fx:id="colLibro" text="Libro" prefWidth="180"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-                <Button text="Buscar"
-                        onAction="#buscarPrestamo"
-                        style="-fx-background-color: #0066FF; -fx-text-fill: white; -fx-background-radius: 8;"/>
-            </HBox>
+            <TableColumn fx:id="colFechaPrestamo" text="Fecha Préstamo" prefWidth="150"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-            <!-- TABLE -->
-            <TableView fx:id="tablaPrestamos"
-                       prefHeight="500"
-                       style="-fx-background-radius: 12; -fx-border-radius: 12;">
+            <TableColumn fx:id="colFechaVencimiento" text="Vencimiento" prefWidth="150"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-                <columns>
+            <TableColumn fx:id="colEstado" text="Estado" prefWidth="130"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-                    <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="150"/>
+            <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"
+                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
 
-                    <TableColumn fx:id="colLibro" text="Libro" prefWidth="150"/>
+        </columns>
 
-                    <TableColumn fx:id="colFechaPrestamo" text="Fecha Préstamo" prefWidth="140"/>
+    </TableView>
 
-                    <TableColumn fx:id="colFechaVencimiento" text="Fecha Vencimiento" prefWidth="150"/>
-
-                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
-
-                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"/>
-
-                </columns>
-
-            </TableView>
-        </VBox>
-    </center>
-
-</BorderPane>
+</VBox>

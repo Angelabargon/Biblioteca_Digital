@@ -1,137 +1,140 @@
 package com.example.biblioteca_digital.controladores.admin;
 
 import com.example.biblioteca_digital.DAO.admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.modelos.Prestamo;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import com.example.biblioteca_digital.modelos.Prestamo;
+import javafx.scene.layout.HBox;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ControladorPrestamosAdmin {
 
-    @FXML
-    private TableView<Prestamo> tablaPrestamos;
+    @FXML private TableView<Prestamo> tablaPrestamos;
 
-    @FXML
-    private TableColumn<Prestamo, String> colUsuario;
+    @FXML private TableColumn<Prestamo, String> colUsuario;
+    @FXML private TableColumn<Prestamo, String> colLibro;
+    @FXML private TableColumn<Prestamo, String> colFechaPrestamo;
+    @FXML private TableColumn<Prestamo, String> colFechaVencimiento;
+    @FXML private TableColumn<Prestamo, String> colEstado;
+    @FXML private TableColumn<Prestamo, Void> colAcciones;
 
-    @FXML
-    private TableColumn<Prestamo, String> colLibro;
-
-    @FXML
-    private TableColumn<Prestamo, String> colFechaPrestamo;
-
-    @FXML
-    private TableColumn<Prestamo, String> colFechaVencimiento;
-
-    @FXML
-    private TableColumn<Prestamo, String> colEstado;
-
-    @FXML
-    private TableColumn<Prestamo, Void> colAcciones;
-
-    @FXML
-    private TextField txtBuscar;
-
-    @FXML
-    private Button btnAgregarPrestamo;
-
-    @FXML
-    private ImageView iconAdd;
+    @FXML private TextField txtBuscar;
 
     private final PrestamoAdminDAO prestamoAdminDAO = new PrestamoAdminDAO();
-    private ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList();
+    private final ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList();
 
     private final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     public void initialize() {
-        // Ícono del botón agregar
-        iconAdd.setImage(new Image(getClass().getResourceAsStream("/icons/add.png")));
-
         cargarColumnas();
         refrescarTabla();
     }
 
+    // ============================================================
+    // CONFIGURACIÓN DE COLUMNAS
+    // ============================================================
     private void cargarColumnas() {
 
-        colUsuario.setCellValueFactory(data -> data.getValue().nombreUsuarioProperty());
-        colLibro.setCellValueFactory(data -> data.getValue().tituloLibroProperty());
+        // USUARIO
+        colUsuario.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getNombreUsuario()));
 
+        // LIBRO
+        colLibro.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getTituloLibro()));
+
+        // FECHA PRESTAMO
         colFechaPrestamo.setCellValueFactory(data ->
-                javafx.beans.binding.Bindings.createStringBinding(() ->
-                        data.getValue().getFechaPrestamo().format(formato)));
+                new SimpleStringProperty(data.getValue().getFechaPrestamo().format(formato)));
 
+        // FECHA VENCIMIENTO
         colFechaVencimiento.setCellValueFactory(data ->
-                javafx.beans.binding.Bindings.createStringBinding(() ->
-                        data.getValue().getFechaVencimiento().format(formato)));
+                new SimpleStringProperty(data.getValue().getFechaVencimiento().format(formato)));
 
-        // Estado con badge visual
-        colEstado.setCellFactory(column -> new TableCell<>() {
+        // ESTADO (badge igual estilo que Libros)
+        colEstado.setCellFactory(col -> new TableCell<>() {
+
             @Override
             protected void updateItem(String estado, boolean empty) {
                 super.updateItem(estado, empty);
 
-                if (empty) {
+                if (empty || getTableRow() == null) {
+                    setGraphic(null);
                     setText(null);
-                    setStyle("");
                     return;
                 }
 
                 Prestamo p = getTableView().getItems().get(getIndex());
-
                 boolean vencido = p.getFechaVencimiento().isBefore(LocalDate.now());
-                setText(vencido ? "Vencido" : "Vigente");
 
-                setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-alignment: center;"
-                        + (vencido
-                        ? "-fx-background-color: #E74C3C; -fx-background-radius: 12;"
-                        : "-fx-background-color: #2ECC71; -fx-background-radius: 12;"));
+                Label badge = new Label(vencido ? "Vencido" : "Vigente");
+                badge.setStyle(
+                        vencido
+                                ? "-fx-background-color:#ef4444; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;"
+                                : "-fx-background-color:#10B981; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;"
+                );
+
+                setGraphic(badge);
+                setText(null);
             }
         });
 
-        // Acciones (editar / eliminar)
+        // ACCIONES (✎ editar / 🗑 eliminar)
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
-            private final ImageView iconEdit = new ImageView(new Image(getClass().getResourceAsStream("/icons/edit.png")));
-            private final ImageView iconDelete = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete.png")));
-
-            private final Button btnEdit = new Button("", iconEdit);
-            private final Button btnDelete = new Button("", iconDelete);
+            private final Button btnEditar = new Button("✎");
+            private final Button btnEliminar = new Button("🗑");
+            private final HBox contenedor = new HBox(8);
 
             {
-                iconEdit.setFitWidth(18);
-                iconEdit.setFitHeight(18);
-                iconDelete.setFitWidth(18);
-                iconDelete.setFitHeight(18);
+                // Estilo EDITAR (como en Libros)
+                btnEditar.setStyle(
+                        "-fx-background-color:#fff6ee; " +
+                                "-fx-border-radius:8; -fx-background-radius:8; -fx-padding:6;"
+                );
 
-                btnEdit.setStyle("-fx-background-color: transparent;");
-                btnDelete.setStyle("-fx-background-color: transparent;");
+                btnEditar.setOnAction(e -> {
+                    Prestamo p = getTableView().getItems().get(getIndex());
+                    editarPrestamo(p);
+                });
 
-                btnEdit.setOnAction(e -> editarPrestamo(getTableView().getItems().get(getIndex())));
-                btnDelete.setOnAction(e -> eliminarPrestamo(getTableView().getItems().get(getIndex())));
+                // Estilo ELIMINAR (como en Libros)
+                btnEliminar.setStyle(
+                        "-fx-background-color:#ef4444; -fx-text-fill:white; " +
+                                "-fx-border-radius:8; -fx-background-radius:8; -fx-padding:6;"
+                );
+
+                btnEliminar.setOnAction(e -> {
+                    Prestamo p = getTableView().getItems().get(getIndex());
+                    eliminarPrestamo(p);
+                });
+
+                contenedor.setPadding(new Insets(4, 0, 4, 0));
+                contenedor.getChildren().addAll(btnEditar, btnEliminar);
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty) {
                     setGraphic(null);
-                    return;
+                } else {
+                    setGraphic(contenedor);
                 }
-
-                HBox box = new HBox(10, btnEdit, btnDelete);
-                setGraphic(box);
             }
         });
     }
 
+    // ============================================================
+    // ACCIONES
+    // ============================================================
     public void refrescarTabla() {
         listaPrestamos.setAll(prestamoAdminDAO.obtenerTodos());
         tablaPrestamos.setItems(listaPrestamos);
@@ -139,7 +142,12 @@ public class ControladorPrestamosAdmin {
 
     @FXML
     private void buscarPrestamo() {
-        String texto = txtBuscar.getText().toLowerCase();
+        String texto = txtBuscar.getText().toLowerCase().trim();
+
+        if (texto.isEmpty()) {
+            tablaPrestamos.setItems(listaPrestamos);
+            return;
+        }
 
         ObservableList<Prestamo> filtrado = listaPrestamos.filtered(p ->
                 p.getNombreUsuario().toLowerCase().contains(texto) ||
@@ -156,12 +164,12 @@ public class ControladorPrestamosAdmin {
     }
 
     private void editarPrestamo(Prestamo p) {
-        System.out.println("Editar préstamo ID: " + p.getId());
+        System.out.println("Editar préstamo: " + p.getId());
         // abrir modal…
     }
 
     private void eliminarPrestamo(Prestamo p) {
-        System.out.println("Eliminar préstamo ID: " + p.getId());
+        System.out.println("Eliminar préstamo: " + p.getId());
         // confirmar…
     }
 }
