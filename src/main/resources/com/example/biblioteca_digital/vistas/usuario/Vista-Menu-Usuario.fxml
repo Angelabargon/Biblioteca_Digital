@@ -27,6 +27,11 @@
                <Font size="15.0" />
             </font>
          </ToggleButton>
+         <ToggleButton fx:id="tbt_admin1" prefHeight="35.0" prefWidth="150.0" text="Mis favoritos">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </ToggleButton>
       </children>
    </HBox>
 
