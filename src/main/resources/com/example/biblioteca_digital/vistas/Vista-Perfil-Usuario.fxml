@@ -66,6 +66,19 @@
             </graphic>
         </Button>
 
+        <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="314.0" layoutY="33.0" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
+            <font>
+                <Font size="15.0" />
+            </font>
+            <graphic>
+                <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imagenes/IconoInterrogacion.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
    </children>
 
 </AnchorPane>

@@ -131,4 +131,14 @@ public class ControladorPerfilUsuario {
     private void cerrarPerfil(ActionEvent event) {
         Navegacion.cerrarVentana(event);
     }
+
+    @FXML
+    private void volverAtras(ActionEvent event) {
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml", "Menu Principal");
+    }
+
+    @FXML
+    private void mostrarAyuda(ActionEvent event) {
+        ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-PerfilUsuario.fxml", "Perfil Usuario");
+    }
 }
