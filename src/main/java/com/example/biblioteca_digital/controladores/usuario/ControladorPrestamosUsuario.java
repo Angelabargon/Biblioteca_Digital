@@ -1,10 +1,13 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
+import com.example.biblioteca_digital.controladores.ControladorAyuda;
+import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Estado;
 import com.example.biblioteca_digital.modelos.Usuario;
 import com.example.biblioteca_digital.modelos.Prestamo;
 import com.example.biblioteca_digital.modelos.Libro; // Necesario para el Prestamo
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -181,5 +184,9 @@ public class ControladorPrestamosUsuario {
         alert.setHeaderText(null);
         alert.setContentText(texto);
         alert.show();
+    }
+
+    public void mostrarAyuda(ActionEvent event) {
+       ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-PrestamosUsuario.fxml", "Prestamos Usuario");
     }
 }

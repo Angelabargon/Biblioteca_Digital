@@ -1,5 +1,6 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+import com.example.biblioteca_digital.controladores.ControladorAyuda;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -110,31 +111,10 @@ public class ControladorMenuInicioUsuario {
      */
     @FXML
     public void mostrarAyuda(ActionEvent event) {
-        try {
-            // Cargar el FXML de Ayuda
-            URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Usuario.fxml");
-            if (fxmlUrl == null) {
-                mostrarAlertaError("Error de Carga", "No se pudo encontrar el FXML de ayuda.");
-                return;
-            }
-
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            Parent root = loader.load();
-
-            // Crear una nueva Stage (ventana)
-            Stage stage = new Stage();
-            stage.setTitle("Ayuda de la Biblioteca Digital");
-            stage.setScene(new Scene(root));
-
-            // Hacerla modal (bloquea la ventana principal hasta que se cierre)
-            stage.initModality(Modality.APPLICATION_MODAL);
-
-            stage.showAndWait(); // Muestra y espera a que se cierre
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            mostrarAlertaError("Error de E/S", "No se pudo abrir la ventana de ayuda.");
-        }
+        ControladorAyuda.mostrarAyuda(
+                "/com/example/biblioteca_digital/vistas/Vista-Ayuda-Usuario.fxml",
+                "Usuario"
+        );
     }
 
     private void mostrarVistaPerfil() throws IOException {

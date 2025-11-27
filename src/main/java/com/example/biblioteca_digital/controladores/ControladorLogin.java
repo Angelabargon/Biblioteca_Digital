@@ -79,22 +79,9 @@ public class ControladorLogin {
             });
         }
 
+        @FXML
         public void mostrarAyuda(ActionEvent event) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml"));
-                Parent root = loader.load();
-
-                Stage ayudaStage = new Stage();
-                ayudaStage.setTitle("Guía");
-                ayudaStage.setScene(new Scene(root));
-                ayudaStage.initModality(Modality.APPLICATION_MODAL);
-                ayudaStage.initStyle(StageStyle.UTILITY);
-                ayudaStage.setResizable(false);
-                ayudaStage.showAndWait();
-
-            } catch (IOException e) {
-                System.out.println("Error al cargar la ayuda.");
-            }
+            ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-Login.fxml", "Login");
         }
 
         @FXML
@@ -103,36 +90,23 @@ public class ControladorLogin {
             String email = tf_email.getText().trim();
             String contraseña = pf_contraseña.getText().trim();
             String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
-            if (email.isEmpty() || contraseña.isEmpty())
-            {
+
+            if (email.isEmpty() || contraseña.isEmpty()) {
                 System.out.println("Rellena todos los campos.");
                 return;
             }
+
             Optional<Usuario> cuentaAutenticada = autenticar(email, contraseña, rol);
             if (cuentaAutenticada.isPresent())
             {
                 Sesion.setUsuario(cuentaAutenticada.get());
-                String vistaDestino = rol.equals("usuario") ?
-                        "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml" :
-                        "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
-                try
-                {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
-                    Parent root = loader.load();
 
-                    Stage stage = new Stage();
-                    stage.setTitle("Bienvenido");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                    ((Stage) bt_inicioUsuario.getScene().getWindow()).close();
-                }
-                catch (IOException e)
-                {
-                    System.out.println("Error, no se pudo cargar la vista de " + rol.toLowerCase() + ".");
-                }
-            }
-            else
-            {
+                String vistaDestino = rol.equals("usuario")
+                        ? "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml"
+                        : "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
+
+                Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
+            } else {
                 System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             }
         }

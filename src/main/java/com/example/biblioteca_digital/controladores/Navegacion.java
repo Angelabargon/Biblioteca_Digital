@@ -1,20 +1,24 @@
 package com.example.biblioteca_digital.controladores;
 
+/*
+Hacemos los importes necesarios.
+ */
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
+/*
+Creamos la clase Navegación que almacenará los métodos encargados de los cambios entre activitys, así como sus cierres.
+ */
 public class Navegacion {
 
-    public static void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
-    public static void cambiarVista(ActionEvent event, String fxml, String titulo) {
+    /*
+    Creamos un metodo para cambiar de la activity actual a otra.
+     */
+    public static void cambiarVista(ActionEvent event, String rutaFXML, String titulo) {
         try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
-                    Navegacion.class.getResource(fxml)
+                    Navegacion.class.getResource(rutaFXML)
             );
             javafx.scene.Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -22,7 +26,23 @@ public class Navegacion {
             stage.setTitle(titulo);
             stage.show();
         } catch (Exception e) {
-            System.out.println("Error al cambiar a la vista: " + fxml);
+            System.out.println("Error al cambiar a la vista: " + rutaFXML);
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Creamos un metodo cerrar una ventana y vover a la página anterior.
+     */
+    public static void cerrarVentana(ActionEvent event) {
+
+        String titulo = "Título";
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            titulo = stage.getTitle();
+            stage.close();
+        } catch (Exception e) {
+            System.out.println("Error al cerrar la vista: " + titulo);
             e.printStackTrace();
         }
     }

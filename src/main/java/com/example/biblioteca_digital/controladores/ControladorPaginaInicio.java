@@ -26,7 +26,7 @@ public class ControladorPaginaInicio
      * @param event
      */
     public void irALogin(javafx.event.ActionEvent event) {
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Registro.fxml", "Registro");
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Login.fxml", "Login");
 
     }
     /**
@@ -34,6 +34,6 @@ public class ControladorPaginaInicio
      * @param event
      */
     public void irARegistro(javafx.event.ActionEvent event) {
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Login.fxml", "Login");
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Registro.fxml", "Registro");
     }
 }

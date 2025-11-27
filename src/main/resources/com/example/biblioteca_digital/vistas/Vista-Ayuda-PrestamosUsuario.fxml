@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.biblioteca_digital.controladores.ControladorAyuda"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+
+        <Label id="lb_tituloAyuda" layoutX="45.0" layoutY="40.0" prefWidth="450.0" style="-fx-font-weight: bold;" text="Guía de Menú Principal" wrapText="true">
+            <font>
+                <Font size="30.0" />
+            </font>
+            <graphic>
+                <ImageView id="iv_iconoAyuda" fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imagenes/IconoInterrogacion.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Label>
+
+        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫  Punto 1." textAlignment="JUSTIFY" wrapText="true">
+            <font>
+                <Font size="17.5" />
+            </font>
+        </Label>
+
+        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ Punto 2." textAlignment="JUSTIFY" wrapText="true">
+            <font>
+                <Font size="17.5" />
+            </font>
+        </Label>
+
+        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Punto 3." textAlignment="JUSTIFY" wrapText="true">
+            <font>
+                <Font size="17.5" />
+            </font>
+        </Label>
+
+        <Button id="bt_cerrarAyuda" alignment="CENTER" layoutX="230.0" layoutY="323.0" mnemonicParsing="false" onAction="#cerrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Cerrar">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+
+    </children>
+
+</AnchorPane>
