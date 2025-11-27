@@ -1,6 +1,6 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.DAO.Admin.UsuarioAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -214,7 +213,7 @@ public class ControladorUsuarioAdmin {
 
     private void abrirEditor(Usuario u) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/editarUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarUsuario.fxml"));
             Parent root = loader.load();
             com.example.biblioteca_digital.controladores.admin.ControladorEditarUsuario ctrl = loader.getController();
             Stage st = new Stage();

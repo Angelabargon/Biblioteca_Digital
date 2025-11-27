@@ -13,7 +13,7 @@
 
       <ImageView fx:id="iv_icono" fitHeight="85.0" fitWidth="85.0" layoutX="168.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
        <image>
-           <Image url="@../imagenes/IconoUsuario.png" />
+           <Image url="@../../imagenes/IconoUsuario.png" />
        </image>
       </ImageView>
 
@@ -60,7 +60,7 @@
             <graphic>
                 <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../imagenes/icono-volver.png" />
+                        <Image url="@../../imagenes/icono-volver.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -73,7 +73,7 @@
             <graphic>
                 <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../imagenes/IconoInterrogacion.png" />
+                        <Image url="@../../imagenes/IconoInterrogacion.png" />
                     </image>
                 </ImageView>
             </graphic>

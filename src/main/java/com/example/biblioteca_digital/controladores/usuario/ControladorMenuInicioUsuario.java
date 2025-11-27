@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class ControladorMenuInicioUsuario {
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
         // Cargar la vista inicial (Catálogo)
-        cargarVista("/com/example/biblioteca_digital/vistas/Vista-Catalogo-Usuario.fxml", true);
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", true);
     }
 
     @FXML
@@ -58,7 +57,7 @@ public class ControladorMenuInicioUsuario {
         boolean esCatalogo = false;
 
         if (botonSeleccionado == tbt_MENU) {
-            vistaFxml = "/com/example/biblioteca_digital/vistas/Vista-Catalogo-Usuario.fxml";
+            vistaFxml = "/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml";
             esCatalogo = true;
         } else if (botonSeleccionado == tbt_PRESTAMOS) {
             vistaFxml = "/com/example/biblioteca_digital/vistas/Vista-MisPrestamos-Usuario.fxml";

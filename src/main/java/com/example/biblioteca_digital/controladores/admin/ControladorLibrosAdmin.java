@@ -1,7 +1,7 @@
 package com.example.biblioteca_digital.controladores.admin;
 
 import com.example.biblioteca_digital.modelos.Libro;
-import com.example.biblioteca_digital.DAO.Admin.LibroAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.LibroAdminDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -198,7 +198,7 @@ public class ControladorLibrosAdmin {
      */
     private void abrirEditor(Libro libro) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/editarLibro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarLibro.fxml"));
             Parent root = loader.load();
             // Tu controlador del editor: ControladorEditarLibros
             com.example.biblioteca_digital.controladores.admin.ControladorEditarLibros ctrl = loader.getController();

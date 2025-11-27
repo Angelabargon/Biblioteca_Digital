@@ -1,6 +1,6 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.PrestamoAdminDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

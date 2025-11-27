@@ -142,7 +142,7 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
             Parent root = loader.load();
 
             // Asume que este controlador maneja la vista de detalle
-            ControladorLibrosUsuario controlador = loader.getController();
+            ControladorLibrosIndividual controlador = loader.getController();
             controlador.setLibro(libro, usuarioActual);
 
             Stage stage = new Stage();
@@ -164,7 +164,7 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
             Parent item = loader.load();
             // Asume que tienes un controlador específico para la tarjeta de libro
-            ControladorVistaLibro controlador = loader.getController();
+            ControladorLibroCatalogo controlador = loader.getController();
             controlador.setDatos(libro, favoritos.contains(libro.getId()), this);
 
             return item;
@@ -174,166 +174,6 @@ public class ControladorCatalogoUsuario { // Nombre del controlador de la sub-vi
             return new Label("Error al cargar item: " + libro.getTitulo());
         }
     }
-
-    // --- LÓGICA DE BASE DE DATOS (Mismos métodos que tenías) ---
-
-    // LIBROS
-    private List<Libro> obtenerTodosLosLibros() { /* ... Tu lógica de DB ... */
-        List<Libro> lista = new ArrayList<>();
-        String sql = "SELECT * FROM libros";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery())
-        {
-            while (rs.next())
-            {
-                Libro libro = new Libro(
-                        rs.getInt("id"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getString("descripcion"),
-                        rs.getString("genero"),
-                        rs.getString("isbn"),
-                        rs.getString("foto"),
-                        rs.getInt("cantidad"),
-                        rs.getBoolean("disponible")
-                );
-                lista.add(libro);
-            }
-
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        return lista;
-    }
-
-    // FAVORITOS
-    private List<Integer> obtenerFavoritosUsuario(int idUsuario) { /* ... Tu lógica de DB ... */
-        List<Integer> lista = new ArrayList<>();
-        String sql = "SELECT id_libro FROM favoritos WHERE id_usuario = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next())
-            {
-                lista.add(rs.getInt("id_libro"));
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return lista;
-    }
-
-    private void alternarFavorito(int idLibro) {
-        if (favoritos.contains(idLibro)) {
-            eliminarFavorito(idLibro);
-        } else {
-            insertarFavorito(idLibro);
-        }
-        // Actualizar la lista local y el contador
-        favoritos = obtenerFavoritosUsuario(usuarioActual.getId());
-        if (labelContadorFavoritos != null) labelContadorFavoritos.setText(String.valueOf(favoritos.size()));
-
-        // Refrescar el catálogo para actualizar el ícono de corazón
-        mostrarLibrosFiltrados();
-    }
-
-    private void insertarFavorito(int idLibro) { /* ... Tu lógica de DB ... */
-        String sql = "INSERT INTO favoritos (id_usuario, id_libro) VALUES (?, ?)";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, usuarioActual.getId());
-            pst.setInt(2, idLibro);
-            pst.executeUpdate();
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private void eliminarFavorito(int idLibro) { /* ... Tu lógica de DB ... */
-        String sql = "DELETE FROM favoritos WHERE id_usuario = ? AND id_libro = ?";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, usuarioActual.getId());
-            pst.setInt(2, idLibro);
-            pst.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    // PRÉSTAMOS
-    private int contarPrestamosActivos(int idUsuario) { /* ... Tu lógica de DB ... */
-        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) return rs.getInt(1);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    private boolean pedirPrestado(int idLibro) {
-        // Lógica de validación antes de la inserción (por ejemplo, límite de préstamos)
-        if (prestamosActivos >= 5) { // Ejemplo de límite
-            mostrarAlertaError("Límite Alcanzado", "No puedes tener más de 5 libros en préstamo a la vez.");
-            return false;
-        }
-
-        // Obtener el libro para verificar disponibilidad
-        Libro libroAPrestar = libros.stream().filter(l -> l.getId() == idLibro).findFirst().orElse(null);
-        if (libroAPrestar == null || libroAPrestar.getCantidad() <= 0) {
-            // Mostrar error si el libro no está disponible
-            return false;
-        }
-
-        String sql = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
-                "VALUES (?, ?, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL 15 DAY), 'activo')";
-        String sqlUpdate = "UPDATE libros SET cantidad = cantidad - 1 WHERE id = ?";
-
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql);
-             PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate))
-        {
-            // 1. Insertar préstamo
-            pst.setInt(1, usuarioActual.getId());
-            pst.setInt(2, idLibro);
-            pst.executeUpdate();
-
-            // 2. Decrementar disponibilidad del libro
-            pstUpdate.setInt(1, idLibro);
-            pstUpdate.executeUpdate();
-
-            prestamosActivos++;
-            if (labelContadorPrestamos != null) labelContadorPrestamos.setText(String.valueOf(prestamosActivos));
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlertaError("Error de Base de Datos", "No se pudo completar la solicitud de préstamo.");
-            return false;
-        }
-    }
-
     // --- UTILIDADES ---
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

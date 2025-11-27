@@ -45,6 +45,11 @@ public class Libro {
         this.disponible = disponible;
     }
 
+    public Libro(int idLibro, String tituloLibro) {
+        this.id = idLibro;
+        this.titulo = tituloLibro;
+    }
+
     /*
      *Getters de los atributos de un libro
      *@return

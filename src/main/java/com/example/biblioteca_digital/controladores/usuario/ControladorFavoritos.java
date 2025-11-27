@@ -1,4 +1,4 @@
-package com.example.biblioteca_digital.controladores;
+package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;

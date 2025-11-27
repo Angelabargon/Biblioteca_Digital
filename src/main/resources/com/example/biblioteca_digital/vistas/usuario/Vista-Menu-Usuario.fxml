@@ -34,7 +34,7 @@
     </AnchorPane>
     <ImageView id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../imagenes/IconoUsuario.png" />
+            <Image url="@../../imagenes/IconoUsuario.png" />
         </image>
     </ImageView>
    <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="1293.0" layoutY="25.0" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
@@ -44,7 +44,7 @@
       <graphic>
          <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../imagenes/IconoInterrogacion.png" />
+               <Image url="@../../imagenes/IconoInterrogacion.png" />
             </image>
          </ImageView>
       </graphic>

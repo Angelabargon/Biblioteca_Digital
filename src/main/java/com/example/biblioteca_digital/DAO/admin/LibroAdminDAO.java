@@ -1,4 +1,4 @@
-package com.example.biblioteca_digital.DAO.Admin;
+package com.example.biblioteca_digital.DAO.admin;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;

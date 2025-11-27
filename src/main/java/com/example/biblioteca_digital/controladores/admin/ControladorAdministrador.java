@@ -1,12 +1,9 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.DAO.Admin.LibroAdminDAO;
-import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
-import com.example.biblioteca_digital.DAO.Admin.UsuarioAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.LibroAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO;
 import com.example.biblioteca_digital.modelos.Sesion;
-import com.example.biblioteca_digital.DAO.Admin.LibroAdminDAO;
-import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
-import com.example.biblioteca_digital.DAO.Admin.UsuarioAdminDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

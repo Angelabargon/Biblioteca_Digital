@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class ControladorVistaLibro
+public class ControladorLibroCatalogo
 {
     @FXML private Label tituloLabel;
     @FXML private Label autorLabel;

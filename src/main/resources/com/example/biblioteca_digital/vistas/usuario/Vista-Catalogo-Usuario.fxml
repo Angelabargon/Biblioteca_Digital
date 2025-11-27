@@ -18,7 +18,7 @@
 <?import java.net.URL?>
 <BorderPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
     <stylesheets>
-        <URL value="@../estilo/estilo.css" />
+        <URL value="@../../estilo/estilo.css" />
     </stylesheets>
     <top>
         <VBox style="-fx-background-color: #f8f6f2;">
@@ -87,7 +87,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -125,7 +125,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -160,7 +160,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -195,7 +195,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -230,7 +230,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -266,7 +266,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -301,7 +301,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -333,7 +333,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -365,7 +365,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -398,7 +398,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -430,7 +430,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -462,7 +462,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -494,7 +494,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -527,7 +527,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">
@@ -559,7 +559,7 @@
                             <StackPane prefHeight="280.0" prefWidth="250.0">
                                 <ImageView fitHeight="280.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../imagenes/geronimo-stilton-1.jpg" />
+                                        <Image url="@../../imagenes/geronimo-stilton-1.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button StackPane.alignment="TOP_RIGHT" styleClass="favorite-button">

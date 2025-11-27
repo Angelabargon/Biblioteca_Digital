@@ -8,17 +8,10 @@ import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,8 +95,8 @@ public class ControladorLogin {
                 Sesion.setUsuario(cuentaAutenticada.get());
 
                 String vistaDestino = rol.equals("usuario")
-                        ? "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml"
-                        : "/com/example/biblioteca_digital/vistas/Vista-Administrador.fxml";
+                        ? "/com/example/biblioteca_digital/vistas/usuario/Vista-Menu-Usuario.fxml"
+                        : "/com/example/biblioteca_digital/vistas/admin/Vista-Administrador.fxml";
 
                 Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
             } else {

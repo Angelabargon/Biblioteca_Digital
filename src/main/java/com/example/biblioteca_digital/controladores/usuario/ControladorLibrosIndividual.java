@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ControladorLibrosUsuario {
+public class ControladorLibrosIndividual {
 
     //Elementos Vista
     @FXML

@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.util.function.Consumer;
 
-public class ControladorPrestamoIndividual
+public class ControladorPedirPrestamo
 {
     // Componentes FXML de la tarjeta individual
     @FXML private Label lblTitulo;

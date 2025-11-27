@@ -9,7 +9,6 @@ import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -134,11 +133,11 @@ public class ControladorPerfilUsuario {
 
     @FXML
     private void volverAtras(ActionEvent event) {
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Menu-Usuario.fxml", "Menu Principal");
+        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/usuario/Vista-Menu-Usuario.fxml", "Menu Principal");
     }
 
     @FXML
     private void mostrarAyuda(ActionEvent event) {
-        ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-PerfilUsuario.fxml", "Perfil Usuario");
+        ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/usuario/Vista-Ayuda-PerfilUsuario.fxml", "Perfil Usuario");
     }
 }
