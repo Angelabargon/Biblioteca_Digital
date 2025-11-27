@@ -187,6 +187,6 @@ public class ControladorPrestamosUsuario {
     }
 
     public void mostrarAyuda(ActionEvent event) {
-       // ControladorAyuda.mostrarAyuda();
+       ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/Vista-Ayuda-PrestamosUsuario.fxml", "Prestamos Usuario");
     }
 }
