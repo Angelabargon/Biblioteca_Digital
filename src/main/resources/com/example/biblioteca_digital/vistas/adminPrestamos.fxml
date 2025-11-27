@@ -1,31 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorPrestamosAdmin">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorPrestamosAdmin">
+
+    <!-- TOP BAR -->
     <top>
-        <HBox spacing="8" style="-fx-padding:10;">
-            <TextField fx:id="txtBuscar" promptText="Buscar préstamo por usuario o libro" HBox.hgrow="ALWAYS"/>
-            <Button text="Buscar" onAction="#buscarPrestamo"/>
-            <Button text="Añadir préstamo" onAction="#abrirAgregarPrestamo" style="-fx-background-color:#10B981; -fx-text-fill:white;"/>
+        <HBox spacing="12" style="-fx-background-color: #F4F6F9;" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="12" bottom="12" left="20" right="20"/>
+            </padding>
+
+            <Label text="Préstamos"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="btnAgregarPrestamo"
+                    text="Nuevo Préstamo"
+                    onAction="#nuevoPrestamo"
+                    style="-fx-background-color: #0066FF; -fx-text-fill: white; -fx-background-radius: 8;"
+            >
+                <graphic>
+                    <ImageView fitHeight="18" fitWidth="18"
+                               pickOnBounds="true" preserveRatio="true"
+                               fx:id="iconAdd"/>
+                </graphic>
+            </Button>
+
         </HBox>
     </top>
+
+    <!-- CENTER TABLE -->
     <center>
-        <TableView fx:id="tablaPrestamos" prefHeight="600">
-            <columns>
-                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
-                <TableColumn fx:id="colUsuario" text="ID Usuario" prefWidth="120"/>
-                <TableColumn fx:id="colLibro" text="ID Libro" prefWidth="120"/>
-                <TableColumn fx:id="colInicio" text="Inicio" prefWidth="160"/>
-                <TableColumn fx:id="colFin" text="Fin" prefWidth="160"/>
-                <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
-            </columns>
-        </TableView>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+
+            <!-- SEARCH BAR -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="txtBuscar"
+                           promptText="Buscar préstamo..."
+                           onKeyReleased="#buscarPrestamo"
+                           style="-fx-background-radius: 8; -fx-padding: 8;"/>
+
+                <Button text="Buscar"
+                        onAction="#buscarPrestamo"
+                        style="-fx-background-color: #0066FF; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            </HBox>
+
+            <!-- TABLE -->
+            <TableView fx:id="tablaPrestamos"
+                       prefHeight="500"
+                       style="-fx-background-radius: 12; -fx-border-radius: 12;">
+
+                <columns>
+
+                    <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="150"/>
+
+                    <TableColumn fx:id="colLibro" text="Libro" prefWidth="150"/>
+
+                    <TableColumn fx:id="colFechaPrestamo" text="Fecha Préstamo" prefWidth="140"/>
+
+                    <TableColumn fx:id="colFechaVencimiento" text="Fecha Vencimiento" prefWidth="150"/>
+
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
+
+                    <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"/>
+
+                </columns>
+
+            </TableView>
+        </VBox>
     </center>
-    <bottom>
-        <HBox spacing="8" style="-fx-padding:10;">
-            <Button text="Editar" onAction="#editarPrestamo"/>
-            <Button text="Eliminar" onAction="#eliminarPrestamo" style="-fx-background-color:#ef4444; -fx-text-fill:white;"/>
-        </HBox>
-    </bottom>
+
 </BorderPane>

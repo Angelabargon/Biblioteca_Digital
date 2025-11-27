@@ -1,45 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador">
-    <left>
-        <VBox style="-fx-background-color:#1A1A1A; -fx-padding:20; -fx-spacing:18;" prefWidth="220">
-            <Label text="ADMIN PANEL" style="-fx-text-fill:white; -fx-font-size:18; -fx-font-weight:bold;"/>
-            <Button text="Catálogo" onAction="#mostrarCatalogo"/>
-            <Button text="Libros" onAction="#mostrarLibros"/>
-            <Button text="Usuarios" onAction="#mostrarUsuarios"/>
-            <Button text="Préstamos" onAction="#mostrarPrestamos"/>
-            <Region VBox.vgrow="ALWAYS"/>
-            <Button text="Cerrar sesión" style="-fx-background-color:#ff4444; -fx-text-fill:white;" onAction="#cerrarSesion"/>
-        </VBox>
-    </left>
-    <center>
-        <AnchorPane fx:id="panelContenido"/>
-    </center>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador">
+
+    <!-- TOP: TÍTULO / ESTADÍSTICAS / BARRA DE APARTADOS -->
     <top>
-        <HBox spacing="12" style="-fx-padding:12;">
-            <Label text="Panel administrador" style="-fx-font-size:18; -fx-font-weight:bold;"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox spacing="8">
-                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
-                    <Label text="Total libros" style="-fx-text-fill:#9CA3AF;"/>
-                    <Label fx:id="lblTotalLibros" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
-                </VBox>
-                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
-                    <Label text="Total usuarios" style="-fx-text-fill:#9CA3AF;"/>
-                    <Label fx:id="lblTotalUsuarios" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
-                </VBox>
-                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
-                    <Label text="Préstamos activos" style="-fx-text-fill:#9CA3AF;"/>
-                    <Label fx:id="lblPrestamosActivos" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
-                </VBox>
-                <VBox style="-fx-padding:8; -fx-background-color:#0b1220;">
-                    <Label text="Préstamos vencidos" style="-fx-text-fill:#9CA3AF;"/>
-                    <Label fx:id="lblPrestamosVencidos" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
-                </VBox>
+        <VBox spacing="12" style="-fx-padding: 14 20 10 20; -fx-background-color: transparent;">
+
+            <!-- FILA 1: TITULO -->
+            <HBox>
+                <Label text="Panel de Administración"
+                       style="-fx-font-size:24px; -fx-font-weight:700; -fx-text-fill: #2b2b2b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <!-- Opcional: botón cerrar sesión aquí si lo quieres arriba -->
             </HBox>
-        </HBox>
+
+            <!-- FILA 2: ESTADÍSTICAS -->
+            <HBox spacing="12" style="-fx-padding: 6 0 0 0;">
+                <HBox style="-fx-background-color: white; -fx-padding:12; -fx-border-radius:8; -fx-background-radius:8;"
+                      spacing="10">
+                    <VBox>
+                        <Label text="Total Libros" style="-fx-text-fill:#6b6b6b;"/>
+                        <Label fx:id="lblTotalLibros" text="0" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox style="-fx-background-color: white; -fx-padding:12; -fx-border-radius:8; -fx-background-radius:8;"
+                      spacing="10">
+                    <VBox>
+                        <Label text="Total Usuarios" style="-fx-text-fill:#6b6b6b;"/>
+                        <Label fx:id="lblTotalUsuarios" text="0" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox style="-fx-background-color: white; -fx-padding:12; -fx-border-radius:8; -fx-background-radius:8;"
+                      spacing="10">
+                    <VBox>
+                        <Label text="Préstamos Activos" style="-fx-text-fill:#6b6b6b;"/>
+                        <Label fx:id="lblPrestamosActivos" text="0" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox style="-fx-background-color: white; -fx-padding:12; -fx-border-radius:8; -fx-background-radius:8;"
+                      spacing="10">
+                    <VBox>
+                        <Label text="Préstamos Vencidos" style="-fx-text-fill:#6b6b6b;"/>
+                        <Label fx:id="lblPrestamosVencidos" text="0" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+                    </VBox>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <!-- FILA 3: BARRA DE APARTADOS (píldora) -->
+            <HBox>
+                <HBox spacing="6" style="-fx-background-color:#efe9e2; -fx-padding:6; -fx-background-radius:18;">
+                    <!-- Botones: llamarán a los métodos del controlador -->
+                    <Button text="Libros" onAction="#mostrarLibros"
+                            style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" />
+                    <Button text="Usuarios" onAction="#mostrarUsuarios"
+                            style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" />
+                    <Button text="Préstamos" onAction="#mostrarPrestamos"
+                            style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" />
+                    <Button text="Catálogo" onAction="#mostrarCatalogo"
+                            style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" />
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Botones adicionales (Cerrar sesión / Ayuda) a la derecha si lo quieres -->
+                <Button text="Cerrar sesión" onAction="#cerrarSesion"
+                        style="-fx-background-color:#8b4b2e; -fx-text-fill:white; -fx-padding:8 14;"/>
+            </HBox>
+
+        </VBox>
     </top>
+
+    <!-- CENTER: Panel donde se cargan las sub-vistas (libros/usuarios/prestamos/catalogo) -->
+    <center>
+        <AnchorPane fx:id="panelContenido" style="-fx-padding:16; -fx-background-color: transparent;"/>
+    </center>
+
 </BorderPane>
+

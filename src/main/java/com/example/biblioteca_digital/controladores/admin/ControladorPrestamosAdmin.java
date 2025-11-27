@@ -1,108 +1,167 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.modelos.Prestamo;
-import com.example.biblioteca_digital.modelos.Estado;
 import com.example.biblioteca_digital.DAO.Admin.PrestamoAdminDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import com.example.biblioteca_digital.modelos.Prestamo;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
 
 public class ControladorPrestamosAdmin {
 
-    @FXML private TableView<Prestamo> tablaPrestamos;
-    @FXML private TableColumn<Prestamo, Integer> colId;
-    @FXML private TableColumn<Prestamo, Integer> colUsuario;
-    @FXML private TableColumn<Prestamo, Integer> colLibro;
-    @FXML private TableColumn<Prestamo, LocalDate> colInicio;
-    @FXML private TableColumn<Prestamo, LocalDate> colFin;
-    @FXML private TableColumn<Prestamo, String> colEstado;
-    @FXML private TextField txtBuscar;
+    @FXML
+    private TableView<Prestamo> tablaPrestamos;
 
-    private final PrestamoAdminDAO prestamoServicio = new PrestamoAdminDAO();
-    private final ObservableList<Prestamo> lista = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<Prestamo, String> colUsuario;
+
+    @FXML
+    private TableColumn<Prestamo, String> colLibro;
+
+    @FXML
+    private TableColumn<Prestamo, String> colFechaPrestamo;
+
+    @FXML
+    private TableColumn<Prestamo, String> colFechaVencimiento;
+
+    @FXML
+    private TableColumn<Prestamo, String> colEstado;
+
+    @FXML
+    private TableColumn<Prestamo, Void> colAcciones;
+
+    @FXML
+    private TextField txtBuscar;
+
+    @FXML
+    private Button btnAgregarPrestamo;
+
+    @FXML
+    private ImageView iconAdd;
+
+    private final PrestamoAdminDAO prestamoAdminDAO = new PrestamoAdminDAO();
+    private ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList();
+
+    private final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     public void initialize() {
-        if (colId!=null) colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        if (colUsuario!=null) colUsuario.setCellValueFactory(new PropertyValueFactory<>("id_usuario"));
-        if (colLibro!=null) colLibro.setCellValueFactory(new PropertyValueFactory<>("id_libro"));
-        if (colInicio!=null) colInicio.setCellValueFactory(new PropertyValueFactory<>("fecha_inicio"));
-        if (colFin!=null) colFin.setCellValueFactory(new PropertyValueFactory<>("fecha_fin"));
-        if (colEstado!=null) colEstado.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getEstado()));
+        // Ícono del botón agregar
+        iconAdd.setImage(new Image(getClass().getResourceAsStream("/icons/add.png")));
 
-        cargarPrestamos();
+        cargarColumnas();
+        refrescarTabla();
     }
 
-    private void cargarPrestamos() {
-        lista.setAll(prestamoServicio.obtenerTodos());
-        if (tablaPrestamos!=null) tablaPrestamos.setItems(lista);
-    }
+    private void cargarColumnas() {
 
-    @FXML public void buscarPrestamo() {
-        String q = txtBuscar!=null? txtBuscar.getText().trim().toLowerCase() : "";
-        if (q.isEmpty()) { cargarPrestamos(); return; }
-        ObservableList<Prestamo> filt = lista.filtered(p ->
-                String.valueOf(p.getId_usuario()).contains(q) ||
-                        String.valueOf(p.getId_libro()).contains(q)
-        );
-        tablaPrestamos.setItems(filt);
-    }
+        colUsuario.setCellValueFactory(data -> data.getValue().nombreUsuarioProperty());
+        colLibro.setCellValueFactory(data -> data.getValue().tituloLibroProperty());
 
-    @FXML public void abrirAgregarPrestamo() { abrirEditor(null); }
-    @FXML public void editarPrestamo() {
-        Prestamo sel = tablaPrestamos.getSelectionModel().getSelectedItem();
-        if (sel==null) { mostrarAlerta("Selecciona un préstamo"); return; }
-        abrirEditor(sel);
-    }
-    @FXML public void eliminarPrestamo() {
-        Prestamo sel = tablaPrestamos.getSelectionModel().getSelectedItem();
-        if (sel==null) { mostrarAlerta("Selecciona un préstamo"); return; }
-        Alert a=new Alert(Alert.AlertType.CONFIRMATION,"Eliminar préstamo?",ButtonType.OK,ButtonType.CANCEL);
-        a.setHeaderText(null);
-        Optional<javafx.scene.control.ButtonType> r = a.showAndWait();
-        if (r.isPresent() && r.get()==ButtonType.OK) {
-            boolean ok = prestamoServicio.eliminarPrestamo(sel.getId());
-            if (!ok) mostrarAlerta("No se pudo eliminar.");
-            cargarPrestamos();
-        }
-    }
+        colFechaPrestamo.setCellValueFactory(data ->
+                javafx.beans.binding.Bindings.createStringBinding(() ->
+                        data.getValue().getFechaPrestamo().format(formato)));
 
-    private void abrirEditor(Prestamo p) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/editarPrestamo.fxml"));
-            Parent root = loader.load();
-            ControladorEditarPrestamo ctrl = loader.getController();
-            Stage st = new Stage();
-            st.initOwner(tablaPrestamos.getScene().getWindow());
-            st.initModality(Modality.APPLICATION_MODAL);
-            ctrl.setStage(st);
-            ctrl.setPrestamo(p);
-            ctrl.setOnGuardarCallback(() -> {
-                Prestamo res = ctrl.getPrestamoResultado();
-                if (p==null) {
-                    boolean ok = prestamoServicio.agregarPrestamo(res);
-                    if (!ok) mostrarAlerta("No se pudo crear.");
-                } else {
-                    res.setId(p.getId());
-                    boolean ok = prestamoServicio.actualizarPrestamo(res);
-                    if (!ok) mostrarAlerta("No se pudo actualizar.");
+        colFechaVencimiento.setCellValueFactory(data ->
+                javafx.beans.binding.Bindings.createStringBinding(() ->
+                        data.getValue().getFechaVencimiento().format(formato)));
+
+        // Estado con badge visual
+        colEstado.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String estado, boolean empty) {
+                super.updateItem(estado, empty);
+
+                if (empty) {
+                    setText(null);
+                    setStyle("");
+                    return;
                 }
-                cargarPrestamos();
-            });
-            st.setScene(new javafx.scene.Scene(root));
-            st.showAndWait();
-        } catch (IOException e) { e.printStackTrace(); mostrarAlerta("Error abrir editor"); }
+
+                Prestamo p = getTableView().getItems().get(getIndex());
+
+                boolean vencido = p.getFechaVencimiento().isBefore(LocalDate.now());
+                setText(vencido ? "Vencido" : "Vigente");
+
+                setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-alignment: center;"
+                        + (vencido
+                        ? "-fx-background-color: #E74C3C; -fx-background-radius: 12;"
+                        : "-fx-background-color: #2ECC71; -fx-background-radius: 12;"));
+            }
+        });
+
+        // Acciones (editar / eliminar)
+        colAcciones.setCellFactory(col -> new TableCell<>() {
+
+            private final ImageView iconEdit = new ImageView(new Image(getClass().getResourceAsStream("/icons/edit.png")));
+            private final ImageView iconDelete = new ImageView(new Image(getClass().getResourceAsStream("/icons/delete.png")));
+
+            private final Button btnEdit = new Button("", iconEdit);
+            private final Button btnDelete = new Button("", iconDelete);
+
+            {
+                iconEdit.setFitWidth(18);
+                iconEdit.setFitHeight(18);
+                iconDelete.setFitWidth(18);
+                iconDelete.setFitHeight(18);
+
+                btnEdit.setStyle("-fx-background-color: transparent;");
+                btnDelete.setStyle("-fx-background-color: transparent;");
+
+                btnEdit.setOnAction(e -> editarPrestamo(getTableView().getItems().get(getIndex())));
+                btnDelete.setOnAction(e -> eliminarPrestamo(getTableView().getItems().get(getIndex())));
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                HBox box = new HBox(10, btnEdit, btnDelete);
+                setGraphic(box);
+            }
+        });
     }
 
-    private void mostrarAlerta(String t) { Alert a=new Alert(Alert.AlertType.WARNING); a.setHeaderText(null); a.setContentText(t); a.showAndWait(); }
+    public void refrescarTabla() {
+        listaPrestamos.setAll(prestamoAdminDAO.obtenerTodos());
+        tablaPrestamos.setItems(listaPrestamos);
+    }
+
+    @FXML
+    private void buscarPrestamo() {
+        String texto = txtBuscar.getText().toLowerCase();
+
+        ObservableList<Prestamo> filtrado = listaPrestamos.filtered(p ->
+                p.getNombreUsuario().toLowerCase().contains(texto) ||
+                        p.getTituloLibro().toLowerCase().contains(texto)
+        );
+
+        tablaPrestamos.setItems(filtrado);
+    }
+
+    @FXML
+    private void nuevoPrestamo() {
+        System.out.println("Nuevo préstamo");
+        // abrir modal…
+    }
+
+    private void editarPrestamo(Prestamo p) {
+        System.out.println("Editar préstamo ID: " + p.getId());
+        // abrir modal…
+    }
+
+    private void eliminarPrestamo(Prestamo p) {
+        System.out.println("Eliminar préstamo ID: " + p.getId());
+        // confirmar…
+    }
 }
