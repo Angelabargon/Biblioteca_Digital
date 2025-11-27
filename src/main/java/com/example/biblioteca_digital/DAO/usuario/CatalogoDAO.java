@@ -1,4 +1,4 @@
-package com.example.biblioteca_digital.dao; // Asumiendo el paquete 'dao'
+package com.example.biblioteca_digital.DAO.usuario; // Asumiendo el paquete 'dao'
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro; // Necesitas el modelo Libro
