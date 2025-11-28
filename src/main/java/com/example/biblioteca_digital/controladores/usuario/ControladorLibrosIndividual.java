@@ -74,8 +74,7 @@ public class ControladorLibrosIndividual
         boolean exito = new PrestamoDAO().crearPrestamo(usuarioActual.getId(), libroActual.getId());
 
         if (exito) {
-            mensaje("¡Préstamo exitoso! Recarga el catálogo para ver el stock actualizado.");
-            // Opcional: Cerrar la ventana de detalles después del préstamo
+            mensaje("¡Préstamo exitoso!");
             handleVolver(new ActionEvent(btnPedirPrestado, null));
         } else {
             mensaje("No se pudo crear el préstamo. Verifica la disponibilidad.");
@@ -85,7 +84,6 @@ public class ControladorLibrosIndividual
     @FXML
     private void handleVolver(ActionEvent event)
     {
-        // Cierra la ventana modal actual
         Stage stage = (Stage) btnVolver.getScene().getWindow();
         stage.close();
     }

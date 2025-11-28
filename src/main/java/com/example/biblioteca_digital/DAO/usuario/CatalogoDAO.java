@@ -79,10 +79,10 @@ public class CatalogoDAO
                             rs.getString("isbn"),
                             rs.getString("descripcion"),
                             rs.getString("foto"),
-                            // Usar 'cantidad_disponible' y 'cantidad_total' para consistencia
                             rs.getInt("cantidad_disponible"),
                             rs.getInt("cantidad_total"),
-                            rs.getBoolean("disponible")
+                            rs.getBoolean("disponible"),
+                            rs.getString("contenido")
                     );
                     libros.add(libro);
                 }
@@ -134,10 +134,10 @@ public class CatalogoDAO
                             rs.getString("isbn"),
                             rs.getString("descripcion"),
                             rs.getString("foto"),
-                            // Se asume que el constructor de Libro requiere: disponible, total
                             rs.getInt("cantidad_disponible"),
                             rs.getInt("cantidad_total"),
-                            rs.getBoolean("disponible")
+                            rs.getBoolean("disponible"),
+                            rs.getString("contenido")
                     );
                 }
             }
@@ -157,7 +157,6 @@ public class CatalogoDAO
      */
     public int contarPrestamosActivos(int idUsuario)
     {
-        // ... (Este método se mantiene igual, ya que estaba correcto)
         int count = 0;
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND fecha_devolucion IS NULL";
         try (Connection conn = conectar();
@@ -192,27 +191,23 @@ public class CatalogoDAO
         String sqlCheck = "SELECT cantidad_disponible FROM libros WHERE id = ?";
         String sqlUpdate = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ?";
 
-        // Nota: 'obtenerDatosUsuarioYLibro' no se usa en la lógica de transacción real,
-        // solo para mensajes o logs. Se puede mantener o eliminar si no es necesario.
-        // String[] datosPrestamo = obtenerDatosUsuarioYLibro(idUsuario, idLibro);
-
         LocalDate fechaInicio = LocalDate.now();
         LocalDate fechaFin = fechaInicio.plusDays(14);
-        Connection conn = null; // Declarar fuera del try-with-resources para el rollback
+        Connection conn = null;
 
         try
         {
             conn = conectar();
-            conn.setAutoCommit(false); // Iniciar transacción
+            conn.setAutoCommit(false);
 
             int disponibles = 0;
-            // Bloque 1: Chequear disponibilidad
             try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck))
             {
                 psCheck.setInt(1, idLibro);
                 try (ResultSet rs = psCheck.executeQuery())
                 {
-                    if (rs.next()) {
+                    if (rs.next())
+                    {
                         disponibles = rs.getInt("cantidad_disponible");
                     }
                 }
@@ -236,7 +231,6 @@ public class CatalogoDAO
                 throw new SQLException("Fallo al guardar registro de préstamo");
             }
 
-            // Bloque 3: Actualizar el stock
             try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate))
             {
                 psUpdate.setInt(1, idLibro);
@@ -244,7 +238,7 @@ public class CatalogoDAO
                 if (filasAfectadas == 0) throw new SQLException("Fallo al actualizar stock disponible");
             }
 
-            conn.commit(); // Confirmar la transacción
+            conn.commit();
             return true;
         }
         catch (SQLException e)
@@ -253,7 +247,7 @@ public class CatalogoDAO
             if (conn != null)
             {
                 try {
-                    conn.rollback(); // Rollback en caso de error
+                    conn.rollback();
                 } catch (SQLException rollbackException) {
                     System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
                 }
@@ -266,7 +260,7 @@ public class CatalogoDAO
             if (conn != null)
             {
                 try {
-                    conn.close(); // Asegurar el cierre de la conexión
+                    conn.close();
                 } catch (SQLException closeException) {
                     System.err.println("Error al cerrar la conexión: " + closeException.getMessage());
                 }

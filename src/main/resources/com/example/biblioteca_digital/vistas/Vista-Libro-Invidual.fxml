@@ -3,75 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual">
-    <padding>
-        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-    </padding>
+<AnchorPane prefWidth="850" prefHeight="600" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual">
 
-    <left>
-        <VBox alignment="TOP_CENTER" prefWidth="350.0" spacing="15.0" BorderPane.alignment="TOP_LEFT">
-            <padding>
-                <Insets right="20.0" />
-            </padding>
-            <ImageView fx:id="imagenLibro" fitHeight="350.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../imagenes/geronimo-stilton-1.jpg" />
-                </image>
-            </ImageView>
+    <HBox spacing="30" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
 
-            <VBox alignment="CENTER_LEFT" spacing="5.0">
-                <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Detalles del Libro" />
-                <Label fx:id="tituloLabel" style="-fx-font-weight: bold; -fx-font-size: 20px;" text="Título del Libro" wrapText="true"/>
-                <Label fx:id="autorLabel" style="-fx-text-fill: #555555;" text="Autor del Libro" />
-                <Label fx:id="categoriaLabel" text="Género: [Categoría]" />
-                <Label fx:id="isbnLabel" text="ISBN: [ISBN]" />
-                <Label fx:id="disponiblesLabel" style="-fx-font-weight: bold; -fx-text-fill: #28a745;" text="Disponibles: X" />
-            </VBox>
+        <!-- IMAGEN DEL LIBRO -->
+        <ImageView fx:id="imagenLibro" fitHeight="380" fitWidth="260"
+                   style="-fx-effect: dropshadow(gaussian, #444, 10, 0, 0, 3);" />
 
-            <HBox spacing="10.0" alignment="CENTER" prefWidth="250.0">
-                <Button fx:id="btnAgregarFavorito"
-                        onAction="#handleAlternarFavorito"
-                        text="❤️ Añadir a Favoritos"
-                        prefWidth="160.0"
-                        style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc;"/>
+        <!-- PANEL DE INFORMACIÓN -->
+        <VBox spacing="12">
+            <Label fx:id="tituloLibro" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
+            <Label fx:id="autorLibro" style="-fx-font-size: 16px; -fx-text-fill: #555;" />
+            <Label fx:id="categoriaLibro" style="-fx-background-color: #d4a373; -fx-text-fill: white;
+                                                  -fx-padding: 3 9; -fx-background-radius: 6;" />
+            <Label fx:id="isbnLibro" style="-fx-font-size: 14px;" />
+            <Label fx:id="disponiblesLibro" style="-fx-font-size: 14px;" />
+            <Label fx:id="descripcionLibro" wrapText="true" maxWidth="420"
+                   style="-fx-font-size: 15px; -fx-text-fill: #333;" />
 
-                <Button fx:id="btnPedirPrestado"
-                        onAction="#handlePedirPrestado"
-                        text="Pedir Prestado"
-                        HBox.hgrow="ALWAYS"
-                        style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold;"/>
-            </HBox>
-
-            <Button fx:id="btnVolver"
-                    onAction="#handleVolver"
-                    text="← Volver al Catálogo"
-                    prefWidth="250.0"
-                    style="-fx-background-color: #6c757d; -fx-text-fill: white;"/>
+            <Button text="Leer Libro" fx:id="btnLeerLibro"
+                    style="-fx-background-color: #c19a6b; -fx-text-fill: white;
+                            -fx-font-size: 16px; -fx-background-radius: 8;
+                            -fx-padding: 10 20;" />
         </VBox>
-    </left>
 
-    <center>
-        <VBox spacing="10.0">
-            <Label style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Descripción" />
-            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-border-color: #cccccc;">
-                <TextArea fx:id="descripcionArea"
-                          editable="false"
-                          wrapText="true"
-                          style="-fx-font-size: 14px; -fx-control-inner-background: #ffffff; -fx-border-color: transparent;"
-                          minHeight="500.0">
-                    <padding>
-                        <Insets/>
-                    </padding>
-                </TextArea>
-            </ScrollPane>
-        </VBox>
-    </center>
-</BorderPane>
+    </HBox>
+
+</AnchorPane>

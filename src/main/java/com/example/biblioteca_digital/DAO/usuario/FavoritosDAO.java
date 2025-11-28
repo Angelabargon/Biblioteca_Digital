@@ -48,7 +48,8 @@ public class FavoritosDAO
                         rs.getString("foto"),
                         rs.getInt("cantidad_disponible"),
                         rs.getInt("cantidad"),
-                        rs.getBoolean("disponible")
+                        rs.getBoolean("disponible"),
+                        rs.getString("contenido")
                 );
                 lista.add(libro);
             }
