@@ -3,6 +3,7 @@ package com.example.biblioteca_digital.DAO.admin;
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Prestamo;
+import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
 
 import java.sql.*;
@@ -17,41 +18,55 @@ public class PrestamoAdminDAO {
      */
     public List<Prestamo> obtenerTodos() {
         List<Prestamo> lista = new ArrayList<>();
-        String sql = "SELECT p.id, p.id_usuario, p.id_libro, p.fecha_inicio, p.fecha_fin, p.estado, u.nombre_usuario, u.nombre, l.titulo " +
-                "FROM prestamos p " +
-                "JOIN usuarios u ON p.id_usuario = u.id " +
-                "JOIN libros l ON p.id_libro = l.id " +
-                "ORDER BY p.fecha_inicio DESC";
+        String sql = """
+            SELECT 
+                p.id, p.fecha_inicio, p.fecha_fin, p.estado,
+
+                u.id AS uid, u.nombre_usuario, u.nombre, u.primer_apellido, u.correo, u.rol,
+                
+                l.id AS lid, l.titulo, l.autor, l.descripcion, 
+                l.genero, l.isbn, l.foto, l.cantidad, l.cantidad_disponible, l.disponible
+
+            FROM prestamos p
+            JOIN usuarios u ON p.id_usuario = u.id
+            JOIN libros l ON p.id_libro = l.id
+            ORDER BY p.fecha_inicio DESC
+        """;
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Prestamo p = new Prestamo();
-                p.setId(rs.getInt("id"));
-                p.setId_usuario(rs.getInt("id_usuario"));
-                p.setId_libro(rs.getInt("id_libro"));
-                Date di = rs.getDate("fecha_inicio");
-                Date df = rs.getDate("fecha_fin");
-                if (di != null) p.setFecha_inicio(di.toLocalDate());
-                if (df != null) p.setFecha_fin(df.toLocalDate());
-                p.setEstado(rs.getString("estado"));
-
-                // usuario
                 Usuario u = new Usuario();
-                u.setId(rs.getInt("id_usuario"));
-                // prefer nombre_usuario if present, else nombre
-                String nombreUsuario = null;
-                try { nombreUsuario = rs.getString("nombre_usuario"); } catch (SQLException ex) {}
-                u.setNombreUsuario(nombreUsuario != null ? nombreUsuario : rs.getString("nombre"));
+                u.setId(rs.getInt("uid"));
+                u.setNombreUsuario(rs.getString("nombre_usuario"));
+                u.setNombre(rs.getString("nombre"));
+                u.setPrimerApellido(rs.getString("primer_apellido"));
+                u.setCorreo(rs.getString("correo"));
+                u.setRol(Rol.valueOf(rs.getString("rol")));
 
                 // libro
                 Libro l = new Libro();
-                l.setId(rs.getInt("id_libro"));
+                l.setId(rs.getInt("lid"));
                 l.setTitulo(rs.getString("titulo"));
+                l.setAutor(rs.getString("autor"));
+                l.setDescripcion(rs.getString("descripcion"));
+                l.setGenero(rs.getString("genero"));
+                l.setIsbn(rs.getString("isbn"));
+                l.setFoto(rs.getString("foto"));
+                l.setCantidad(rs.getInt("cantidad"));
+                l.setCantidadDisponible(rs.getInt("cantidad_disponible"));
+                l.setDisponible(rs.getBoolean("disponible"));
 
+                // Prestamo
+                Prestamo p = new Prestamo();
+                p.setId(rs.getInt("id"));
                 p.setUsuario(u);
                 p.setLibro(l);
+
+                p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
+                p.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
+                p.setEstado(rs.getString("estado"));
 
                 lista.add(p);
             }
@@ -63,95 +78,143 @@ public class PrestamoAdminDAO {
     }
 
     /**
-     * Crear préstamo en transacción: insertar en prestamos y decrementar cantidad del libro.
+     * Crear préstamo y actualizar cantidades y disponibilidad.
      */
     public boolean crearPrestamo(Prestamo prestamo) {
-        String selectSql = "SELECT cantidad FROM libros WHERE id = ? FOR UPDATE";
-        String insertSql = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?)";
-        String updateLibroSql = "UPDATE libros SET cantidad = cantidad - 1, disponible = (cantidad - 1) > 0 WHERE id = ?";
+        String bloquearLibro = "SELECT cantidad_disponible FROM libros WHERE id = ? FOR UPDATE";
+        String insertarPrestamo =
+                "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?)";
+        String actualizarLibro =
+                "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1, disponible = (cantidad_disponible - 1) > 0 WHERE id = ?";
 
         Connection con = null;
         try {
             con = ConexionBD.getConexion();
             con.setAutoCommit(false);
 
-            try (PreparedStatement ps = con.prepareStatement(selectSql)) {
-                ps.setInt(1, prestamo.getId_libro());
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (!rs.next() || rs.getInt("cantidad") <= 0) {
-                        con.rollback();
-                        return false;
-                    }
+            // 🔒 Bloquear fila del libro
+            try (PreparedStatement ps = con.prepareStatement(bloquearLibro)) {
+                ps.setInt(1, prestamo.getLibro().getId());
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next() || rs.getInt("cantidad_disponible") <= 0) {
+                    con.rollback();
+                    return false;
                 }
             }
 
-            try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setInt(1, prestamo.getId_usuario());
-                ps.setInt(2, prestamo.getId_libro());
+            // Insertar préstamo
+            try (PreparedStatement ps = con.prepareStatement(insertarPrestamo, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(1, prestamo.getUsuario().getId());
+                ps.setInt(2, prestamo.getLibro().getId());
                 ps.setDate(3, Date.valueOf(prestamo.getFecha_inicio()));
                 ps.setDate(4, Date.valueOf(prestamo.getFecha_fin()));
                 ps.setString(5, prestamo.getEstado());
+
                 ps.executeUpdate();
-                try (ResultSet keys = ps.getGeneratedKeys()) {
-                    if (keys.next()) prestamo.setId(keys.getInt(1));
-                }
+
+                ResultSet keys = ps.getGeneratedKeys();
+                if (keys.next()) prestamo.setId(keys.getInt(1));
             }
 
-            try (PreparedStatement ps = con.prepareStatement(updateLibroSql)) {
-                ps.setInt(1, prestamo.getId_libro());
+            // Actualizar libro
+            try (PreparedStatement ps = con.prepareStatement(actualizarLibro)) {
+                ps.setInt(1, prestamo.getLibro().getId());
                 ps.executeUpdate();
             }
 
             con.commit();
             return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            if (con != null) {
-                try { con.rollback(); } catch (SQLException e) { e.printStackTrace(); }
-            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try { if (con != null) con.rollback(); } catch (SQLException ex) {}
             return false;
         } finally {
-            if (con != null) {
-                try { con.setAutoCommit(true); con.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
+            try { if (con != null) con.setAutoCommit(true); } catch (SQLException e) {}
         }
     }
 
-    public boolean eliminarPrestamo(int id) {
-        String sql = "DELETE FROM prestamos WHERE id = ?";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
+
+
+    /**
+     * Eliminar préstamo (devuelve libro automáticamente)
+     */
+    public boolean eliminarPrestamo(int idPrestamo) {
+        String obtenerLibro = "SELECT id_libro FROM prestamos WHERE id = ?";
+        String eliminar = "DELETE FROM prestamos WHERE id = ?";
+        String devolver = """
+            UPDATE libros 
+            SET cantidad_disponible = cantidad_disponible + 1,
+                disponible = TRUE
+            WHERE id = ?
+        """;
+
+        try (Connection con = ConexionBD.getConexion()) {
+
+            con.setAutoCommit(false);
+
+            int idLibro = -1;
+
+            // obtener id_libro
+            try (PreparedStatement ps = con.prepareStatement(obtenerLibro)) {
+                ps.setInt(1, idPrestamo);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) idLibro = rs.getInt("id_libro");
+            }
+
+            if (idLibro == -1) { con.rollback(); return false; }
+
+            // eliminar préstamo
+            try (PreparedStatement ps = con.prepareStatement(eliminar)) {
+                ps.setInt(1, idPrestamo);
+                ps.executeUpdate();
+            }
+
+            // devolver libro
+            try (PreparedStatement ps = con.prepareStatement(devolver)) {
+                ps.setInt(1, idLibro);
+                ps.executeUpdate();
+            }
+
+            con.commit();
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
+
+
+    /**
+     * Contar préstamos activos
+     */
     public long contarPrestamosActivos() {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE estado = 'activo'";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getLong(1);
+            return rs.next() ? rs.getLong(1) : 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
 
+    /**
+     * Contar préstamos vencidos
+     */
     public long contarPrestamosVencidos() {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE fecha_fin < CURRENT_DATE() AND estado = 'activo'";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) return rs.getLong(1);
+            return rs.next() ? rs.getLong(1) : 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
-
 }
