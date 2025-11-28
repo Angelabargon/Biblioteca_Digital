@@ -18,28 +18,31 @@
 </Label>
     <HBox id="hb_tbg" alignment="CENTER" layoutX="122.0" layoutY="171.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
         <children>
-            <ToggleGroup fx:id="menuGroup" />
             <ToggleButton fx:id="tbt_MENU"
-                          prefHeight="35.0" prefWidth="150.0"
-                          text="Catálogo"
-                          toggleGroup="$menuGroup"
-                          selected="true"
-                          onAction="#handleCatalogo"/>
+                          prefHeight="35.0"
+                          prefWidth="150.0"
+                          text="Catálogo">
+                <toggleGroup>
+                    <ToggleGroup fx:id="menuGroup" />
+                </toggleGroup>
+            </ToggleButton>
+
             <ToggleButton fx:id="tbt_PRESTAMOS"
-                          prefHeight="35.0" prefWidth="150.0"
+                          prefHeight="35.0"
+                          prefWidth="150.0"
                           text="Mis préstamos"
-                          toggleGroup="$menuGroup"
-                          onAction="#handlePrestamos"/>
+                          toggleGroup="$menuGroup"/>
             <ToggleButton fx:id="tbt_FAVORITOS"
-                          prefHeight="35.0" prefWidth="150.0"
+                          prefHeight="35.0"
+                          prefWidth="150.0"
                           text="Mis favoritos"
-                          toggleGroup="$menuGroup"
-                          onAction="#handleFavoritos"/>
+                          toggleGroup="$menuGroup"/>
         </children>
     </HBox>
 
 <AnchorPane fx:id="contenedor" layoutX="0" layoutY="237.0" prefHeight="548.0" prefWidth="1400.0">
-    <ImageView id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true">
+</AnchorPane>
+    <ImageView fx:id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../imagenes/IconoUsuario.png" />
         </image>

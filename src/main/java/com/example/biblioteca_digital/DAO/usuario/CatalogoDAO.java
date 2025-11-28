@@ -224,11 +224,8 @@ public class CatalogoDAO
                 return false;
             }
 
-            // Bloque 2: Guardar el registro de préstamo
             Prestamo prestamo = new Prestamo(
                     -1,
-                    idUsuario,
-                    idLibro,
                     fechaInicio,
                     fechaFin,
                     Estado.Activo

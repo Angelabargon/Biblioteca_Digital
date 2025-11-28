@@ -150,7 +150,6 @@ public class ControladorCatalogoUsuario
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
             Parent item = loader.load();
 
-            // Asumiendo que existe ControladorLibroCatalogo con setDatos
             ControladorLibroCatalogo controlador = loader.getController();
             controlador.setDatos(libro, usuarioActual, this);
             return item;

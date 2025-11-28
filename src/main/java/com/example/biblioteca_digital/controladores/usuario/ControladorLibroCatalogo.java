@@ -1,3 +1,4 @@
+
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO; // Necesitas un DAO de Favoritos
@@ -7,7 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
+import java.util.List;
+
+public class ControladorLibroCatalogo
+{
 
     @FXML private Label lblTitulo;
     @FXML private Label lblAutor;
@@ -15,7 +19,7 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
     @FXML private Label lblDisponibles;
     @FXML private Button btnPedirPrestado;
     @FXML private Button btnVer;
-    @FXML private Button btnFavorito; // Asume que es un botón o ToggleButton para el corazón
+    @FXML private Button btnFavorito;
 
     private Libro libroActual;
     private Usuario usuarioActual;
@@ -28,6 +32,11 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
         this.usuarioActual = usuario;
         this.controladorPadre = padre;
 
+        lblTitulo.setText(libro.getTitulo());
+        lblAutor.setText(libro.getAutor());
+        lblGenero.setText(libro.getGenero());
+
+        int idLibro = libro.getId();
         int disponibles = libro.getCantidadDisponible();
         int stockTotal = libro.getCantidad();
 
@@ -38,12 +47,18 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
         {
             btnPedirPrestado.setDisable(true);
             btnPedirPrestado.setText("No disponible");
+            btnPedirPrestado.getStyleClass().remove("book-button-prestado-enabled");
+            btnPedirPrestado.getStyleClass().add("book-button-disabled");
         }
         else
         {
             btnPedirPrestado.setDisable(false);
             btnPedirPrestado.setText("Pedir Prestado");
+            btnPedirPrestado.getStyleClass().remove("book-button-prestado");
+            btnPedirPrestado.getStyleClass().remove("book-button-disabled");
+            btnPedirPrestado.getStyleClass().add("book-button-prestado-enabled");
         }
+        actualizarBotonFavorito();
     }
 
     @FXML
