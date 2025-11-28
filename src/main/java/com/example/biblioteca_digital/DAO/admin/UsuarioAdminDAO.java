@@ -66,10 +66,9 @@ public class UsuarioAdminDAO {
     }
 
     public boolean agregarUsuario(Usuario u) {
-        String sql = "INSERT INTO usuarios (nombre_usuario, nombre, primer_apellido, correo, contrasena, rol, fecha_registro) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO usuarios (nombre_usuario, nombre, primer_apellido, correo, contrasena, rol, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
             ps.setString(1, u.getNombreUsuario());
             ps.setString(2, u.getNombre());
             ps.setString(3, u.getPrimerApellido());
@@ -77,11 +76,15 @@ public class UsuarioAdminDAO {
             ps.setString(5, u.getContrasena());
             ps.setString(6, u.getRol() != null ? u.getRol().name() : Rol.usuario.name());
             ps.setDate(7, u.getFechaRegistro() != null ? Date.valueOf(u.getFechaRegistro()) : Date.valueOf(LocalDate.now()));
-
             int filas = ps.executeUpdate();
-            return filas > 0;
-
+            if (filas > 0) {
+                try (ResultSet keys = ps.getGeneratedKeys()) {
+                    if (keys.next()) u.setId(keys.getInt(1));
+                }
+                return true;
+            }
         } catch (SQLException e) {
+            // handle unique constraint violations etc
             e.printStackTrace();
         }
         return false;

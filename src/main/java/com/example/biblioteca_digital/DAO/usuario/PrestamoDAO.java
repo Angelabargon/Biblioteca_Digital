@@ -26,9 +26,7 @@ public class PrestamoDAO
              PreparedStatement pst = con.prepareStatement(sql))
         {
             pst.setInt(1, prestamo.getId_usuario());
-            pst.setString(2, prestamo.getNombreUsuario());
             pst.setInt(3, prestamo.getId_libro());
-            pst.setString(4, prestamo.getTituloLibro());
             pst.setDate(5, Date.valueOf(prestamo.getFecha_inicio()));
             pst.setDate(6, Date.valueOf(prestamo.getFecha_fin()));
             pst.setString(7, prestamo.getEstado());
@@ -44,9 +42,13 @@ public class PrestamoDAO
     {
         List<Prestamo> lista = new ArrayList<>();
         String sql = """
-        SELECT * FROM prestamos 
-        WHERE id_usuario = ? AND estado = 'activo'
-    """;
+        SELECT p.id, p.id_usuario, p.id_libro, p.fecha_inicio, p.fecha_fin, p.estado,
+                   u.nombre_usuario, l.titulo
+            FROM prestamos p
+            JOIN usuarios u ON p.id_usuario = u.id
+            JOIN libros l ON p.id_libro = l.id
+            WHERE p.id_usuario = ? AND p.estado = 'activo'
+        """;
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement pst = con.prepareStatement(sql))
         {
@@ -55,32 +57,33 @@ public class PrestamoDAO
             {
                 while (rs.next())
                 {
-                    Libro libro = new Libro(
-                            rs.getInt("id_libro"),
-                            rs.getString("titulo_libro")
-                    );
+                    // Usuario (solo datos necesarios)
+                    Usuario usuario = new Usuario();
+                    usuario.setId(rs.getInt("id_usuario"));
+                    usuario.setNombreUsuario(rs.getString("nombre_usuario"));
 
-                    Usuario user = new Usuario();
-                    user.setId(rs.getInt("id_usuario"));
-                    user.setNombre(rs.getString("nombre_usuario"));
+                    // Libro (solo datos necesarios)
+                    Libro libro = new Libro();
+                    libro.setId(rs.getInt("id_libro"));
+                    libro.setTitulo(rs.getString("titulo"));
 
-                    Prestamo p = new Prestamo(
-                            rs.getInt("id"),
-                            user,
-                            libro,
-                            rs.getDate("fecha_inicio").toLocalDate(),
-                            rs.getDate("fecha_fin").toLocalDate(),
-                            Estado.valueOf(rs.getString("estado"))
-                    );
+                    // Prestamo
+                    Prestamo p = new Prestamo();
+                    p.setId(rs.getInt("id"));
+                    p.setId_usuario(rs.getInt("id_usuario"));
+                    p.setId_libro(rs.getInt("id_libro"));
+                    p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
+                    p.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
+                    p.setEstado(rs.getString("estado"));
+
                     lista.add(p);
                 }
             }
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return lista;
     }
 

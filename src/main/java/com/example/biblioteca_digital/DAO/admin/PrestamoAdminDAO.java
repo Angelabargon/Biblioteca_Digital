@@ -13,87 +13,93 @@ public class PrestamoAdminDAO {
 
     public List<Prestamo> obtenerTodos() {
         List<Prestamo> lista = new ArrayList<>();
-
-        String sql =
-                "SELECT p.id, p.id_usuario, p.id_libro, p.fecha_inicio, p.fecha_fin, p.estado, " +
-                        "u.nombre AS nombreUsuario, l.titulo AS tituloLibro " +
-                        "FROM prestamos p " +
-                        "JOIN usuarios u ON p.id_usuario = u.id " +
-                        "JOIN libros l ON p.id_libro = l.id " +
-                        "ORDER BY p.fecha_inicio DESC";
-
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "SELECT id, id_usuario, id_libro, fecha_inicio, fecha_fin, estado FROM prestamos ORDER BY fecha_inicio DESC";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Prestamo p = new Prestamo();
-
                 p.setId(rs.getInt("id"));
                 p.setId_usuario(rs.getInt("id_usuario"));
                 p.setId_libro(rs.getInt("id_libro"));
-
                 Date di = rs.getDate("fecha_inicio");
                 Date df = rs.getDate("fecha_fin");
                 if (di != null) p.setFecha_inicio(di.toLocalDate());
                 if (df != null) p.setFecha_fin(df.toLocalDate());
-
-                p.setEstado(rs.getString("estado").toUpperCase());
-
-                // CAMPOS NUEVOS
-                p.setNombreUsuario(rs.getString("nombreUsuario"));
-                p.setTituloLibro(rs.getString("tituloLibro"));
-
+                p.setEstado(rs.getString("estado"));
                 lista.add(p);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return lista;
     }
 
 
-    public boolean agregarPrestamo(Prestamo p) {
-        String sql = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) VALUES (?,?,?,?,?)";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    public boolean crearPrestamo(Prestamo prestamo) {
+        String insertSql = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?)";
+        String selectSql = "SELECT cantidad FROM libros WHERE id = ? FOR UPDATE";
+        String updateLibroSql = "UPDATE libros SET cantidad = cantidad - 1, disponible = (cantidad - 1) > 0 WHERE id = ?";
 
-            ps.setInt(1, p.getId_usuario());
-            ps.setInt(2, p.getId_libro());
-            ps.setDate(3, Date.valueOf(p.getFecha_inicio()));
-            ps.setDate(4, Date.valueOf(p.getFecha_fin()));
-            ps.setString(5, p.getEstado().toLowerCase());
+        Connection con = null;
+        try {
+            con = ConexionBD.getConexion();
+            con.setAutoCommit(false);
 
-            int filas = ps.executeUpdate();
-            return filas > 0;
+            // check cantidad
+            try (PreparedStatement ps = con.prepareStatement(selectSql)) {
+                ps.setInt(1, prestamo.getId_libro());
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next() || rs.getInt("cantidad") <= 0) {
+                        con.rollback();
+                        return false;
+                    }
+                }
+            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            // insert prestamo
+            try (PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(1, prestamo.getId_usuario());
+                ps.setInt(2, prestamo.getId_libro());
+                ps.setDate(3, Date.valueOf(prestamo.getFecha_inicio()));
+                ps.setDate(4, Date.valueOf(prestamo.getFecha_fin()));
+                ps.setString(5, prestamo.getEstado());
+                ps.executeUpdate();
+                try (ResultSet keys = ps.getGeneratedKeys()) {
+                    if (keys.next()) prestamo.setId(keys.getInt(1));
+                }
+            }
+
+            // actualizar libro
+            try (PreparedStatement ps = con.prepareStatement(updateLibroSql)) {
+                ps.setInt(1, prestamo.getId_libro());
+                ps.executeUpdate();
+            }
+
+            con.commit();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            if (con != null) {
+                try {
+                    con.setAutoCommit(true);
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return false;
-    }
-
-    public boolean actualizarPrestamo(Prestamo p) {
-        String sql = "UPDATE prestamos SET id_usuario=?, id_libro=?, fecha_inicio=?, fecha_fin=?, estado=? WHERE id=?";
-        try (Connection conn = ConexionBD.getConexion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, p.getId_usuario());
-            ps.setInt(2, p.getId_libro());
-            ps.setDate(3, Date.valueOf(p.getFecha_inicio()));
-            ps.setDate(4, Date.valueOf(p.getFecha_fin()));
-            ps.setString(5, p.getEstado().toLowerCase());
-            ps.setInt(6, p.getId());
-
-            int filas = ps.executeUpdate();
-            return filas > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public boolean eliminarPrestamo(int id) {

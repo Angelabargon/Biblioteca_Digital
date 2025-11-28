@@ -93,6 +93,21 @@ public class LibroAdminDAO {
         return -1;
     }
 
+    public boolean actualizarCantidadYDisponibilidad(int idLibro, int nuevaCantidad) {
+        String sql = "UPDATE libros SET cantidad = ?, disponible = ? WHERE id = ?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, nuevaCantidad);
+            ps.setBoolean(2, nuevaCantidad > 0);
+            ps.setInt(3, idLibro);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean actualizarLibro(Libro libro) {
         String sql = "UPDATE libros SET titulo=?, autor=?, descripcion=?, genero=?, isbn=?, foto=?, cantidad=?, disponible=? WHERE id=?";
         try (Connection conn = ConexionBD.getConexion();
