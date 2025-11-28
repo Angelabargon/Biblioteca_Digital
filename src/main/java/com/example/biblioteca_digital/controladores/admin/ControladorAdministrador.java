@@ -29,7 +29,7 @@ public class ControladorAdministrador {
     @FXML
     public void initialize() {
         cargarEstadisticas();
-        mostrarCatalogo();
+        mostrarLibros();
     }
 
     private void cargarEstadisticas() {
@@ -41,7 +41,7 @@ public class ControladorAdministrador {
 
     private void cargarPanel(String recurso) {
         try {
-            Node n = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/" + recurso));
+            Node n = FXMLLoader.load(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/" + recurso));
             panelContenido.getChildren().setAll(n);
             AnchorPane.setTopAnchor(n, 0.0);
             AnchorPane.setBottomAnchor(n, 0.0);

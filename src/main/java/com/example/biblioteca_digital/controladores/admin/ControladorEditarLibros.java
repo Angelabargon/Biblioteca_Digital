@@ -14,6 +14,7 @@ public class ControladorEditarLibros {
     @FXML private TextField txtFoto;
     @FXML private TextField txtCantidad;
     @FXML private TextArea txtDescripcion;
+    @FXML private TextArea txtContenido;
 
     private Libro libro;
     private Stage stage;
@@ -38,6 +39,8 @@ public class ControladorEditarLibros {
             txtFoto.setText(l.getFoto());
             txtCantidad.setText(String.valueOf(l.getCantidad()));
             txtDescripcion.setText(l.getDescripcion());
+            txtContenido.setText(l.getContenido());
+
         }
     }
 
@@ -50,6 +53,7 @@ public class ControladorEditarLibros {
         libro.setIsbn(txtIsbn.getText());
         libro.setFoto(txtFoto.getText());
         libro.setDescripcion(txtDescripcion.getText());
+        txtContenido.setText(txtContenido.getText());
 
         try { libro.setCantidad(Integer.parseInt(txtCantidad.getText())); }
         catch (Exception e) { libro.setCantidad(1); }
@@ -65,14 +69,10 @@ public class ControladorEditarLibros {
     }
 
     @FXML
-    private void cancelar() {
-        if (stage != null) stage.close();
-    }
+    private void cancelar() { if (stage != null) stage.close(); }
 
     @FXML
-    private void cerrarVentana() {
-        if (stage != null) stage.close();
-    }
+    private void cerrarVentana() { if (stage != null) stage.close(); }
 
     public void setOnGuardarCallback(Runnable cb) { this.onGuardarCallback = cb; }
 }
