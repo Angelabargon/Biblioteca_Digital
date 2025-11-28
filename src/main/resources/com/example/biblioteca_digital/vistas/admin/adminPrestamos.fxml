@@ -29,6 +29,11 @@
     </HBox>
 
     <!-- TABLA ESTILO FIGMA -->
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <TextField fx:id="txtBuscar" promptText="Buscar..." />
+    </HBox>
+
     <TableView fx:id="tablaPrestamos"
                VBox.vgrow="ALWAYS"
                style="
