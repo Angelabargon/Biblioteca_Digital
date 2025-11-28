@@ -141,12 +141,23 @@ public class ControladorMenuInicioUsuario {
     }
 
     @FXML
-    private void abrirPerfil(javafx.scene.input.MouseEvent event)
-    {
-        Navegacion.cambiarVistaImagen(
-                event,
-                "/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml",
-                "Mi Perfil"
-        );
+    private void abrirPerfil(javafx.scene.input.MouseEvent event) throws IOException {
+
+        URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml");
+        if (fxmlUrl == null) {
+            System.err.println("FXML de perfil no encontrado.");
+            mostrarAlertaError("Error de Navegación", "No se pudo encontrar la vista de perfil.");
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        Parent root = loader.load();
+
+        Stage perfilStage = new Stage();
+        perfilStage.initOwner(iv_iconoUsuario.getScene().getWindow());
+        perfilStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+        perfilStage.setTitle("Perfil");
+        perfilStage.setScene(new Scene(root));
+        perfilStage.showAndWait();
     }
 }
