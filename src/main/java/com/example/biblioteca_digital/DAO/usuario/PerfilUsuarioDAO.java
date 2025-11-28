@@ -47,4 +47,24 @@ public class PerfilUsuarioDAO {
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
     }
+
+    /**
+     * Actualiza la contraseña de un usuario en la base de datos.
+     *
+     * @param idUsuario   Identificador del usuario.
+     * @param nuevaPass   Nueva contraseña.
+     * @return true si la actualización fue exitosa, false en caso contrario.
+     */
+    public static boolean actualizarContrasena(int idUsuario, String nuevaPass) {
+        String sql = "UPDATE usuarios SET contrasena = ? WHERE id = ?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setString(1, nuevaPass);
+            pst.setInt(2, idUsuario);
+            return pst.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -10,8 +10,10 @@ import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 
 /*
@@ -72,10 +74,27 @@ public class ControladorPerfilUsuario {
 
     }
 
+    /**
+     * Permite al usuario cambiar su contraseña mediante un diálogo emergente.
+     */
     @FXML
     private void cambiarContrasena(ActionEvent event) {
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Registro.fxml", "Cambiar Contraseña");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Cambiar Contraseña");
+        dialog.setHeaderText("Introduce tu nueva contraseña:");
+        dialog.setContentText("Contraseña:");
 
+        dialog.showAndWait().ifPresent(nuevaPass -> {
+            boolean ok = PerfilUsuarioDAO.actualizarContrasena(usuarioActual.getId(), nuevaPass);
+            if (ok) {
+                usuarioActual.setContrasena(nuevaPass);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Contraseña actualizada correctamente.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error al actualizar la contraseña.");
+                alert.showAndWait();
+            }
+        });
     }
 
     @FXML
@@ -87,11 +106,6 @@ public class ControladorPerfilUsuario {
     @FXML
     private void cerrarPerfil(ActionEvent event) {
         Navegacion.cerrarVentana(event);
-    }
-
-    @FXML
-    private void volverAtras(ActionEvent event) {
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/usuario/Vista-Menu-Usuario.fxml", "Menu Principal");
     }
 
     @FXML
