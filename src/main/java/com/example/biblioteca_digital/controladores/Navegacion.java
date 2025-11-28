@@ -1,19 +1,23 @@
 package com.example.biblioteca_digital.controladores;
 
-/*
-Hacemos los importes necesarios.
+/**
+ * Hacemos los imports necesarios.
  */
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-/*
-Creamos la clase Navegación que almacenará los métodos encargados de los cambios entre activitys, así como sus cierres.
+/**
+ * Creamos la clase Navegación que almacenará los métodos encargados de los cambios entre activitys, así como sus cierres.
  */
 public class Navegacion {
 
-    /*
-    Creamos un metodo para cambiar de la activity actual a otra.
+    /**
+     * Creamos un metodo para cambiar de la activity actual a otra.
+     *
+     * @param event  Evento que dispara la acción (ej. clic en botón).
+     * @param rutaFXML  Ruta del archivo FXML de la nueva vista.
+     * @param titulo  Título de la ventana.
      */
     public static void cambiarVista(ActionEvent event, String rutaFXML, String titulo) {
         try {
@@ -31,8 +35,10 @@ public class Navegacion {
         }
     }
 
-    /*
-    Creamos un metodo cerrar una ventana y vover a la página anterior.
+    /**
+     * Creamos un metodo cerrar una ventana y vover a la página anterior.
+     *
+     * @param event  Evento que dispara la acción (ej. clic en botón).
      */
     public static void cerrarVentana(ActionEvent event) {
 
