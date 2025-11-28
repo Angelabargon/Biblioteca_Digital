@@ -10,7 +10,9 @@ module com.example.biblioteca_digital {
     opens com.example.biblioteca_digital.controladores to javafx.fxml;
     opens com.example.biblioteca_digital.modelos to javafx.fxml;
     opens com.example.biblioteca_digital.controladores.usuario to javafx.fxml;
+    opens com.example.biblioteca_digital.controladores.admin to javafx.fxml;
 
+    exports com.example.biblioteca_digital.controladores.admin;
     exports com.example.biblioteca_digital;
     exports com.example.biblioteca_digital.controladores;
     exports com.example.biblioteca_digital.modelos;
