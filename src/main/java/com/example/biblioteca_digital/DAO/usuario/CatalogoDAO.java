@@ -63,6 +63,45 @@ public class CatalogoDAO
     }
 
     /**
+     * Obtiene todos los detalles de un libro dado su ID.
+     * Requerido por PrestamoDAO para cargar el objeto Libro.
+     */
+    public Libro obtenerLibroPorId(int idLibro) {
+        Libro libro = null;
+        String sql = """
+        SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad, cantidad_disponible, disponible 
+        FROM libros 
+        WHERE id = ?
+    """;
+
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setInt(1, idLibro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Se asume el constructor/setters de Libro
+                    libro = new Libro(
+                            rs.getInt("id"),
+                            rs.getString("titulo"),
+                            rs.getString("autor"),
+                            rs.getString("genero"),
+                            rs.getString("descripcion"),
+                            rs.getString("isbn"),
+                            rs.getString("foto"),
+                            rs.getInt("cantidad"),
+                            rs.getInt("cantidad_disponible"),
+                            rs.getBoolean("disponible")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener libro por ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return libro;
+    }
+    /**
      * Cuenta el número de préstamos activos para un usuario.
      * @param idUsuario ID del usuario.
      * @return Número de préstamos activos.

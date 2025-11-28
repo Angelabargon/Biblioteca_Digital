@@ -126,6 +126,7 @@ public class ControladorLibrosIndividual {
                                         rs.getString("isbn"),
                                         rs.getString("descripcion"),
                                         rs.getString("foto"),
+                                        rs.getInt("cantidad_disponible"),
                                         rs.getInt("cantidad"),
                                         rs.getBoolean("disponible")
                                 );

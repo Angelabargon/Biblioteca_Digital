@@ -105,16 +105,19 @@ public class ControladorPrestamosUsuario
 
     // MANEJADOR DEL BOTÓN "LEER LIBRO"
 
+    // Dentro de ControladorPrestamosUsuario.java, método handleLeerLibro
+
     private void handleLeerLibro(Prestamo prestamo)
     {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/com/example/biblioteca_digital/vistas/Vista-Lectura-Libro.fxml"));
+                    "/com/example/biblioteca_digital/vistas/Vista-Prestamo-Item.fxml"));
             Parent root = loader.load();
             ControladorLeerLibro controlador = loader.getController();
             controlador.cargarContenido(prestamo);
             javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle(prestamo.getTituloLibro());
+            String titulo = (prestamo.getLibro() != null) ? prestamo.getLibro().getTitulo() : "Libro";
+            stage.setTitle(titulo);
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
         }
