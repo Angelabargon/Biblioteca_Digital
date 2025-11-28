@@ -51,7 +51,6 @@ public class ControladorPrestamosUsuario
         if (lista.isEmpty())
         {
             Label noPrestamos = new Label("No tienes libros actualmente en préstamo.");
-            noPrestamos.setStyle("-fx-font-size: 16px; -fx-text-fill: #777;");
             contenedorPrestamos.getChildren().add(noPrestamos);
             return;
         }

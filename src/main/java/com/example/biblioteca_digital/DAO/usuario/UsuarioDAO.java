@@ -17,24 +17,24 @@ public class UsuarioDAO {
      * Obtiene todos los detalles de un usuario dado su ID.
      * Requerido por PrestamoDAO para cargar el objeto Usuario.
      */
-    public Usuario obtenerUsuarioPorId(int idUsuario) {
+    public Usuario obtenerUsuarioPorId(int idUsuario)
+    {
         Usuario usuario = null;
-        // Asumo que la tabla es 'usuarios' y tiene columnas relevantes
         String sql = "SELECT id, nombre, nombre_usuario, email FROM usuarios WHERE id = ?";
 
         try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql))
 
+        {
             ps.setInt(1, idUsuario);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    // Crear y popular el objeto Usuario
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
                     usuario = new Usuario();
                     usuario.setId(rs.getInt("id"));
                     usuario.setNombre(rs.getString("nombre"));
                     usuario.setNombreUsuario(rs.getString("nombre_usuario"));
-                    // Asumiendo que la clase Usuario tiene estos setters
-                    // usuario.setEmail(rs.getString("email"));
                 }
             }
         } catch (SQLException e) {
@@ -43,6 +43,4 @@ public class UsuarioDAO {
         }
         return usuario;
     }
-
-    // ... (Otros métodos como login, registro, etc.)
 }

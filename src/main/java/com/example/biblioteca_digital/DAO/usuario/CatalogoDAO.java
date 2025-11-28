@@ -66,21 +66,22 @@ public class CatalogoDAO
      * Obtiene todos los detalles de un libro dado su ID.
      * Requerido por PrestamoDAO para cargar el objeto Libro.
      */
-    public Libro obtenerLibroPorId(int idLibro) {
+    public Libro obtenerLibroPorId(int idLibro)
+    {
         Libro libro = null;
         String sql = """
         SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad, cantidad_disponible, disponible 
         FROM libros 
         WHERE id = ?
     """;
-
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {
             ps.setInt(1, idLibro);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    // Se asume el constructor/setters de Libro
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
                     libro = new Libro(
                             rs.getInt("id"),
                             rs.getString("titulo"),
@@ -95,7 +96,9 @@ public class CatalogoDAO
                     );
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Error al obtener libro por ID: " + e.getMessage());
             e.printStackTrace();
         }
@@ -106,70 +109,65 @@ public class CatalogoDAO
      * @param idUsuario ID del usuario.
      * @return Número de préstamos activos.
      */
-    public int contarPrestamosActivos(int idUsuario) {
+    public int contarPrestamosActivos(int idUsuario)
+    {
         int count = 0;
-        // Asumiendo que un préstamo activo no tiene fecha de devolución (fecha_devolucion IS NULL)
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND fecha_devolucion IS NULL";
-
         try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
             ps.setInt(1, idUsuario);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
                     count = rs.getInt(1);
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Error al contar préstamos activos: " + e.getMessage());
             e.printStackTrace();
         }
         return count;
     }
-
     /**
      * Realiza la solicitud de préstamo para un libro, actualizando la disponibilidad.
      * @param idUsuario ID del usuario que solicita el préstamo.
      * @param idLibro ID del libro solicitado.
      * @return true si el préstamo fue exitoso, false en caso contrario.
      */
-    public boolean pedirPrestado(int idUsuario, int idLibro) {
-
-        // Consultas
+    public boolean pedirPrestado(int idUsuario, int idLibro)
+    {
         String sqlCheck = "SELECT cantidad_disponible FROM libros WHERE id = ?";
         String sqlUpdate = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ?";
-
-        // --- Datos para construir el objeto Prestamo ---
         String[] datosPrestamo = obtenerDatosUsuarioYLibro(idUsuario, idLibro);
-        if (datosPrestamo == null) {
+        if (datosPrestamo == null)
+        {
             System.err.println("Error: No se pudieron obtener datos del usuario o libro para el préstamo.");
             return false;
         }
-
-        String nombreUsuario = datosPrestamo[0];
-        String tituloLibro = datosPrestamo[1];
-
         LocalDate fechaInicio = LocalDate.now();
         LocalDate fechaFin = fechaInicio.plusDays(14);
-
         try (Connection conn = conectar())
         {
             conn.setAutoCommit(false);
             int disponibles = 0;
-
-            // 2. VERIFICAR STOCK
-            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
+            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck))
+            {
                 psCheck.setInt(1, idLibro);
-                try (ResultSet rs = psCheck.executeQuery()) {
+                try (ResultSet rs = psCheck.executeQuery())
+                {
                     if (rs.next()) {
                         disponibles = rs.getInt("cantidad_disponible");
                     }
                 }
             }
-
-            if (disponibles <= 0) {
+            if (disponibles <= 0)
+            {
                 conn.rollback();
-                return false; // 🛑 Stock insuficiente
+                return false;
             }
             Prestamo prestamo = new Prestamo(
                     -1,
@@ -184,23 +182,24 @@ public class CatalogoDAO
                 conn.rollback();
                 throw new SQLException("Fallo al guardar registro de préstamo");
             }
-
-            // 4. RESTAR 1 AL STOCK DISPONIBLE
-            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
+            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate))
+            {
                 psUpdate.setInt(1, idLibro);
                 int filasAfectadas = psUpdate.executeUpdate();
                 if (filasAfectadas == 0) throw new SQLException("Fallo al actualizar stock disponible");
             }
-
-            conn.commit(); // 5. Confirmar la transacción
+            conn.commit();
             return true;
         }
-        catch (SQLException e) {
+        catch (SQLException e)
+        {
             System.err.println("Error en la transacción de préstamo: " + e.getMessage());
-            // Revertir si la operación falla
-            try (Connection rollbackConn = conectar()) {
+            try (Connection rollbackConn = conectar())
+            {
                 rollbackConn.rollback();
-            } catch (SQLException rollbackException) {
+            }
+            catch (SQLException rollbackException)
+            {
                 System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
             }
             e.printStackTrace();
@@ -215,13 +214,11 @@ public class CatalogoDAO
             FROM usuarios u, libros l
             WHERE u.id = ? AND l.id = ?
             """;
-
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {
             ps.setInt(1, idUsuario);
             ps.setInt(2, idLibro);
-
             try (ResultSet rs = ps.executeQuery())
             {
                 if (rs.next())
@@ -238,10 +235,8 @@ public class CatalogoDAO
             System.err.println("Error al obtener datos usuario/libro: " + e.getMessage());
             e.printStackTrace();
         }
-
         return null;
     }
-
     /**
      * Obtiene el autor de un libro dado su ID.
      * @param idLibro ID del libro.
@@ -252,15 +247,18 @@ public class CatalogoDAO
         String autor = null;
         String sql = "SELECT autor FROM libros WHERE id = ?";
         try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
             ps.setInt(1, idLibro);
-            try (ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery())
+            {
                 if (rs.next()) {
                     autor = rs.getString("autor");
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Error al obtener autor por ID: " + e.getMessage());
             e.printStackTrace();
         }
