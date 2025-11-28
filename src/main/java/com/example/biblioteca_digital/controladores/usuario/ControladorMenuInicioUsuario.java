@@ -40,6 +40,11 @@ public class ControladorMenuInicioUsuario {
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
+        if (contenedor == null) {
+            System.out.println("ERROR: El AnchorPane 'contenedor' es NULL en setUsuario().");
+            return;
+        }
+        System.out.println("OK: El AnchorPane 'contenedor' ha sido inyectado correctamente.");
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
     }
 

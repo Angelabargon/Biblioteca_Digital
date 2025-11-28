@@ -147,7 +147,7 @@ public class ControladorCatalogoUsuario
     {
         try
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/usuario/Vista-Libro-Item.fxml"));
             Parent item = loader.load();
 
             ControladorLibroCatalogo controlador = loader.getController();
