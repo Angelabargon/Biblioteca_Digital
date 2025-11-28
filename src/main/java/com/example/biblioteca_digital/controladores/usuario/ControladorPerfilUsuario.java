@@ -20,8 +20,8 @@ import javafx.scene.image.ImageView;
 Creamos la clase de ControladorPerfilUsuario para mostrar una ventana con los datos del usuario
 junto con las opciones de cambiar contraseña y cerrar sesión.
  */
-public class ControladorPerfilUsuario {
-
+public class ControladorPerfilUsuario
+{
     @FXML
     private ImageView iv_icono;
 

@@ -60,9 +60,9 @@ public class ControladorLibrosIndividual {
                 mostrarDetalles(listaLibros.getSelectionModel().getSelectedItem()));
     }
 
-    private void mostrarDetalles(Libro libro) {
+    private void mostrarDetalles(Libro libro)
+    {
         if (libro == null) return;
-
         tituloLabel.setText(libro.getTitulo());
         autorLabel.setText(libro.getAutor());
         categoriaLabel.setText(libro.getGenero());
@@ -126,6 +126,7 @@ public class ControladorLibrosIndividual {
                                         rs.getString("isbn"),
                                         rs.getString("descripcion"),
                                         rs.getString("foto"),
+                                        rs.getInt("cantidad_disponible"),
                                         rs.getInt("cantidad"),
                                         rs.getBoolean("disponible")
                                 );

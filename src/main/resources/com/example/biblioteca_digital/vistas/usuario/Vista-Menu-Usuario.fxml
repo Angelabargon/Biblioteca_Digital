@@ -32,7 +32,7 @@
 
     <AnchorPane fx:id="contenedor" layoutX="0" layoutY="237.0" prefHeight="548.0" prefWidth="1410.0">
     </AnchorPane>
-    <ImageView id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../imagenes/IconoUsuario.png" />
         </image>

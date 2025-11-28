@@ -1,6 +1,7 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.controladores.ControladorAyuda;
+import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -37,26 +39,33 @@ public class ControladorMenuInicioUsuario {
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        // Cargar la vista inicial (Catálogo)
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
     }
 
     @FXML
-    public void initialize() {
-        iv_iconoUsuario.setOnMouseClicked(event -> {
-            try {
+    public void initialize()
+    {
+        iv_iconoUsuario.setOnMouseClicked(event ->
+        {
+            try
+            {
                 mostrarVistaPerfil();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
                 mostrarAlertaError("Error de Navegación", "No se pudo cargar la vista de perfil: " + e.getMessage());
             }
         });
     }
 
-    private void cargarVista(String fxmlPath, Class<?> expectedControllerClass) {
-        try {
+    private void cargarVista(String fxmlPath, Class<?> expectedControllerClass)
+    {
+        try
+        {
             URL fxmlUrl = getClass().getResource(fxmlPath);
-            if (fxmlUrl == null) {
+            if (fxmlUrl == null)
+            {
                 System.err.println("Recurso FXML no encontrado: " + fxmlPath);
                 mostrarAlertaError("Error de Carga", "El archivo de vista no se encontró.");
                 return;
@@ -64,21 +73,20 @@ public class ControladorMenuInicioUsuario {
 
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent vista = loader.load();
-
-            // --- INYECCIÓN DEL USUARIO AL CONTROLADOR DE LA SUB-VISTA ---
             Object subControlador = loader.getController();
 
-            if (subControlador instanceof ControladorCatalogoUsuario && expectedControllerClass.equals(ControladorCatalogoUsuario.class)) {
+            if (subControlador instanceof ControladorCatalogoUsuario && expectedControllerClass.equals(ControladorCatalogoUsuario.class))
+            {
                 ((ControladorCatalogoUsuario) subControlador).setUsuario(usuarioActual);
-            } else if (subControlador instanceof ControladorPrestamosUsuario && expectedControllerClass.equals(ControladorPrestamosUsuario.class)) {
-                // Asume que tienes este controlador y que tiene el método setUsuario
+            }
+            else if (subControlador instanceof ControladorPrestamosUsuario && expectedControllerClass.equals(ControladorPrestamosUsuario.class))
+            {
                 ((ControladorPrestamosUsuario) subControlador).setUsuario(usuarioActual);
-            } else if (subControlador instanceof ControladorFavoritosUsuario && expectedControllerClass.equals(ControladorFavoritosUsuario.class)) {
-                // Asume que tienes este controlador y que tiene el método setUsuario
+            }
+            else if (subControlador instanceof ControladorFavoritosUsuario && expectedControllerClass.equals(ControladorFavoritosUsuario.class))
+            {
                 ((ControladorFavoritosUsuario) subControlador).setUsuario(usuarioActual);
             }
-            // --- FIN INYECCIÓN ---
-
             contenedor.getChildren().clear();
             AnchorPane.setTopAnchor(vista, 0.0);
             AnchorPane.setBottomAnchor(vista, 0.0);
@@ -86,7 +94,8 @@ public class ControladorMenuInicioUsuario {
             AnchorPane.setRightAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
             mostrarAlertaError("Error de E/S", "No se pudo cargar la vista: " + fxmlPath);
         }
@@ -97,7 +106,8 @@ public class ControladorMenuInicioUsuario {
      * @param event El evento de acción.
      */
     @FXML
-    public void mostrarAyuda(ActionEvent event) {
+    public void mostrarAyuda(ActionEvent event)
+    {
         ControladorAyuda.mostrarAyuda(
                 "/com/example/biblioteca_digital/vistas/Vista-Ayuda-MenuUsuario.fxml",
                 "Usuario"
@@ -105,7 +115,8 @@ public class ControladorMenuInicioUsuario {
     }
 
 
-    private void mostrarVistaPerfil() throws IOException {
+    private void mostrarVistaPerfil() throws IOException
+    {
         Stage stage = (Stage) iv_iconoUsuario.getScene().getWindow();
         URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/vista_perfil_usuario.fxml");
         if (fxmlUrl == null) {
@@ -120,11 +131,22 @@ public class ControladorMenuInicioUsuario {
         stage.show();
     }
 
-    private void mostrarAlertaError(String titulo, String mensaje) {
+    private void mostrarAlertaError(String titulo, String mensaje)
+    {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(titulo);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void abrirPerfil(javafx.scene.input.MouseEvent event)
+    {
+        Navegacion.cambiarVistaImagen(
+                event,
+                "/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml",
+                "Mi Perfil"
+        );
     }
 }

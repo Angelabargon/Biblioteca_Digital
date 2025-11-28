@@ -55,7 +55,7 @@
 
                 <!-- URL PORTADA -->
                 <Label text="URL de Portada" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                <TextField fx:id="txtUrlPortada" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                <TextField fx:id="txtFoto" GridPane.rowIndex="5" GridPane.columnIndex="1"
                            style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
 
             </GridPane>

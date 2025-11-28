@@ -44,19 +44,19 @@ public class ControladorPrestamosAdmin {
 
         // USUARIO
         colUsuario.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getNombreUsuario()));
+                new SimpleStringProperty(data.getValue().getUsuario().getNombreUsuario()));
 
         // LIBRO
         colLibro.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getTituloLibro()));
+                new SimpleStringProperty(data.getValue().getLibro().getTitulo()));
 
         // FECHA PRESTAMO
         colFechaPrestamo.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getFechaPrestamo().format(formato)));
+                new SimpleStringProperty(data.getValue().getFecha_inicio().format(formato)));
 
         // FECHA VENCIMIENTO
         colFechaVencimiento.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getFechaVencimiento().format(formato)));
+                new SimpleStringProperty(data.getValue().getFecha_fin().format(formato)));
 
         // ESTADO (badge igual estilo que Libros)
         colEstado.setCellFactory(col -> new TableCell<>() {
@@ -72,7 +72,7 @@ public class ControladorPrestamosAdmin {
                 }
 
                 Prestamo p = getTableView().getItems().get(getIndex());
-                boolean vencido = p.getFechaVencimiento().isBefore(LocalDate.now());
+                boolean vencido = p.getFecha_fin().isBefore(LocalDate.now());
 
                 Label badge = new Label(vencido ? "Vencido" : "Vigente");
                 badge.setStyle(
@@ -150,8 +150,8 @@ public class ControladorPrestamosAdmin {
         }
 
         ObservableList<Prestamo> filtrado = listaPrestamos.filtered(p ->
-                p.getNombreUsuario().toLowerCase().contains(texto) ||
-                        p.getTituloLibro().toLowerCase().contains(texto)
+                p.getUsuario().getNombreUsuario().toLowerCase().contains(texto) ||
+                        p.getLibro().getTitulo().toLowerCase().contains(texto)
         );
 
         tablaPrestamos.setItems(filtrado);

@@ -28,15 +28,13 @@ public class ControladorPedirPrestamo
         this.prestamoActual = prestamo;
         this.leerLibroHandler = handler;
 
-        lblTitulo.setText(prestamo.getTituloLibro());
+        lblTitulo.setText(prestamo.getLibro().getTitulo());
 
-        // ✅ SOLUCIÓN: Usar el DAO para obtener el autor con el ID del libro
         String autor = catalogoDAO.obtenerAutorPorIdLibro(prestamo.getId_libro());
         lblAutor.setText(autor != null ? autor : "Autor Desconocido");
 
         lblDiasRestantes.setText(tiempoRestante);
 
-        // Deshabilitar si está vencido
         if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy"))
         {
             btnLeerLibro.setDisable(true);
