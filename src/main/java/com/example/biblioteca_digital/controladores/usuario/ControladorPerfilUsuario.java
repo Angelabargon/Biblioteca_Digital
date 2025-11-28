@@ -46,7 +46,7 @@ public class ControladorPerfilUsuario
     private Usuario usuarioActual;
 
     @FXML
-    private Button bt_volver;
+    private Button bt_cerrar;
 
     /*
 

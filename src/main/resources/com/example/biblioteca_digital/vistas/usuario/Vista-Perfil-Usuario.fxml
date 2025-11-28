@@ -41,19 +41,19 @@
           </font>
       </Label>
 
-      <Button fx:id="bt_cambioContrasena" layoutX="137.0" layoutY="344.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="155.0" text="Cambiar Contraseña">
+      <Button fx:id="bt_cambioContrasena" layoutX="137.0" layoutY="344.0" mnemonicParsing="false" onAction="#cambiarContrasena" prefHeight="35.0" prefWidth="155.0" text="Cambiar Contraseña">
           <font>
               <Font size="15.0" />
           </font>
       </Button>
 
-      <Button fx:id="bt_cerrarSesion" layoutX="137.0" layoutY="400.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="155.0" text="Cerrar Sesión">
+      <Button fx:id="bt_cerrarSesion" layoutX="137.0" layoutY="400.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="35.0" prefWidth="155.0" text="Cerrar Sesión">
           <font>
               <Font size="15.0" />
           </font>
       </Button>
 
-        <Button fx:id="bt_volver" alignment="CENTER" layoutX="31.0" layoutY="456.0" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
+        <Button fx:id="bt_cerrar" alignment="CENTER" layoutX="31.0" layoutY="456.0" mnemonicParsing="false" onAction="#cerrarPerfil" prefHeight="35.0" prefWidth="85.0" text="Cerrar">
             <font>
                 <Font size="15.0" />
             </font>
