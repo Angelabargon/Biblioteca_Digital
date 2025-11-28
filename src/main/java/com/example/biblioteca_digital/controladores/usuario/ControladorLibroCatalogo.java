@@ -22,32 +22,33 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
     private ControladorCatalogoUsuario controladorPadre;
     private final FavoritosDAO favoritosDAO = new FavoritosDAO();
 
-    // Asume que esta firma es usada por el ControladorCatalogoUsuario
-    public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre) {
+    public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre)
+    {
         this.libroActual = libro;
         this.usuarioActual = usuario;
         this.controladorPadre = padre;
+
         int disponibles = libro.getCantidadDisponible();
         int stockTotal = libro.getCantidad();
-
-        // Mostrar datos en la tarjeta (como en la imagen)
-        lblTitulo.setText(libro.getTitulo());
-        lblAutor.setText(libro.getAutor());
-        lblGenero.setText(libro.getGenero());
 
         String disponiblesText = String.format("Disponibles: %d/%d", disponibles, stockTotal);
         lblDisponibles.setText(disponiblesText);
 
-        // Control de disponibilidad y estilo del botón Pedir Prestado
-        if (disponibles <= 0) {
+        if (disponibles <= 0)
+        {
             btnPedirPrestado.setDisable(true);
             btnPedirPrestado.setText("No disponible");
-        } else {
+        }
+        else
+        {
             btnPedirPrestado.setDisable(false);
             btnPedirPrestado.setText("Pedir Prestado");
         }
-        actualizarBotonFavorito();
+
+        // ... (Inicializar el estado del corazón y enlazar eventos)
     }
+
+// ...
 
     @FXML
     private void handlePedirPrestado()
@@ -76,12 +77,16 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
         }
     }
 
-    private void actualizarBotonFavorito() {
-        // Este método debe estar en FavoritosDAO: favoritosDAO.esFavorito(idUsuario, idLibro)
+    private void actualizarBotonFavorito()
+    {
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
-        // Lógica para cambiar el icono del corazón (rojo/blanco)
-        // btnFavorito.setStyle(esFavorito ? "-fx-text-fill: red;" : "-fx-text-fill: gray;");
+        if (esFavorito)
+        {
+            btnFavorito.setText("❤\uFE0F");
+        }
+        else
+        {
+            btnFavorito.setText("\uD83E\uDD0D ");
+        }
     }
-
-    private void getCantidadReal()
 }

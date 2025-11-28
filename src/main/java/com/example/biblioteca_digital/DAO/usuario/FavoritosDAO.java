@@ -49,6 +49,7 @@ public class FavoritosDAO {
                         rs.getString("isbn"),
                         rs.getString("descripcion"),
                         rs.getString("foto"),
+                        rs.getInt("cantidadDisponible"),
                         rs.getInt("cantidad"),
                         rs.getBoolean("disponible")
                 );
@@ -85,4 +86,74 @@ public class FavoritosDAO {
             return false;
         }
     }
+
+    /**
+     * Comprueba si el libro es favorito en la sesion del usuario
+     * @param idUsuario
+     * @param idLibro
+     * @return
+     */
+    public boolean esFavorito(int idUsuario, int idLibro)
+    {
+        String sql = "SELECT 1 FROM favoritos WHERE id_usuario = ? AND id_libro = ?";
+
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
+
+            try (ResultSet rs = ps.executeQuery())
+            {
+                return rs.next();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Cambiar el estado de favorito dependiendo de si presiona el botón o no
+     * @param idUsuario
+     * @param idLibro
+     */
+    public void alternarFavorito(int idUsuario, int idLibro)
+    {
+        if (esFavorito(idUsuario, idLibro))
+        {
+            borrarFavorito(idUsuario, idLibro);
+        }
+        else
+        {
+            agregarFavorito(idUsuario, idLibro);
+        }
+    }
+
+    /**
+     * Añadir un libro a la lista favoritos
+     * @param idUsuario
+     * @param idLibro
+     * @return
+     */
+    private boolean agregarFavorito(int idUsuario, int idLibro)
+    {
+        String sql = "INSERT INTO favoritos(id_usuario, id_libro) VALUES (?, ?)";
+
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
+            return ps.executeUpdate() > 0;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

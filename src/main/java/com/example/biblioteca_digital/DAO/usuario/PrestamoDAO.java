@@ -29,7 +29,7 @@ public class PrestamoDAO
             pst.setInt(3, prestamo.getId_libro());
             pst.setDate(5, Date.valueOf(prestamo.getFecha_inicio()));
             pst.setDate(6, Date.valueOf(prestamo.getFecha_fin()));
-            pst.setString(7, prestamo.getEstado());
+            pst.setString(7, prestamo.getEstado().toString());
             return pst.executeUpdate() > 0;
         }
         catch (SQLException e)
