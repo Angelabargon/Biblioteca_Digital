@@ -15,6 +15,8 @@ public class Libro {
     private int id, cantidad;
     private String titulo, autor, genero, isbn, foto, descripcion;
     private boolean disponible;
+    private int cantidadDisponible;
+
 
     /*
      *Constructor vacío de libro
@@ -32,7 +34,7 @@ public class Libro {
      *@param cantidad
      *@param disponible
      */
-    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, boolean disponible) {
+    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, int cantidadDisponible, boolean disponible) {
 
         this.id = id;
         this.titulo = titulo;
@@ -42,6 +44,7 @@ public class Libro {
         this.isbn = isbn;
         this.foto = foto;
         this.cantidad = cantidad;
+        this.cantidadDisponible = cantidadDisponible;
         this.disponible = disponible;
     }
 
@@ -63,6 +66,7 @@ public class Libro {
     public String getFoto() { return foto; }
     public int getCantidad() { return cantidad; }
     public boolean getDisponible() { return disponible; }
+    public int getCantidadDisponible() {return cantidadDisponible;}
 
     /*
      *Setters de los atributos de un libro
@@ -76,7 +80,7 @@ public class Libro {
     public void setFoto(String foto) { this.foto = foto; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
-
+    public void setCantidadDisponible(int cantidadDisponible) {this.cantidadDisponible = cantidadDisponible;}
     /*
      *ToString para imprimir la clase y sus atributos
      *@return

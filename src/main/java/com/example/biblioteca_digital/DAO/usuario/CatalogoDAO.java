@@ -1,4 +1,4 @@
-package com.example.biblioteca_digital.dao; // Asumiendo el paquete 'dao'
+package com.example.biblioteca_digital.DAO.usuario; // Asumiendo el paquete 'dao'
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro; // Necesitas el modelo Libro
@@ -28,9 +28,10 @@ public class CatalogoDAO {
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
+             ResultSet rs = ps.executeQuery())
+        {
+            while (rs.next())
+            {
                 Libro libro = new Libro(
                         rs.getInt("id"),
                         rs.getString("titulo"),
@@ -40,6 +41,7 @@ public class CatalogoDAO {
                         rs.getString("descripcion"),
                         rs.getString("foto"),
                         rs.getInt("cantidad"),
+                        rs.getInt("cantidad_disponible"),
                         rs.getBoolean("disponible")
                 );
                 libros.add(libro);
@@ -150,10 +152,10 @@ public class CatalogoDAO {
      * @param idLibro ID del libro.
      * @return Nombre del autor o null si no se encuentra.
      */
-    public String obtenerAutorPorIdLibro(int idLibro) {
+    public String obtenerAutorPorIdLibro(int idLibro)
+    {
         String autor = null;
         String sql = "SELECT autor FROM libros WHERE id = ?";
-
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 

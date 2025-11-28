@@ -15,7 +15,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class ControladorPrestamosUsuario {
+public class ControladorPrestamosUsuario
+{
 
     @FXML private VBox contenedorPrestamos;
     @FXML private Label labelTituloSeccion;
@@ -24,102 +25,101 @@ public class ControladorPrestamosUsuario {
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
     @FXML
-    public void initialize() {
-        if (contenedorPrestamos != null) {
+    public void initialize()
+    {
+        if (contenedorPrestamos != null)
+        {
             contenedorPrestamos.setSpacing(15);
             contenedorPrestamos.setPadding(new Insets(10));
         }
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario)
+    {
         this.usuarioActual = usuario;
-
-        if (labelTituloSeccion != null) {
+        if (labelTituloSeccion != null)
+        {
             labelTituloSeccion.setText("Mis Préstamos Activos");
         }
-
         cargarPrestamosUsuario();
     }
 
-    // ------------------------------------------------------
     // CARGA DE PRÉSTAMOS
-    // ------------------------------------------------------
-    private void cargarPrestamosUsuario() {
+
+    private void cargarPrestamosUsuario()
+    {
         contenedorPrestamos.getChildren().clear();
-
         List<Prestamo> lista = prestamoDAO.obtenerPrestamosDeUsuario(usuarioActual.getId());
-
-        if (lista.isEmpty()) {
+        if (lista.isEmpty())
+        {
             Label noPrestamos = new Label("No tienes libros actualmente en préstamo.");
             noPrestamos.setStyle("-fx-font-size: 16px; -fx-text-fill: #777;");
             contenedorPrestamos.getChildren().add(noPrestamos);
             return;
         }
-
-        for (Prestamo p : lista) {
+        for (Prestamo p : lista)
+        {
             contenedorPrestamos.getChildren().add(crearPrestamoItem(p));
         }
     }
 
-    // ------------------------------------------------------
-    // CREAR TARJETA FXML (Vista-Prestamo-Item.fxml)
-    // ------------------------------------------------------
-    private Parent crearPrestamoItem(Prestamo prestamo) {
-        try {
+    // CREAR TARJETA FXML
+
+    private Parent crearPrestamoItem(Prestamo prestamo)
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/example/biblioteca_digital/vistas/Vista-Prestamo-Item.fxml"
             ));
-
             Parent item = loader.load();
-
             ControladorPedirPrestamo controlador = loader.getController();
-
             String tiempo = calcularTiempoRestante(prestamo.getFecha_fin());
-
             controlador.setPrestamo(prestamo, tiempo, this::handleLeerLibro);
-
             return item;
-
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             return new Label("Error al cargar préstamo");
         }
     }
 
-    // ------------------------------------------------------
     // TIEMPO RESTANTE
-    // ------------------------------------------------------
-    private String calcularTiempoRestante(LocalDate fechaFin) {
-        long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
 
-        if (dias > 0) {
+    private String calcularTiempoRestante(LocalDate fechaFin)
+    {
+        long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
+        if (dias > 0)
+        {
             return "Vence: " + fechaFin.toString();
-        } else if (dias == 0) {
+        } else if (dias == 0)
+        {
             return "Vence Hoy";
-        } else {
+        }
+        else
+        {
             return "Vencido hace " + Math.abs(dias) + " días";
         }
     }
 
-    // ------------------------------------------------------
     // MANEJADOR DEL BOTÓN "LEER LIBRO"
-    // ------------------------------------------------------
-    private void handleLeerLibro(Prestamo prestamo) {
+
+    private void handleLeerLibro(Prestamo prestamo)
+    {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/example/biblioteca_digital/vistas/Vista-Lectura-Libro.fxml"));
-
             Parent root = loader.load();
-
             ControladorLeerLibro controlador = loader.getController();
             controlador.cargarContenido(prestamo);
-
             javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle(prestamo.getLibro().getTitulo());
+            stage.setTitle(prestamo.getTituloLibro());
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

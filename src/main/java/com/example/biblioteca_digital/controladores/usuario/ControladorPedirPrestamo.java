@@ -1,5 +1,6 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO; // Necesitas el DAO de Catálogo
 import com.example.biblioteca_digital.modelos.Prestamo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ public class ControladorPedirPrestamo
     // Atributos internos
     private Prestamo prestamoActual;
     private Consumer<Prestamo> leerLibroHandler;
+    private final CatalogoDAO catalogoDAO = new CatalogoDAO(); // Para obtener el autor
 
     /**
      * Establece los datos y el manejador de eventos para esta tarjeta de préstamo.
@@ -26,12 +28,15 @@ public class ControladorPedirPrestamo
         this.prestamoActual = prestamo;
         this.leerLibroHandler = handler;
 
-        // **NOTA:** Asumiendo que Prestamo.getLibro() devuelve el objeto Libro
         lblTitulo.setText(prestamo.getTituloLibro());
-        lblAutor.setText(prestamo.getTituloLibro().getAutor());
+
+        // ✅ SOLUCIÓN: Usar el DAO para obtener el autor con el ID del libro
+        String autor = catalogoDAO.obtenerAutorPorIdLibro(prestamo.getId_libro());
+        lblAutor.setText(autor != null ? autor : "Autor Desconocido");
+
         lblDiasRestantes.setText(tiempoRestante);
 
-        // Deshabilitar si está vencido, similar al diseño de tu imagen
+        // Deshabilitar si está vencido
         if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy"))
         {
             btnLeerLibro.setDisable(true);
