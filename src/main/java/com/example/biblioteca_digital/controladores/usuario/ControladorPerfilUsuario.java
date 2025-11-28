@@ -69,8 +69,8 @@ public class ControladorPerfilUsuario
         int numFavoritos = perfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
         int numPrestamos = perfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
 
-        lb_favoritos.setText("Favoritos " + numFavoritos);
-        lb_prestamos.setText("Préstamos " + numPrestamos);
+        lb_favoritos.setText("Favoritos: " + numFavoritos);
+        lb_prestamos.setText("Préstamos: " + numPrestamos);
 
     }
 

@@ -17,25 +17,25 @@
        </image>
       </ImageView>
 
-      <Label fx:id="lb_nombreUsuario" layoutX="197.0" layoutY="174.0" text="Label">
+      <Label fx:id="lb_nombreUsuario" layoutX="197.0" layoutY="174.0" text="Label" textAlignment="CENTER">
        <font>
            <Font size="15.0" />
        </font>
       </Label>
 
-      <Label fx:id="lb_nombreReal" layoutX="197.0" layoutY="214.0" text="Label">
+      <Label fx:id="lb_nombreReal" layoutX="197.0" layoutY="214.0" text="Label" textAlignment="CENTER">
           <font>
               <Font size="15.0" />
           </font>
       </Label>
 
-      <Label fx:id="lb_favoritos" layoutX="197.0" layoutY="251.0" text="Label">
+      <Label fx:id="lb_favoritos" layoutX="197.0" layoutY="251.0" text="Label" textAlignment="CENTER">
           <font>
               <Font size="15.0" />
           </font>
       </Label>
 
-      <Label fx:id="lb_prestamos" layoutX="197.0" layoutY="290.0" text="Label">
+      <Label fx:id="lb_prestamos" layoutX="197.0" layoutY="290.0" text="Label" textAlignment="CENTER">
           <font>
               <Font size="15.0" />
           </font>
