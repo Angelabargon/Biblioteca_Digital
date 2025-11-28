@@ -37,7 +37,6 @@ public class ControladorFavoritosUsuario {
     {
         this.usuarioActual = usuario;
         cargarFavoritos();
-        // Configurar listener para mostrar detalles al hacer clic
         listaFavoritos.setOnMouseClicked(e -> mostrarDetalles(
                 listaFavoritos.getSelectionModel().getSelectedItem()
         ));
