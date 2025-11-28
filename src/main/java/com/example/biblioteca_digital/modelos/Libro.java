@@ -1,40 +1,43 @@
 package com.example.biblioteca_digital.modelos;
-/*
- *Imports de la clase libro
+/**
+ * Imports de la clase libro
  */
 import java.util.Date;
 
-/*
- *Clase libro
+/**
+ * Clase libro
  */
 public class Libro {
 
-    /*
-     *Atributos de un libro
+    /**
+     * Atributos de un libro
      */
     private int id, cantidad;
-    private String titulo, autor, genero, isbn, foto, descripcion;
+    private String titulo, autor, genero, isbn, foto, descripcion, contenido;
     private boolean disponible;
     private int cantidadDisponible;
 
 
-    /*
-     *Constructor vacío de libro
+    /**
+     * Constructor vacío de libro
      */
     public Libro() {}
 
-    /*
-     *Constructor de libro con atributos
-     *@param id
-     *@param titulo
-     *@param autor
-     *@param genero
-     *@param isbn
-     *@param foto
-     *@param cantidad
-     *@param disponible
+    /**
+     * Constructor de libro con atributos
+     * @param id
+     * @param titulo
+     * @param autor
+     * @param genero
+     * @param descripcion
+     * @param isbn
+     * @param foto
+     * @param cantidadDisponible
+     * @param cantidad
+     * @param disponible
+     * @param contenido
      */
-    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, int cantidadDisponible, boolean disponible) {
+    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, int cantidadDisponible, boolean disponible, String contenido) {
 
         this.id = id;
         this.titulo = titulo;
@@ -46,6 +49,7 @@ public class Libro {
         this.cantidad = cantidad;
         this.cantidadDisponible = cantidadDisponible;
         this.disponible = disponible;
+        this.contenido = contenido;
     }
 
     public Libro(int idLibro, String tituloLibro) {
@@ -53,9 +57,9 @@ public class Libro {
         this.titulo = tituloLibro;
     }
 
-    /*
-     *Getters de los atributos de un libro
-     *@return
+    /**
+     * Getters de los atributos de un libro
+     * @return
      */
     public int getId() { return id; }
     public String getTitulo() { return titulo; }
@@ -67,9 +71,10 @@ public class Libro {
     public int getCantidad() { return cantidad; }
     public boolean getDisponible() { return disponible; }
     public int getCantidadDisponible() {return cantidadDisponible;}
+    public String getContenido() {return contenido; }
 
-    /*
-     *Setters de los atributos de un libro
+    /**
+     * Setters de los atributos de un libro
      */
     public void setId(int id) { this.id = id; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -80,10 +85,11 @@ public class Libro {
     public void setFoto(String foto) { this.foto = foto; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
-    public void setCantidadDisponible(int cantidadDisponible) {this.cantidadDisponible = cantidadDisponible;}
-    /*
-     *ToString para imprimir la clase y sus atributos
-     *@return
+    public void setCantidadDisponible(int cantidadDisponible) {this.cantidadDisponible = cantidadDisponible; }
+    public void setContenido(String contenido) {this.contenido = contenido; }
+    /**
+     * ToString para imprimir la clase y sus atributos
+     * @return
      */
 
     @Override
@@ -94,10 +100,13 @@ public class Libro {
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", genero='" + genero + '\'' +
-                ", genero='" + descripcion + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", foto='" + foto + '\'' +
+                ", cantidad disponible=" + cantidadDisponible +
+                ", cantidad=" + cantidad +
                 ", disponible=" + disponible +
+                ", contenido=" + contenido +
                 '}';
     }
 }
