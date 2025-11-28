@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ComboBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorEditarLibros"
             style="-fx-background-color: #FFF7ED; -fx-padding: 20; -fx-background-radius: 15;">
 
-    <!-- Botón cerrar -->
+    <!-- BOTÓN CERRAR -->
     <top>
         <HBox alignment="TOP_RIGHT">
             <Button text="✕" onAction="#cerrarVentana"
@@ -22,7 +29,9 @@
             <Label text="Editar Libro"
                    style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #5C3D2E;"/>
 
+            <!-- FORMULARIO PRINCIPAL -->
             <GridPane hgap="20" vgap="15">
+
                 <columnConstraints>
                     <ColumnConstraints percentWidth="50"/>
                     <ColumnConstraints percentWidth="50"/>
@@ -49,31 +58,38 @@
                            style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
 
                 <!-- CANTIDAD -->
-                <Label text="Total de Copias" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <Label text="Cantidad total" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                 <TextField fx:id="txtCantidad" GridPane.rowIndex="5" GridPane.columnIndex="0"
                            style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
 
-                <!-- URL PORTADA -->
-                <Label text="URL de Portada" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <!-- FOTO -->
+                <Label text="URL Foto" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                 <TextField fx:id="txtFoto" GridPane.rowIndex="5" GridPane.columnIndex="1"
                            style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
-
             </GridPane>
 
             <!-- DESCRIPCIÓN -->
             <Label text="Descripción"/>
             <TextArea fx:id="txtDescripcion"
                       prefHeight="120"
+                      wrapText="true"
+                      style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
+
+            <!-- CONTENIDO -->
+            <Label text="Contenido"/>
+            <TextArea fx:id="txtContenido"
+                      prefHeight="160"
+                      wrapText="true"
                       style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
 
             <!-- BOTONES -->
             <HBox spacing="15" alignment="CENTER_RIGHT">
                 <Button text="Cancelar" onAction="#cancelar"
-                        style="-fx-background-color: transparent; -fx-text-fill: #5C3D2E; -fx-font-size: 14;"/>
+                        style="-fx-background-color: transparent; -fx-text-fill: #5C3D2E;"/>
 
                 <Button text="Guardar" onAction="#guardar"
                         style="-fx-background-color: #A65B1A; -fx-text-fill: white;
-                               -fx-background-radius: 8; -fx-padding: 8 18; -fx-font-size: 14;"/>
+                               -fx-background-radius: 8; -fx-padding: 8 18;"/>
             </HBox>
 
         </VBox>

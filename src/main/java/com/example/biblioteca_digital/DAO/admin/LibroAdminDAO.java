@@ -11,7 +11,7 @@ public class LibroAdminDAO {
 
     public List<Libro> obtenerTodos() {
         List<Libro> lista = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, cantidad, disponible FROM libros ORDER BY titulo";
+        String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, cantidad_disponible, cantidad, disponible, contenido FROM libros ORDER BY titulo";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -26,7 +26,9 @@ public class LibroAdminDAO {
                 l.setIsbn(rs.getString("isbn"));
                 l.setFoto(rs.getString("foto"));
                 l.setCantidad(rs.getInt("cantidad"));
+                l.setCantidadDisponible(rs.getInt("cantidad_disponible"));
                 l.setDisponible(rs.getBoolean("disponible"));
+                l.setContenido(rs.getString("contenido"));
                 lista.add(l);
             }
 
@@ -37,7 +39,7 @@ public class LibroAdminDAO {
     }
 
     public Libro obtenerPorId(int id) {
-        String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, cantidad, disponible FROM libros WHERE id = ?";
+        String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, cantidad_disponible, cantidad, disponible, contenido FROM libros WHERE id = ?";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -63,7 +65,7 @@ public class LibroAdminDAO {
     }
 
     public boolean actualizarCantidadYDisponibilidad(int idLibro, int nuevaCantidad) {
-        String sql = "UPDATE libros SET cantidad = ?, disponible = ? WHERE id = ?";
+        String sql = "UPDATE libros SET titulo=?, autor=?, descripcion=?, genero=?, isbn=?, foto=?, cantidad_disponible=?, cantidad=?, disponible=?, contenido=? WHERE id = ?";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, nuevaCantidad);
@@ -79,7 +81,7 @@ public class LibroAdminDAO {
 
 
     public boolean agregarLibro(Libro libro) {
-        String sql = "INSERT INTO libros (titulo, autor, descripcion, genero, isbn, foto, cantidad, disponible) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO libros (titulo, autor, descripcion, genero, isbn, foto, cantidad_disponible, cantidad, disponible, contenido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, libro.getTitulo());
@@ -88,8 +90,10 @@ public class LibroAdminDAO {
             ps.setString(4, libro.getGenero());
             ps.setString(5, libro.getIsbn());
             ps.setString(6, libro.getFoto());
-            ps.setInt(7, libro.getCantidad());
-            ps.setBoolean(8, libro.getCantidad() > 0);
+            ps.setInt(7, libro.getCantidadDisponible());
+            ps.setInt(8, libro.getCantidad());
+            ps.setBoolean(9, libro.getCantidad() > 0);
+            ps.setString(10, libro.getContenido());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -113,9 +117,11 @@ public class LibroAdminDAO {
             ps.setString(4, libro.getGenero());
             ps.setString(5, libro.getIsbn());
             ps.setString(6, libro.getFoto());
-            ps.setInt(7, libro.getCantidad());
-            ps.setBoolean(8, libro.getCantidad() > 0);
-            ps.setInt(9, libro.getId());
+            ps.setInt(7, libro.getCantidadDisponible());
+            ps.setInt(8, libro.getCantidad());
+            ps.setBoolean(9, libro.getCantidad() > 0);
+            ps.setString(10, libro.getContenido());
+            ps.setInt(11, libro.getId());
             int filas = ps.executeUpdate();
             return filas > 0;
         } catch (SQLException e) {
