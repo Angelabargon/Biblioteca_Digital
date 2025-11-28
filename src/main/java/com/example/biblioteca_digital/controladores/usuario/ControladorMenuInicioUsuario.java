@@ -111,7 +111,7 @@ public class ControladorMenuInicioUsuario {
     public void mostrarAyuda(ActionEvent event)
     {
         ControladorAyuda.mostrarAyuda(
-                "/com/example/biblioteca_digital/vistas/Vista-Ayuda-MenuUsuario.fxml",
+                "/com/example/biblioteca_digital/vistas/usuario/Vista-Ayuda-MenuUsuario.fxml",
                 "Usuario"
         );
     }
