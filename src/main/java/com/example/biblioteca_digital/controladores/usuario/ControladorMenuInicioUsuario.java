@@ -6,6 +6,7 @@ import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -49,7 +50,7 @@ public class ControladorMenuInicioUsuario {
         {
             try
             {
-                mostrarVistaPerfil();
+                abrirPerfil(event);
             }
             catch (IOException e)
             {
@@ -110,23 +111,6 @@ public class ControladorMenuInicioUsuario {
         );
     }
 
-
-    private void mostrarVistaPerfil() throws IOException
-    {
-        Stage stage = (Stage) iv_iconoUsuario.getScene().getWindow();
-        URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/vista_perfil_usuario.fxml");
-        if (fxmlUrl == null) {
-            System.err.println("Recurso FXML de perfil no encontrado.");
-            mostrarAlertaError("Error de Navegación", "No se pudo encontrar la vista de perfil.");
-            return;
-        }
-        Parent root = FXMLLoader.load(fxmlUrl);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Perfil de Usuario");
-        stage.show();
-    }
-
     private void mostrarAlertaError(String titulo, String mensaje)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -137,8 +121,7 @@ public class ControladorMenuInicioUsuario {
     }
 
     @FXML
-    private void abrirPerfil(javafx.scene.input.MouseEvent event) throws IOException {
-
+    private void abrirPerfil(MouseEvent event) throws IOException {
         URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml");
         if (fxmlUrl == null) {
             System.err.println("FXML de perfil no encontrado.");
@@ -150,12 +133,13 @@ public class ControladorMenuInicioUsuario {
         Parent root = loader.load();
 
         Stage perfilStage = new Stage();
-        perfilStage.initOwner(iv_iconoUsuario.getScene().getWindow());
+        perfilStage.initOwner(((Stage) ((Node) event.getSource()).getScene().getWindow()));
         perfilStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        perfilStage.setTitle("Perfil");
+        perfilStage.setTitle("Perfil de Usuario");
         perfilStage.setScene(new Scene(root));
         perfilStage.showAndWait();
     }
+
     @FXML
     private void handleCatalogo() {
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
