@@ -11,6 +11,9 @@ public class Prestamo {
     private LocalDate fecha_fin;
     private Estado estado;
 
+    private Usuario usuario;
+    private Libro libro;
+
     public Prestamo() {}
 
     public Prestamo(int id, int id_usuario, int id_libro, LocalDate fecha_inicio, LocalDate fecha_fin, Estado estado) {
@@ -32,6 +35,10 @@ public class Prestamo {
     public LocalDate getFecha_inicio() { return fecha_inicio; }
     public LocalDate getFecha_fin() { return fecha_fin; }
     public String getEstado() { return estado.toString(); }
+
+    public Usuario getUsuario() { return usuario; }
+    public Libro getLibro() { return libro; }
+
     // ---------------------------------
     // SETTERS NORMALES
     // ---------------------------------
@@ -42,5 +49,8 @@ public class Prestamo {
     public void setFecha_inicio(LocalDate fecha_inicio) { this.fecha_inicio = fecha_inicio; }
     public void setFecha_fin(LocalDate fecha_fin) { this.fecha_fin = fecha_fin; }
     public void setEstado(String estado) { this.estado = Estado.valueOf(estado); }
+
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public void setLibro(Libro libro) { this.libro = libro; }
 }
 
