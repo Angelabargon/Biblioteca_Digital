@@ -4,12 +4,14 @@ import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Usuario;
 import java.sql.*;
 
-public class UsuarioDAO {
+public class UsuarioDAO
+{
 
     /**
      * Método auxiliar para la conexión a la base de datos.
      */
-    private Connection conectar() {
+    private static Connection conectar()
+    {
         return ConexionBD.getConexion();
     }
 
@@ -17,14 +19,13 @@ public class UsuarioDAO {
      * Obtiene todos los detalles de un usuario dado su ID.
      * Requerido por PrestamoDAO para cargar el objeto Usuario.
      */
-    public Usuario obtenerUsuarioPorId(int idUsuario)
+    public static Usuario obtenerUsuarioPorId(int idUsuario)
     {
         Usuario usuario = null;
         String sql = "SELECT id, nombre, nombre_usuario, email FROM usuarios WHERE id = ?";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
-
         {
             ps.setInt(1, idUsuario);
             try (ResultSet rs = ps.executeQuery())
@@ -37,7 +38,9 @@ public class UsuarioDAO {
                     usuario.setNombreUsuario(rs.getString("nombre_usuario"));
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("Error al obtener usuario por ID: " + e.getMessage());
             e.printStackTrace();
         }

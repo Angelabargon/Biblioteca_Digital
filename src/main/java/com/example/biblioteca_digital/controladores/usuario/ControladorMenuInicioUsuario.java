@@ -58,43 +58,39 @@ public class ControladorMenuInicioUsuario {
             }
         });
     }
-
-    private void cargarVista(String fxmlPath, Class<?> expectedControllerClass)
+    /**
+     * Método genérico para cargar FXML, pasándole el Usuario al controlador.
+     * @param fxmlPath Ruta del archivo FXML.
+     * @param controllerClass Clase del controlador asociado para la inyección.
+     */
+    private void cargarVista(String fxmlPath, Class<?> controllerClass)
     {
         try
         {
-            URL fxmlUrl = getClass().getResource(fxmlPath);
-            if (fxmlUrl == null)
-            {
-                System.err.println("Recurso FXML no encontrado: " + fxmlPath);
-                mostrarAlertaError("Error de Carga", "El archivo de vista no se encontró.");
-                return;
-            }
-
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent vista = loader.load();
-            Object subControlador = loader.getController();
-
-            if (subControlador instanceof ControladorCatalogoUsuario && expectedControllerClass.equals(ControladorCatalogoUsuario.class))
-            {
-                ((ControladorCatalogoUsuario) subControlador).setUsuario(usuarioActual);
-            }
-            else if (subControlador instanceof ControladorPrestamosUsuario && expectedControllerClass.equals(ControladorPrestamosUsuario.class))
-            {
-                ((ControladorPrestamosUsuario) subControlador).setUsuario(usuarioActual);
-            }
-            else if (subControlador instanceof ControladorFavoritosUsuario && expectedControllerClass.equals(ControladorFavoritosUsuario.class))
-            {
-                ((ControladorFavoritosUsuario) subControlador).setUsuario(usuarioActual);
-            }
+            Object controlador = loader.getController();
             contenedor.getChildren().clear();
-            AnchorPane.setTopAnchor(vista, 0.0);
-            AnchorPane.setBottomAnchor(vista, 0.0);
             AnchorPane.setLeftAnchor(vista, 0.0);
             AnchorPane.setRightAnchor(vista, 0.0);
+            AnchorPane.setTopAnchor(vista, 0.0);
+            AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
+            if (controlador instanceof ControladorCatalogoUsuario)
+            {
+                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioActual);
+            }
+            else if (controlador instanceof ControladorPrestamosUsuario)
+            {
+                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioActual);
+            }
+            else if (controlador instanceof ControladorFavoritosUsuario)
+            {
+                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioActual);
+            }
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             mostrarAlertaError("Error de E/S", "No se pudo cargar la vista: " + fxmlPath);
@@ -159,5 +155,20 @@ public class ControladorMenuInicioUsuario {
         perfilStage.setTitle("Perfil");
         perfilStage.setScene(new Scene(root));
         perfilStage.showAndWait();
+    }
+    @FXML
+    private void handleCatalogo() {
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
+    }
+
+    @FXML
+    private void handlePrestamos() {
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamos-Usuario.fxml", ControladorPrestamosUsuario.class);
+    }
+
+    @FXML
+    private void handleFavoritos() {
+        // Asegúrate de que el FXML esté creado en la ruta correcta
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Favoritos-Usuario.fxml", ControladorFavoritosUsuario.class);
     }
 }

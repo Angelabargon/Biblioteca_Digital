@@ -14,7 +14,7 @@ public class FavoritosDAO
     /**
      * Obtiene la conexión a la base de datos.
      */
-    private Connection conectar()
+    private static Connection conectar()
     {
         return ConexionBD.getConexion();
     }
@@ -133,7 +133,7 @@ public class FavoritosDAO
      * @param idLibro
      * @return
      */
-    private boolean agregarFavorito(int idUsuario, int idLibro)
+    public static boolean agregarFavorito(int idUsuario, int idLibro)
     {
         String sql = "INSERT INTO favoritos(id_usuario, id_libro) VALUES (?, ?)";
 

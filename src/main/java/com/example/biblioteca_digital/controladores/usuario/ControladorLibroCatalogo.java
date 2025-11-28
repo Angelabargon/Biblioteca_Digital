@@ -44,11 +44,7 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
             btnPedirPrestado.setDisable(false);
             btnPedirPrestado.setText("Pedir Prestado");
         }
-
-        // ... (Inicializar el estado del corazón y enlazar eventos)
     }
-
-// ...
 
     @FXML
     private void handlePedirPrestado()
@@ -59,19 +55,20 @@ public class ControladorLibroCatalogo { // Asumimos este nombre para la tarjeta
         }
     }
 
-    // Llama al padre para la acción
     @FXML
-    private void handleVerDetalles() {
-        if (libroActual != null && controladorPadre != null) {
+    private void handleVerDetalles()
+    {
+        if (libroActual != null && controladorPadre != null)
+        {
             controladorPadre.clickVer(libroActual);
         }
     }
 
-    // Acción que gestiona el favorito (Llama al DAO de Favoritos)
     @FXML
-    private void handleAlternarFavorito() {
-        if (libroActual != null && usuarioActual != null) {
-            // Este método debe estar en FavoritosDAO
+    private void handleAlternarFavorito()
+    {
+        if (libroActual != null && usuarioActual != null)
+        {
             favoritosDAO.alternarFavorito(usuarioActual.getId(), libroActual.getId());
             actualizarBotonFavorito();
         }

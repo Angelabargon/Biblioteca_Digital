@@ -1,6 +1,6 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
-import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO; // Nuevo DAO
+import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
@@ -14,26 +14,22 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ControladorCatalogoUsuario {
+public class ControladorCatalogoUsuario
+{
 
-    // --- Géneros Estáticos ---
     private static final List<String> GENEROS_ESTATICOS = Arrays.asList(
             "Todas", "Ficción", "Clásicos", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía"
     );
 
-    // --- Atributos de estado ---
     private Usuario usuarioActual;
-    private List<Libro> libros = new ArrayList<>();
+    // ELIMINADA: private List<Libro> libros = new ArrayList<>(); // ¡La lista ahora se carga en el DAO!
     private int prestamosActivos = 0;
 
-    // --- Instancias DAO ---
     private final CatalogoDAO catalogoDAO = new CatalogoDAO();
 
-    // --- Elementos FXML ---
     @FXML private Label labelBienvenida;
     @FXML private Label labelContadorPrestamos;
     @FXML private FlowPane contenedorLibros;
@@ -42,8 +38,9 @@ public class ControladorCatalogoUsuario {
     @FXML private ChoiceBox<String> filtroGenero;
 
     @FXML
-    public void initialize() {
-        // Enlazar listeners para el filtrado automático
+    public void initialize()
+    {
+        // Enlazar listeners para que las búsquedas se actualicen inmediatamente
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
@@ -54,57 +51,48 @@ public class ControladorCatalogoUsuario {
     /**
      * Establece el usuario y carga los datos iniciales.
      */
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario)
+    {
         this.usuarioActual = usuario;
 
         if (labelBienvenida != null) labelBienvenida.setText("Bienvenido, " + usuario.getNombre());
 
-        // Cargar datos usando DAO
-        libros = catalogoDAO.obtenerTodosLosLibros();
+        // Cargar prestamos activos
         prestamosActivos = catalogoDAO.contarPrestamosActivos(usuario.getId());
 
         // Actualizar contadores
         if (labelContadorPrestamos != null) labelContadorPrestamos.setText(String.valueOf(prestamosActivos));
 
+        // Cargar el catálogo completo por primera vez (o filtrado si hay valores iniciales)
         mostrarLibrosFiltrados();
     }
 
-    private void cargarFiltroGeneros() {
+    private void cargarFiltroGeneros()
+    {
         if (filtroGenero != null) {
             filtroGenero.setItems(FXCollections.observableArrayList(GENEROS_ESTATICOS));
             filtroGenero.getSelectionModel().selectFirst();
         }
     }
 
-
-    // --- LÓGICA DE FILTRADO Y VISUALIZACIÓN ---
-
     /**
-     * Aplica los filtros de Título, Autor y Género.
+     * Aplica los filtros de Título, Autor y Género llamando al DAO.
      */
     @FXML
     public void mostrarLibrosFiltrados() {
         if (contenedorLibros == null) return;
         contenedorLibros.getChildren().clear();
 
-        // Obtener valores de filtro (se aplica toLowerCase para la búsqueda)
-        String titulo = filtroTitulo.getText() != null ? filtroTitulo.getText().toLowerCase() : "";
-        String autor = filtroAutor.getText() != null ? filtroAutor.getText().toLowerCase() : "";
-        String generoSeleccionado = filtroGenero.getValue() != null && !filtroGenero.getValue().equals("Todas")
-                ? filtroGenero.getValue().toLowerCase() : "";
+        // Obtener valores de filtro (ya no es necesario toLowerCase aquí, el DAO lo maneja en SQL)
+        String titulo = filtroTitulo.getText();
+        String autor = filtroAutor.getText();
+        String generoSeleccionado = filtroGenero.getValue();
 
-        for (Libro libro : libros) {
-            String libroTitulo = libro.getTitulo() != null ? libro.getTitulo().toLowerCase() : "";
-            String libroAutor = libro.getAutor() != null ? libro.getAutor().toLowerCase() : "";
-            String libroGenero = libro.getGenero() != null ? libro.getGenero().toLowerCase() : "";
+        // **USO DEL DAO PARA FILTRAR EN LA BASE DE DATOS**
+        List<Libro> librosFiltrados = catalogoDAO.cargarCatalogo(titulo, autor, generoSeleccionado);
 
-            boolean coincide = libroTitulo.contains(titulo)
-                    && libroAutor.contains(autor)
-                    && (generoSeleccionado.isEmpty() || libroGenero.equals(generoSeleccionado));
-
-            if (coincide) {
-                contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
-            }
+        for (Libro libro : librosFiltrados) {
+            contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
         }
     }
 
@@ -114,68 +102,68 @@ public class ControladorCatalogoUsuario {
      * Método llamado por el ControladorLibroCatalogo para pedir un préstamo.
      */
     public void clickPedirPrestamo(Libro libro) {
-        // La lógica de verificar disponibilidad ya está dentro de CatalogoDAO.pedirPrestado
         if (catalogoDAO.pedirPrestado(usuarioActual.getId(), libro.getId())) {
             mostrarAlerta("Préstamo Exitoso", "Has solicitado el préstamo de " + libro.getTitulo() + ".");
 
-            // Refrescar datos
-            libros = catalogoDAO.obtenerTodosLosLibros(); // Recargar para actualizar disponibles
+            // 1. Refrescar el contador de préstamos
             prestamosActivos = catalogoDAO.contarPrestamosActivos(usuarioActual.getId());
             if (labelContadorPrestamos != null) labelContadorPrestamos.setText(String.valueOf(prestamosActivos));
 
-            mostrarLibrosFiltrados(); // Actualizar UI
+            // 2. Refrescar la vista del catálogo (llama al DAO para recargar los libros con stock actualizado)
+            mostrarLibrosFiltrados();
         } else {
             // Este error puede ser por límite del usuario o por disponibilidad (DAO lo verifica)
             mostrarAlertaError("Préstamo Fallido", "No se pudo solicitar el préstamo. Revisa si el libro está disponible o si has alcanzado tu límite de préstamos.");
         }
     }
 
-    /**
-     * Método llamado por el ControladorLibroCatalogo para ver detalles.
-     */
-    public void clickVer(Libro libro) {
-        // ... (Lógica para abrir la vista individual)
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Usuario.fxml"));
-            Parent root = loader.load();
+    // El resto de la lógica de vistas y alertas se mantiene igual...
+    public void clickVer(Libro libro)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/com/example/biblioteca_digital/vistas/Vista-Libro-Individual.fxml"));
 
+            Parent root = loader.load();
+            // Asegúrate de que ControladorLibrosIndividual existe y tiene setLibro
+            // Si el nombre del controlador en el recurso FXML es diferente, corrígelo
             ControladorLibrosIndividual controlador = loader.getController();
             controlador.setLibro(libro, usuarioActual);
-
             Stage stage = new Stage();
-            stage.setTitle(libro.getTitulo());
+            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.setTitle("Detalles de: " + libro.getTitulo());
             stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
+            stage.showAndWait();
+        }
+        catch (IOException e)
+        {
+            mostrarAlertaError("Error de Vista", "No se pudo cargar la vista individual del libro.");
             e.printStackTrace();
-            mostrarAlertaError("Error de Carga", "No se pudo cargar la vista de detalle del libro.");
         }
     }
 
-    // --- LÓGICA DE CARGA DE VISTAS (Item del Libro) ---
-
-    private Node crearVistaLibroItem(Libro libro) {
-        try {
+    private Node crearVistaLibroItem(Libro libro)
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Item.fxml"));
             Parent item = loader.load();
 
+            // Asumiendo que existe ControladorLibroCatalogo con setDatos
             ControladorLibroCatalogo controlador = loader.getController();
-
-            // Se asume la siguiente firma para la tarjeta de libro:
-            // El controlador de la tarjeta necesita el libro y la referencia al controlador padre para los callbacks.
             controlador.setDatos(libro, usuarioActual, this);
-
             return item;
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             return new Label("Error al cargar item: " + libro.getTitulo());
         }
     }
 
-    // --- UTILIDADES ---
-    private void mostrarAlerta(String titulo, String mensaje) {
-        // ... (Tu lógica de alerta)
+    private void mostrarAlerta(String titulo, String mensaje)
+    {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información");
         alert.setHeaderText(titulo);
@@ -183,8 +171,8 @@ public class ControladorCatalogoUsuario {
         alert.showAndWait();
     }
 
-    private void mostrarAlertaError(String titulo, String mensaje) {
-        // ... (Tu lógica de alerta de error)
+    private void mostrarAlertaError(String titulo, String mensaje)
+    {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(titulo);
