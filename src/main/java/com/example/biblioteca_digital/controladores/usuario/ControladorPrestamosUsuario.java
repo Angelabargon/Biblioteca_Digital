@@ -37,6 +37,11 @@ public class ControladorPrestamosUsuario
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
+        if (contenedorPrestamos == null)
+        {
+            System.err.println("ERROR INTERNO: contenedorPrestamos es NULL en ControladorPrestamosUsuario. Revise el FXML.");
+            return;
+        }
         if (labelTituloSeccion != null)
         {
             labelTituloSeccion.setText("Mis Préstamos Activos");
