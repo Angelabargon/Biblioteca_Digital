@@ -64,7 +64,7 @@ public class ControladorPerfilUsuario
         if (usuarioActual == null) return;
 
         lb_nombreUsuario.setText("Nombre de Usuario: " + usuarioActual.getNombreUsuario());
-        lb_nombreReal.setText("Nombre " + usuarioActual.getNombre());
+        lb_nombreReal.setText("Nombre: " + usuarioActual.getNombre());
 
         int numFavoritos = perfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
         int numPrestamos = perfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
