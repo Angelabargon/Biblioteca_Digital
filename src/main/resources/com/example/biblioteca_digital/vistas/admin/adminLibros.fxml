@@ -1,73 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibrosAdmin"
-      spacing="20"
-      style="-fx-background-color:#f6f2ec; -fx-padding:32;">
+<VBox prefHeight="578.0" prefWidth="1061.0" spacing="20" style="-fx-background-color:#f6f2ec; -fx-padding:32;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibrosAdmin">
 
     <!-- TÍTULO + BOTÓN -->
     <HBox alignment="CENTER_LEFT" spacing="16">
-        <Label text="Gestión de Libros"
-               style="-fx-font-size:24px; -fx-font-weight:700; -fx-text-fill:#3a3a3a;"/>
+        <Label style="-fx-font-size:24px; -fx-font-weight:700; -fx-text-fill:#3a3a3a;" text="Gestión de Libros" />
 
-        <Region HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="ALWAYS" />
 
-        <Button text="+  Nuevo Libro"
-                onAction="#abrirAgregarLibro"
-                style="
-                    -fx-background-color:#8b4b2e;
-                    -fx-text-fill:white;
-                    -fx-font-weight:600;
-                    -fx-font-size:14px;
-                    -fx-padding:10 22;
-                    -fx-background-radius:12;">
+        <Button onAction="#abrirAgregarLibro" style="                     -fx-background-color:#8b4b2e;                     -fx-text-fill:white;                     -fx-font-weight:600;                     -fx-font-size:14px;                     -fx-padding:10 22;                     -fx-background-radius:12;" text="+  Nuevo Libro">
         </Button>
     </HBox>
 
     <!-- TABLA ESTILO FIGMA -->
 
-    <HBox spacing="8" alignment="CENTER_LEFT">
+    <HBox alignment="CENTER_LEFT" spacing="8">
         <TextField fx:id="txtBuscar" promptText="Buscar..." />
     </HBox>
 
-    <TableView fx:id="tablaLibros"
-               VBox.vgrow="ALWAYS"
-               style="
-                   -fx-background-color:white;
-                   -fx-background-radius:14;
-                   -fx-border-color:#e5e3dd;
-                   -fx-border-radius:14;
-                   -fx-table-cell-border-color: transparent;
-                   -fx-padding:6;
-                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4);
-                   -fx-fixed-cell-size:46;">
+    <TableView fx:id="tablaLibros" style="                    -fx-background-color:white;                    -fx-background-radius:14;                    -fx-border-color:#e5e3dd;                    -fx-border-radius:14;                    -fx-table-cell-border-color: transparent;                    -fx-padding:6;                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4);                    -fx-fixed-cell-size:46;" VBox.vgrow="ALWAYS">
 
         <columns>
 
-            <TableColumn fx:id="colTitulo" text="Título" prefWidth="240"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colTitulo" prefWidth="240" style="-fx-font-size:14px; -fx-font-weight:600;" text="Título" />
 
-            <TableColumn fx:id="colAutor" text="Autor" prefWidth="180"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colAutor" prefWidth="180" style="-fx-font-size:14px; -fx-font-weight:600;" text="Autor" />
 
-            <TableColumn fx:id="colGenero" text="Categoría" prefWidth="150"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colGenero" prefWidth="150" style="-fx-font-size:14px; -fx-font-weight:600;" text="Categoría" />
 
-            <TableColumn fx:id="colIsbn" text="ISBN" prefWidth="120"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colIsbn" prefWidth="120" style="-fx-font-size:14px; -fx-font-weight:600;" text="ISBN" />
 
-            <TableColumn fx:id="colCantidad" text="Copias" prefWidth="100"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colCantidad" prefWidth="76.79998779296875" style="-fx-font-size:14px; -fx-font-weight:600;" text="Copias" />
 
-            <TableColumn fx:id="colEstado" text="Estado" prefWidth="130"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colEstado" prefWidth="117.5999755859375" style="-fx-font-size:14px; -fx-font-weight:600;" text="Estado" />
 
-            <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="120"
-                         style="-fx-font-size:14px; -fx-font-weight:600;"/>
+            <TableColumn fx:id="colAcciones" prefWidth="100.0" style="-fx-font-size:14px; -fx-font-weight:600;" text="Acciones" />
 
         </columns>
 
