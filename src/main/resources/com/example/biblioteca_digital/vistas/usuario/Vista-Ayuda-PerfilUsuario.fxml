@@ -23,19 +23,19 @@
             </graphic>
         </Label>
 
-        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫  Punto 1." textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫  A continuación se pueden ver la imagen de su perfil junto con los datos de su cuenta." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
         </Label>
 
-        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ Punto 2." textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ En caso de querer cambiar su contraseña, pulse el botón e introduzca la nueva dos veces para confirmar el cambio." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
         </Label>
 
-        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Punto 3." textAlignment="JUSTIFY" wrapText="true">
+        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Para cerrar sesión pulse el botón y será llevado a la pagina de inicio sin su cuenta iniciada." textAlignment="JUSTIFY" wrapText="true">
             <font>
                 <Font size="17.5" />
             </font>
