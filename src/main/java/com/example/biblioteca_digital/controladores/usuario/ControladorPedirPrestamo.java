@@ -30,7 +30,7 @@ public class ControladorPedirPrestamo
 
         lblTitulo.setText(prestamo.getLibro().getTitulo());
 
-        String autor = catalogoDAO.obtenerAutorPorIdLibro(prestamo.getId_libro());
+        String autor = catalogoDAO.obtenerAutorPorIdLibro(prestamo.getLibro().getId());
         lblAutor.setText(autor != null ? autor : "Autor Desconocido");
 
         lblDiasRestantes.setText(tiempoRestante);

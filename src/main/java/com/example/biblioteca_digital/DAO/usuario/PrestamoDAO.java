@@ -88,7 +88,7 @@ public class PrestamoDAO
     {
         // El método original tenía errores de sintaxis y omitía la transacción.
         // Se corrige delegando al método crearPrestamo, que ya implementa la atomicidad.
-        return crearPrestamo(prestamo.getId_usuario(), prestamo.getId_libro());
+        return crearPrestamo(prestamo.getUsuario().getId(), prestamo.getLibro().getId());
     }
 
     /**
@@ -114,8 +114,8 @@ public class PrestamoDAO
                     int id_usuario_actual = rs.getInt("id_usuario");
                     Prestamo p = new Prestamo();
                     p.setId(rs.getInt("id"));
-                    p.setId_usuario(id_usuario_actual);
-                    p.setId_libro(idLibro);
+                    p.getUsuario().setId(id_usuario_actual);
+                    p.getLibro().setId(idLibro);
                     p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
                     p.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
                     p.setEstado(rs.getString("estado"));
@@ -156,5 +156,18 @@ public class PrestamoDAO
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * Coger los ID de los libros que el usuario tiene prestado
+     * @param idUsuario
+     * @return
+     */
+    public List<Integer> obtenerIdsLibrosPrestados(int idUsuario) {
+        List<Integer> ids = new ArrayList<>();
+        // Asegúrate de que tu tabla 'prestamos' tiene una columna 'id_libro' y 'fecha_devolucion' es NULL para los activos
+        String sql = "SELECT id_libro FROM prestamos WHERE id_usuario = ? AND fecha_devolucion IS NULL";
+        // ... (Lógica de conexión y ejecución de consulta)
+        return ids;
     }
 }
