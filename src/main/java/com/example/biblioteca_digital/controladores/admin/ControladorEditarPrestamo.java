@@ -83,10 +83,10 @@ public class ControladorEditarPrestamo {
         Libro libroSeleccionado = comboLibro.getValue();
 
         if (usuarioSeleccionado != null)
-            prestamo.setId_usuario(usuarioSeleccionado.getId());
+            prestamo.setUsuario(usuarioSeleccionado);
 
         if (libroSeleccionado != null)
-            prestamo.setId_libro(libroSeleccionado.getId());
+            prestamo.setLibro(libroSeleccionado);
 
         prestamo.setFecha_inicio(LocalDate.now());
         prestamo.setFecha_fin(fechaFin.getValue());
