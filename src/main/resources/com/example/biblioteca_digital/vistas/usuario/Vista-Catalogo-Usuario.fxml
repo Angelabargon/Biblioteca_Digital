@@ -16,7 +16,8 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import java.net.URL?>
-<BorderPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">    <ImageView id="iv_fondoLogin" fitHeight="548.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+<BorderPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">
+    <ImageView id="iv_fondoLogin" fitHeight="548.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../imagenes/fondo-biblioteca.png" />
         </image>

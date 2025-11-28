@@ -54,7 +54,7 @@ public class ControladorLibrosIndividual
     private void actualizarBotonFavorito()
     {
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
-        btnAgregarFavorito.setText(esFavorito ? "❤️ En Favoritos" : "♡ Añadir a Favoritos");
+        btnAgregarFavorito.setText(esFavorito ? "❤ En Favoritos" : "♡ Añadir a Favoritos");
     }
 
     @FXML

@@ -15,28 +15,10 @@
             <Image url="@../../imagenes/fondo-biblioteca.png" />
         </image>
     </ImageView>
-    <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-        </padding>
-
-        <Label fx:id="labelTituloSeccion" text="Mis Préstamos Activos">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <VBox.margin>
-                <Insets bottom="15.0" />
-            </VBox.margin>
-        </Label>
-
-        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" hbarPolicy="NEVER">
-            <content>
-                <VBox fx:id="contenedorPrestamos" spacing="10.0">
-                    <padding>
-                        <Insets top="5.0" />
-                    </padding>
-                </VBox>
-            </content>
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label fx:id="labelTituloSeccion" text="Mis Préstamos Activos"/>
+        <ScrollPane>
+            <VBox fx:id="contenedorPrestamos"/>
         </ScrollPane>
     </VBox>
 </AnchorPane>
