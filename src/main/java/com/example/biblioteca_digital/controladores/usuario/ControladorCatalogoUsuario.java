@@ -25,7 +25,6 @@ public class ControladorCatalogoUsuario
     );
 
     private Usuario usuarioActual;
-    // ELIMINADA: private List<Libro> libros = new ArrayList<>(); // ¡La lista ahora se carga en el DAO!
     private int prestamosActivos = 0;
 
     private final CatalogoDAO catalogoDAO = new CatalogoDAO();
@@ -40,7 +39,6 @@ public class ControladorCatalogoUsuario
     @FXML
     public void initialize()
     {
-        // Enlazar listeners para que las búsquedas se actualicen inmediatamente
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
