@@ -1,16 +1,24 @@
-package com.example.biblioteca_digital.DAO.usuario; // Asumiendo el paquete 'dao'
+package com.example.biblioteca_digital.DAO.usuario;
 
 import com.example.biblioteca_digital.conexion.ConexionBD;
+import com.example.biblioteca_digital.modelos.Estado;
 import com.example.biblioteca_digital.modelos.Libro; // Necesitas el modelo Libro
+import com.example.biblioteca_digital.modelos.Prestamo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatalogoDAO {
-
+public class CatalogoDAO
+{
+    /**
+     *  Llama a prestamos para guardar un préstamo al presionar el botón
+     */
+    private final PrestamoDAO prestamoDAO = new PrestamoDAO();
     /**
      * Obtiene la conexión a la base de datos.
      */
@@ -87,64 +95,112 @@ public class CatalogoDAO {
      * @return true si el préstamo fue exitoso, false en caso contrario.
      */
     public boolean pedirPrestado(int idUsuario, int idLibro) {
-        // Asumimos que la lógica de límite de préstamos se verifica en el Controlador.
-        // Aquí solo manejamos la transacción de la BD.
 
-        try (Connection conn = conectar()) {
-            // Desactivamos auto-commit para asegurar que ambas operaciones (INSERT y UPDATE)
-            // se realicen juntas (transacción atómica).
+        // Consultas
+        String sqlCheck = "SELECT cantidad_disponible FROM libros WHERE id = ?";
+        String sqlUpdate = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ?";
+
+        // --- Datos para construir el objeto Prestamo ---
+        String[] datosPrestamo = obtenerDatosUsuarioYLibro(idUsuario, idLibro);
+        if (datosPrestamo == null) {
+            System.err.println("Error: No se pudieron obtener datos del usuario o libro para el préstamo.");
+            return false;
+        }
+
+        String nombreUsuario = datosPrestamo[0];
+        String tituloLibro = datosPrestamo[1];
+
+        LocalDate fechaInicio = LocalDate.now();
+        LocalDate fechaFin = fechaInicio.plusDays(14);
+
+        try (Connection conn = conectar())
+        {
             conn.setAutoCommit(false);
-
-            // 1. Verificar si hay unidades disponibles
-            String sqlCheck = "SELECT disponibles FROM libros WHERE id = ?";
             int disponibles = 0;
 
+            // 2. VERIFICAR STOCK
             try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck)) {
                 psCheck.setInt(1, idLibro);
                 try (ResultSet rs = psCheck.executeQuery()) {
                     if (rs.next()) {
-                        disponibles = rs.getInt("disponibles");
+                        disponibles = rs.getInt("cantidad_disponible");
                     }
                 }
             }
 
             if (disponibles <= 0) {
                 conn.rollback();
-                return false; // No hay unidades disponibles
+                return false; // 🛑 Stock insuficiente
+            }
+            Prestamo prestamo = new Prestamo(
+                    -1,
+                    idUsuario,
+                    idLibro,
+                    fechaInicio,
+                    fechaFin,
+                    Estado.Activo
+            );
+            if (!prestamoDAO.guardarPrestamo(prestamo))
+            {
+                conn.rollback();
+                throw new SQLException("Fallo al guardar registro de préstamo");
             }
 
-            // 2. Insertar el nuevo préstamo
-            // Asumiendo que la fecha_prestamo es la fecha actual y la fecha_vencimiento es calculada
-            // (por simplicidad, no la calculamos aquí, se puede hacer en SQL o en Java)
-            String sqlInsert = "INSERT INTO prestamos (id_usuario, id_libro, fecha_prestamo, fecha_vencimiento) VALUES (?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 14 DAY))";
-
-            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert)) {
-                psInsert.setInt(1, idUsuario);
-                psInsert.setInt(2, idLibro);
-                psInsert.executeUpdate();
-            }
-
-            // 3. Actualizar la disponibilidad del libro (disponibles = disponibles - 1)
-            String sqlUpdate = "UPDATE libros SET disponibles = disponibles - 1 WHERE id = ?";
+            // 4. RESTAR 1 AL STOCK DISPONIBLE
             try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
                 psUpdate.setInt(1, idLibro);
-                psUpdate.executeUpdate();
+                int filasAfectadas = psUpdate.executeUpdate();
+                if (filasAfectadas == 0) throw new SQLException("Fallo al actualizar stock disponible");
             }
 
-            conn.commit(); // Confirmar la transacción
+            conn.commit(); // 5. Confirmar la transacción
             return true;
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Error en la transacción de préstamo: " + e.getMessage());
-            // Si algo falla, revertir los cambios
-            try (Connection conn = conectar()) {
-                conn.rollback();
+            // Revertir si la operación falla
+            try (Connection rollbackConn = conectar()) {
+                rollbackConn.rollback();
             } catch (SQLException rollbackException) {
                 System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
             }
             e.printStackTrace();
             return false;
         }
+    }
+
+    private String[] obtenerDatosUsuarioYLibro(int idUsuario, int idLibro)
+    {
+        String sql = """
+            SELECT u.nombre_usuario, l.titulo
+            FROM usuarios u, libros l
+            WHERE u.id = ? AND l.id = ?
+            """;
+
+        try (Connection conn = conectar();
+             PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
+
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
+                    return new String[]{
+                            rs.getString("nombre_usuario"),
+                            rs.getString("titulo")
+                    };
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error al obtener datos usuario/libro: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

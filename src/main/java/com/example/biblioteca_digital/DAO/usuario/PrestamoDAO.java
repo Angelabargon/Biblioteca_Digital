@@ -19,17 +19,17 @@ public class PrestamoDAO
     {
         String sql = """
         INSERT INTO prestamos 
-        (id_usuario, nombre_usuario, id_libro, titulo_libro, fecha_inicio, fecha_fin, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (id_usuario, id_libro, fecha_inicio, fecha_fin, estado)
+        VALUES (?, ?, ?, ?, ?)
     """;
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement pst = con.prepareStatement(sql))
         {
             pst.setInt(1, prestamo.getId_usuario());
-            pst.setInt(3, prestamo.getId_libro());
-            pst.setDate(5, Date.valueOf(prestamo.getFecha_inicio()));
-            pst.setDate(6, Date.valueOf(prestamo.getFecha_fin()));
-            pst.setString(7, prestamo.getEstado());
+            pst.setInt(2, prestamo.getId_libro());
+            pst.setDate(3, Date.valueOf(prestamo.getFecha_inicio()));
+            pst.setDate(4, Date.valueOf(prestamo.getFecha_fin()));
+            pst.setString(5, prestamo.getEstado().toString());
             return pst.executeUpdate() > 0;
         }
         catch (SQLException e)
