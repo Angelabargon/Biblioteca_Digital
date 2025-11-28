@@ -44,8 +44,6 @@ public class ControladorPrestamosUsuario
         cargarPrestamosUsuario();
     }
 
-    // CARGA DE PRÉSTAMOS
-
     private void cargarPrestamosUsuario()
     {
         contenedorPrestamos.getChildren().clear();
@@ -62,8 +60,6 @@ public class ControladorPrestamosUsuario
             contenedorPrestamos.getChildren().add(crearPrestamoItem(p));
         }
     }
-
-    // CREAR TARJETA FXML
 
     private Parent crearPrestamoItem(Prestamo prestamo)
     {
@@ -85,8 +81,6 @@ public class ControladorPrestamosUsuario
         }
     }
 
-    // TIEMPO RESTANTE
-
     private String calcularTiempoRestante(LocalDate fechaFin)
     {
         long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
@@ -103,18 +97,18 @@ public class ControladorPrestamosUsuario
         }
     }
 
-    // MANEJADOR DEL BOTÓN "LEER LIBRO"
-
     private void handleLeerLibro(Prestamo prestamo)
     {
-        try {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/com/example/biblioteca_digital/vistas/Vista-Lectura-Libro.fxml"));
+                    "/com/example/biblioteca_digital/vistas/Vista-Prestamo-Item.fxml"));
             Parent root = loader.load();
             ControladorLeerLibro controlador = loader.getController();
             controlador.cargarContenido(prestamo);
             javafx.stage.Stage stage = new javafx.stage.Stage();
-            stage.setTitle(prestamo.getTituloLibro());
+            String titulo = (prestamo.getLibro() != null) ? prestamo.getLibro().getTitulo() : "Libro";
+            stage.setTitle(titulo);
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
         }

@@ -5,6 +5,7 @@ package com.example.biblioteca_digital.controladores;
  */
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -49,6 +50,29 @@ public class Navegacion {
             stage.close();
         } catch (Exception e) {
             System.out.println("Error al cerrar la vista: " + titulo);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creamos un metodo para cambiar de la activity actual a otra.
+     *
+     * @param event  Evento que dispara la acción (ej. clic en botón).
+     * @param rutaFXML  Ruta del archivo FXML de la nueva vista.
+     * @param titulo  Título de la ventana.
+     */
+    public static void cambiarVistaImagen(MouseEvent event, String rutaFXML, String titulo) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                    Navegacion.class.getResource(rutaFXML)
+            );
+            javafx.scene.Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.setTitle(titulo);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error al cambiar a la vista: " + rutaFXML);
             e.printStackTrace();
         }
     }

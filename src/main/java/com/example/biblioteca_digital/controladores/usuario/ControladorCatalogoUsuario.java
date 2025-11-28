@@ -1,6 +1,6 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
-import com.example.biblioteca_digital.dao.CatalogoDAO; // Nuevo DAO
+import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO; // Nuevo DAO
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;

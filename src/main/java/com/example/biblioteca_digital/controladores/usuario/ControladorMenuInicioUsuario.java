@@ -1,6 +1,7 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.controladores.ControladorAyuda;
+import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -126,5 +128,15 @@ public class ControladorMenuInicioUsuario {
         alert.setHeaderText(titulo);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void abrirPerfil(javafx.scene.input.MouseEvent event)
+    {
+        Navegacion.cambiarVistaImagen(
+                event,
+                "/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml",
+                "Mi Perfil"
+        );
     }
 }
