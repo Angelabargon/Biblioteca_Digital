@@ -20,7 +20,7 @@
 
     <children>
 
-      <ImageView id="iv_fondoLogin" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="iv_fondo" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
           <image>
            <Image url="@../imagenes/fondo-biblioteca.png" />
           </image>

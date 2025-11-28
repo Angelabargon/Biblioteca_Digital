@@ -44,39 +44,44 @@ public class ControladorPrestamosUsuario
         cargarPrestamosUsuario();
     }
 
+    /**
+     * Carga la lista de préstamos activos y genera la vista dinámica.
+     */
     private void cargarPrestamosUsuario()
     {
         contenedorPrestamos.getChildren().clear();
-        List<Prestamo> lista = prestamoDAO.obtenerPrestamosDeUsuario(usuarioActual.getId());
-        if (lista.isEmpty())
+        List<Prestamo> prestamos = prestamoDAO.obtenerPrestamosDeUsuario(usuarioActual.getId());
+        if (prestamos.isEmpty())
         {
-            Label noPrestamos = new Label("No tienes libros actualmente en préstamo.");
-            contenedorPrestamos.getChildren().add(noPrestamos);
+            contenedorPrestamos.getChildren().add(new Label("No tienes préstamos activos en este momento."));
             return;
         }
-        for (Prestamo p : lista)
+        for (Prestamo prestamo : prestamos)
         {
-            contenedorPrestamos.getChildren().add(crearPrestamoItem(p));
+            contenedorPrestamos.getChildren().add(crearVistaPrestamoItem(prestamo));
         }
     }
 
-    private Parent crearPrestamoItem(Prestamo prestamo)
+    /**
+     * Crea y configura un Node para un único préstamo.
+     */
+    private javafx.scene.Node crearVistaPrestamoItem(Prestamo prestamo)
     {
         try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/com/example/biblioteca_digital/vistas/Vista-Prestamo-Item.fxml"
-            ));
-            Parent item = loader.load();
-            ControladorPedirPrestamo controlador = loader.getController();
-            String tiempo = calcularTiempoRestante(prestamo.getFecha_fin());
-            controlador.setPrestamo(prestamo, tiempo, this::handleLeerLibro);
+                    "/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamo-Item.fxml")); // AJUSTA LA RUTA
+
+            javafx.scene.Node item = loader.load();
+            ControladorPedirPrestamo controladorItem = loader.getController();
+            String tiempoRestante = calcularTiempoRestante(prestamo.getFecha_fin());
+            controladorItem.setPrestamo(prestamo, tiempoRestante, this::handleLeerLibro);
             return item;
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            return new Label("Error al cargar préstamo");
+            return new Label("Error al cargar préstamo: " + e.getMessage());
         }
     }
 

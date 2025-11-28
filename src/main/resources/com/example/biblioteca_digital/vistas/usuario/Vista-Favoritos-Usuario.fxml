@@ -8,7 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 
-<AnchorPane prefHeight="548.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
+    <ImageView id="iv_fondoLogin" fitHeight="548.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../imagenes/fondo-biblioteca.png" />
+        </image>
+    </ImageView>
     <VBox AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" spacing="15">
 
         <Label text="Mis Libros Favoritos" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;" />

@@ -10,8 +10,13 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.ToggleGroup?>
-<AnchorPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
-<Label layoutX="269.0" layoutY="34.0" prefHeight="54.0" prefWidth="269.0" text="Biblioteca Digital">
+<AnchorPane prefHeight="770.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
+    <ImageView id="iv_fondoLogin" fitHeight="770.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../imagenes/fondo-biblioteca.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="269.0" layoutY="34.0" prefHeight="54.0" prefWidth="269.0" text="Biblioteca Digital">
     <font>
         <Font size="36.0" />
     </font>
@@ -21,7 +26,8 @@
             <ToggleButton fx:id="tbt_MENU"
                           prefHeight="35.0"
                           prefWidth="150.0"
-                          text="Catálogo">
+                          text="Catálogo"
+                          onAction="#handleCatalogo">
                 <toggleGroup>
                     <ToggleGroup fx:id="menuGroup" />
                 </toggleGroup>
@@ -31,12 +37,15 @@
                           prefHeight="35.0"
                           prefWidth="150.0"
                           text="Mis préstamos"
-                          toggleGroup="$menuGroup"/>
+                          toggleGroup="$menuGroup"
+                          onAction="#handlePrestamos"/>
+
             <ToggleButton fx:id="tbt_FAVORITOS"
                           prefHeight="35.0"
                           prefWidth="150.0"
                           text="Mis favoritos"
-                          toggleGroup="$menuGroup"/>
+                          toggleGroup="$menuGroup"
+                          onAction="#handleFavoritos"/>
         </children>
     </HBox>
 
