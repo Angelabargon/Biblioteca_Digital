@@ -158,7 +158,6 @@ public class ControladorMenuInicioUsuario {
 
     @FXML
     private void handleFavoritos() {
-        // Asegúrate de que el FXML esté creado en la ruta correcta
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Favoritos-Usuario.fxml", ControladorFavoritosUsuario.class);
     }
 }

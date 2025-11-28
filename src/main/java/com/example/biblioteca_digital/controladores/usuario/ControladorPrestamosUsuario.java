@@ -75,12 +75,11 @@ public class ControladorPrestamosUsuario
         try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamo-Item.fxml")); // AJUSTA LA RUTA
-
+                    "/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamo-Item.fxml"));
             javafx.scene.Node item = loader.load();
-            ControladorPedirPrestamo controladorItem = loader.getController();
+            ControladorPedirPrestamo controlador = loader.getController();
             String tiempoRestante = calcularTiempoRestante(prestamo.getFecha_fin());
-            controladorItem.setPrestamo(prestamo, tiempoRestante, this::handleLeerLibro);
+            controlador.setPrestamo(prestamo, tiempoRestante, this::handleLeerLibro);
             return item;
         }
         catch (IOException e)
