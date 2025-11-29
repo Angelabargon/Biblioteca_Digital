@@ -1,5 +1,6 @@
 package com.example.biblioteca_digital.controladores.admin;
 
+import com.example.biblioteca_digital.modelos.Estado;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import com.example.biblioteca_digital.modelos.Prestamo;
@@ -90,7 +91,7 @@ public class ControladorEditarPrestamo {
 
         prestamo.setFecha_inicio(LocalDate.now());
         prestamo.setFecha_fin(fechaFin.getValue());
-        prestamo.setEstado("Activo");
+        prestamo.setEstado(String.valueOf(Estado.activo));
 
         return prestamo;
     }

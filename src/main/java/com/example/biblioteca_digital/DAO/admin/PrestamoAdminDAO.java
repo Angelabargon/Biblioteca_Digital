@@ -108,7 +108,7 @@ public class PrestamoAdminDAO {
                 ps.setInt(2, prestamo.getLibro().getId());
                 ps.setDate(3, Date.valueOf(prestamo.getFecha_inicio()));
                 ps.setDate(4, Date.valueOf(prestamo.getFecha_fin()));
-                ps.setString(5, prestamo.getEstado());
+                ps.setString(5, prestamo.getEstado() != null ? prestamo.getEstado() : null);
 
                 ps.executeUpdate();
 

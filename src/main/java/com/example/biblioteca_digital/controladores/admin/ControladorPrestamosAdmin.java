@@ -98,26 +98,13 @@ public class ControladorPrestamosAdmin {
             }
         });
 
-        // ACCIONES (✎ editar / 🗑 eliminar)
+        // ACCIONES (solo eliminar)
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
-            private final Button btnEditar = new Button("✎");
             private final Button btnEliminar = new Button("🗑");
             private final HBox contenedor = new HBox(8);
 
             {
-                // Estilo EDITAR (como en Libros)
-                btnEditar.setStyle(
-                        "-fx-background-color:#fff6ee; " +
-                                "-fx-border-radius:8; -fx-background-radius:8; -fx-padding:6;"
-                );
-
-                btnEditar.setOnAction(e -> {
-                    Prestamo p = getTableView().getItems().get(getIndex());
-                    editarPrestamo(p);
-                });
-
-                // Estilo ELIMINAR (como en Libros)
                 btnEliminar.setStyle(
                         "-fx-background-color:#ef4444; -fx-text-fill:white; " +
                                 "-fx-border-radius:8; -fx-background-radius:8; -fx-padding:6;"
@@ -129,17 +116,13 @@ public class ControladorPrestamosAdmin {
                 });
 
                 contenedor.setPadding(new Insets(4, 0, 4, 0));
-                contenedor.getChildren().addAll(btnEditar, btnEliminar);
+                contenedor.getChildren().add(btnEliminar);
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(contenedor);
-                }
+                setGraphic(empty ? null : contenedor);
             }
         });
     }
@@ -207,7 +190,22 @@ public class ControladorPrestamosAdmin {
     }
 
     private void eliminarPrestamo(Prestamo p) {
-        System.out.println("Eliminar préstamo: " + p.getId());
-        // confirmar…
+        if (p == null) return;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("¿Eliminar préstamo?");
+        alert.setContentText("Esto devolverá el libro automáticamente.");
+        alert.showAndWait().ifPresent(btn -> {
+            if (btn == ButtonType.OK) {
+                boolean ok = prestamoAdminDAO.eliminarPrestamo(p.getId());
+
+                if (!ok) {
+                    new Alert(Alert.AlertType.ERROR,
+                            "No se pudo eliminar el préstamo").showAndWait();
+                }
+
+                refrescarTabla();
+            }
+        });
     }
 }

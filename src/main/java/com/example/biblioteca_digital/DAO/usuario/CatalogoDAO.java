@@ -223,7 +223,7 @@ public class CatalogoDAO
                     -1,
                     fechaInicio,
                     fechaFin,
-                    Estado.Activo
+                    Estado.activo
             );
             if (!prestamoDAO.guardarPrestamo(prestamo))
             {

@@ -80,6 +80,11 @@ public class ControladorUsuarioAdmin {
                 }
             }
         });
+
+        // listener búsqueda en tiempo real
+        if (txtBuscar != null) {
+            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarUsuario());
+        }
     }
 
     private void configurarFechaCellFactory() {

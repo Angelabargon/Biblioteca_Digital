@@ -71,6 +71,11 @@ public class ControladorLibrosAdmin {
                 setGraphic(tag);
             }
         });
+
+        // listener búsqueda en tiempo real
+        if (txtBuscar != null) {
+            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarLibro());
+        }
     }
 
     // -----------------------------
