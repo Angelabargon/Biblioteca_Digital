@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="578.0" prefWidth="1061.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador">
+<BorderPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorAdministrador">
 
     <!-- TOP: TÍTULO / ESTADÍSTICAS / BARRA DE APARTADOS -->
     <top>
@@ -18,6 +18,9 @@
             <HBox>
                 <Label style="-fx-font-size:24px; -fx-font-weight:700; -fx-text-fill: #2b2b2b;" text="Panel de Administración" />
                 <Region HBox.hgrow="ALWAYS" />
+
+                <!-- Botones adicionales (Cerrar sesión / Ayuda) a la derecha si lo quieres -->
+                <Button onAction="#cerrarSesion" style="-fx-background-color:#8b4b2e; -fx-text-fill:white; -fx-padding:8 14;" text="Cerrar sesión" />
                 <!-- Opcional: botón cerrar sesión aquí si lo quieres arriba -->
             </HBox>
 
@@ -65,9 +68,6 @@
                 </HBox>
 
                 <Region HBox.hgrow="ALWAYS" />
-
-                <!-- Botones adicionales (Cerrar sesión / Ayuda) a la derecha si lo quieres -->
-                <Button onAction="#cerrarSesion" style="-fx-background-color:#8b4b2e; -fx-text-fill:white; -fx-padding:8 14;" text="Cerrar sesión" />
             </HBox>
 
         </VBox>
@@ -75,7 +75,7 @@
 
     <!-- CENTER: Panel donde se cargan las sub-vistas (libros/usuarios/prestamos/catalogo) -->
     <center>
-        <AnchorPane fx:id="panelContenido" prefHeight="578.0" prefWidth="1061.0" style="-fx-padding:16; -fx-background-color: transparent;" />
+        <AnchorPane fx:id="panelContenido" prefHeight="770.0" prefWidth="1400.0" style="-fx-padding:16; -fx-background-color: transparent;" />
     </center>
 
 </BorderPane>

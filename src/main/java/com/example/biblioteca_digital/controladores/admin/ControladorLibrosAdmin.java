@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -17,11 +18,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
-/**
- * Controlador para la vista adminLibros.fxml
- * - Añade cell factories para categoría (tag), estado (badge) y acciones (editar/eliminar).
- * - Usa el DAO LibroAdminDAO que ya tienes.
- */
 public class ControladorLibrosAdmin {
 
     @FXML private TableView<Libro> tablaLibros;
@@ -40,85 +36,92 @@ public class ControladorLibrosAdmin {
 
     @FXML
     public void initialize() {
-        // Seteamos value factories (propiedades del modelo)
-        if (colTitulo != null) colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        if (colAutor != null) colAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
-        if (colGenero != null) colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
-        if (colIsbn != null) colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        if (colCantidad != null) colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
-        if (colEstado != null) colEstado.setCellValueFactory(new PropertyValueFactory<>("disponible"));
+
+        // Value factories — columnas de la tabla
+        colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        colAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("disponible"));
 
         // Cell factories visuales
-        if (colGenero != null) configurarGeneroCellFactory();
-        if (colEstado != null) configurarEstadoCellFactory();
-        if (colAcciones != null) configurarAccionesCellFactory();
+        configurarGeneroCellFactory();
+        configurarEstadoCellFactory();
+        configurarAccionesCellFactory();
 
         cargarLibros();
     }
 
+    // -----------------------------
+    //   CELL FACTORY: GÉNERO
+    // -----------------------------
     private void configurarGeneroCellFactory() {
         colGenero.setCellFactory(col -> new TableCell<Libro, String>() {
             @Override
             protected void updateItem(String genero, boolean empty) {
                 super.updateItem(genero, empty);
-                if (empty || genero == null || genero.isEmpty()) {
+                if (empty || genero == null) {
                     setGraphic(null);
-                    setText(null);
-                } else {
-                    Label tag = new Label(genero);
-                    // estilo parecido al Figma (marrón claro, bordes redondeados)
-                    tag.setStyle("-fx-background-color: #c99b68; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 10;");
-                    setGraphic(tag);
-                    setText(null);
+                    return;
                 }
+                Label tag = new Label(genero);
+                tag.setStyle("-fx-background-color: #c99b68; -fx-text-fill: white; " +
+                        "-fx-padding: 4 10; -fx-background-radius: 10;");
+                setGraphic(tag);
             }
         });
     }
 
+    // -----------------------------
+    //   CELL FACTORY: ESTADO
+    // -----------------------------
     private void configurarEstadoCellFactory() {
         colEstado.setCellFactory(col -> new TableCell<Libro, Boolean>() {
             @Override
             protected void updateItem(Boolean disponible, boolean empty) {
                 super.updateItem(disponible, empty);
+
                 if (empty || disponible == null) {
                     setGraphic(null);
-                    setText(null);
-                } else {
-                    Label badge = new Label(disponible ? "Disponible" : "No disponible");
-                    if (disponible) {
-                        badge.setStyle("-fx-background-color: #10B981; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 8;");
-                    } else {
-                        badge.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 8;");
-                    }
-                    setGraphic(badge);
-                    setText(null);
+                    return;
                 }
+
+                Label badge = new Label(disponible ? "Disponible" : "No disponible");
+                badge.setStyle(
+                        disponible
+                                ? "-fx-background-color: #10B981; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 8;"
+                                : "-fx-background-color: #ef4444; -fx-text-fill: white; -fx-padding: 4 10; -fx-background-radius: 8;"
+                );
+                setGraphic(badge);
             }
         });
     }
 
+    // -----------------------------
+    //   CELL FACTORY: ACCIONES
+    // -----------------------------
     private void configurarAccionesCellFactory() {
         colAcciones.setCellFactory(col -> new TableCell<Libro, Void>() {
 
-            private final Button btnEditar = new Button();
-            private final Button btnEliminar = new Button();
+            private final Button btnEditar = new Button("\u270E");
+            private final Button btnEliminar = new Button("\uD83D\uDDD1");
             private final HBox contenedor = new HBox(8);
 
             {
-                // Botón editar (icono textual por ahora)
-                btnEditar.setText("\u270E"); // ✎
-                btnEditar.setStyle("-fx-background-color: #fff6ee; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding:6;");
+                // Botón Editar
+                btnEditar.setStyle("-fx-background-color: #fff6ee; -fx-border-radius: 8; -fx-background-radius: 8;");
                 btnEditar.setOnAction(e -> {
                     Libro libro = getTableView().getItems().get(getIndex());
-                    if (libro != null) abrirEditor(libro);
+                    abrirEditor(libro);
                 });
 
-                // Botón eliminar
-                btnEliminar.setText("\uD83D\uDDD1"); // 🗑 (dependiendo de la fuente puede variar)
-                btnEliminar.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding:6;");
+                // Botón Eliminar
+                btnEliminar.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white;" +
+                        " -fx-border-radius: 8; -fx-background-radius: 8;");
                 btnEliminar.setOnAction(e -> {
                     Libro libro = getTableView().getItems().get(getIndex());
-                    if (libro != null) eliminarLibroDirecto(libro);
+                    eliminarLibroDirecto(libro);
                 });
 
                 contenedor.setPadding(new Insets(4,0,4,0));
@@ -128,106 +131,134 @@ public class ControladorLibrosAdmin {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(contenedor);
-                }
+                setGraphic(empty ? null : contenedor);
             }
         });
     }
 
-    // Cargar todos los libros desde el DAO
+    // -----------------------------
+    //   CARGAR LIBROS
+    // -----------------------------
     private void cargarLibros() {
         lista.setAll(libroServicio.obtenerTodos());
-        if (tablaLibros != null) tablaLibros.setItems(lista);
+        tablaLibros.setItems(lista);
     }
+
+    // -----------------------------
+    //   BUSCAR LIBRO
+    // -----------------------------
+    @FXML
+    private void buscarLibro() {
+        String q = txtBuscar.getText().trim().toLowerCase();
+        if (q.isEmpty()) {
+            cargarLibros();
+            return;
+        }
+
+        ObservableList<Libro> filtrado = lista.filtered(
+                l ->
+                        (l.getTitulo() != null && l.getTitulo().toLowerCase().contains(q))
+                                ||  (l.getAutor() != null && l.getAutor().toLowerCase().contains(q))
+                                ||  (l.getGenero() != null && l.getGenero().toLowerCase().contains(q))
+                                ||  (l.getIsbn()   != null && l.getIsbn().toLowerCase().contains(q))
+        );
+
+        tablaLibros.setItems(filtrado);
+    }
+
+    // -----------------------------
+    //   ABRIR EDITOR
+    // -----------------------------
+    @FXML
+    public void abrirAgregarLibro() { abrirEditor(null); }
 
     @FXML
-    public void buscarLibro() {
-        String q = txtBuscar != null ? txtBuscar.getText().trim().toLowerCase() : "";
-        if (q.isEmpty()) { cargarLibros(); return; }
-        ObservableList<Libro> filt = lista.filtered(l ->
-                (l.getTitulo()!=null && l.getTitulo().toLowerCase().contains(q)) ||
-                        (l.getAutor()!=null && l.getAutor().toLowerCase().contains(q)) ||
-                        (l.getGenero()!=null && l.getGenero().toLowerCase().contains(q)) ||
-                        (l.getIsbn()!=null && l.getIsbn().toLowerCase().contains(q))
-        );
-        if (tablaLibros != null) tablaLibros.setItems(filt);
-    }
-
-    // Método original para abrir editor (ya lo tenías)
-    @FXML public void abrirAgregarLibro() { abrirEditor(null); }
-
-    @FXML public void editarLibro() {
-        Libro sel = tablaLibros.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAlerta("Selecciona un libro"); return; }
-        abrirEditor(sel);
-    }
-
-    @FXML public void eliminarLibro() {
-        // Este método se mantiene para el botón inferior que tenías
-        Libro sel = tablaLibros.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAlerta("Selecciona un libro"); return; }
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Eliminar libro?", ButtonType.OK, ButtonType.CANCEL);
-        a.setHeaderText(null);
-        Optional<ButtonType> r = a.showAndWait();
-        if (r.isPresent() && r.get()==ButtonType.OK) {
-            boolean ok = libroServicio.eliminarLibro(sel.getId());
-            if (!ok) mostrarAlerta("No se pudo eliminar (referencias).");
-            cargarLibros();
+    public void editarLibro() {
+        Libro l = tablaLibros.getSelectionModel().getSelectedItem();
+        if (l == null) {
+            mostrarAlerta("Selecciona un libro.");
+            return;
         }
+        abrirEditor(l);
     }
 
-    /**
-     * Eliminación invocada por el botón de la celda (sin usar selección)
-     */
-    private void eliminarLibroDirecto(Libro libro) {
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Eliminar libro \"" + libro.getTitulo() + "\"?", ButtonType.OK, ButtonType.CANCEL);
-        a.setHeaderText(null);
-        Optional<ButtonType> r = a.showAndWait();
-        if (r.isPresent() && r.get()==ButtonType.OK) {
-            boolean ok = libroServicio.eliminarLibro(libro.getId());
-            if (!ok) mostrarAlerta("No se pudo eliminar (referencias).");
-            cargarLibros();
-        }
-    }
-
-    /**
-     * Abre el editor (reusa tu implementación). Se pasa el libro seleccionado si se edita.
-     */
     private void abrirEditor(Libro libro) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarLibro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/com/example/biblioteca_digital/vistas/admin/editarLibro.fxml"
+            ));
+
             Parent root = loader.load();
-            // Tu controlador del editor: ControladorEditarLibros
-            com.example.biblioteca_digital.controladores.admin.ControladorEditarLibros ctrl = loader.getController();
-            Stage st = new Stage();
-            st.initOwner(tablaLibros.getScene().getWindow());
-            st.initModality(Modality.APPLICATION_MODAL);
-            ctrl.setStage(st);
+            ControladorEditarLibros ctrl = loader.getController();
+
+            Stage ventana = new Stage();
+            ventana.initOwner(tablaLibros.getScene().getWindow());
+            ventana.initModality(Modality.APPLICATION_MODAL);
+            ventana.setScene(new Scene(root));
+
+            ctrl.setStage(ventana);
             if (libro != null) ctrl.setLibro(libro);
+
             ctrl.setOnGuardarCallback(() -> {
-                Libro res = ctrl.getLibroResultado();
-                if (libro==null) libroServicio.agregarLibro(res);
-                else { res.setId(libro.getId()); libroServicio.actualizarLibro(res); }
+                Libro resultado = ctrl.getLibroResultado();
+
+                if (libro == null)
+                    libroServicio.agregarLibro(resultado);
+                else {
+                    resultado.setId(libro.getId());
+                    libroServicio.actualizarLibro(resultado);
+                }
+
                 cargarLibros();
             });
-            st.setScene(new javafx.scene.Scene(root));
-            st.showAndWait();
+
+            ventana.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error al abrir editor");
+            mostrarAlerta("Error al abrir el editor.");
         }
     }
 
-    private void mostrarAlerta(String t) {
+    // -----------------------------
+    //   ELIMINAR LIBROS
+    // -----------------------------
+    @FXML
+    public void eliminarLibro() {
+        Libro l = tablaLibros.getSelectionModel().getSelectedItem();
+        if (l == null) {
+            mostrarAlerta("Selecciona un libro.");
+            return;
+        }
+
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Eliminar libro?", ButtonType.OK, ButtonType.CANCEL);
+
+        if (a.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            libroServicio.eliminarLibro(l.getId());
+            cargarLibros();
+        }
+    }
+
+    private void eliminarLibroDirecto(Libro libro) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Eliminar \"" + libro.getTitulo() + "\"?",
+                ButtonType.OK, ButtonType.CANCEL);
+
+        if (a.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            libroServicio.eliminarLibro(libro.getId());
+            cargarLibros();
+        }
+    }
+
+    // -----------------------------
+    //   UTILIDAD
+    // -----------------------------
+    private void mostrarAlerta(String msg) {
         Alert a = new Alert(Alert.AlertType.WARNING);
         a.setHeaderText(null);
-        a.setContentText(t);
+        a.setContentText(msg);
         a.showAndWait();
     }
 }
-
-
 

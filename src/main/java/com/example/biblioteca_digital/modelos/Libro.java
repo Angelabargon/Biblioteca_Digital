@@ -96,7 +96,6 @@ public class Libro {
     public String toString() {
         return "Libro{" +
                 "id=" + id +
-                ", cantidad=" + cantidad +
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", genero='" + genero + '\'' +
@@ -106,7 +105,7 @@ public class Libro {
                 ", cantidad disponible=" + cantidadDisponible +
                 ", cantidad=" + cantidad +
                 ", disponible=" + disponible +
-                ", contenido=" + contenido +
+                ", contenido='" + contenido + '\'' +
                 '}';
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="578.0" prefWidth="1061.0" spacing="20" style="-fx-background-color:#f6f2ec; -fx-padding:32;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibrosAdmin">
+<VBox prefHeight="770.0" prefWidth="1400.0" spacing="20" style="-fx-background-color:#f6f2ec; -fx-padding:32;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibrosAdmin">
 
     <!-- TÍTULO + BOTÓN -->
     <HBox alignment="CENTER_LEFT" spacing="16">
@@ -31,19 +31,19 @@
 
         <columns>
 
-            <TableColumn fx:id="colTitulo" prefWidth="240" style="-fx-font-size:14px; -fx-font-weight:600;" text="Título" />
+            <TableColumn fx:id="colTitulo" prefWidth="236.0" style="-fx-font-size:14px; -fx-font-weight:600;" text="Título" />
 
-            <TableColumn fx:id="colAutor" prefWidth="180" style="-fx-font-size:14px; -fx-font-weight:600;" text="Autor" />
+            <TableColumn fx:id="colAutor" prefWidth="236.0" style="-fx-font-size:14px; -fx-font-weight:600;" text="Autor" />
 
-            <TableColumn fx:id="colGenero" prefWidth="150" style="-fx-font-size:14px; -fx-font-weight:600;" text="Categoría" />
+            <TableColumn fx:id="colGenero" prefWidth="210.40008544921875" style="-fx-font-size:14px; -fx-font-weight:600;" text="Categoría" />
 
-            <TableColumn fx:id="colIsbn" prefWidth="120" style="-fx-font-size:14px; -fx-font-weight:600;" text="ISBN" />
+            <TableColumn fx:id="colIsbn" prefWidth="217.5999755859375" style="-fx-font-size:14px; -fx-font-weight:600;" text="ISBN" />
 
-            <TableColumn fx:id="colCantidad" prefWidth="76.79998779296875" style="-fx-font-size:14px; -fx-font-weight:600;" text="Copias" />
+            <TableColumn fx:id="colCantidad" prefWidth="107.199951171875" style="-fx-font-size:14px; -fx-font-weight:600;" text="Copias" />
 
-            <TableColumn fx:id="colEstado" prefWidth="117.5999755859375" style="-fx-font-size:14px; -fx-font-weight:600;" text="Estado" />
+            <TableColumn fx:id="colEstado" prefWidth="183.2000732421875" style="-fx-font-size:14px; -fx-font-weight:600;" text="Estado" />
 
-            <TableColumn fx:id="colAcciones" prefWidth="100.0" style="-fx-font-size:14px; -fx-font-weight:600;" text="Acciones" />
+            <TableColumn fx:id="colAcciones" prefWidth="133.60003662109375" style="-fx-font-size:14px; -fx-font-weight:600;" text="Acciones" />
 
         </columns>
 
