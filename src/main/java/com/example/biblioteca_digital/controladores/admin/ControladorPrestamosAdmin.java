@@ -35,6 +35,10 @@ public class ControladorPrestamosAdmin {
     public void initialize() {
         cargarColumnas();
         refrescarTabla();
+        // buscar en tiempo real al escribir
+        if (txtBuscar != null) {
+            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarPrestamo());
+        }
     }
 
     // ============================================================
@@ -59,6 +63,10 @@ public class ControladorPrestamosAdmin {
                 new SimpleStringProperty(data.getValue().getFecha_fin().format(formato)));
 
         // ESTADO (badge igual estilo que Libros)
+
+        colEstado.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().getEstado()));
+
         colEstado.setCellFactory(col -> new TableCell<>() {
 
             @Override
