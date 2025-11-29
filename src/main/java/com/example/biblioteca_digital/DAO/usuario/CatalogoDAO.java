@@ -18,8 +18,11 @@ public class CatalogoDAO
     /**
      * Llama a prestamos para guardar un préstamo al presionar el botón
      */
-    private final PrestamoDAO prestamoDAO = new PrestamoDAO();
+    private PrestamoDAO prestamoDAO;
 
+    public void setPrestamoDAO(PrestamoDAO dao) {
+        this.prestamoDAO = dao;
+    }
     /**
      * Obtiene la conexión a la base de datos.
      * Se mantiene como static, ya que es un método de utilidad pura.

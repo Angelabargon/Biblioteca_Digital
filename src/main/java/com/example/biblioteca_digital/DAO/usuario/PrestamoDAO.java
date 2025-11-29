@@ -11,7 +11,11 @@ import java.util.List;
 public class PrestamoDAO
 {
     // Instancias de DAO necesarias para obtener objetos completos (Libro y Usuario)
-    private final CatalogoDAO catalogoDAO = new CatalogoDAO();
+    private CatalogoDAO catalogoDAO;
+
+    public void setCatalogoDAO(CatalogoDAO dao) {
+        this.catalogoDAO = dao;
+    }
     private final UsuarioDAO usuarioDAO = new UsuarioDAO(); // Asumiendo que existe una clase UsuarioDAO
 
     /**

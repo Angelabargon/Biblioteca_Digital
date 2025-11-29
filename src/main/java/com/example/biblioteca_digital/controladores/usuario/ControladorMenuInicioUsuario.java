@@ -1,5 +1,7 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
+import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.controladores.ControladorAyuda;
 import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -50,8 +52,14 @@ public class ControladorMenuInicioUsuario {
     }
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
+
+        CatalogoDAO catalogoDAO = new CatalogoDAO();
+        PrestamoDAO prestamoDAO = new PrestamoDAO();
+
+        catalogoDAO.setPrestamoDAO(prestamoDAO);
+        prestamoDAO.setCatalogoDAO(catalogoDAO);
+
         iv_iconoUsuario.setOnMouseClicked(event ->
         {
             try
