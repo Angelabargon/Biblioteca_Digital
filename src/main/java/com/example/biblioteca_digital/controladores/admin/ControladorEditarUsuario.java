@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 public class ControladorEditarUsuario {
 
     @FXML private TextField txtUsuario;
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtPrimerApellido;
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtContrasena;
     @FXML private ComboBox<Rol> comboRol;
@@ -24,6 +26,8 @@ public class ControladorEditarUsuario {
         this.usuario = u;
         if (u!=null) {
             txtUsuario.setText(u.getNombreUsuario());
+            txtNombre.setText(u.getNombre());
+            txtPrimerApellido.setText(u.getPrimerApellido());
             txtCorreo.setText(u.getCorreo());
             txtContrasena.setText(u.getContrasena());
             comboRol.setValue(u.getRol());
@@ -32,6 +36,8 @@ public class ControladorEditarUsuario {
     public Usuario getUsuarioResultado() {
         if (usuario==null) usuario = new Usuario();
         usuario.setNombreUsuario(txtUsuario.getText());
+        usuario.setNombre(txtNombre.getText());
+        usuario.setPrimerApellido(txtPrimerApellido.getText());
         usuario.setCorreo(txtCorreo.getText());
         usuario.setContrasena(txtContrasena.getText());
         usuario.setRol(comboRol.getValue());

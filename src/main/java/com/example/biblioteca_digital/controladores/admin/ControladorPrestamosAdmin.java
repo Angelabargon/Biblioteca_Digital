@@ -6,9 +6,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -167,8 +171,34 @@ public class ControladorPrestamosAdmin {
 
     @FXML
     private void nuevoPrestamo() {
-        System.out.println("Nuevo préstamo");
-        // abrir modal…
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml"));
+            Parent root = loader.load();
+            com.example.biblioteca_digital.controladores.admin.ControladorEditarPrestamo ctrl = loader.getController();
+
+            // cargar usuarios y libros disponibles
+            ctrl.cargarDatos(new com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO().obtenerTodos(),
+                    new com.example.biblioteca_digital.DAO.admin.LibroAdminDAO().obtenerTodos());
+
+            Stage st = new Stage();
+            st.initOwner(tablaPrestamos.getScene().getWindow());
+            st.initModality(Modality.APPLICATION_MODAL);
+            ctrl.setStage(st);
+            ctrl.setOnGuardarCallback(() -> {
+                com.example.biblioteca_digital.modelos.Prestamo p = ctrl.getPrestamoResultado();
+                boolean ok = prestamoAdminDAO.crearPrestamo(p);
+                if (!ok) {
+                    Alert a = new Alert(Alert.AlertType.ERROR, "No se pudo crear el préstamo");
+                    a.showAndWait();
+                }
+                refrescarTabla();
+            });
+
+            st.setScene(new javafx.scene.Scene(root));
+            st.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void editarPrestamo(Prestamo p) {

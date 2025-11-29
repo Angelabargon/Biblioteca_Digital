@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ComboBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorEditarLibros"
@@ -49,8 +48,8 @@
 
                 <!-- CATEGORÍA -->
                 <Label text="Categoría" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="comboCategoria" GridPane.rowIndex="3" GridPane.columnIndex="0"
-                          style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
+                <TextField fx:id="txtCategoria" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                           style="-fx-background-color: #F8EFE3; -fx-background-radius: 8;"/>
 
                 <!-- ISBN -->
                 <Label text="ISBN" GridPane.rowIndex="2" GridPane.columnIndex="1"/>

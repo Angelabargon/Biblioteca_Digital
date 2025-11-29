@@ -81,7 +81,7 @@ public class ControladorRegistro {
          * @return
          */
         public boolean existeUsuarioPorNombre(String nombre) {
-            String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre = ?";
+            String sql = "SELECT COUNT(*) FROM usuarios WHERE nombre = ?";
             try (Connection conn = ConexionBD.getConexion();
                  PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
                 if (stmt == null) {

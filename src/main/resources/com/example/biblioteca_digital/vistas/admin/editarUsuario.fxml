@@ -38,7 +38,7 @@
             <!-- CAMPOS -->
             <VBox spacing="14">
 
-                <Label text="Nombre"
+                <Label text="Nombre de usuario"
                        style="-fx-font-size:14px; -fx-font-weight:600; -fx-text-fill:#3a3a3a;"/>
                 <TextField fx:id="txtUsuario"
                            style="
@@ -50,7 +50,31 @@
                                -fx-border-radius:10;
                            "/>
 
-                <Label text="Email"
+                <Label text="Nombre"
+                       style="-fx-font-size:14px; -fx-font-weight:600; -fx-text-fill:#3a3a3a;"/>
+                <TextField fx:id="txtNombre"
+                           style="
+                               -fx-background-color:#fff;
+                               -fx-background-radius:10;
+                               -fx-padding:10 14;
+                               -fx-font-size:14px;
+                               -fx-border-color:#e3ded7;
+                               -fx-border-radius:10;
+                           "/>
+
+                <Label text="Primer Apellido"
+                       style="-fx-font-size:14px; -fx-font-weight:600; -fx-text-fill:#3a3a3a;"/>
+                <TextField fx:id="txtPrimerApellido"
+                           style="
+                               -fx-background-color:#fff;
+                               -fx-background-radius:10;
+                               -fx-padding:10 14;
+                               -fx-font-size:14px;
+                               -fx-border-color:#e3ded7;
+                               -fx-border-radius:10;
+                           "/>
+
+                <Label text="Correo"
                        style="-fx-font-size:14px; -fx-font-weight:600; -fx-text-fill:#3a3a3a;"/>
                 <TextField fx:id="txtCorreo"
                            style="
@@ -87,7 +111,6 @@
                           "/>
 
             </VBox>
-
             <!-- BOTONES -->
             <HBox spacing="16" alignment="CENTER_RIGHT">
 
