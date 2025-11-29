@@ -4,6 +4,7 @@ import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.controladores.ControladorAyuda;
 import com.example.biblioteca_digital.controladores.Navegacion;
+import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,74 +40,67 @@ public class ControladorMenuInicioUsuario {
 
     private Usuario usuarioActual;
 
-    public void setUsuario(Usuario usuario)
-    {
+    public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
-        if (tbt_MENU != null)
-        {
+        Sesion.setUsuario(usuario); // sincroniza con la sesión global
+        if (tbt_MENU != null) {
             tbt_MENU.setSelected(true);
             handleCatalogo();
         }
-        System.out.println("OK: El AnchorPane 'contenedor' ha sido inyectado correctamente.");
-        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
     }
 
     @FXML
     public void initialize() {
-
         CatalogoDAO catalogoDAO = new CatalogoDAO();
         PrestamoDAO prestamoDAO = new PrestamoDAO();
-
         catalogoDAO.setPrestamoDAO(prestamoDAO);
         prestamoDAO.setCatalogoDAO(catalogoDAO);
 
-        iv_iconoUsuario.setOnMouseClicked(event ->
-        {
-            try
-            {
+        // Marcar catálogo por defecto
+        if (tbt_MENU != null) {
+            tbt_MENU.setSelected(true);
+            handleCatalogo();
+        }
+
+        iv_iconoUsuario.setOnMouseClicked(event -> {
+            try {
                 abrirPerfil(event);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
                 mostrarAlertaError("Error de Navegación", "No se pudo cargar la vista de perfil: " + e.getMessage());
             }
         });
     }
+
     /**
      * Método genérico para cargar FXML, pasándole el Usuario al controlador.
      * @param fxmlPath Ruta del archivo FXML.
      * @param controllerClass Clase del controlador asociado para la inyección.
      */
-    private void cargarVista(String fxmlPath, Class<?> controllerClass)
-    {
-        try
-        {
+    private void cargarVista(String fxmlPath, Class<?> controllerClass) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent vista = loader.load();
             Object controlador = loader.getController();
+
             contenedor.getChildren().clear();
             AnchorPane.setLeftAnchor(vista, 0.0);
             AnchorPane.setRightAnchor(vista, 0.0);
             AnchorPane.setTopAnchor(vista, 0.0);
             AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
-            if (controlador instanceof ControladorCatalogoUsuario)
-            {
-                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioActual);
-            }
-            else if (controlador instanceof ControladorPrestamosUsuario)
-            {
-                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioActual);
-            }
-            else if (controlador instanceof ControladorFavoritosUsuario)
-            {
-                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioActual);
+
+            Usuario usuarioSesion = Sesion.getUsuario(); // ✅ aquí cogemos el usuario real
+
+            if (controlador instanceof ControladorCatalogoUsuario) {
+                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioSesion);
+            } else if (controlador instanceof ControladorPrestamosUsuario) {
+                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioSesion);
+            } else if (controlador instanceof ControladorFavoritosUsuario) {
+                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioSesion);
             }
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             mostrarAlertaError("Error de E/S", "No se pudo cargar la vista: " + fxmlPath);
         }
