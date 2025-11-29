@@ -2,6 +2,7 @@ package com.example.biblioteca_digital.controladores.admin;
 
 import com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO;
 import com.example.biblioteca_digital.modelos.Usuario;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,7 +48,7 @@ public class ControladorUsuarioAdmin {
         // Value factories
         if (colUsuario != null) colUsuario.setCellValueFactory(new PropertyValueFactory<>("nombreUsuario"));
         if (colCorreo != null) colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        if (colRol != null) colRol.setCellValueFactory(new PropertyValueFactory<>("rol"));
+        if (colRol != null) colRol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRol().toString()));
         if (colFecha != null) colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaRegistro"));
 
         // Cell factories visuales
