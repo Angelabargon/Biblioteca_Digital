@@ -16,11 +16,11 @@ public class ControladorLeerLibro
     @FXML private HBox headerBar; // Para la barra de color y el botón de cerrar
 
     /**
-     * Carga el contenido del préstamo en la vista de lectura.
+     * Método que carga el contenido del préstamo en la vista de lectura.
      */
     public void cargarContenido(Prestamo prestamo)
     {
-        // Cargar datos del libro
+        // Carga los datos del libro
         lblTitulo.setText(prestamo.getLibro().getTitulo());
         lblAutor.setText("por " + prestamo.getLibro().getAutor());
 
@@ -45,6 +45,9 @@ public class ControladorLeerLibro
         }
     }
 
+    /**
+     * Método para cerrar la ventana de leerlibro
+     */
     @FXML
     private void cerrarVentana()
     {

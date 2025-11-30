@@ -15,25 +15,17 @@ import java.util.List;
 
 public class CatalogoDAO
 {
-    /**
-     * Llama a prestamos para guardar un préstamo al presionar el botón
-     */
     private PrestamoDAO prestamoDAO;
 
     public void setPrestamoDAO(PrestamoDAO dao) {
         this.prestamoDAO = dao;
     }
-    /**
-     * Obtiene la conexión a la base de datos.
-     * Se mantiene como static, ya que es un método de utilidad pura.
-     */
     private static Connection conectar() {
         return ConexionBD.getConexion();
     }
 
     /**
-     * Obtiene libros del catálogo aplicando filtros opcionales de título, autor y género.
-     * NOTA: Ahora es un método de instancia.
+     * Método qye obtiene libros del catálogo aplicando filtros opcionales de título, autor y género.
      * @param titulo Filtro por título (puede ser nulo o vacío).
      * @param autor Filtro por autor (puede ser nulo o vacío).
      * @param genero Filtro por género (puede ser "Todas", nulo o vacío).
@@ -100,12 +92,12 @@ public class CatalogoDAO
     }
 
     /**
-     * Obtiene todos los libros del catálogo.
+     * Método que obtiene todos los libros del catálogo.
      * NOTA: Ahora es un método de instancia.
      * @return Lista de todos los objetos Libro.
      */
-    public List<Libro> obtenerTodosLosLibros() {
-        // Redirigimos a cargarCatalogo sin filtros para evitar duplicar código SQL
+    public List<Libro> obtenerTodosLosLibros()
+    {
         return cargarCatalogo(null, null, null);
     }
 
@@ -180,126 +172,6 @@ public class CatalogoDAO
             e.printStackTrace();
         }
         return count;
-    }
-
-    /**
-     * Realiza la solicitud de préstamo para un libro, actualizando la disponibilidad.
-     * Se ha mejorado el manejo de la transacción.
-     * @param idUsuario ID del usuario que solicita el préstamo.
-     * @param idLibro ID del libro solicitado.
-     * @return true si el préstamo fue exitoso, false en caso contrario.
-     */
-    public boolean pedirPrestado(int idUsuario, int idLibro)
-    {
-        String sqlCheck = "SELECT cantidad_disponible FROM libros WHERE id = ?";
-        String sqlUpdate = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ?";
-
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(14);
-        Connection conn = null;
-
-        try
-        {
-            conn = conectar();
-            conn.setAutoCommit(false);
-
-            int disponibles = 0;
-            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheck))
-            {
-                psCheck.setInt(1, idLibro);
-                try (ResultSet rs = psCheck.executeQuery())
-                {
-                    if (rs.next())
-                    {
-                        disponibles = rs.getInt("cantidad_disponible");
-                    }
-                }
-            }
-
-            if (disponibles <= 0)
-            {
-                conn.rollback();
-                return false;
-            }
-
-            Prestamo prestamo = new Prestamo(
-                    -1,
-                    fechaInicio,
-                    fechaFin,
-                    Estado.activo
-            );
-            if (!prestamoDAO.guardarPrestamo(prestamo))
-            {
-                conn.rollback();
-                throw new SQLException("Fallo al guardar registro de préstamo");
-            }
-
-            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate))
-            {
-                psUpdate.setInt(1, idLibro);
-                int filasAfectadas = psUpdate.executeUpdate();
-                if (filasAfectadas == 0) throw new SQLException("Fallo al actualizar stock disponible");
-            }
-
-            conn.commit();
-            return true;
-        }
-        catch (SQLException e)
-        {
-            System.err.println("Error en la transacción de préstamo: " + e.getMessage());
-            if (conn != null)
-            {
-                try {
-                    conn.rollback();
-                } catch (SQLException rollbackException) {
-                    System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
-                }
-            }
-            e.printStackTrace();
-            return false;
-        }
-        finally
-        {
-            if (conn != null)
-            {
-                try {
-                    conn.close();
-                } catch (SQLException closeException) {
-                    System.err.println("Error al cerrar la conexión: " + closeException.getMessage());
-                }
-            }
-        }
-    }
-
-    private String[] obtenerDatosUsuarioYLibro(int idUsuario, int idLibro)
-    {
-        String sql = """
-            SELECT u.nombre_usuario, l.titulo
-            FROM usuarios u, libros l
-            WHERE u.id = ? AND l.id = ?
-            """;
-        try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql))
-        {
-            ps.setInt(1, idUsuario);
-            ps.setInt(2, idLibro);
-            try (ResultSet rs = ps.executeQuery())
-            {
-                if (rs.next())
-                {
-                    return new String[]{
-                            rs.getString("nombre_usuario"),
-                            rs.getString("titulo")
-                    };
-                }
-            }
-        }
-        catch (SQLException e)
-        {
-            System.err.println("Error al obtener datos usuario/libro: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**

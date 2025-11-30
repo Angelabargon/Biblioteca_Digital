@@ -21,7 +21,7 @@ public class ControladorPedirPrestamo
     private final CatalogoDAO catalogoDAO = new CatalogoDAO(); // Para obtener el autor
 
     /**
-     * Establece los datos y el manejador de eventos para esta tarjeta de préstamo.
+     * Método que establece los datos y el manejador de eventos para esta tarjeta de préstamo.
      */
     public void setPrestamo(Prestamo prestamo, String tiempoRestante, Consumer<Prestamo> handler)
     {
@@ -41,6 +41,9 @@ public class ControladorPedirPrestamo
         }
     }
 
+    /**
+     * Método que lleva a la vista de contenido del libro para leer
+     */
     @FXML
     private void handleBotonLeer()
     {

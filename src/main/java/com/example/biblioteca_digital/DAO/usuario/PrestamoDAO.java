@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PrestamoDAO
 {
-    // Instancias de DAO necesarias para obtener objetos completos (Libro y Usuario)
+    // Instancias de DAO necesarias para obtener objetos completos
     private CatalogoDAO catalogoDAO = new CatalogoDAO();
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -20,9 +20,9 @@ public class PrestamoDAO
         this.catalogoDAO = catalogoDAO;
     }
     /**
-     * Crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica.
-     * @param idUsuario ID del usuario.
-     * @param idLibro ID del libro.
+     * Método que crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica
+     * @param idUsuario ID del usuario
+     * @param idLibro ID del libro
      * @return true si la transacción fue exitosa, false en caso contrario.
      */
     public boolean crearPrestamo(int idUsuario, int idLibro)
@@ -37,14 +37,12 @@ public class PrestamoDAO
         {
             conn = ConexionBD.getConexion();
             conn.setAutoCommit(false);
-
             // Crear el Préstamo
             try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
                 ps.executeUpdate();
             }
-
             // Restar Stock del Libro
             try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock)) {
                 ps2.setInt(1, idLibro);
@@ -91,27 +89,22 @@ public class PrestamoDAO
     }
 
     /**
-     * Versión corregida y transaccional del método guardarPrestamo.
-     * Delega la lógica atómica al método crearPrestamo.
+     * Método  que guarad el préstamo en la base de datos
      * @param prestamo Objeto Prestamo con idUsuario y idLibro.
      * @return true si la transacción fue exitosa, false en caso contrario.
      */
     public boolean guardarPrestamo(Prestamo prestamo)
     {
-        // El método original tenía errores de sintaxis y omitía la transacción.
-        // Se corrige delegando al método crearPrestamo, que ya implementa la atomicidad.
         return crearPrestamo(prestamo.getUsuario().getId(), prestamo.getLibro().getId());
     }
 
     /**
-     * Obtiene todos los préstamos activos de un usuario, incluyendo los datos completos del Libro y Usuario.
+     * Método que obtiene todos los préstamos activos de un usuario, incluyendo los datos completos del Libro y Usuario.
      */
     public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)
     {
         List<Prestamo> prestamos = new ArrayList<>();
         String sql = "SELECT * FROM prestamos WHERE id_usuario = ?";
-
-        // 1. Conexión y PreparedStatement en el try-with-resources principal
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement pst = conn.prepareStatement(sql))
         {
@@ -136,7 +129,6 @@ public class PrestamoDAO
                     p.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
                     p.setEstado(rs.getString("estado"));
 
-                    // Se usan las instancias de campo para obtener los objetos completos
                     Libro libroCompleto = catalogoDAO.obtenerLibroPorId(idLibro);
                     Usuario usuarioCompleto = usuarioDAO.obtenerUsuarioPorId(id_usuario_actual);
 
@@ -153,7 +145,12 @@ public class PrestamoDAO
         return prestamos;
     }
 
-
+    /**
+     * Metodo que comprueba si el libro está en préstamo por el usuario o no
+     * @param idUsuario
+     * @param idLibro
+     * @return
+     */
     public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
     {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND id_libro = ? AND estado = 'activo'";

@@ -23,6 +23,9 @@ public class ControladorPrestamosUsuario
     private Usuario usuarioActual;
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
+    /**
+     * Método que inicializa el controlador con el usuario actual
+     */
     @FXML
     public void initialize()
     {
@@ -32,7 +35,10 @@ public class ControladorPrestamosUsuario
             contenedorPrestamos.setPadding(new Insets(10));
         }
     }
-
+    /**
+     * Metodo que establece el usuario actual y carga sus libros favoritos.
+     * @param usuario El objeto Usuario actualmente logueado.
+     */
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
@@ -47,7 +53,7 @@ public class ControladorPrestamosUsuario
     }
 
     /**
-     * Carga la lista de préstamos activos y genera la vista dinámica.
+     * Método que carga la lista de préstamos activos y genera la vista dinámica.
      */
     private void cargarPrestamosUsuario()
     {
@@ -67,7 +73,7 @@ public class ControladorPrestamosUsuario
     }
 
     /**
-     * Crea y configura un Node para un único préstamo.
+     * Método que crea y configura un Node para un único préstamo.
      */
     private javafx.scene.Node crearVistaPrestamoItem(Prestamo prestamo)
     {
@@ -88,6 +94,11 @@ public class ControladorPrestamosUsuario
         }
     }
 
+    /**
+     * Método que calcula el tiempo restante de un préstamo
+     * @param fechaFin
+     * @return
+     */
     private String calcularTiempoRestante(LocalDate fechaFin)
     {
         long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
@@ -104,6 +115,10 @@ public class ControladorPrestamosUsuario
         }
     }
 
+    /**
+     * Método que lleva a la ventana para leer el libro
+     * @param prestamo
+     */
     private void handleLeerLibro(Prestamo prestamo)
     {
         try
@@ -124,5 +139,4 @@ public class ControladorPrestamosUsuario
             e.printStackTrace();
         }
     }
-    //AYUDA//
 }

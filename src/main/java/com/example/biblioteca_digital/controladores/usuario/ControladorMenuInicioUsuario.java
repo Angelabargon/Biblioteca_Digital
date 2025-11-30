@@ -42,6 +42,9 @@ public class ControladorMenuInicioUsuario {
 
     private Usuario usuarioActual;
 
+    /**
+     * Método que inicializa el controlador con el usuario actual.
+     */
     @FXML
     public void initialize()
     {
@@ -62,6 +65,10 @@ public class ControladorMenuInicioUsuario {
             }
         });
     }
+    /**
+     * Metodo que establece el usuario actual y carga sus libros favoritos.
+     * @param usuario El objeto Usuario actualmente logueado.
+     */
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
@@ -116,7 +123,7 @@ public class ControladorMenuInicioUsuario {
     }
 
     /**
-     * Muestra la vista de Ayuda en una ventana modal separada.
+     * Método que muestra la vista de Ayuda en una ventana modal separada.
      * @param event El evento de acción.
      */
     @FXML
@@ -127,7 +134,11 @@ public class ControladorMenuInicioUsuario {
                 "Usuario"
         );
     }
-
+    /**
+     * Método que muestra la alerta de error
+     * @param titulo
+     * @param mensaje
+     */
     private void mostrarAlertaError(String titulo, String mensaje)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -137,6 +148,12 @@ public class ControladorMenuInicioUsuario {
         alert.showAndWait();
     }
 
+    /**
+     * Método para abrir el perfil al clickar la imagen de perfil
+     * para ver los datos
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void abrirPerfil(MouseEvent event) throws IOException {
         URL fxmlUrl = getClass().getResource("/com/example/biblioteca_digital/vistas/usuario/Vista-Perfil-Usuario.fxml");
@@ -157,16 +174,25 @@ public class ControladorMenuInicioUsuario {
         perfilStage.showAndWait();
     }
 
+    /**
+     * Método del togglebutton de catálogo
+     */
     @FXML
     private void handleCatalogo() {
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
     }
 
+    /**
+     * Método del togglebutton de mis préstamos
+     */
     @FXML
     private void handlePrestamos() {
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamos-Usuario.fxml", ControladorPrestamosUsuario.class);
     }
 
+    /**
+     * Método del togglebutton de mis favoritos
+     */
     @FXML
     private void handleFavoritos() {
         cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Favoritos-Usuario.fxml", ControladorFavoritosUsuario.class);

@@ -49,69 +49,20 @@ public class ControladorLibroCatalogo
         {
             String rutaBase = "/com/example/biblioteca_digital/imagenes/libros/";
             String rutaCompleta = rutaBase + nombreArchivo;
-            boolean imagenCargada = false;
-
-            // El nombre del libro es clave para el mensaje de error.
+            // El nombre del libro es clave para el mensaje de error
             String tituloLibro = (libro != null && libro.getTitulo() != null) ? libro.getTitulo() : "Libro Desconocido";
-
-
-            // --- INTENTO 1: Carga con el nombre de archivo exacto (.jpg o lo que esté en la BD) ---
+            // Carga con el nombre de archivo exacto que está en la BD
             try
             {
                 Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
-
-                if (!portada.isError()) {
+                if (!portada.isError())
+                {
                     imgPortada.setImage(portada);
-                    imagenCargada = true;
-                } else {
-                    // Si la carga falla, lanzamos una excepción para ir al bloque catch (FALLBACK)
-                    throw new Exception("Carga inicial fallida, intentando fallback.");
                 }
             }
             catch (Exception e)
             {
-                // --- FALLBACK: Intenta buscar con la extensión alternativa (.webp en este caso) ---
-                if (!imagenCargada) {
-                    String rutaFallback = null;
-                    try {
-                        // Asume que el nombre sin extensión es la parte hasta el último punto
-                        int lastDot = nombreArchivo.lastIndexOf('.');
-                        String nombreSinExt = (lastDot > 0) ? nombreArchivo.substring(0, lastDot) : nombreArchivo;
-                        rutaFallback = rutaBase + nombreSinExt + ".webp";
-
-                        Image portadaFallback = new Image(getClass().getResourceAsStream(rutaFallback));
-
-                        if (!portadaFallback.isError()) {
-                            // Si el fallback funciona, lo establecemos
-                            imgPortada.setImage(portadaFallback);
-                            imagenCargada = true;
-                        }
-                    } catch (Exception ex) {
-                        // Se ignora el error del fallback, se manejará con el placeholder
-                    }
-
-                    // Reportamos el fallo de ambos intentos
-                    if (!imagenCargada) {
-                        System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + tituloLibro + ". Ruta esperada: " + rutaCompleta + ". Fallback probado: " + rutaFallback);
-                    }
-                }
-
-                // portada genérica si todo falla ---
-                if (!imagenCargada) {
-                    String generica = "/com/example/biblioteca_digital/imagenes/libros/generica.jpg";
-                    try
-                    {
-                        Image generica1 = new Image(getClass().getResourceAsStream(generica));
-                        if (!generica1.isError()) {
-                            imgPortada.setImage(generica1);
-                            System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + tituloLibro + ". Se usó una imagen genérica.");
-                        } else {
-                            System.err.println("Error FATAL: La imagen genérica existe pero no se pudo cargar. (" + generica + ").");
-                        }
-                    } catch (Exception placeholderEx) {
-                        System.err.println("Error FATAL: No se pudo encontrar la imagen genérica en la ruta (" + generica + ").");
-                    }
-                }
+                System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + tituloLibro + ". Ruta esperada: " + rutaCompleta + "." + e);
             }
         }
         int disponibles = libro.getCantidadDisponible();
@@ -119,7 +70,7 @@ public class ControladorLibroCatalogo
         boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libro.getId());
         String disponiblesText = String.format("Disponibles: %d/%d", disponibles, stockTotal);
         lblDisponibles.setText(disponiblesText);
-
+        // Mira si está disponible o no el libro y si el usuario lo tiene prestado ya o no
         if (disponibles <= 0 || yaEstaPrestado)
         {
             lblDisponibles.setText("No disponible");
@@ -150,6 +101,9 @@ public class ControladorLibroCatalogo
         actualizarBotonFavorito();
     }
 
+    /**
+     * Método de botón pedir prestado
+     */
     @FXML
     private void handlePedirPrestado()
     {
@@ -159,6 +113,9 @@ public class ControladorLibroCatalogo
         }
     }
 
+    /**
+     * Método de botón ver detalles
+     */
     @FXML
     private void handleVerDetalles()
     {
@@ -168,6 +125,9 @@ public class ControladorLibroCatalogo
         }
     }
 
+    /**
+     * Método de botón añadir o eliminar de favoritos
+     */
     @FXML
     private void handleAlternarFavorito()
     {
@@ -178,6 +138,9 @@ public class ControladorLibroCatalogo
         }
     }
 
+    /**
+     * Método de actualización de favorito
+     */
     private void actualizarBotonFavorito()
     {
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
