@@ -14,6 +14,7 @@ public class Prestamo {
 
     public Prestamo() {}
 
+
     public Prestamo(int id, LocalDate fecha_inicio, LocalDate fecha_fin, Estado estado) {
         this.id = id;
         this.fecha_inicio = fecha_inicio;

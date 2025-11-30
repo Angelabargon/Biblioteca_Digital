@@ -69,13 +69,18 @@ public class PrestamoDAO
             }
             e.printStackTrace();
             return false;
-        } finally {
-            // Asegúrate de devolver el autocommit a true y cerrar la conexión
-            if (conn != null) {
-                try {
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                try
+                {
                     conn.setAutoCommit(true);
                     conn.close();
-                } catch (SQLException closeException) {
+                }
+                catch (SQLException closeException)
+                {
                     System.err.println("Error al cerrar conexión: " + closeException.getMessage());
                 }
             }
@@ -118,6 +123,12 @@ public class PrestamoDAO
                     int id_usuario_actual = rs.getInt("id_usuario");
                     Prestamo p = new Prestamo();
                     p.setId(rs.getInt("id"));
+                    if (p.getUsuario() == null) {
+                        p.setUsuario(new com.example.biblioteca_digital.modelos.Usuario());
+                    }
+                    if (p.getLibro() == null) {
+                        p.setLibro(new com.example.biblioteca_digital.modelos.Libro());
+                    }
                     p.getUsuario().setId(id_usuario_actual);
                     p.getLibro().setId(idLibro);
                     p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
