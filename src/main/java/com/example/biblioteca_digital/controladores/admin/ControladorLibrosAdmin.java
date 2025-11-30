@@ -18,26 +18,54 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Controlador encargado de gestionar el módulo de administración de libros.
+ * Permite listar, buscar, agregar, editar y eliminar libros dentro del sistema.
+ *
+ * Este controlador interactúa con {@link LibroAdminDAO} para obtener y modificar datos,
+ * y utiliza varias celdas personalizadas para mejorar la visualización en la tabla.
+ */
 public class ControladorLibrosAdmin {
 
+    /** Tabla principal donde se muestran los libros disponibles. */
     @FXML private TableView<Libro> tablaLibros;
+
+    /** Columna que muestra el título del libro. */
     @FXML private TableColumn<Libro, String> colTitulo;
+
+    /** Columna que muestra el autor del libro. */
     @FXML private TableColumn<Libro, String> colAutor;
+
+    /** Columna que muestra el género del libro. */
     @FXML private TableColumn<Libro, String> colGenero;
+
+    /** Columna que muestra el ISBN del libro. */
     @FXML private TableColumn<Libro, String> colIsbn;
+
+    /** Columna que muestra la cantidad total disponible del libro. */
     @FXML private TableColumn<Libro, Integer> colCantidad;
+
+    /** Columna que muestra si el libro está disponible o no. */
     @FXML private TableColumn<Libro, Boolean> colEstado;
+
+    /** Columna que contiene los botones de acciones (editar, eliminar). */
     @FXML private TableColumn<Libro, Void> colAcciones;
 
+    /** Campo de texto para realizar búsquedas en tiempo real. */
     @FXML private TextField txtBuscar;
 
+    /** Servicio de acceso a datos para la gestión de libros. */
     private final LibroAdminDAO libroServicio = new LibroAdminDAO();
+
+    /** Lista observable utilizada para poblar la tabla de libros. */
     private final ObservableList<Libro> lista = FXCollections.observableArrayList();
 
+    /**
+     * Inicializa la vista configurando columnas, cell factories y cargando los libros.
+     */
     @FXML
     public void initialize() {
 
-        // Value factories — columnas de la tabla
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         colAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
         colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
@@ -45,7 +73,6 @@ public class ControladorLibrosAdmin {
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("disponible"));
 
-        // Cell factories visuales
         configurarGeneroCellFactory();
         configurarEstadoCellFactory();
         configurarAccionesCellFactory();
@@ -53,9 +80,9 @@ public class ControladorLibrosAdmin {
         cargarLibros();
     }
 
-    // -----------------------------
-    //   CELL FACTORY: GÉNERO
-    // -----------------------------
+    /**
+     * Configura la celda de la columna “género” para mostrar estilos personalizados.
+     */
     private void configurarGeneroCellFactory() {
         colGenero.setCellFactory(col -> new TableCell<Libro, String>() {
             @Override
@@ -72,15 +99,15 @@ public class ControladorLibrosAdmin {
             }
         });
 
-        // listener búsqueda en tiempo real
         if (txtBuscar != null) {
             txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarLibro());
         }
     }
 
-    // -----------------------------
-    //   CELL FACTORY: ESTADO
-    // -----------------------------
+    /**
+     * Configura la celda del estado de disponibilidad,
+     * mostrando etiquetas verdes o rojas según corresponda.
+     */
     private void configurarEstadoCellFactory() {
         colEstado.setCellFactory(col -> new TableCell<Libro, Boolean>() {
             @Override
@@ -103,9 +130,9 @@ public class ControladorLibrosAdmin {
         });
     }
 
-    // -----------------------------
-    //   CELL FACTORY: ACCIONES
-    // -----------------------------
+    /**
+     * Configura la columna de acciones, agregando los botones de editar y eliminar.
+     */
     private void configurarAccionesCellFactory() {
         colAcciones.setCellFactory(col -> new TableCell<Libro, Void>() {
 
@@ -141,17 +168,17 @@ public class ControladorLibrosAdmin {
         });
     }
 
-    // -----------------------------
-    //   CARGAR LIBROS
-    // -----------------------------
+    /**
+     * Carga todos los libros desde la base de datos y los muestra en la tabla.
+     */
     private void cargarLibros() {
         lista.setAll(libroServicio.obtenerTodos());
         tablaLibros.setItems(lista);
     }
 
-    // -----------------------------
-    //   BUSCAR LIBRO
-    // -----------------------------
+    /**
+     * Realiza una búsqueda filtrando por título, autor, género o ISBN.
+     */
     @FXML
     private void buscarLibro() {
         String q = txtBuscar.getText().trim().toLowerCase();
@@ -171,12 +198,16 @@ public class ControladorLibrosAdmin {
         tablaLibros.setItems(filtrado);
     }
 
-    // -----------------------------
-    //   ABRIR EDITOR
-    // -----------------------------
+    /**
+     * Abre el editor en modo "agregar libro".
+     */
     @FXML
     public void abrirAgregarLibro() { abrirEditor(null); }
 
+    /**
+     * Abre el editor para el libro seleccionado.
+     * Muestra una alerta si no se seleccionó ninguno.
+     */
     @FXML
     public void editarLibro() {
         Libro l = tablaLibros.getSelectionModel().getSelectedItem();
@@ -187,6 +218,12 @@ public class ControladorLibrosAdmin {
         abrirEditor(l);
     }
 
+    /**
+     * Abre la ventana de edición/creación de libros, configurando los callbacks
+     * para guardar los cambios en la base de datos.
+     *
+     * @param libro libro a editar, o null para crear uno nuevo.
+     */
     private void abrirEditor(Libro libro) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -225,9 +262,10 @@ public class ControladorLibrosAdmin {
         }
     }
 
-    // -----------------------------
-    //   ELIMINAR LIBROS
-    // -----------------------------
+    /**
+     * Elimina el libro seleccionado de la tabla.
+     * Solicita confirmación antes de proceder.
+     */
     @FXML
     public void eliminarLibro() {
         Libro l = tablaLibros.getSelectionModel().getSelectedItem();
@@ -245,6 +283,11 @@ public class ControladorLibrosAdmin {
         }
     }
 
+    /**
+     * Elimina un libro directamente desde el botón de acciones dentro de la tabla.
+     *
+     * @param libro libro a eliminar
+     */
     private void eliminarLibroDirecto(Libro libro) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION,
                 "¿Eliminar \"" + libro.getTitulo() + "\"?",
@@ -256,9 +299,11 @@ public class ControladorLibrosAdmin {
         }
     }
 
-    // -----------------------------
-    //   UTILIDAD
-    // -----------------------------
+    /**
+     * Muestra una alerta de advertencia con el mensaje indicado.
+     *
+     * @param msg Mensaje a mostrar.
+     */
     private void mostrarAlerta(String msg) {
         Alert a = new Alert(Alert.AlertType.WARNING);
         a.setHeaderText(null);

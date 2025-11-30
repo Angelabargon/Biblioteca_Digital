@@ -17,17 +17,16 @@
 
     <Region HBox.hgrow="ALWAYS" />
 
-    <Button onAction="#abrirAgregarLibro" style="                     -fx-background-color:#8b4b2e;                     -fx-text-fill:white;                     -fx-font-weight:600;                     -fx-font-size:14px;                     -fx-padding:10 22;                     -fx-background-radius:12;" text="+  Nuevo Libro">
+    <Button onAction="#abrirAgregarLibro" style="-fx-background-color:#8b4b2e; -fx-text-fill:white; -fx-font-weight:600; -fx-font-size:14px;-fx-padding:10 22; -fx-background-radius:12;" text="+  Nuevo Libro">
     </Button>
 </HBox>
 
-<!-- TABLA ESTILO FIGMA -->
-
+<!-- TABLA -->
 <HBox alignment="CENTER_LEFT" spacing="8">
     <TextField fx:id="txtBuscar" promptText="Buscar..." />
 </HBox>
 
-<TableView fx:id="tablaLibros" style="                    -fx-background-color:white;                    -fx-background-radius:14;                    -fx-border-color:#e5e3dd;                    -fx-border-radius:14;                    -fx-table-cell-border-color: transparent;                    -fx-padding:6;                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4);                    -fx-fixed-cell-size:46;" VBox.vgrow="ALWAYS">
+<TableView fx:id="tablaLibros" style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#e5e3dd; -fx-border-radius:14; -fx-table-cell-border-color: transparent;                    -fx-padding:6;                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4);                    -fx-fixed-cell-size:46;" VBox.vgrow="ALWAYS">
 
     <columns>
 
