@@ -18,6 +18,7 @@ public class ControladorLibroCatalogo
     @FXML private Label lblGenero;
     @FXML private Label lblDisponibles;
     @FXML private Button btnPedirPrestado;
+    @FXML private Label lblNoDisponibleTag;
     @FXML private Button btnVer;
     @FXML private Button btnFavorito;
 
@@ -36,7 +37,6 @@ public class ControladorLibroCatalogo
         lblAutor.setText(libro.getAutor());
         lblGenero.setText(libro.getGenero());
 
-        int idLibro = libro.getId();
         int disponibles = libro.getCantidadDisponible();
         int stockTotal = libro.getCantidad();
 
@@ -45,18 +45,31 @@ public class ControladorLibroCatalogo
 
         if (disponibles <= 0)
         {
+            lblDisponibles.setVisible(false);
+            lblDisponibles.setManaged(false);
+
+            if (lblNoDisponibleTag != null) {
+                lblNoDisponibleTag.setVisible(true);
+                lblNoDisponibleTag.setManaged(true);
+            }
+
             btnPedirPrestado.setDisable(true);
-            btnPedirPrestado.setText("No disponible");
-            btnPedirPrestado.getStyleClass().remove("book-button-prestado-enabled");
-            btnPedirPrestado.getStyleClass().add("book-button-disabled");
+            btnPedirPrestado.getStyleClass().remove("btn-prestar"); // Clase habilitada
+            btnPedirPrestado.getStyleClass().add("btn-prestar-disabled"); // Nueva clase deshabilitada
         }
         else
         {
+            lblDisponibles.setVisible(true);
+            lblDisponibles.setManaged(true);
+
+            if (lblNoDisponibleTag != null) {
+                lblNoDisponibleTag.setVisible(false);
+                lblNoDisponibleTag.setManaged(false);
+            }
+
             btnPedirPrestado.setDisable(false);
-            btnPedirPrestado.setText("Pedir Prestado");
-            btnPedirPrestado.getStyleClass().remove("book-button-prestado");
-            btnPedirPrestado.getStyleClass().remove("book-button-disabled");
-            btnPedirPrestado.getStyleClass().add("book-button-prestado-enabled");
+            btnPedirPrestado.getStyleClass().remove("btn-prestar-disabled");
+            btnPedirPrestado.getStyleClass().add("btn-prestar"); // Clase activa
         }
         actualizarBotonFavorito();
     }
@@ -94,11 +107,13 @@ public class ControladorLibroCatalogo
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
         if (esFavorito)
         {
-            btnFavorito.setText("❤\uFE0F");
+            btnFavorito.setText("❤");
+            btnFavorito.getStyleClass().add("favorito-activo");
         }
         else
         {
-            btnFavorito.setText("\uD83E\uDD0D ");
+            btnFavorito.setText("♡");
+            btnFavorito.getStyleClass().remove("favorito-activo");
         }
     }
 }

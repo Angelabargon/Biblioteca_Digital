@@ -16,7 +16,7 @@ public class PrestamoDAO
     public void setCatalogoDAO(CatalogoDAO dao) {
         this.catalogoDAO = dao;
     }
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO(); // Asumiendo que existe una clase UsuarioDAO
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     /**
      * Crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica.

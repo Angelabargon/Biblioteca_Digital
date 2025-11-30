@@ -21,6 +21,12 @@ public class Prestamo {
         this.estado = estado;
     }
 
+    public Prestamo(int idU, int idL)
+    {
+        this.usuario.setId(idU);
+        this.libro.setId(idL);
+    }
+
     // ---------------------------------
     // GETTERS NORMALES
     // ---------------------------------

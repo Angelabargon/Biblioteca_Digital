@@ -40,38 +40,36 @@ public class ControladorMenuInicioUsuario {
 
     private Usuario usuarioActual;
 
-    public void setUsuario(Usuario usuario) {
-        this.usuarioActual = usuario;
-        Sesion.setUsuario(usuario); // sincroniza con la sesión global
-        if (tbt_MENU != null) {
-            tbt_MENU.setSelected(true);
-            handleCatalogo();
-        }
-    }
-
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         CatalogoDAO catalogoDAO = new CatalogoDAO();
         PrestamoDAO prestamoDAO = new PrestamoDAO();
         catalogoDAO.setPrestamoDAO(prestamoDAO);
         prestamoDAO.setCatalogoDAO(catalogoDAO);
-
-        // Marcar catálogo por defecto
-        if (tbt_MENU != null) {
-            tbt_MENU.setSelected(true);
-            handleCatalogo();
-        }
-
-        iv_iconoUsuario.setOnMouseClicked(event -> {
-            try {
+        iv_iconoUsuario.setOnMouseClicked(event ->
+        {
+            try
+            {
                 abrirPerfil(event);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
                 mostrarAlertaError("Error de Navegación", "No se pudo cargar la vista de perfil: " + e.getMessage());
             }
         });
     }
-
+    public void setUsuario(Usuario usuario)
+    {
+        this.usuarioActual = usuario;
+        Sesion.setUsuario(usuario);
+        if (tbt_MENU != null)
+        {
+            tbt_MENU.setSelected(true);
+            handleCatalogo();
+        }
+    }
     /**
      * Método genérico para cargar FXML, pasándole el Usuario al controlador.
      * @param fxmlPath Ruta del archivo FXML.
@@ -90,7 +88,7 @@ public class ControladorMenuInicioUsuario {
             AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
 
-            Usuario usuarioSesion = Sesion.getUsuario(); // ✅ aquí cogemos el usuario real
+            Usuario usuarioSesion = Sesion.getUsuario(); //Cogemos el usuario real
 
             if (controlador instanceof ControladorCatalogoUsuario) {
                 ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioSesion);

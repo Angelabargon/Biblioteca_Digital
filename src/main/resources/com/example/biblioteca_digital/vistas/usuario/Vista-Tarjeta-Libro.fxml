@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<VBox fx:id="card" alignment="TOP_CENTER" prefHeight="300" prefWidth="180" spacing="10" styleClass="card" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibroCatalogo">
+
+    <StackPane>
+        <ImageView fx:id="imgPortada" fitHeight="200" fitWidth="191.0" preserveRatio="true" />
+
+        <Button fx:id="btnFavorito"
+                alignment="CENTER"
+                onAction="#handleAlternarFavorito"
+                styleClass="btn-fav-overlay"
+                text="♡"
+                StackPane.alignment="TOP_RIGHT">
+            <StackPane.margin>
+                <Insets top="10.0" right="10.0" />
+            </StackPane.margin>
+        </Button>
+    </StackPane>
+    <Label fx:id="lblTitulo" prefHeight="18.0" prefWidth="206.0" styleClass="card-title" />
+    <Label fx:id="lblAutor" prefHeight="10.0" prefWidth="203.0" styleClass="card-author" />
+
+    <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="203.0">
+        <Label fx:id="lblGenero" styleClass="card-genre" />
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="194.0" spacing="5.0" styleClass="stock-container">
+        <Label fx:id="lblDisponibles" styleClass="card-stock" />
+        <Label fx:id="lblNoDisponibleTag" managed="false" styleClass="no-disponible-tag" text="No disponible" visible="false" />
+    </HBox>
+
+    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="202.0" spacing="5.0">
+        <Button fx:id="btnVer" prefHeight="30.0" prefWidth="60.0" onAction="#handleVerDetalles" styleClass="btn-ver" text="Ver" />
+        <Button fx:id="btnPedirPrestado" prefHeight="30.0" prefWidth="100.0" onAction="#handlePedirPrestado" styleClass="btn-prestar" text="Pedir Prestado" />
+    </HBox>
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+</VBox>

@@ -127,6 +127,17 @@ public class ControladorLogin {
     private void volverAtras(ActionEvent event) {
         Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml", "Página de Inicio");
     }
+
+    /**
+     * Muestra una ventana de error con el mensaje de credenciales incorrectas.
+     */
+    private void mostrarAlertaErrorLogin() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error de Inicio de Sesión");
+        alert.setHeaderText("Credenciales Incorrectas");
+        alert.setContentText("Comprueba tu email o contraseña.");
+        alert.showAndWait();
+    }
 }
 
 
