@@ -10,7 +10,7 @@
 
     <VBox alignment="CENTER" prefWidth="800">
 
-        <!-- CONTENEDOR PRINCIPAL -->
+        <!-- FORMULARIO PRINCIPAL -->
         <VBox spacing="22"
               maxWidth="600"
               style="

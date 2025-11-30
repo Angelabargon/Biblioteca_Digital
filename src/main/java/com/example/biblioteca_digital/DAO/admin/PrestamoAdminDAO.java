@@ -11,10 +11,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO encargado de gestionar todas las operaciones relacionadas con los
+ * préstamos de libros en el sistema. Incluye métodos para obtener listados
+ * completos con JOIN, crear préstamos con control transaccional, eliminarlos
+ * devolviendo automáticamente la disponibilidad del libro, y estadísticas de uso.
+ *
+ * <p>Utiliza {@link ConexionBD} para gestionar la conexión con la base de datos
+ * y aprovecha transacciones SQL para asegurar la integridad en operaciones
+ * críticas como crear o eliminar un préstamo.</p>
+ */
 public class PrestamoAdminDAO {
 
     /**
-     * Obtiene todos los préstamos (incluyendo nombre de usuario y título de libro mediante JOIN).
+     * Obtiene todos los préstamos registrados en el sistema, incluyendo
+     * información del usuario y del libro asociado mediante sentencias JOIN.
+     *
+     * @return lista de objetos {@link Prestamo}; nunca es null, aunque puede estar vacía.
      */
     public List<Prestamo> obtenerTodos() {
         List<Prestamo> lista = new ArrayList<>();
@@ -58,7 +71,7 @@ public class PrestamoAdminDAO {
                 l.setCantidadDisponible(rs.getInt("cantidad_disponible"));
                 l.setDisponible(rs.getBoolean("disponible"));
 
-                // Prestamo
+                // prestamo
                 Prestamo p = new Prestamo();
                 p.setId(rs.getInt("id"));
                 p.setUsuario(u);
@@ -78,7 +91,19 @@ public class PrestamoAdminDAO {
     }
 
     /**
-     * Crear préstamo y actualizar cantidades y disponibilidad.
+     * Crea un nuevo préstamo en la base de datos.
+     * <p>
+     * El proceso es transaccional e incluye:
+     * <ul>
+     *   <li>Bloqueo del libro mediante <code>SELECT ... FOR UPDATE</code></li>
+     *   <li>Verificación de disponibilidad</li>
+     *   <li>Inserción del préstamo</li>
+     *   <li>Actualización de la cantidad disponible del libro</li>
+     * </ul>
+     * Si cualquiera de estos pasos falla, se ejecuta un rollback para mantener la integridad.
+     *
+     * @param prestamo objeto {@link Prestamo} que contiene los datos del préstamo a registrar.
+     * @return true si el préstamo se creó correctamente; false si no había stock o ocurrió un error.
      */
     public boolean crearPrestamo(Prestamo prestamo) {
         String bloquearLibro = "SELECT cantidad_disponible FROM libros WHERE id = ? FOR UPDATE";
@@ -137,7 +162,13 @@ public class PrestamoAdminDAO {
 
 
     /**
-     * Eliminar préstamo (devuelve libro automáticamente)
+     * Elimina un préstamo existente y devuelve automáticamente el libro,
+     * incrementando su cantidad disponible.
+     * <p>
+     * La operación es transaccional: si alguna parte falla, se cancela todo.
+     *
+     * @param idPrestamo identificador del préstamo que se desea eliminar.
+     * @return true si el préstamo fue eliminado correctamente; false si no existe o ocurre un error.
      */
     public boolean eliminarPrestamo(int idPrestamo) {
         String obtenerLibro = "SELECT id_libro FROM prestamos WHERE id = ?";
@@ -188,7 +219,9 @@ public class PrestamoAdminDAO {
 
 
     /**
-     * Contar préstamos activos
+     * Cuenta el número total de préstamos que se encuentran actualmente activos.
+     *
+     * @return número de préstamos con estado "activo"; 0 en caso de error.
      */
     public long contarPrestamosActivos() {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE estado = 'activo'";
@@ -204,7 +237,10 @@ public class PrestamoAdminDAO {
 
 
     /**
-     * Contar préstamos vencidos
+     * Cuenta la cantidad de préstamos vencidos, es decir,
+     * aquellos cuya fecha de fin ha pasado y siguen en estado "activo".
+     *
+     * @return número de préstamos vencidos; 0 si ocurre un error.
      */
     public long contarPrestamosVencidos() {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE fecha_fin < CURRENT_DATE() AND estado = 'activo'";

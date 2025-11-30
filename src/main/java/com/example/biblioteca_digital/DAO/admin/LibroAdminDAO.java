@@ -7,8 +7,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase DAO encargada de gestionar todas las operaciones relacionadas con
+ * la tabla <b>libros</b> en la base de datos. Proporciona métodos CRUD
+ * (crear, leer, actualizar, eliminar) y utilidades adicionales como
+ * contar libros o recuperar la lista de géneros existentes.
+ *
+ * <p>Utiliza la clase {@link ConexionBD} para obtener la conexión con la base
+ * de datos. Todas las operaciones se ejecutan mediante sentencias
+ * preparadas para mayor seguridad.</p>
+ */
 public class LibroAdminDAO {
 
+    /**
+     * Obtiene todos los libros registrados en la base de datos ordenados por título.
+     *
+     * @return una lista con todos los libros existentes; nunca es null, aunque puede estar vacía.
+     */
     public List<Libro> obtenerTodos() {
         List<Libro> lista = new ArrayList<>();
         String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, " +
@@ -40,6 +55,12 @@ public class LibroAdminDAO {
         return lista;
     }
 
+    /**
+     * Obtiene un libro concreto según su identificador.
+     *
+     * @param id identificador numérico del libro.
+     * @return el libro encontrado o {@code null} si no existe.
+     */
     public Libro obtenerPorId(int id) {
         String sql = "SELECT id, titulo, autor, descripcion, genero, isbn, foto, " +
                 "cantidad_disponible, cantidad, disponible, contenido FROM libros WHERE id = ?";
@@ -72,6 +93,14 @@ public class LibroAdminDAO {
         return null;
     }
 
+    /**
+     * Inserta un nuevo libro en la base de datos.
+     * También establece automáticamente el ID generado y marca
+     * la disponibilidad según la cantidad indicada.
+     *
+     * @param libro objeto {@link Libro} que se desea registrar.
+     * @return true si la operación tuvo éxito; false en caso contrario.
+     */
     public boolean agregarLibro(Libro libro) {
         String sql = "INSERT INTO libros (titulo, autor, descripcion, genero, isbn, foto, " +
                 "cantidad_disponible, cantidad, disponible, contenido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -104,6 +133,12 @@ public class LibroAdminDAO {
         return false;
     }
 
+    /**
+     * Actualiza todos los datos de un libro existente en la base de datos.
+     *
+     * @param libro objeto {@link Libro} con los datos modificados.
+     * @return true si el libro fue actualizado; false si no existe o falla la operación.
+     */
     public boolean actualizarLibro(Libro libro) {
         String sql = "UPDATE libros SET titulo=?, autor=?, descripcion=?, genero=?, isbn=?, foto=?, " +
                 "cantidad_disponible=?, cantidad=?, disponible=?, contenido=? WHERE id = ?";
@@ -131,6 +166,12 @@ public class LibroAdminDAO {
         return false;
     }
 
+    /**
+     * Elimina un libro de la base de datos según su identificador.
+     *
+     * @param id identificador numérico del libro a eliminar.
+     * @return true si el libro fue eliminado; false si no existe o la operación falla.
+     */
     public boolean eliminarLibro(int id) {
         String sql = "DELETE FROM libros WHERE id = ?";
         try (Connection con = ConexionBD.getConexion();
@@ -143,7 +184,12 @@ public class LibroAdminDAO {
         return false;
     }
 
-    /** NUEVO → lista de géneros existentes en BD */
+    /**
+     * Obtiene una lista con todos los géneros registrados en la base de datos.
+     * Solo devuelve valores distintos y no vacíos.
+     *
+     * @return lista ordenada alfabéticamente de géneros existentes.
+     */
     public List<String> obtenerGeneros() {
         List<String> generos = new ArrayList<>();
         String sql = "SELECT DISTINCT genero FROM libros WHERE genero IS NOT NULL AND genero <> '' ORDER BY genero";
@@ -161,6 +207,11 @@ public class LibroAdminDAO {
         return generos;
     }
 
+    /**
+     * Cuenta la cantidad total de libros registrados en la base de datos.
+     *
+     * @return número total de libros; 0 si ocurre un error o la tabla está vacía.
+     */
     public long contarLibros() {
         String sql = "SELECT COUNT(*) FROM libros";
         try (Connection con = ConexionBD.getConexion();

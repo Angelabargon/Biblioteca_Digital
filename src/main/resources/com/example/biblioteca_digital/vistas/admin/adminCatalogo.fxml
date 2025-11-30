@@ -3,17 +3,31 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorCatalogoAdmin">
+
+    <!-- BARRA DE BÚSQUEDA + BOTÓN -->
     <top>
         <HBox spacing="8" style="-fx-padding:8;">
+
+            <!-- Campo de texto para búsqueda -->
             <TextField fx:id="txtBuscar" promptText="Buscar catálogo" HBox.hgrow="ALWAYS"/>
+
+            <!-- Botón de búsqueda, ejecuta el metodo buscarCatalogo() -->
             <Button text="Buscar" onAction="#buscarCatalogo"/>
         </HBox>
     </top>
+
+    <!-- LISTA DE LIBROS + DESCRIPCIÓN -->
     <center>
         <SplitPane>
+
+            <!-- Lista de libros disponibles en el catálogo -->
             <ListView fx:id="listLibros" prefWidth="360"/>
+
+            <!-- Panel derecho: muestra el detalle del libro -->
             <VBox spacing="8" style="-fx-padding:12;">
                 <Label text="Detalle" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+
+                <!-- Área de texto que muestra la descripción del libro seleccionado -->
                 <TextArea fx:id="areaDescripcion" editable="false" wrapText="true" prefHeight="400"/>
             </VBox>
         </SplitPane>

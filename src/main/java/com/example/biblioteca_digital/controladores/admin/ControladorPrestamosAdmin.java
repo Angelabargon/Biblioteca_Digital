@@ -17,24 +17,52 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Controlador encargado de gestionar los préstamos dentro del panel de administración.
+ * Permite listar, filtrar, crear y eliminar préstamos asociados a usuarios y libros.
+ *
+ * Se apoya en {@link PrestamoAdminDAO} para el acceso a datos y utiliza una tabla con
+ * celdas personalizadas para mejorar la visualización del estado del préstamo.
+ */
 public class ControladorPrestamosAdmin {
 
+    /** Tabla principal que muestra los préstamos registrados. */
     @FXML private TableView<Prestamo> tablaPrestamos;
 
+    /** Columna que muestra el nombre del usuario asociado al préstamo. */
     @FXML private TableColumn<Prestamo, String> colUsuario;
+
+    /** Columna que muestra el título del libro prestado. */
     @FXML private TableColumn<Prestamo, String> colLibro;
+
+    /** Columna que muestra la fecha de inicio del préstamo. */
     @FXML private TableColumn<Prestamo, String> colFechaPrestamo;
+
+    /** Columna que muestra la fecha de vencimiento del préstamo. */
     @FXML private TableColumn<Prestamo, String> colFechaVencimiento;
+
+    /** Columna que muestra el estado del préstamo. */
     @FXML private TableColumn<Prestamo, String> colEstado;
+
+    /** Columna que contiene acciones como eliminar el préstamo. */
     @FXML private TableColumn<Prestamo, Void> colAcciones;
 
+    /** Campo de búsqueda para filtrar préstamos por usuario o libro. */
     @FXML private TextField txtBuscar;
 
+    /** Objeto DAO que gestiona el acceso a datos de préstamos. */
     private final PrestamoAdminDAO prestamoAdminDAO = new PrestamoAdminDAO();
+
+    /** Lista observable utilizada para poblar la tabla. */
     private final ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList();
 
+    /** Formato de fecha utilizado en la visualización. */
     private final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    /**
+     * Inicializa el controlador configurando las columnas, cargando los datos
+     * y activando la búsqueda en tiempo real.
+     */
     @FXML
     public void initialize() {
         cargarColumnas();
@@ -45,29 +73,29 @@ public class ControladorPrestamosAdmin {
         }
     }
 
-    // ============================================================
-    // CONFIGURACIÓN DE COLUMNAS
-    // ============================================================
+    /**
+     * Configura las columnas de la tabla, incluyendo celdas personalizadas
+     * para estado y acciones (eliminar).
+     */
     private void cargarColumnas() {
 
-        // USUARIO
+        // Usuario
         colUsuario.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getUsuario().getNombreUsuario()));
 
-        // LIBRO
+        // Libro
         colLibro.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getLibro().getTitulo()));
 
-        // FECHA PRESTAMO
+        // Fecha Prestamo
         colFechaPrestamo.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getFecha_inicio().format(formato)));
 
-        // FECHA VENCIMIENTO
+        // Fecha Vencimiento
         colFechaVencimiento.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getFecha_fin().format(formato)));
 
-        // ESTADO (badge igual estilo que Libros)
-
+        // Estado
         colEstado.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getEstado()));
 
@@ -98,7 +126,7 @@ public class ControladorPrestamosAdmin {
             }
         });
 
-        // ACCIONES (solo eliminar)
+        // Celda personalizada para botones de acciones
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnEliminar = new Button("🗑");
@@ -127,14 +155,18 @@ public class ControladorPrestamosAdmin {
         });
     }
 
-    // ============================================================
-    // ACCIONES
-    // ============================================================
+    /**
+     * Recarga la tabla con la información más reciente desde la base de datos.
+     */
     public void refrescarTabla() {
         listaPrestamos.setAll(prestamoAdminDAO.obtenerTodos());
         tablaPrestamos.setItems(listaPrestamos);
     }
 
+    /**
+     * Filtra los préstamos según el texto ingresado en el buscador.
+     * Se puede buscar por nombre de usuario o nombre de libro.
+     */
     @FXML
     private void buscarPrestamo() {
         String texto = txtBuscar.getText().toLowerCase().trim();
@@ -152,6 +184,9 @@ public class ControladorPrestamosAdmin {
         tablaPrestamos.setItems(filtrado);
     }
 
+    /**
+     * Abre la ventana para crear un nuevo préstamo y guarda el resultado si es válido.
+     */
     @FXML
     private void nuevoPrestamo() {
         try {
@@ -159,7 +194,7 @@ public class ControladorPrestamosAdmin {
             Parent root = loader.load();
             com.example.biblioteca_digital.controladores.admin.ControladorEditarPrestamo ctrl = loader.getController();
 
-            // cargar usuarios y libros disponibles
+            // cargar usuarios y libros existentes
             ctrl.cargarDatos(new com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO().obtenerTodos(),
                     new com.example.biblioteca_digital.DAO.admin.LibroAdminDAO().obtenerTodos());
 
@@ -184,11 +219,21 @@ public class ControladorPrestamosAdmin {
         }
     }
 
+    /**
+     * Metodo reservado para una futura implementación de edición de préstamos.
+     *
+     * @param p préstamo a editar
+     */
     private void editarPrestamo(Prestamo p) {
         System.out.println("Editar préstamo: " + p.getId());
-        // abrir modal…
     }
 
+    /**
+     * Elimina el préstamo indicado tras una confirmación,
+     * devolviendo automáticamente el libro asociado.
+     *
+     * @param p préstamo a eliminar
+     */
     private void eliminarPrestamo(Prestamo p) {
         if (p == null) return;
 

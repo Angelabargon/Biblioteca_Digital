@@ -11,23 +11,52 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controlador de la ventana emergente utilizada por el administrador para crear
+ * un préstamo dentro del sistema.
+ *
+ * <p>Permite seleccionar un usuario, un libro y una fecha de vencimiento.
+ * También construye el objeto {@link Prestamo} resultante que será procesado
+ * por el controlador principal.</p>
+ */
 public class ControladorEditarPrestamo {
 
+    /** ComboBox que muestra la lista de usuarios disponibles. */
     @FXML private ComboBox<Usuario> comboUsuario;
+
+    /** ComboBox que muestra la lista de libros disponibles. */
     @FXML private ComboBox<Libro> comboLibro;
+
+    /** Selector de fecha para indicar el vencimiento del préstamo. */
     @FXML private DatePicker fechaFin;
 
+    /** Instancia del préstamo que se está creando. */
     private Prestamo prestamo;
+
+    /** Ventana actual donde se encuentra cargado este editor. */
     private Stage stage;
+
+    /**
+     * Función callback que se ejecutará cuando el usuario pulse el botón Guardar.
+     * Se utiliza para comunicar los datos al controlador principal.
+     */
     private Runnable onGuardarCallback;
 
-    // Listas recibidas desde el controlador principal
+    /** Lista de usuarios enviada desde el controlador principal. */
     private List<Usuario> usuarios;
+
+    /** Lista de libros enviada desde el controlador principal. */
     private List<Libro> libros;
 
+    /**
+     * Inicializa el comportamiento visual de los ComboBox,
+     * mostrando únicamente el nombre de usuario y el título del libro.
+     * También asigna un valor por defecto para la fecha de finalización.
+     */
     @FXML
     private void initialize() {
-        // Mostrar SOLO el nombre del usuario
+
+        // Mostrar solo el nombre del usuario en lista y botón
         comboUsuario.setCellFactory(list -> new ListCell<>() {
             @Override
             protected void updateItem(Usuario u, boolean empty) {
@@ -43,7 +72,7 @@ public class ControladorEditarPrestamo {
             }
         });
 
-        // Mostrar SOLO el título del libro
+        // Mostrar solo el título del libro
         comboLibro.setCellFactory(list -> new ListCell<>() {
             @Override
             protected void updateItem(Libro l, boolean empty) {
@@ -59,11 +88,17 @@ public class ControladorEditarPrestamo {
             }
         });
 
-        // Fecha mínima por defecto
+        // Fecha mínima por defecto (2 semanas desde hoy)
         fechaFin.setValue(LocalDate.now().plusWeeks(2));
     }
 
-    // Se llama desde el controlador principal al abrir el popup
+    /**
+     * Carga las listas de usuarios y libros que deben mostrarse en los ComboBox.
+     * Este metodo es llamado desde el controlador principal antes de abrir el popup.
+     *
+     * @param usuarios lista completa de usuarios del sistema.
+     * @param libros lista completa de libros disponibles.
+     */
     public void cargarDatos(List<Usuario> usuarios, List<Libro> libros) {
         this.usuarios = usuarios;
         this.libros = libros;
@@ -72,10 +107,24 @@ public class ControladorEditarPrestamo {
         comboLibro.getItems().setAll(libros);
     }
 
+    /**
+     * Establece la ventana actual de este editor.
+     *
+     * @param s instancia del {@link Stage}.
+     */
     public void setStage(Stage s) {
         this.stage = s;
     }
 
+    /**
+     * Construye y devuelve un objeto {@link Prestamo} con los valores seleccionados
+     * en la interfaz.
+     *
+     * <p>Si no existía un préstamo previo, se crea uno nuevo. De lo contrario, se
+     * actualiza el préstamo existente.</p>
+     *
+     * @return el préstamo generado o actualizado listo para ser guardado.
+     */
     public Prestamo getPrestamoResultado() {
         if (prestamo == null)
             prestamo = new Prestamo();
@@ -96,6 +145,10 @@ public class ControladorEditarPrestamo {
         return prestamo;
     }
 
+    /**
+     * Acción ejecutada al pulsar el botón Guardar.
+     * Ejecuta la función callback asociada y cierra la ventana.
+     */
     @FXML
     private void guardar() {
         if (onGuardarCallback != null)
@@ -105,12 +158,20 @@ public class ControladorEditarPrestamo {
             stage.close();
     }
 
+    /**
+     * Cierra la ventana sin realizar ningún cambio.
+     */
     @FXML
     private void cancelar() {
         if (stage != null)
             stage.close();
     }
 
+    /**
+     * Establece la función callback que será ejecutada cuando el usuario guarde los cambios.
+     *
+     * @param cb función a ejecutar.
+     */
     public void setOnGuardarCallback(Runnable cb) {
         this.onGuardarCallback = cb;
     }
