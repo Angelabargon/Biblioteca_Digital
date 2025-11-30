@@ -16,7 +16,11 @@
 
 <?import javafx.scene.control.PasswordField?>
 
-<AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
+<AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin"
+            stylesheets="@../estilo/estilo.css">
 
     <children>
 
@@ -26,7 +30,7 @@
           </image>
       </ImageView>
 
-      <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" style="-fx-background-color: white;">
+      <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" styleClass="panel">
 
           <children>
 
@@ -44,7 +48,7 @@
 
                    <Region id="region2" maxWidth="67.0" prefHeight="100.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
 
-                   <Button fx:id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
+                   <Button fx:id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda" styleClass="button-secundario">
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>
@@ -64,13 +68,13 @@
 
             </HBox>
 
-            <Label id="lb_titulo" alignment="CENTER" prefWidth="138.0" text="BIBLIOTECA DIGITAL">
+            <Label id="lb_titulo" alignment="CENTER" prefWidth="138.0" text="BIBLIOTECA DIGITAL" styleClass="titulo">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
 
-            <Label id="lb_subtitulo" alignment="CENTER" text="El conocimiento al alcance de tus manos">
+            <Label id="lb_subtitulo" alignment="CENTER" text="El conocimiento al alcance de tus manos" styleClass="subtitulo">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Label>
@@ -82,7 +86,7 @@
 
                <children>
 
-                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario" selected="true">
+                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" text="Usuario" selected="true" styleClass="toggle-opcion">
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -95,7 +99,7 @@
                      </font>
                   </ToggleButton>
 
-                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Admin">
+                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Admin" styleClass="toggle-opcion">
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                          <image>
@@ -111,19 +115,19 @@
 
             </HBox>
 
-            <TextField fx:id="tf_email" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Email">
+            <TextField fx:id="tf_email" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Email" styleClass="text-field">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </TextField>
 
-             <PasswordField fx:id="pf_contraseña" promptText="Contraseña" prefHeight="35.0" maxWidth="300.0" >
+             <PasswordField fx:id="pf_contraseña" promptText="Contraseña" prefHeight="35.0" maxWidth="300.0" styleClass="password-field">
                  <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </PasswordField>
 
-            <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="35.0" prefWidth="250.0" text="Iniciar Sesión como Usuario">
+            <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="35.0" prefWidth="250.0" text="Iniciar Sesión como Usuario" styleClass="button-principal">
                 <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
@@ -133,7 +137,7 @@
 
                <children>
 
-                  <Button fx:id="bt_volver" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
+                  <Button fx:id="bt_volver" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver" styleClass="button-secundario">
                      <font>
                         <Font size="15.0" />
                      </font>

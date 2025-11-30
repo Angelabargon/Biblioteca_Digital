@@ -1,113 +1,132 @@
 /* ===========================
-   Tema claro y oscuro
+   Fondo general
    =========================== */
-.root.light {
-    -fx-background-color: #faf8f3;
-    -fx-text-fill: #2c1810;
-}
-
-.root.dark {
-    -fx-background-color: #2c1810;
-    -fx-text-fill: #faf8f3;
+.root {
+    -fx-background-color: #fdfaf5;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
 }
 
 /* ===========================
-   Botones generales
+   Paneles principales (login, formularios, modales)
    =========================== */
-.button {
-    -fx-font-size: 14px;
+.panel {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 12;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+}
+
+/* ===========================
+   Títulos y subtítulos
+   =========================== */
+.titulo {
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
+    -fx-text-fill: #8b4513;
+}
+
+.subtitulo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b5d52;
+}
+
+/* ===========================
+   Campos de texto y contraseñas
+   =========================== */
+.text-field, .password-field {
+    -fx-background-color: #f5f1e8;
+    -fx-border-color: rgba(139,69,19,0.15);
+    -fx-border-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+}
+
+/* ===========================
+   Botones principales
+   =========================== */
+.button-principal {
     -fx-background-color: #8b4513;
-    -fx-text-fill: #faf8f3;
-    -fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.button-principal:hover {
+    -fx-background-color: #a96b3d;
+}
+
+/* ===========================
+   Botones secundarios (Volver, Ayuda)
+   =========================== */
+.button-secundario {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8b4513;
+    -fx-border-color: #8b4513;
+    -fx-border-radius: 8;
     -fx-padding: 6 12;
 }
 
-.button:hover {
-    -fx-background-color: #d4a574;
-    -fx-text-fill: #2c1810;
-}
-
-/* ===========================
-   Etiquetas y texto
-   =========================== */
-.label {
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-.text-field, .password-field {
-    -fx-font-size: 14px;
+.button-secundario:hover {
     -fx-background-color: #f5f1e8;
-    -fx-border-color: rgba(139, 69, 19, 0.15);
-    -fx-border-radius: 4;
-    -fx-padding: 4;
 }
 
 /* ===========================
-   Botón de favoritos
+   Toggle Usuario/Admin
    =========================== */
-.favorite-button {
-    -fx-background-color: white;
-    -fx-padding: 0;
-    -fx-min-width: 30px;
-    -fx-max-width: 30px;
-    -fx-min-height: 30px;
-    -fx-max-height: 30px;
-    -fx-background-radius: 50%;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 1);
+.toggle-opcion {
+    -fx-background-color: #e8e4dc;
+    -fx-text-fill: #2c1810;
+    -fx-background-radius: 8;
+    -fx-padding: 6 12;
 }
 
-.favorite-icon {
-    -fx-text-fill: gray;
-    -fx-font-size: 18px;
-}
-
-.favorite-button:selected .favorite-icon,
-.favorite-button:hover .favorite-icon {
-    -fx-text-fill: red;
+.toggle-opcion:selected {
+    -fx-background-color: #8b4513;
+    -fx-text-fill: #ffffff;
 }
 
 /* ===========================
-   Tablas
+   Tablas (Admin, Catálogo)
    =========================== */
 .table-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: #d4a574;
-    -fx-border-radius: 6;
-}
-
-.table-column {
-    -fx-font-size: 13px;
-    -fx-text-fill: #2c1810;
-}
-
-/* ===========================
-   ToggleButtons (Catálogo, Préstamos, Favoritos)
-   =========================== */
-.toggle-button {
-    -fx-background-color: #e8e4dc;
-    -fx-text-fill: #2c1810;
-    -fx-background-radius: 6;
-    -fx-padding: 6 12;
-}
-
-.toggle-button:selected {
-    -fx-background-color: #8b4513;
-    -fx-text-fill: #faf8f3;
-}
-
-/* ===========================
-   Ventanas modales (Perfil, Ayuda)
-   =========================== */
-.dialog-pane {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #8b4513;
+    -fx-border-color: rgba(139,69,19,0.15);
     -fx-border-radius: 8;
 }
 
-.dialog-pane .header-panel {
-    -fx-background-color: #d4a574;
+.table-column {
+    -fx-font-size: 14px;
     -fx-text-fill: #2c1810;
-    -fx-font-weight: bold;
+}
+
+/* ===========================
+   Badges de estado (Disponible / No disponible / Vencido)
+   =========================== */
+.badge-disponible {
+    -fx-background-color: #10B981;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+}
+
+.badge-no-disponible {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+}
+
+.badge-vencido {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+}
+
+.badge-vigente {
+    -fx-background-color: #10B981;
+    -fx-text-fill: white;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
 }
