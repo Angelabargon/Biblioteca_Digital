@@ -7,36 +7,35 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
- * Controlador de la página de inicio que se encarga de la navegación a Login o Registro.
+ * Controlador de la vista de página de inicio.
+ *
+ * Gestiona la navegación inicial del usuario, permitiéndole
+ * acceder a la pantalla de Login o a la pantalla de Registro.
  */
 public class ControladorPaginaInicio {
 
-    /**
-     * Definimos los elementos que recibiran los métodos en la vista:
-     *
-     * - Button registro: Llevará al usuario a Vista-Registro.
-     * - Button login: Llevará al usuario a Vista-Login.
-     */
-    @FXML
-    private Button registro;
-    @FXML
-    private Button login;
+    /** Botón que redirige a la vista de Registro. */
+    @FXML private Button registro;
 
+    /** Botón que redirige a la vista de Login. */
+    @FXML private Button login;
+
+    /** Constructor vacío requerido por JavaFX. */
     public ControladorPaginaInicio() {}
 
     /**
-     * Cambia a la vista de Login.
+     * Cambia la vista actual a la pantalla de Login.
      *
-     * @param event
+     * @param event evento de acción generado al pulsar el botón de Login.
      */
     public void irALogin(javafx.event.ActionEvent event) {
         Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Login.fxml", "Login");
-
     }
+
     /**
-     * Cambia a la vista de Registro.
+     * Cambia la vista actual a la pantalla de Registro.
      *
-     * @param event
+     * @param event evento de acción generado al pulsar el botón de Registro.
      */
     public void irARegistro(javafx.event.ActionEvent event) {
         Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Registro.fxml", "Registro");

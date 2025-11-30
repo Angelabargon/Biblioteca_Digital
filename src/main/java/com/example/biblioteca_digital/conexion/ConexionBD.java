@@ -1,33 +1,34 @@
 package com.example.biblioteca_digital.conexion;
 
 /**
- *Imports de la clase ConexionBD.
+ * Imports de la clase ConexionBD.
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *Creamos la clase encargada de conectar la base de datos con la aplicación.
+ * Clase encargada de conectar la base de datos con la aplicación.
  */
 public class ConexionBD {
 
-    /**
-     *Especificamos:
-     *
-     *La URL de la conexión con la base de datos.
-     *El nombre del usuario para acceder a la base de datos.
-     *La contraseña del usuario.
-     */
+    /** URL de conexión a la base de datos. */
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca_web";
+
+    /** Usuario de la base de datos. */
     private static final String Usuario = "root";
+
+    /** Contraseña del usuario de la base de datos. */
     private static final String Contrasena = "";
 
+    /** Instancia única de la conexión activa. */
     private static Connection conexion = null;
 
     /**
-     *Establecemos la conexión con la base de datos y la devolvemos.
-     *En caso de existir la conexión previamente, se reutilizará.
+     * Obtiene la conexión actual con la base de datos.
+     * Si no existe o está cerrada, se crea una nueva conexión.
+     *
+     * @return objeto {@link Connection} activo contra la base de datos
      */
     public static Connection getConexion() {
         try {
@@ -42,7 +43,8 @@ public class ConexionBD {
     }
 
     /**
-     *Creamos otro metodo para cerrar la conexión con la base de datos en caso de estar abierta.
+     * Cierra la conexión actual si está abierta.
+     * Libera los recursos asociados a la conexión.
      */
     public static void cerrarConexion() {
         try {

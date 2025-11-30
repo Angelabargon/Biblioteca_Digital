@@ -1,7 +1,7 @@
 package com.example.biblioteca_digital.controladores;
 
-/*
-Hacemos los importes necesarios.
+/**
+ * Hacemos los importes necesarios.
  */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,10 +11,19 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controlador encargado de gestionar las ventanas de ayuda.
+ *
+ * Permite abrir una vista de ayuda en modo modal sobre la ventana actual
+ * y cerrarla cuando el usuario lo quiera.
+ */
 public class ControladorAyuda {
 
-    /*
-    Creamos un metodo para mostrar la ayuda encima de la activity actual.
+    /**
+     * Muestra una ventana de ayuda en modo modal(Ventana Emergente) sobre la actividad actual.
+     *
+     * @param rutaFXML ruta del archivo FXML de la vista de ayuda.
+     * @param titulo   título descriptivo que se mostrará en la ventana.
      */
     public static void mostrarAyuda(String rutaFXML, String titulo) {
         try {
@@ -33,12 +42,15 @@ public class ControladorAyuda {
         }
     }
 
-    /*
-    Creamos un metodo para cerrar la ayuda y vover a la página anterior.
+    /**
+     * Cierra la ventana de ayuda y regresa a la pantalla anterior.
+     *
+     * @param event evento de acción generado al pulsar el botón de cerrar.
      */
     @FXML
     private void cerrarAyuda(ActionEvent event) {
 
         Navegacion.cerrarVentana(event);
+
     }
 }

@@ -9,7 +9,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- * Creamos la clase Navegación que almacenará los métodos encargados de los cambios entre activitys, así como sus cierres.
+ * Creamos la clase Navegación que almacenará los métodos encargados de los cambios entre activitys,
+ * así como sus cierres.
  */
 public class Navegacion {
 
@@ -21,15 +22,19 @@ public class Navegacion {
      * @param titulo  Título de la ventana.
      */
     public static void cambiarVista(ActionEvent event, String rutaFXML, String titulo) {
+
         try {
+
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
                     Navegacion.class.getResource(rutaFXML)
             );
+
             javafx.scene.Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new javafx.scene.Scene(root));
             stage.setTitle(titulo);
             stage.show();
+
         } catch (Exception e) {
             System.out.println("Error al cambiar a la vista: " + rutaFXML);
             e.printStackTrace();
@@ -44,10 +49,12 @@ public class Navegacion {
     public static void cerrarVentana(ActionEvent event) {
 
         String titulo = "Título";
+
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             titulo = stage.getTitle();
             stage.close();
+
         } catch (Exception e) {
             System.out.println("Error al cerrar la vista: " + titulo);
             e.printStackTrace();
@@ -62,15 +69,19 @@ public class Navegacion {
      * @param titulo  Título de la ventana.
      */
     public static void cambiarVistaImagen(MouseEvent event, String rutaFXML, String titulo) {
+
         try {
+
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
                     Navegacion.class.getResource(rutaFXML)
             );
+
             javafx.scene.Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new javafx.scene.Scene(root));
             stage.setTitle(titulo);
             stage.show();
+
         } catch (Exception e) {
             System.out.println("Error al cambiar a la vista: " + rutaFXML);
             e.printStackTrace();
