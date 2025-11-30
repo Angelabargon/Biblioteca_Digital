@@ -44,7 +44,7 @@
                           prefHeight="35.0" prefWidth="150.0"
                           text="Catálogo"
                           onAction="#handleCatalogo"
-                          styleClass="toggle-button">
+                          styleClass="toggle-opcion">
                 <toggleGroup>
                     <ToggleGroup fx:id="menuGroup"/>
                 </toggleGroup>
@@ -55,14 +55,14 @@
                           text="Mis préstamos"
                           toggleGroup="$menuGroup"
                           onAction="#handlePrestamos"
-                          styleClass="toggle-button"/>
+                          styleClass="toggle-opcion"/>
 
             <ToggleButton fx:id="tbt_FAVORITOS"
                           prefHeight="35.0" prefWidth="150.0"
                           text="Mis favoritos"
                           toggleGroup="$menuGroup"
                           onAction="#handleFavoritos"
-                          styleClass="toggle-button"/>
+                          styleClass="toggle-opcion"/>
         </children>
     </HBox>
 

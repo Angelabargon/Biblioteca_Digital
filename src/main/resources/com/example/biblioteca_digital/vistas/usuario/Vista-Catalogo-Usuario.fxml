@@ -8,15 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-
 <BorderPane prefHeight="548.0" prefWidth="1410.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"

@@ -1,132 +1,234 @@
-/* ===========================
-   Fondo general
-   =========================== */
-.root {
-    -fx-background-color: #fdfaf5;
-    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
-}
-
-/* ===========================
-   Paneles principales (login, formularios, modales)
-   =========================== */
+/* =========================
+   ESTILOS GENERALES
+   ========================= */
 .panel {
     -fx-background-color: #ffffff;
-    -fx-border-radius: 12;
-    -fx-padding: 24;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
 }
 
-/* ===========================
-   Títulos y subtítulos
-   =========================== */
 .titulo {
-    -fx-font-size: 24px;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #8b4513;
+    -fx-text-fill: #333;
 }
 
 .subtitulo {
-    -fx-font-size: 14px;
-    -fx-text-fill: #6b5d52;
+    -fx-font-size: 16px;
+    -fx-text-fill: #555;
 }
 
-/* ===========================
-   Campos de texto y contraseñas
-   =========================== */
-.text-field, .password-field {
-    -fx-background-color: #f5f1e8;
-    -fx-border-color: rgba(139,69,19,0.15);
-    -fx-border-radius: 8;
-    -fx-padding: 8 12;
-    -fx-font-size: 14px;
-}
-
-/* ===========================
-   Botones principales
-   =========================== */
+/* =========================
+   BOTONES
+   ========================= */
 .button-principal {
-    -fx-background-color: #8b4513;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #8B5E3C;   /* marrón oscuro */
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-background-radius: 8;
+    -fx-background-radius: 6;
     -fx-padding: 8 16;
 }
 
-.button-principal:hover {
-    -fx-background-color: #a96b3d;
-}
-
-/* ===========================
-   Botones secundarios (Volver, Ayuda)
-   =========================== */
 .button-secundario {
+    -fx-background-color: #A67B5B;   /* marrón medio para contraste */
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+}
+
+.toggle-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 6;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #8B5E3C;   /* marrón oscuro */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.btn-prestar {
+    -fx-background-color: #8B5E3C;   /* mismo marrón oscuro */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+.btn-ver {
+    -fx-background-color: #A67B5B;   /* marrón medio */
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+}
+
+.btn-fav-overlay {
     -fx-background-color: transparent;
-    -fx-text-fill: #8b4513;
-    -fx-border-color: #8b4513;
-    -fx-border-radius: 8;
-    -fx-padding: 6 12;
+    -fx-text-fill: #e63946;   /* rojo vivo */
+    -fx-font-size: 18px;
 }
 
-.button-secundario:hover {
-    -fx-background-color: #f5f1e8;
+/* =========================
+   CAMPOS DE TEXTO
+   ========================= */
+.text-field, .password-field {
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6;
 }
 
-/* ===========================
-   Toggle Usuario/Admin
-   =========================== */
-.toggle-opcion {
-    -fx-background-color: #e8e4dc;
-    -fx-text-fill: #2c1810;
-    -fx-background-radius: 8;
-    -fx-padding: 6 12;
+.titulo {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;   /* gris oscuro consistente */
 }
 
-.toggle-opcion:selected {
-    -fx-background-color: #8b4513;
-    -fx-text-fill: #ffffff;
+.combo-box {
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
-/* ===========================
-   Tablas (Admin, Catálogo)
-   =========================== */
-.table-view {
+/* =========================
+   SCROLL Y CONTENEDORES
+   ========================= */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.flow-pane {
+    -fx-padding: 10;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+}
+
+.filtro-box {
+    -fx-border-color: lightgray;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-padding: 5 10;
+}
+
+/* =========================
+   BADGES Y TAGS
+   ========================= */
+.badge-aviso {
+    -fx-background-color: #ffc107;
+    -fx-text-fill: black;
+    -fx-padding: 3 8;
+    -fx-background-radius: 5;
+}
+
+.badge-categoria {
+    -fx-background-color: #d4a373;
+    -fx-text-fill: white;
+    -fx-padding: 3 9;
+    -fx-background-radius: 6;
+}
+
+.no-disponible-tag {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-padding: 3 8;
+    -fx-background-radius: 6;
+}
+
+/* =========================
+   TARJETAS DE LIBRO
+   ========================= */
+.card {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(139,69,19,0.15);
+    -fx-background-radius: 8;
+    -fx-border-color: #ddd;
     -fx-border-radius: 8;
+    -fx-padding: 10;
 }
 
-.table-column {
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.card-author {
     -fx-font-size: 14px;
-    -fx-text-fill: #2c1810;
+    -fx-text-fill: #666;
 }
 
-/* ===========================
-   Badges de estado (Disponible / No disponible / Vencido)
-   =========================== */
-.badge-disponible {
-    -fx-background-color: #10B981;
+.card-genre {
+    -fx-font-size: 13px;
+    -fx-background-color: #c99b68;
     -fx-text-fill: white;
-    -fx-padding: 4 10;
-    -fx-background-radius: 8;
+    -fx-padding: 3 8;
+    -fx-background-radius: 6;
 }
 
-.badge-no-disponible {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-    -fx-padding: 4 10;
-    -fx-background-radius: 8;
+.card-stock {
+    -fx-font-size: 13px;
+    -fx-text-fill: #10B981; /* verde */
 }
 
-.badge-vencido {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-    -fx-padding: 4 10;
-    -fx-background-radius: 8;
+.btn-ver {
+    -fx-background-color: #e0d8c7;
+    -fx-text-fill: #333;
+    -fx-background-radius: 6;
 }
 
-.badge-vigente {
-    -fx-background-color: #10B981;
+.btn-prestar {
+    -fx-background-color: #c19a6b;
     -fx-text-fill: white;
-    -fx-padding: 4 10;
-    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+}
+
+.btn-fav-overlay {
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
+    -fx-font-size: 18px;
+}
+
+.stock-container {
+    -fx-spacing: 5;
+    -fx-alignment: center-left;
+}
+
+/* =========================
+   LIBRO INDIVIDUAL
+   ========================= */
+.imagen-libro {
+    -fx-effect: dropshadow(gaussian, #444, 10, 0, 0, 3);
+}
+
+.texto-detalle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.texto-descripcion {
+    -fx-font-size: 15px;
+    -fx-text-fill: #333;
+}
+
+/* =========================
+   PÁGINA INICIO
+   ========================= */
+.linea-decorativa {
+    -fx-stroke: #333;
+    -fx-stroke-width: 2;
+}
+
+/* =========================
+   FORMULARIOS
+   ========================= */
+.mensaje-error {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+}
+
+.check-box {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
 }
