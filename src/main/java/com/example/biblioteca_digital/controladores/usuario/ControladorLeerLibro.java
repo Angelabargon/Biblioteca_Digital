@@ -24,7 +24,7 @@ public class ControladorLeerLibro
         lblTitulo.setText(prestamo.getLibro().getTitulo());
         lblAutor.setText("por " + prestamo.getLibro().getAutor());
 
-        areaContenido.setText(prestamo.getLibro().getDescripcion());
+        areaContenido.setText(prestamo.getLibro().getContenido());
 
         long dias = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(), prestamo.getFecha_fin());
         if (dias >= 0)

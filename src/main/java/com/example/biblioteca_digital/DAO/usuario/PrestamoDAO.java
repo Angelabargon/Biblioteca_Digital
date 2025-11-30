@@ -108,14 +108,12 @@ public class PrestamoDAO
      */
     public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)
     {
-        List<Prestamo> lista = new ArrayList<>();
-        String sql = """
-        SELECT id, id_usuario, id_libro, fecha_inicio, fecha_fin, estado
-        FROM prestamos 
-        WHERE id_usuario = ? AND estado = 'activo'
-        """;
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
+        List<Prestamo> prestamos = new ArrayList<>();
+        String sql = "SELECT * FROM prestamos WHERE id_usuario = ?";
+
+        // 1. Conexión y PreparedStatement en el try-with-resources principal
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pst = conn.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
             try (ResultSet rs = pst.executeQuery())
@@ -145,16 +143,18 @@ public class PrestamoDAO
                     p.setLibro(libroCompleto);
                     p.setUsuario(usuarioCompleto);
 
-                    lista.add(p);
+                    prestamos.add(p);
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return prestamos;
+    }
 
-        return lista;
-    }public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
+
+    public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
     {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND id_libro = ? AND estado = 'activo'";
         try (Connection con = ConexionBD.getConexion();
