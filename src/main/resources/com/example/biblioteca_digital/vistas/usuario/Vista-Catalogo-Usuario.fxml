@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="548.0" prefWidth="1410.0"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario"
-            stylesheets="@../../estilo/estilo.css"
-            styleClass="panel">
+<BorderPane prefHeight="548.0" prefWidth="1410.0" styleClass="panel" stylesheets="@../../estilo/estilo.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">
 
     <!-- Fondo -->
     <ImageView fitHeight="548" fitWidth="1410" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../imagenes/fondo-biblioteca.png"/>
+            <Image url="@../../imagenes/fondo-biblioteca.png" />
         </image>
     </ImageView>
 
@@ -26,19 +26,19 @@
     <top>
         <VBox styleClass="panel">
             <padding>
-                <Insets top="10" bottom="10" left="20" right="20"/>
+                <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
 
             <children>
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Filtros" styleClass="titulo"/>
-                    <HBox HBox.hgrow="ALWAYS"/>
+                    <Label styleClass="titulo" text="Filtros" />
+                    <HBox HBox.hgrow="ALWAYS" />
                 </HBox>
 
                 <HBox alignment="CENTER_LEFT" spacing="15" VBox.vgrow="NEVER">
                     <VBox.margin>
-                        <Insets top="15"/>
+                        <Insets top="15" />
                     </VBox.margin>
 
                     <children>
@@ -46,34 +46,21 @@
                         <!-- FILTRO TÍTULO -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
-                                <Label text="🔍" styleClass="subtitulo"/>
-                                <TextField fx:id="filtroTitulo"
-                                           promptText="Buscar por título..."
-                                           styleClass="text-field"/>
+                                <Label styleClass="subtitulo" text="🔍" />
+                                <TextField fx:id="filtroTitulo" promptText="Buscar por título..." styleClass="text-field" />
                             </children>
                         </HBox>
 
                         <!-- FILTRO AUTOR -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
-                                <Label text="🔍" styleClass="subtitulo"/>
-                                <TextField fx:id="filtroAutor"
-                                           promptText="Buscar por autor..."
-                                           styleClass="text-field"/>
+                                <Label styleClass="subtitulo" text="🔍" />
+                                <TextField fx:id="filtroAutor" promptText="Buscar por autor..." styleClass="text-field" />
                             </children>
                         </HBox>
 
                         <!-- FILTRO GÉNERO -->
-                        <ChoiceBox fx:id="filtroGenero"
-                                   prefWidth="150"
-                                   styleClass="combo-box"/>
-
-                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                            <children>
-                                <Button text="Mostrar Favoritos"
-                                        styleClass="button-secundario"/>
-                            </children>
-                        </HBox>
+                        <ChoiceBox fx:id="filtroGenero" prefWidth="150" styleClass="combo-box" />
 
                     </children>
                 </HBox>
@@ -85,27 +72,19 @@
     <!-- LISTA DINÁMICA DE LIBROS -->
     <center>
         <AnchorPane>
+         <ImageView fitHeight="800.0" fitWidth="1486.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../imagenes/fondo-biblioteca.png" />
+            </image>
+         </ImageView>
 
-            <Label text="Catálogo de Libros"
-                   layoutX="50"
-                   layoutY="25"
-                   styleClass="titulo"/>
+            <Label layoutX="50" layoutY="25" styleClass="titulo" text="Catálogo de Libros" />
 
-            <ScrollPane AnchorPane.leftAnchor="20.0"
-                        AnchorPane.rightAnchor="20.0"
-                        AnchorPane.topAnchor="70.0"
-                        AnchorPane.bottomAnchor="20.0"
-                        hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
-                        styleClass="scroll-pane">
+            <ScrollPane hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
                 <content>
-                    <FlowPane fx:id="contenedorLibros"
-                              prefWidth="1300"
-                              hgap="20"
-                              vgap="20"
-                              alignment="TOP_LEFT"
-                              styleClass="flow-pane">
+                    <FlowPane fx:id="contenedorLibros" alignment="TOP_LEFT" hgap="20" prefWidth="1300" styleClass="flow-pane" vgap="20">
                         <padding>
-                            <Insets top="20" right="20" bottom="20" left="20"/>
+                            <Insets bottom="20" left="20" right="20" top="20" />
                         </padding>
                     </FlowPane>
                 </content>
@@ -115,4 +94,3 @@
     </center>
 
 </BorderPane>
-

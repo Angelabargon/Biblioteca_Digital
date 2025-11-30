@@ -6,58 +6,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="770.0" prefWidth="1400.0"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.biblioteca_digital.controladores.ControladorPaginaInicio"
-            stylesheets="@../estilo/estilo.css"
-            styleClass="panel">
+<AnchorPane prefHeight="770.0" prefWidth="1400.0" styleClass="panel" stylesheets="@../estilo/estilo.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorPaginaInicio">
 
     <children>
         <!-- Fondo -->
-        <ImageView fitHeight="793.0" fitWidth="1421.0"
-                   pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="793.0" fitWidth="1421.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../imagenes/fondo-inicial.png"/>
+                <Image url="@../imagenes/fondo-inicial.png" />
             </image>
         </ImageView>
 
         <!-- Botón Registro -->
-        <Button fx:id="registro"
-                onAction="#irARegistro"
-                mnemonicParsing="false"
-                prefHeight="67.0" prefWidth="166.0"
-                text="Registro"
-                AnchorPane.leftAnchor="935.0"
-                AnchorPane.topAnchor="362.4"
-                styleClass="button-principal"/>
+        <Button fx:id="registro" mnemonicParsing="false" onAction="#irARegistro" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Registro" AnchorPane.leftAnchor="935.0" AnchorPane.topAnchor="362.4" />
 
         <!-- Botón Login -->
-        <Button fx:id="login"
-                onAction="#irALogin"
-                mnemonicParsing="false"
-                prefHeight="67.0" prefWidth="166.0"
-                text="Login"
-                AnchorPane.leftAnchor="668.0"
-                AnchorPane.topAnchor="362.0"
-                styleClass="button-principal"/>
+        <Button fx:id="login" mnemonicParsing="false" onAction="#irALogin" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Login" AnchorPane.leftAnchor="668.0" AnchorPane.topAnchor="362.0" />
 
         <!-- Título -->
-        <Label layoutX="627.0" layoutY="261.0"
-               prefHeight="58.0" prefWidth="538.0"
-               text="¡BIENVENIDO A TU BIBLIOTECA DIGITAL!"
-               textAlignment="CENTER"
-               textOverrun="CENTER_WORD_ELLIPSIS"
-               AnchorPane.leftAnchor="627.0"
-               AnchorPane.topAnchor="261.0"
-               styleClass="titulo-principal"/>
+        <Label layoutX="574.0" layoutY="263.0" prefHeight="58.0" prefWidth="655.0" styleClass="titulo-principal" text="¡BIENVENIDO A TU BIBLIOTECA DIGITAL!" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="574.0" AnchorPane.topAnchor="263.0" />
 
         <!-- Línea decorativa -->
-        <Line layoutX="982.0" layoutY="452.0"
-              startX="-99.8" startY="-14.6"
-              endX="-99.8" endY="-97.0"
-              styleClass="linea-decorativa"/>
+        <Line endX="-99.8" endY="-97.0" layoutX="982.0" layoutY="452.0" startX="-99.8" startY="-14.6" styleClass="linea-decorativa" />
     </children>
 </AnchorPane>
