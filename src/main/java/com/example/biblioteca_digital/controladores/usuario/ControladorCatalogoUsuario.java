@@ -1,14 +1,10 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
-import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.modelos.Libro;
-import com.example.biblioteca_digital.modelos.Prestamo;
-import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -43,41 +39,47 @@ public class ControladorCatalogoUsuario
     @FXML private ChoiceBox<String> filtroGenero;
 
     /**
-     * Establece el usuario y carga los datos iniciales.
-     * Este método debe ser llamado por el controlador padre después de cargar el FXML.
+     * Metodo que establece el usuario actual y carga sus libros favoritos.
+     * @param usuario El objeto Usuario actualmente logueado.
      */
-    // ...
-
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
         if (usuarioActual != null) {
             labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
             cargarDatosIniciales();
-        }
+        }if (filtroGenero != null) {
+        filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
     }
+
+    }
+
+    /**
+     * Método que carga los datos iniciales de la base de datos
+     */
     private void cargarDatosIniciales()
     {
-        if (filtroGenero != null && filtroGenero.getSelectionModel().isEmpty())
-        {
-            filtroGenero.getSelectionModel().selectFirst();
-        }
+        actualizarContadorPrestamos();
         if (contenedorLibros.getChildren().isEmpty())
         {
             mostrarLibrosFiltrados();
         }
-        actualizarContadorPrestamos();
     }
-
+    /**
+     * Método que inicializa el controlador con el usuario actual.
+     */
     @FXML
     public void initialize()
     {
         cargarFiltroGeneros();
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-        if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
+        if (filtroGenero != null)  filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
     }
 
+    /**
+     * Método para actualiza los préstamos tras pedir uno ptrestado
+     */
     private void actualizarContadorPrestamos()
     {
         if (usuarioActual != null)
@@ -90,6 +92,9 @@ public class ControladorCatalogoUsuario
         }
     }
 
+    /**
+     * Método para cargar los géneros
+     */
     private void cargarFiltroGeneros()
     {
         if (filtroGenero != null) {
@@ -99,7 +104,7 @@ public class ControladorCatalogoUsuario
     }
 
     /**
-     * Aplica los filtros de Título, Autor y Género llamando al DAO.
+     * Método para filtrar por los filtros de Título, Autor y Género llamando al DAO.
      */
     @FXML
     public void mostrarLibrosFiltrados() {
@@ -146,6 +151,10 @@ public class ControladorCatalogoUsuario
         }
     }
 
+    /**
+     * Método para ver la cartilla de los libros individualmente ( aun no está completo)
+     * @param libro
+     */
     public void clickVer(Libro libro)
     {
         try
@@ -168,6 +177,11 @@ public class ControladorCatalogoUsuario
         }
     }
 
+    /**
+     * Método que maneja las mini tarjetas de libros (son individuales)
+     * @param libro
+     * @return
+     */
     private Node crearVistaLibroItem(Libro libro)
     {
         try
@@ -186,6 +200,11 @@ public class ControladorCatalogoUsuario
         }
     }
 
+    /**
+     * Método para alertas de información para mostrar el mensaje al usuario como una ventana
+     * @param titulo
+     * @param mensaje
+     */
     private void mostrarAlerta(String titulo, String mensaje)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -194,7 +213,11 @@ public class ControladorCatalogoUsuario
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
+    /**
+     * Método para alertas de errores para mostrar el mensaje al usuario como una ventana
+     * @param titulo
+     * @param mensaje
+     */
     private void mostrarAlertaError(String titulo, String mensaje)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);

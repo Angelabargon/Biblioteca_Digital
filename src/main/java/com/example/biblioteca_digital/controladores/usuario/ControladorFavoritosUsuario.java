@@ -38,7 +38,7 @@ public class ControladorFavoritosUsuario {
     private Usuario usuarioActual;
     private final FavoritosDAO favoritosDAO = new FavoritosDAO(); // Instancia del DAO
     /**
-     * Inicializa el controlador con el usuario actual.
+     * Método que inicializa el controlador con el usuario actual.
      */
     public void initialize()
     {
@@ -49,8 +49,7 @@ public class ControladorFavoritosUsuario {
         }
     }
     /**
-     * Establece el usuario actual y carga sus libros favoritos.
-     * Este método es llamado por el controlador principal (padre) al cambiar de vista.
+     * Metodo que establece el usuario actual y carga sus libros favoritos.
      * @param usuario El objeto Usuario actualmente logueado.
      */
     public void setUsuario(Usuario usuario)
@@ -62,7 +61,7 @@ public class ControladorFavoritosUsuario {
         }
     }
     /**
-     * Carga la lista de favoritos en la ListView usando el DAO.
+     * Método que carga la lista de favoritos en la ListView usando el DAO.
      */
     private void cargarFavoritos()
     {
@@ -83,10 +82,10 @@ public class ControladorFavoritosUsuario {
     }
 
     /**
-     * Muestra los detalles del libro seleccionado en las etiquetas.
-     * Este método solo funcionará si los detalles se pasan desde la tarjeta del libro.
+     * Método que muestra los detalles del libro seleccionado en las etiquetas.
+     * (parte del clickver)
      */
-    public void mostrarDetalles(Libro libro) // Hecho público para ser llamado desde la tarjeta
+    public void mostrarDetalles(Libro libro)
     {
         if (libro == null) {
             tituloLabel.setText("");
@@ -99,6 +98,11 @@ public class ControladorFavoritosUsuario {
         categoriaLabel.setText(libro.getGenero());
     }
 
+    /**
+     * Método que maneja las mini tarjetas de libros (son individuales)
+     * @param libro
+     * @return
+     */
     private Node crearVistaLibroItem(Libro libro)
     {
         try
@@ -116,30 +120,8 @@ public class ControladorFavoritosUsuario {
         }
     }
     /**
-     * Manejador de evento para eliminar el favorito seleccionado.
-     */
-    @FXML
-    private void eliminarFavorito()
-    {
-        Libro libro = listaFavoritos.getSelectionModel().getSelectedItem();
-        if (libro == null)
-        {
-            mensaje("Seleccione un libro para eliminar.");
-            return;
-        }
-        // USANDO DAO
-        if (favoritosDAO.borrarFavorito(usuarioActual.getId(), libro.getId()))
-        {
-            mensaje("Favorito eliminado correctamente: " + libro.getTitulo());
-        }
-        else
-        {
-            mensaje("Error al eliminar el favorito. Intente de nuevo.");
-        }
-        cargarFavoritos();
-    }
-    /**
-     * Muestra una alerta de información.
+     * Método para alertas de información para mostrar el mensaje al usuario como una ventana
+     * @param t
      */
     private void mensaje(String t)
     {

@@ -11,17 +11,14 @@ import java.util.List;
 
 public class FavoritosDAO
 {
-    /**
-     * Obtiene la conexión a la base de datos.
-     */
     private static Connection conectar()
     {
         return ConexionBD.getConexion();
     }
     /**
-     * Obtiene todos los libros marcados como favoritos por un usuario.
-     * @param idUsuario ID del usuario.
-     * @return Lista de objetos Libro.
+     * Método que obtiene todos los libros marcados como favoritos por un usuario
+     * @param idUsuario ID del usuario
+     * @return Lista de objetos Libro
      */
     public List<Libro> obtenerFavoritos(int idUsuario)
     {
@@ -63,9 +60,9 @@ public class FavoritosDAO
     }
 
     /**
-     * Elimina un libro de la lista de favoritos de un usuario.
-     * @param idUsuario ID del usuario.
-     * @param idLibro ID del libro a borrar.
+     * Método que elimina un libro de la lista de favoritos de un usuario
+     * @param idUsuario ID del usuario
+     * @param idLibro ID del libro a borrar
      */
     public boolean borrarFavorito(int idUsuario, int idLibro)
     {
@@ -86,7 +83,7 @@ public class FavoritosDAO
         }
     }
     /**
-     * Comprueba si el libro es favorito en la sesion del usuario
+     * Método que comprueba si el libro es favorito en la sesion del usuario
      * @param idUsuario
      * @param idLibro
      * @return
@@ -113,7 +110,7 @@ public class FavoritosDAO
         }
     }
     /**
-     * Cambiar el estado de favorito dependiendo de si presiona el botón o no
+     * Mñetodo que cambia el estado de favorito dependiendo de si presiona el botón o no
      * @param idUsuario
      * @param idLibro
      */
@@ -129,7 +126,7 @@ public class FavoritosDAO
         }
     }
     /**
-     * Añadir un libro a la lista favoritos
+     * Método que añade un libro a la lista favoritos
      * @param idUsuario
      * @param idLibro
      * @return

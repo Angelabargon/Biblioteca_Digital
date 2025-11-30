@@ -55,6 +55,9 @@ public class ControladorPerfilUsuario
     @FXML
     private Button bt_cerrar;
 
+    /**
+     * Método que inicializa el controlador con el usuario actual.
+     */
     @FXML
     public void initialize()
     {
@@ -64,6 +67,9 @@ public class ControladorPerfilUsuario
 
     private final PerfilUsuarioDAO perfilUsuarioDAO = new PerfilUsuarioDAO();
 
+    /**
+     * Método que carga los datos del usuario actual
+     */
     private void cargarDatosPerfil()
     {
         if (usuarioActual == null) return;
@@ -80,7 +86,7 @@ public class ControladorPerfilUsuario
     }
 
     /**
-     * Permite al usuario cambiar su contraseña mediante un diálogo emergente.
+     * Método que permite al usuario cambiar su contraseña mediante un diálogo emergente.
      */
     @FXML
     private void cambiarContrasena(ActionEvent event) {
@@ -102,6 +108,10 @@ public class ControladorPerfilUsuario
         });
     }
 
+    /**
+     * Método que permite cerrar sesión y lleva a la pantalla de inicio
+     * @param event
+     */
     @FXML
     private void cerrarSesion(ActionEvent event)
     {
@@ -116,11 +126,11 @@ public class ControladorPerfilUsuario
             nuevaStage.setScene(new Scene(root));
             nuevaStage.show();
 
-            // Cerrar la ventana del perfil (modal)
+            // Cerrar la ventana del perfil
             Stage perfilStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             perfilStage.close();
 
-            // Cerrar también la ventana principal (owner del modal)
+            // Cerrar también la ventana principal
             Stage menuStage = (Stage) perfilStage.getOwner();
             if (menuStage != null) {
                 menuStage.close();
@@ -133,11 +143,18 @@ public class ControladorPerfilUsuario
         }
     }
 
+    /**
+     * Método que cierra la ventana de perfil
+     */
     @FXML
     private void cerrarPerfil(ActionEvent event) {
         Navegacion.cerrarVentana(event);
     }
 
+    /**
+     * Método que muestra la ventana de ayuda de navegación por el perfil
+     * @param event
+     */
     @FXML
     private void mostrarAyuda(ActionEvent event) {
         ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/usuario/Vista-Ayuda-PerfilUsuario.fxml", "Perfil Usuario");

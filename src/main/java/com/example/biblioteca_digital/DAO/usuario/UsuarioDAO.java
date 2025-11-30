@@ -16,8 +16,7 @@ public class UsuarioDAO
     }
 
     /**
-     * Obtiene todos los detalles de un usuario dado su ID.
-     * Requerido por PrestamoDAO para cargar el objeto Usuario.
+     * Método que obtiene todos los detalles de un usuario dado su ID
      */
     public static Usuario obtenerUsuarioPorId(int idUsuario)
     {
