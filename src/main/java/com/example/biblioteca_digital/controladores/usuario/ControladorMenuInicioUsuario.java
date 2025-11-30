@@ -76,10 +76,13 @@ public class ControladorMenuInicioUsuario {
      * @param controllerClass Clase del controlador asociado para la inyección.
      */
     private void cargarVista(String fxmlPath, Class<?> controllerClass) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        try
+        {
+            URL fxmlUrl = getClass().getResource(fxmlPath);
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent vista = loader.load();
             Object controlador = loader.getController();
+            Usuario usuarioSesion = Sesion.getUsuario(); //Cogemos el usuario real
 
             contenedor.getChildren().clear();
             AnchorPane.setLeftAnchor(vista, 0.0);
@@ -87,18 +90,38 @@ public class ControladorMenuInicioUsuario {
             AnchorPane.setTopAnchor(vista, 0.0);
             AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
-
-            Usuario usuarioSesion = Sesion.getUsuario(); //Cogemos el usuario real
-
-            if (controlador instanceof ControladorCatalogoUsuario) {
-                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioSesion);
-            } else if (controlador instanceof ControladorPrestamosUsuario) {
-                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioSesion);
-            } else if (controlador instanceof ControladorFavoritosUsuario) {
-                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioSesion);
+            if (usuarioSesion != null) {
+                if (controllerClass == ControladorCatalogoUsuario.class)
+                {
+                    ControladorCatalogoUsuario controlador1 = loader.getController();
+                    controlador1.setUsuario(usuarioSesion);
+                }
+                else if (controllerClass == ControladorPrestamosUsuario.class)
+                {
+                    ControladorCatalogoUsuario controlador2 = loader.getController();
+                    controlador2.setUsuario(usuarioSesion);
+                }
+                else if (controllerClass == ControladorFavoritosUsuario.class)
+                {
+                    ControladorCatalogoUsuario controlador3 = loader.getController();
+                    controlador3.setUsuario(usuarioSesion);
+                }
             }
+            else
+            {
+                mostrarAlertaError("Error de sesión", "No se pudo cargar la vista: " + fxmlPath);
+            }
+//                if (controlador instanceof ControladorCatalogoUsuario) {
+//                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioSesion);
+//            } else if (controlador instanceof ControladorPrestamosUsuario) {
+//                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioSesion);
+//            } else if (controlador instanceof ControladorFavoritosUsuario) {
+//                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioSesion);
+//            }
 
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             mostrarAlertaError("Error de E/S", "No se pudo cargar la vista: " + fxmlPath);
         }

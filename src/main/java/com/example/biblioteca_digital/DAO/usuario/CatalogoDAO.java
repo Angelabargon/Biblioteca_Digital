@@ -83,7 +83,7 @@ public class CatalogoDAO
                             rs.getString("descripcion"),
                             rs.getString("foto"),
                             rs.getInt("cantidad_disponible"),
-                            rs.getInt("cantidad_total"),
+                            rs.getInt("cantidad"),
                             rs.getBoolean("disponible"),
                             rs.getString("contenido")
                     );
@@ -117,7 +117,7 @@ public class CatalogoDAO
     {
         Libro libro = null;
         String sql = """
-        SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad_total, cantidad_disponible, disponible 
+        SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad_disponible, cantidad, disponible 
         FROM libros 
         WHERE id = ?
     """; // Agregado 'cantidad_total' para consistencia en la consulta
@@ -138,7 +138,7 @@ public class CatalogoDAO
                             rs.getString("descripcion"),
                             rs.getString("foto"),
                             rs.getInt("cantidad_disponible"),
-                            rs.getInt("cantidad_total"),
+                            rs.getInt("cantidad"),
                             rs.getBoolean("disponible"),
                             rs.getString("contenido")
                     );
@@ -161,7 +161,7 @@ public class CatalogoDAO
     public int contarPrestamosActivos(int idUsuario)
     {
         int count = 0;
-        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND fecha_devolucion IS NULL";
+        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {

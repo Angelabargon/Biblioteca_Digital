@@ -7,6 +7,8 @@ import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class ControladorLibroCatalogo
     @FXML private Label lblTitulo;
     @FXML private Label lblAutor;
     @FXML private Label lblGenero;
+    @FXML private ImageView imgPortada;
     @FXML private Label lblDisponibles;
     @FXML private Button btnPedirPrestado;
     @FXML private Label lblNoDisponibleTag;
@@ -36,6 +39,22 @@ public class ControladorLibroCatalogo
         lblTitulo.setText(libro.getTitulo());
         lblAutor.setText(libro.getAutor());
         lblGenero.setText(libro.getGenero());
+
+        String nombreArchivo = libro.getFoto();
+
+        if (nombreArchivo != null && !nombreArchivo.isEmpty())
+        {
+            String rutaCompleta = "/imagenes/libros/" + nombreArchivo;
+            try
+            {
+                Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
+                imgPortada.setImage(portada);
+            }
+            catch (Exception e)
+            {
+                System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + libro.getTitulo() + ". Ruta esperada: " + rutaCompleta);
+            }
+        }
 
         int disponibles = libro.getCantidadDisponible();
         int stockTotal = libro.getCantidad();

@@ -141,37 +141,36 @@ public class PrestamoDAO
 
         return lista;
     }
-
-    /**
-     * Cuenta el número de préstamos activos de un usuario.
-     */
-    public static int contarPrestamosActivos(int idUsuario)
-    {
-        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
-        {
-            pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) return rs.getInt(1);
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    /**
-     * Coger los ID de los libros que el usuario tiene prestado
-     * @param idUsuario
-     * @return
-     */
-    public List<Integer> obtenerIdsLibrosPrestados(int idUsuario) {
-        List<Integer> ids = new ArrayList<>();
-        // Asegúrate de que tu tabla 'prestamos' tiene una columna 'id_libro' y 'fecha_devolucion' es NULL para los activos
-        String sql = "SELECT id_libro FROM prestamos WHERE id_usuario = ? AND fecha_devolucion IS NULL";
-        // ... (Lógica de conexión y ejecución de consulta)
-        return ids;
-    }
+//
+//    /**
+//     * Cuenta el número de préstamos activos de un usuario.
+//     */
+//    public static int contarPrestamosActivos(int idUsuario)
+//    {
+//        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
+//        try (Connection con = ConexionBD.getConexion();
+//             PreparedStatement pst = con.prepareStatement(sql))
+//        {
+//            pst.setInt(1, idUsuario);
+//            ResultSet rs = pst.executeQuery();
+//            if (rs.next()) return rs.getInt(1);
+//        }
+//        catch (SQLException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return 0;
+//    }
+//
+//    /**
+//     * Coger los ID de los libros que el usuario tiene prestado
+//     * @param idUsuario
+//     * @return
+//     */
+//    public List<Integer> obtenerIdsLibrosPrestados(int idUsuario) {
+//        List<Integer> ids = new ArrayList<>();
+//        String sql = "SELECT id_libro FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
+//        // ... (Lógica de conexión y ejecución de consulta)
+//        return ids;
+//    }
 }

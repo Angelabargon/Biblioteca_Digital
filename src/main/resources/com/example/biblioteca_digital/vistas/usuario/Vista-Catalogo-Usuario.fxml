@@ -95,7 +95,10 @@
                    layoutY="25"
                    style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
 
-            <ScrollPane layoutX="20" layoutY="70" prefWidth="1350" prefHeight="430"
+            <ScrollPane AnchorPane.leftAnchor="20.0"
+                        AnchorPane.rightAnchor="20.0"
+                        AnchorPane.topAnchor="70.0"
+                        AnchorPane.bottomAnchor="20.0"
                         hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
                         style="-fx-background-color: transparent;">
                 <content>
@@ -105,7 +108,7 @@
                               vgap="20"
                               alignment="TOP_LEFT">
                         <padding>
-                            <Insets top="20" right="20" bottom="20" left="20" />
+                            <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>
                     </FlowPane>
                 </content>

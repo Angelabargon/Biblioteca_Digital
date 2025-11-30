@@ -42,6 +42,28 @@ public class ControladorCatalogoUsuario
     @FXML private TextField filtroAutor;
     @FXML private ChoiceBox<String> filtroGenero;
 
+    /**
+     * Establece el usuario y carga los datos iniciales.
+     * Este método debe ser llamado por el controlador padre después de cargar el FXML.
+     */
+    public void setUsuario(Usuario usuario)
+    {
+        this.usuarioActual = usuario;
+        if (usuarioActual == null)
+        {
+            System.err.println("Error: setUsuario fue llamado con un objeto Usuario nulo.");
+            return;
+        }
+
+        if (labelBienvenida != null)
+        {
+            labelBienvenida.setText("Bienvenido, " + usuario.getNombre());
+        }
+
+        actualizarContadorPrestamos();
+        mostrarLibrosFiltrados();
+    }
+
     @FXML
     public void initialize()
     {
@@ -50,19 +72,6 @@ public class ControladorCatalogoUsuario
         if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
 
         cargarFiltroGeneros(); // Cargar los géneros estáticos al inicializar
-    }
-
-    /**
-     * Establece el usuario y carga los datos iniciales.
-     */
-    public void setUsuario(Usuario usuario)
-    {
-        this.usuarioActual = usuario;
-        if (usuarioActual == null) {return;}
-        if (labelBienvenida != null) labelBienvenida.setText("Bienvenido, " + usuario.getNombre());
-
-        actualizarContadorPrestamos();
-        mostrarLibrosFiltrados();
     }
 
     private void actualizarContadorPrestamos()
@@ -125,15 +134,30 @@ public class ControladorCatalogoUsuario
             mostrarAlertaError("Error de Préstamo", "No se pudo registrar el préstamo. Intente de nuevo.");
         }
     }
-
-    //Método para el botón de pedir prestado
+    /**
+     * Maneja el evento de click en el botón "Pedir Prestado" de la tarjeta de libro.
+     * Es llamado por el ControladorLibroCatalogo.
+     * @param libro El libro que el usuario desea prestar.
+     */
     public void clickPedirPrestamo(Libro libro)
     {
-        if (libro.getCantidadDisponible() > 0)
+        if (usuarioActual == null)
         {
-            registrarPrestamo(libro, usuarioActual);
-        } else {
-            mostrarAlertaError("No Disponible", "No quedan ejemplares de " + libro.getTitulo() + " disponibles para préstamo.");
+            mostrarAlertaError("Error de Sesión", "Debe iniciar sesión para realizar un préstamo.");
+            return;
+        }
+        if (prestamoDAO.crearPrestamo(usuarioActual.getId(), libro.getId()))
+        {
+            mostrarAlerta("Préstamo Exitoso",
+                    "Has prestado '" + libro.getTitulo() + "'. ¡Disfruta la lectura!");
+
+            actualizarContadorPrestamos();
+            mostrarLibrosFiltrados();
+        }
+        else
+        {
+            mostrarAlertaError("Error de Préstamo",
+                    "No se pudo completar el préstamo. El libro puede haberse agotado o ocurrió un error en la base de datos.");
         }
     }
 
