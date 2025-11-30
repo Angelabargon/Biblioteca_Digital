@@ -11,13 +11,14 @@ import java.util.List;
 public class PrestamoDAO
 {
     // Instancias de DAO necesarias para obtener objetos completos (Libro y Usuario)
-    private CatalogoDAO catalogoDAO;
+    private CatalogoDAO catalogoDAO = new CatalogoDAO();
 
-    public void setCatalogoDAO(CatalogoDAO dao) {
-        this.catalogoDAO = dao;
-    }
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
+    public void setCatalogoDAO(CatalogoDAO catalogoDAO)
+    {
+        this.catalogoDAO = catalogoDAO;
+    }
     /**
      * Crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica.
      * @param idUsuario ID del usuario.
@@ -28,42 +29,44 @@ public class PrestamoDAO
     {
         String sqlPrestamo = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
                 "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 'activo')";
-        // Se añade una condición de stock > 0 para hacer la operación más segura a nivel SQL
         String sqlUpdateStock = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ? AND cantidad_disponible > 0";
 
         Connection conn = null;
 
-        try {
+        try
+        {
             conn = ConexionBD.getConexion();
-            conn.setAutoCommit(false); // 1. INICIAR TRANSACCIÓN
+            conn.setAutoCommit(false);
 
-            // --- 1. Crear el Préstamo ---
+            // Crear el Préstamo
             try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
                 ps.executeUpdate();
             }
 
-            // --- 2. Restar Stock del Libro ---
+            // Restar Stock del Libro
             try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock)) {
                 ps2.setInt(1, idLibro);
                 int filasAfectadas = ps2.executeUpdate();
 
-                if (filasAfectadas == 0) {
-                    // Si no se afectó la fila, es porque el libro no existe o no había stock disponible.
+                if (filasAfectadas == 0)
+                {
                     throw new SQLException("Error: No se pudo restar el stock del libro o no hay unidades disponibles.");
                 }
             }
 
-            conn.commit(); // 3. CONFIRMAR TRANSACCIÓN
+            conn.commit();
             return true;
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             System.err.println("Error en la transacción de préstamo. Realizando rollback: " + e.getMessage());
             if (conn != null) {
                 try {
-                    conn.rollback(); // 4. REVERTIR SI HAY ERROR
-                } catch (SQLException rollbackException) {
+                    conn.rollback();
+                } catch (SQLException rollbackException)
+                {
                     System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
                 }
             }
@@ -105,14 +108,12 @@ public class PrestamoDAO
      */
     public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)
     {
-        List<Prestamo> lista = new ArrayList<>();
-        String sql = """
-        SELECT id, id_usuario, id_libro, fecha_inicio, fecha_fin, estado
-        FROM prestamos 
-        WHERE id_usuario = ? AND estado = 'activo'
-        """;
-        try (Connection con = ConexionBD.getConexion();
-             PreparedStatement pst = con.prepareStatement(sql))
+        List<Prestamo> prestamos = new ArrayList<>();
+        String sql = "SELECT * FROM prestamos WHERE id_usuario = ?";
+
+        // 1. Conexión y PreparedStatement en el try-with-resources principal
+        try (Connection conn = ConexionBD.getConexion();
+             PreparedStatement pst = conn.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
             try (ResultSet rs = pst.executeQuery())
@@ -142,16 +143,18 @@ public class PrestamoDAO
                     p.setLibro(libroCompleto);
                     p.setUsuario(usuarioCompleto);
 
-                    lista.add(p);
+                    prestamos.add(p);
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return prestamos;
+    }
 
-        return lista;
-    }public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
+
+    public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
     {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND id_libro = ? AND estado = 'activo'";
         try (Connection con = ConexionBD.getConexion();
@@ -163,7 +166,7 @@ public class PrestamoDAO
             {
                 if (rs.next())
                 {
-                    return rs.getInt(1) > 0; // Si el conteo es > 0, el libro ya está prestado.
+                    return rs.getInt(1) > 0;
                 }
             }
         }
