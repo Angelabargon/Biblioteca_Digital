@@ -38,7 +38,7 @@
         <Label id="lb_ayuda1"
                layoutX="45.0" layoutY="100.0"
                prefWidth="450.0"
-               text="⚫  Punto 1."
+               text="⚫ Desde el menú de usuario puedes navegar entre las secciones principales: Catálogo, Préstamos, Favoritos y Perfil."
                textAlignment="JUSTIFY"
                wrapText="true"
                styleClass="subtitulo"/>
@@ -46,7 +46,7 @@
         <Label id="lb_ayuda2"
                layoutX="45.0" layoutY="170.0"
                prefWidth="450.0"
-               text="⚫ Punto 2."
+               text="⚫ Cada sección te permite consultar y gestionar tus libros: explorar el catálogo, revisar préstamos activos y guardar favoritos."
                textAlignment="JUSTIFY"
                wrapText="true"
                styleClass="subtitulo"/>
@@ -54,7 +54,7 @@
         <Label id="lb_ayuda3"
                layoutX="45.0" layoutY="240.0"
                prefWidth="450.0"
-               text="⚫ Punto 3."
+               text="⚫ En Perfil puedes ver tus datos, cambiar la contraseña y cerrar sesión. Siempre tienes disponible el botón de Ayuda para más información."
                textAlignment="JUSTIFY"
                wrapText="true"
                styleClass="subtitulo"/>

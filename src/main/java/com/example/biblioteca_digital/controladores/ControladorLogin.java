@@ -12,45 +12,45 @@ import javafx.event.ActionEvent;
 import java.util.Optional;
 
 /**
- * Creamos la clase tras la lógica del controlador.
+ * Controlador de la vista de inicio de sesión.
+ *
+ * Gestiona la autenticación de usuarios y administradores,
+ * configurando la interfaz según el rol seleccionado y
+ * redirigiendo a la vista correspondiente tras un login exitoso.
  */
 public class ControladorLogin {
 
-    /**
-     * Definimos los elementos con los que interactúa la vista.
-     *
-     * - ToggleButton tbt_usuario: Marcará el rol elegido como usuario.
-     * - ToggleButton tbt_admin: Marcará el rol elegido como usuario.
-     * - ToggleGroup groupRol: Unirá ambos ToggleButton.
-     * - TextField tf_email: Recibirá el correo del usuario.
-     * - PasswordField pf_contraseña: Recibirá la contraseña del usuario.
-     * - Button bt_inicioUsuario: Recibirá la contraseña del usuario por segunda vez.
-     * - Button bt_ayuda: Mostrará una guía para iniciar sesión al usuario.
-     * - Button bt_volver: Devolverá al usuario a la página de inicio.
-     */
-    @FXML
-    private ToggleButton tbt_usuario;
-    @FXML
-    private ToggleButton tbt_admin;
-    @FXML
-    private ToggleGroup grupoRol;
-    @FXML
-    private TextField tf_email;
-    @FXML
-    private PasswordField pf_contraseña;
-    @FXML
-    private Button bt_inicioUsuario;
-    @FXML
-    private Button bt_ayuda;
-    @FXML
-    private Button bt_volver;
+    /** ToggleButton para seleccionar el rol de usuario. */
+    @FXML private ToggleButton tbt_usuario;
+
+    /** ToggleButton para seleccionar el rol de administrador. */
+    @FXML private ToggleButton tbt_admin;
+
+    /** Grupo que une ambos ToggleButton para que sean excluyentes. */
+    @FXML private ToggleGroup grupoRol;
+
+    /** Campo de texto para introducir el correo electrónico. */
+    @FXML private TextField tf_email;
+
+    /** Campo de contraseña para introducir la clave de acceso. */
+    @FXML private PasswordField pf_contraseña;
+
+    /** Botón para iniciar sesión con las credenciales introducidas. */
+    @FXML private Button bt_inicioUsuario;
+
+    /** Botón para mostrar la ayuda de inicio de sesión. */
+    @FXML private Button bt_ayuda;
+
+    /** Botón para volver a la página de inicio. */
+    @FXML private Button bt_volver;
 
     /**
      * Inicializa el controlador configurando el grupo de roles
-     * y ajustando los textos según el rol seleccionado.
+     * y ajustando los textos y placeholders según el rol seleccionado.
      */
         @FXML
         public void initialize() {
+
             grupoRol = new ToggleGroup();
             tbt_usuario.setToggleGroup(grupoRol);
             tbt_admin.setToggleGroup(grupoRol);
@@ -78,7 +78,7 @@ public class ControladorLogin {
     /**
      * Muestra la ventana de ayuda sobre la actual.
      *
-     * @param event
+     * @param event evento de acción generado al pulsar el botón de ayuda.
      */
     @FXML
     public void mostrarAyuda(ActionEvent event) {
@@ -86,14 +86,15 @@ public class ControladorLogin {
     }
 
     /**
-     * Verifica la existencia del usuario con los datos introducidas.
-     * Si son correctas, guarda la sesión y navega al menú correspondient.
+     * Verifica la existencia del usuario con los datos introducidos.
      *
-     * @param event
+     * Si las credenciales son correctas, guarda la sesión y navega
+     * al menú correspondiente (usuario o administrador).
+     *
+     * @param event evento de acción generado al pulsar el botón de inicio de sesión.
      */
     @FXML
     private void iniciarSesion(ActionEvent event) {
-
         String email = tf_email.getText().trim();
         String contraseña = pf_contraseña.getText().trim();
         String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
@@ -105,23 +106,23 @@ public class ControladorLogin {
 
         Optional<Usuario> cuentaAutenticada = LoginDAO.autenticar(email, contraseña, rol);
         if (cuentaAutenticada.isPresent()) {
-
             Sesion.setUsuario(cuentaAutenticada.get());
 
             String vistaDestino = rol.equals("usuario")
                     ? "/com/example/biblioteca_digital/vistas/usuario/Vista-Menu-Usuario.fxml"
-                        : "/com/example/biblioteca_digital/vistas/admin/Vista-Administrador.fxml";
+                    : "/com/example/biblioteca_digital/vistas/admin/Vista-Administrador.fxml";
 
             Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
-
         } else {
             System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
+            mostrarAlertaErrorLogin();
         }
     }
 
     /**
-     * Este último método cambiará de vista a Vista-Pagina-Inicio.
-     * @param event
+     * Cambia la vista actual a la página de inicio.
+     *
+     * @param event evento de acción generado al pulsar el botón de volver.
      */
     @FXML
     private void volverAtras(ActionEvent event) {
