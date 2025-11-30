@@ -46,32 +46,36 @@ public class ControladorCatalogoUsuario
      * Establece el usuario y carga los datos iniciales.
      * Este método debe ser llamado por el controlador padre después de cargar el FXML.
      */
+    // ...
+
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        if (usuarioActual == null)
-        {
-            System.err.println("Error: setUsuario fue llamado con un objeto Usuario nulo.");
-            return;
+        if (usuarioActual != null) {
+            labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
+            cargarDatosIniciales();
         }
-
-        if (labelBienvenida != null)
+    }
+    private void cargarDatosIniciales()
+    {
+        if (filtroGenero != null && filtroGenero.getSelectionModel().isEmpty())
         {
-            labelBienvenida.setText("Bienvenido, " + usuario.getNombre());
+            filtroGenero.getSelectionModel().selectFirst();
         }
-
+        if (contenedorLibros.getChildren().isEmpty())
+        {
+            mostrarLibrosFiltrados();
+        }
         actualizarContadorPrestamos();
-        mostrarLibrosFiltrados();
     }
 
     @FXML
     public void initialize()
     {
+        cargarFiltroGeneros();
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null) filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-
-        cargarFiltroGeneros(); // Cargar los géneros estáticos al inicializar
     }
 
     private void actualizarContadorPrestamos()
@@ -102,12 +106,10 @@ public class ControladorCatalogoUsuario
         if (contenedorLibros == null) return;
         contenedorLibros.getChildren().clear();
 
-        // Obtener valores de filtro (ya no es necesario toLowerCase aquí, el DAO lo maneja en SQL)
         String titulo = filtroTitulo.getText();
         String autor = filtroAutor.getText();
         String generoSeleccionado = filtroGenero.getValue();
 
-        // Uso del dao para filtrar en la bd
         List<Libro> librosFiltrados = catalogoDAO.cargarCatalogo(titulo, autor, generoSeleccionado);
 
         for (Libro libro : librosFiltrados) {
@@ -117,23 +119,6 @@ public class ControladorCatalogoUsuario
 
     //Lógica entre vistas
 
-    /**
-     * Método llamado por el ControladorLibroCatalogo para pedir un préstamo.
-     */
-    public void registrarPrestamo(Libro libro, Usuario usuario)
-    {
-        Prestamo nuevoPrestamo = new Prestamo(usuario.getId(), libro.getId());
-        if (prestamoDAO.guardarPrestamo(nuevoPrestamo))
-        {
-            mostrarAlerta("Préstamo Exitoso", "Has tomado prestado el libro: " + libro.getTitulo());
-            actualizarContadorPrestamos();
-            mostrarLibrosFiltrados();
-        }
-        else
-        {
-            mostrarAlertaError("Error de Préstamo", "No se pudo registrar el préstamo. Intente de nuevo.");
-        }
-    }
     /**
      * Maneja el evento de click en el botón "Pedir Prestado" de la tarjeta de libro.
      * Es llamado por el ControladorLibroCatalogo.
@@ -149,7 +134,7 @@ public class ControladorCatalogoUsuario
         if (prestamoDAO.crearPrestamo(usuarioActual.getId(), libro.getId()))
         {
             mostrarAlerta("Préstamo Exitoso",
-                    "Has prestado '" + libro.getTitulo() + "'. ¡Disfruta la lectura!");
+                    "Has pedido prestado '" + libro.getTitulo() + "'. ¡Disfruta la lectura!");
 
             actualizarContadorPrestamos();
             mostrarLibrosFiltrados();

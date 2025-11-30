@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.example.biblioteca_digital.modelos.Rol.usuario;
+
 public class ControladorMenuInicioUsuario {
 
     @FXML
@@ -81,44 +83,30 @@ public class ControladorMenuInicioUsuario {
             URL fxmlUrl = getClass().getResource(fxmlPath);
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent vista = loader.load();
-            Object controlador = loader.getController();
-            Usuario usuarioSesion = Sesion.getUsuario(); //Cogemos el usuario real
-
+            Usuario usuarioSesion = Sesion.getInstancia().getUsuario(); //Cogemos el usuario real
             contenedor.getChildren().clear();
             AnchorPane.setLeftAnchor(vista, 0.0);
             AnchorPane.setRightAnchor(vista, 0.0);
             AnchorPane.setTopAnchor(vista, 0.0);
             AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
-            if (usuarioSesion != null) {
-                if (controllerClass == ControladorCatalogoUsuario.class)
-                {
-                    ControladorCatalogoUsuario controlador1 = loader.getController();
-                    controlador1.setUsuario(usuarioSesion);
-                }
-                else if (controllerClass == ControladorPrestamosUsuario.class)
-                {
-                    ControladorCatalogoUsuario controlador2 = loader.getController();
-                    controlador2.setUsuario(usuarioSesion);
-                }
-                else if (controllerClass == ControladorFavoritosUsuario.class)
-                {
-                    ControladorCatalogoUsuario controlador3 = loader.getController();
-                    controlador3.setUsuario(usuarioSesion);
-                }
-            }
-            else
-            {
-                mostrarAlertaError("Error de sesión", "No se pudo cargar la vista: " + fxmlPath);
-            }
-//                if (controlador instanceof ControladorCatalogoUsuario) {
-//                ((ControladorCatalogoUsuario) controlador).setUsuario(usuarioSesion);
-//            } else if (controlador instanceof ControladorPrestamosUsuario) {
-//                ((ControladorPrestamosUsuario) controlador).setUsuario(usuarioSesion);
-//            } else if (controlador instanceof ControladorFavoritosUsuario) {
-//                ((ControladorFavoritosUsuario) controlador).setUsuario(usuarioSesion);
-//            }
+            Object controller = loader.getController();
 
+            if (controller instanceof ControladorCatalogoUsuario)
+            {
+                ControladorCatalogoUsuario a = (ControladorCatalogoUsuario) controller;
+                a.setUsuario(usuarioSesion);
+            }
+            else if (controller instanceof ControladorPrestamosUsuario)
+            {
+                ControladorPrestamosUsuario b = (ControladorPrestamosUsuario) controller;
+                b.setUsuario(usuarioSesion);
+            }
+            else if (controller instanceof ControladorFavoritosUsuario)
+            {
+                ControladorFavoritosUsuario c = (ControladorFavoritosUsuario) controller;
+                c.setUsuario(usuarioSesion);
+            }
         }
         catch (IOException e)
         {

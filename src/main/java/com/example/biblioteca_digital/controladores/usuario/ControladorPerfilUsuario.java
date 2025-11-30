@@ -55,19 +55,17 @@ public class ControladorPerfilUsuario
     @FXML
     private Button bt_cerrar;
 
-    /*
-
-     */
-
     @FXML
-    public void initialize() {
-        usuarioActual = Sesion.getUsuario();
+    public void initialize()
+    {
+        usuarioActual = Sesion.getInstancia().getUsuario();
         cargarDatosPerfil();
     }
 
     private final PerfilUsuarioDAO perfilUsuarioDAO = new PerfilUsuarioDAO();
 
-    private void cargarDatosPerfil() {
+    private void cargarDatosPerfil()
+    {
         if (usuarioActual == null) return;
 
         lb_nombreUsuario.setText("Nombre de Usuario: " + usuarioActual.getNombreUsuario());
@@ -105,10 +103,11 @@ public class ControladorPerfilUsuario
     }
 
     @FXML
-    private void cerrarSesion(ActionEvent event) {
-        Sesion.setUsuario(null);
-
-        try {
+    private void cerrarSesion(ActionEvent event)
+    {
+        Sesion.cerrarSesion();
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
             Parent root = loader.load();
 

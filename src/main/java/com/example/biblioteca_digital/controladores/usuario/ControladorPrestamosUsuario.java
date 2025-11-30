@@ -19,7 +19,6 @@ public class ControladorPrestamosUsuario
 {
 
     @FXML private VBox contenedorPrestamos;
-    @FXML private Label labelTituloSeccion;
 
     private Usuario usuarioActual;
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
@@ -37,16 +36,14 @@ public class ControladorPrestamosUsuario
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        if (contenedorPrestamos == null)
+        if (usuarioActual != null)
         {
-            System.err.println("ERROR INTERNO: contenedorPrestamos es NULL en ControladorPrestamosUsuario. Revise el FXML.");
-            return;
+            cargarPrestamosUsuario();
         }
-        if (labelTituloSeccion != null)
+        else
         {
-            labelTituloSeccion.setText("Mis Préstamos Activos");
+            System.err.println("Usuario nulo en ControladorPrestamosUsuario.");
         }
-        cargarPrestamosUsuario();
     }
 
     /**
@@ -59,11 +56,13 @@ public class ControladorPrestamosUsuario
         if (prestamos.isEmpty())
         {
             contenedorPrestamos.getChildren().add(new Label("No tienes préstamos activos en este momento."));
-            return;
         }
-        for (Prestamo prestamo : prestamos)
+        else
         {
-            contenedorPrestamos.getChildren().add(crearVistaPrestamoItem(prestamo));
+            for (Prestamo prestamo : prestamos)
+            {
+                contenedorPrestamos.getChildren().add(crearVistaPrestamoItem(prestamo));
+            }
         }
     }
 

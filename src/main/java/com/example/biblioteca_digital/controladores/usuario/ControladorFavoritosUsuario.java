@@ -42,33 +42,11 @@ public class ControladorFavoritosUsuario {
      */
     public void initialize()
     {
-        listaFavoritos.setCellFactory(lv -> new ListCell<Libro>() {
-            @Override
-            protected void updateItem(Libro libro, boolean empty)
-            {
-                super.updateItem(libro, empty);
-                if (empty || libro == null)
-                {
-                    setGraphic(null);
-                    setText(null);
-                    setOnMouseClicked(null);
-                    return;
-                }
-                try
-                {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_CARD_PATH));
-                    Node item = loader.load();
-                    ControladorLibroCatalogo controladorTarjeta = loader.getController();
-                    controladorTarjeta.setDatos(libro, usuarioActual, null);
-                    setGraphic(item);
-                    setOnMouseClicked(e -> mostrarDetalles(libro));
-                } catch (IOException e)
-                {
-                    setGraphic(new Label("Error al cargar la tarjeta: " + libro.getTitulo()));
-                    e.printStackTrace();
-                }
-            }
-        });
+        if (contenedorFavoritos != null)
+        {
+            contenedorFavoritos.setVgap(15);
+            contenedorFavoritos.setHgap(15);
+        }
     }
     /**
      * Establece el usuario actual y carga sus libros favoritos.
@@ -78,10 +56,10 @@ public class ControladorFavoritosUsuario {
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        cargarFavoritos();
-        listaFavoritos.setOnMouseClicked(e -> mostrarDetalles(
-                listaFavoritos.getSelectionModel().getSelectedItem()
-        ));
+        if (usuarioActual != null)
+        {
+            cargarFavoritos();
+        }
     }
     /**
      * Carga la lista de favoritos en la ListView usando el DAO.
@@ -89,18 +67,26 @@ public class ControladorFavoritosUsuario {
     private void cargarFavoritos()
     {
         if (usuarioActual == null) return;
-        List<Libro> libros = favoritosDAO.obtenerFavoritos(usuarioActual.getId());
         contenedorFavoritos.getChildren().clear();
-        for (Libro libro : libros)
+        List<Libro> librosFavoritos = favoritosDAO.obtenerFavoritos(usuarioActual.getId());
+        if (librosFavoritos.isEmpty())
         {
-            contenedorFavoritos.getChildren().add(crearVistaLibroItem(libro));
+            contenedorFavoritos.getChildren().add(new Label("Aún no tienes libros marcados como favoritos."));
+        }
+        else
+        {
+            for (Libro libro : librosFavoritos)
+            {
+                contenedorFavoritos.getChildren().add(crearVistaLibroItem(libro));
+            }
         }
     }
 
     /**
      * Muestra los detalles del libro seleccionado en las etiquetas.
+     * Este método solo funcionará si los detalles se pasan desde la tarjeta del libro.
      */
-    private void mostrarDetalles(Libro libro)
+    public void mostrarDetalles(Libro libro) // Hecho público para ser llamado desde la tarjeta
     {
         if (libro == null) {
             tituloLabel.setText("");
@@ -112,6 +98,7 @@ public class ControladorFavoritosUsuario {
         autorLabel.setText(libro.getAutor());
         categoriaLabel.setText(libro.getGenero());
     }
+
     private Node crearVistaLibroItem(Libro libro)
     {
         try
@@ -149,7 +136,6 @@ public class ControladorFavoritosUsuario {
         {
             mensaje("Error al eliminar el favorito. Intente de nuevo.");
         }
-        // Recargar la lista después de la operación
         cargarFavoritos();
     }
     /**

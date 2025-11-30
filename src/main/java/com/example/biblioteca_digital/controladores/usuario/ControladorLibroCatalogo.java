@@ -2,6 +2,7 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO; // Necesitas un DAO de Favoritos
+import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ public class ControladorLibroCatalogo
     private Usuario usuarioActual;
     private ControladorCatalogoUsuario controladorPadre;
     private final FavoritosDAO favoritosDAO = new FavoritosDAO();
+    private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
     public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre)
     {
@@ -44,7 +46,7 @@ public class ControladorLibroCatalogo
 
         if (nombreArchivo != null && !nombreArchivo.isEmpty())
         {
-            String rutaCompleta = "/imagenes/libros/" + nombreArchivo;
+            String rutaCompleta = "../imagenes/libros/" + nombreArchivo;
             try
             {
                 Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
@@ -58,23 +60,22 @@ public class ControladorLibroCatalogo
 
         int disponibles = libro.getCantidadDisponible();
         int stockTotal = libro.getCantidad();
-
+        boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libro.getId());
         String disponiblesText = String.format("Disponibles: %d/%d", disponibles, stockTotal);
         lblDisponibles.setText(disponiblesText);
 
-        if (disponibles <= 0)
+        if (disponibles <= 0 || yaEstaPrestado)
         {
-            lblDisponibles.setVisible(false);
-            lblDisponibles.setManaged(false);
+            lblDisponibles.setText("No disponible");
 
             if (lblNoDisponibleTag != null) {
+                lblNoDisponibleTag.setText(yaEstaPrestado ? "Ya Prestado" : "Agotado");
                 lblNoDisponibleTag.setVisible(true);
                 lblNoDisponibleTag.setManaged(true);
             }
 
             btnPedirPrestado.setDisable(true);
-            btnPedirPrestado.getStyleClass().remove("btn-prestar"); // Clase habilitada
-            btnPedirPrestado.getStyleClass().add("btn-prestar-disabled"); // Nueva clase deshabilitada
+            btnPedirPrestado.getStyleClass().add("btn-prestar-disabled");
         }
         else
         {

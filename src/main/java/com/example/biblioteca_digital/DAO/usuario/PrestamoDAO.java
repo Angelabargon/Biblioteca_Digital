@@ -140,37 +140,26 @@ public class PrestamoDAO
         }
 
         return lista;
+    }public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
+    {
+        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND id_libro = ? AND estado = 'activo'";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1, idUsuario);
+            pst.setInt(2, idLibro);
+            try (ResultSet rs = pst.executeQuery())
+            {
+                if (rs.next())
+                {
+                    return rs.getInt(1) > 0; // Si el conteo es > 0, el libro ya está prestado.
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
-//
-//    /**
-//     * Cuenta el número de préstamos activos de un usuario.
-//     */
-//    public static int contarPrestamosActivos(int idUsuario)
-//    {
-//        String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
-//        try (Connection con = ConexionBD.getConexion();
-//             PreparedStatement pst = con.prepareStatement(sql))
-//        {
-//            pst.setInt(1, idUsuario);
-//            ResultSet rs = pst.executeQuery();
-//            if (rs.next()) return rs.getInt(1);
-//        }
-//        catch (SQLException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return 0;
-//    }
-//
-//    /**
-//     * Coger los ID de los libros que el usuario tiene prestado
-//     * @param idUsuario
-//     * @return
-//     */
-//    public List<Integer> obtenerIdsLibrosPrestados(int idUsuario) {
-//        List<Integer> ids = new ArrayList<>();
-//        String sql = "SELECT id_libro FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
-//        // ... (Lógica de conexión y ejecución de consulta)
-//        return ids;
-//    }
 }
