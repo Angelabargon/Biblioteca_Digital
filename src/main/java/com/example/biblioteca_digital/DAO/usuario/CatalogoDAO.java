@@ -117,10 +117,10 @@ public class CatalogoDAO
     {
         Libro libro = null;
         String sql = """
-        SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad_disponible, cantidad, disponible 
+        SELECT id, titulo, autor, genero, descripcion, isbn, foto, cantidad_disponible, cantidad, disponible, contenido 
         FROM libros 
         WHERE id = ?
-    """; // Agregado 'cantidad_total' para consistencia en la consulta
+        """;
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {

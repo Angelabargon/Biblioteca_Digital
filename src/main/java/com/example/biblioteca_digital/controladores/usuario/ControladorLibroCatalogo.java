@@ -46,7 +46,7 @@ public class ControladorLibroCatalogo
 
         if (nombreArchivo != null && !nombreArchivo.isEmpty())
         {
-            String rutaCompleta = "../imagenes/libros/" + nombreArchivo;
+            String rutaCompleta = "@/../../imagenes/libros/" + nombreArchivo;
             try
             {
                 Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
