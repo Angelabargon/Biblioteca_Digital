@@ -334,4 +334,3 @@ public class ControladorUsuarioAdmin {
     private void mostrarAlerta(String t) { Alert a=new Alert(Alert.AlertType.WARNING); a.setHeaderText(null); a.setContentText(t); a.showAndWait(); }
 
 }
-

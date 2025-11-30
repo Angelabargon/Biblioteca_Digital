@@ -222,5 +222,3 @@ public class LibroAdminDAO {
         catch (SQLException e) { e.printStackTrace(); } return 0;
     }
 }
-
-
