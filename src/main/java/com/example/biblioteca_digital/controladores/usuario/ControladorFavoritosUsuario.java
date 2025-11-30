@@ -3,7 +3,6 @@ package com.example.biblioteca_digital.controladores.usuario;
 import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO; // Importar la nueva clase DAO
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -118,16 +117,5 @@ public class ControladorFavoritosUsuario {
             e.printStackTrace();
             return new Label("Error al cargar item: " + libro.getTitulo());
         }
-    }
-    /**
-     * Método para alertas de información para mostrar el mensaje al usuario como una ventana
-     * @param t
-     */
-    private void mensaje(String t)
-    {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(t);
-        a.show();
     }
 }
