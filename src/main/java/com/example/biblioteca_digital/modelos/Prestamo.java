@@ -24,13 +24,11 @@ public class Prestamo {
 
     public Prestamo(int idU, int idL)
     {
-        this.usuario.setId(idU);
-        this.libro.setId(idL);
+        this.usuario = new com.example.biblioteca_digital.modelos.Usuario();
+        this.libro = new com.example.biblioteca_digital.modelos.Libro();
     }
 
-    // ---------------------------------
-    // GETTERS NORMALES
-    // ---------------------------------
+    // GETTERS
 
     public int getId() { return id; }
     public LocalDate getFecha_inicio() { return fecha_inicio; }
@@ -40,9 +38,7 @@ public class Prestamo {
     public Usuario getUsuario() { return usuario; }
     public Libro getLibro() { return libro; }
 
-    // ---------------------------------
-    // SETTERS NORMALES
-    // ---------------------------------
+    // SETTERS
 
     public void setId(int id) { this.id = id; }
     public void setFecha_inicio(LocalDate fecha_inicio) { this.fecha_inicio = fecha_inicio; }

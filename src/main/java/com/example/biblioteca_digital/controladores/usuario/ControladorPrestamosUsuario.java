@@ -109,7 +109,7 @@ public class ControladorPrestamosUsuario
         try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/com/example/biblioteca_digital/vistas/Vista-Prestamo-Item.fxml"));
+                    "/com/example/biblioteca_digital/vistas/usuario/Vista-Leer-Libro.fxml"));
             Parent root = loader.load();
             ControladorLeerLibro controlador = loader.getController();
             controlador.cargarContenido(prestamo);

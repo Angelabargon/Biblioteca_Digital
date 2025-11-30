@@ -22,7 +22,7 @@ public class UsuarioDAO
     public static Usuario obtenerUsuarioPorId(int idUsuario)
     {
         Usuario usuario = null;
-        String sql = "SELECT id, nombre, nombre_usuario, email FROM usuarios WHERE id = ?";
+        String sql = "SELECT id, nombre, nombre_usuario, correo  FROM usuarios WHERE id = ?";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
@@ -34,7 +34,7 @@ public class UsuarioDAO
                 {
                     usuario = new Usuario();
                     usuario.setId(rs.getInt("id"));
-                    usuario.setNombre(rs.getString("nombre"));
+                    usuario.setNombre(rs.getString("correo "));
                     usuario.setNombreUsuario(rs.getString("nombre_usuario"));
                 }
             }

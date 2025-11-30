@@ -5,8 +5,6 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPrestamosUsuario"
-            prefHeight="400.0" prefWidth="600.0"
-            stylesheets="@../../estilo/estilo.css"
-            styleClass="panel">
+            prefHeight="400.0" prefWidth="600.0">
 
 </AnchorPane>
