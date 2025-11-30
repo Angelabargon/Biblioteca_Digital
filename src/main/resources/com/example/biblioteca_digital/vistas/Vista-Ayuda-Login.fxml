@@ -7,46 +7,67 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="ap_ayudaLogin" prefHeight="400.0" prefWidth="546.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorAyuda">
+<AnchorPane id="ap_ayudaLogin"
+            prefHeight="400.0" prefWidth="546.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.ControladorAyuda"
+            stylesheets="@../estilo/estilo.css"
+            styleClass="panel">
 
     <children>
 
-        <Label id="lb_tituloAyuda" layoutX="45.0" layoutY="40.0" prefWidth="450.0" style="-fx-font-weight: bold;" text="Guía de Inicio de Sesión" wrapText="true">
-            <font>
-                <Font size="30.0" />
-            </font>
+        <!-- Título -->
+        <Label id="lb_tituloAyuda"
+               layoutX="45.0" layoutY="40.0"
+               prefWidth="450.0"
+               text="Guía de Inicio de Sesión"
+               wrapText="true"
+               styleClass="titulo">
             <graphic>
-                <ImageView id="iv_iconoAyuda" fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="iv_iconoAyuda"
+                           fitHeight="30.0" fitWidth="25.0"
+                           pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../imagenes/IconoInterrogacion.png" />
+                        <Image url="@../imagenes/IconoInterrogacion.png"/>
                     </image>
                 </ImageView>
             </graphic>
         </Label>
 
-        <Label id="lb_ayuda1" layoutX="45.0" layoutY="100.0" prefWidth="450.0" text="⚫ Escoge con qué rol vas a iniciar sesión seleccionando 'Usuario' o 'Administrador'." textAlignment="JUSTIFY" wrapText="true">
-            <font>
-                <Font size="17.5" />
-            </font>
-        </Label>
+        <!-- Puntos de ayuda -->
+        <Label id="lb_ayuda1"
+               layoutX="45.0" layoutY="100.0"
+               prefWidth="450.0"
+               text="⚫ Escoge con qué rol vas a iniciar sesión seleccionando 'Usuario' o 'Administrador'."
+               textAlignment="JUSTIFY"
+               wrapText="true"
+               styleClass="subtitulo"/>
 
-        <Label id="lb_ayuda2" layoutX="45.0" layoutY="170.0" prefWidth="450.0" text="⚫ Introduce tu el correo y contraseña de tu cuenta en los campos especificados." textAlignment="JUSTIFY" wrapText="true">
-            <font>
-                <Font size="17.5" />
-            </font>
-        </Label>
+        <Label id="lb_ayuda2"
+               layoutX="45.0" layoutY="170.0"
+               prefWidth="450.0"
+               text="⚫ Introduce tu correo y contraseña de tu cuenta en los campos especificados."
+               textAlignment="JUSTIFY"
+               wrapText="true"
+               styleClass="subtitulo"/>
 
-        <Label id="lb_ayuda3" layoutX="45.0" layoutY="240.0" prefWidth="450.0" text="⚫ Una vez rellenados todos los campos, pulsa 'Iniciar sesión' para acceder a tu cuenta." textAlignment="JUSTIFY" wrapText="true">
-            <font>
-                <Font size="17.5" />
-            </font>
-        </Label>
+        <Label id="lb_ayuda3"
+               layoutX="45.0" layoutY="240.0"
+               prefWidth="450.0"
+               text="⚫ Una vez rellenados todos los campos, pulsa 'Iniciar sesión' para acceder a tu cuenta."
+               textAlignment="JUSTIFY"
+               wrapText="true"
+               styleClass="subtitulo"/>
 
-      <Button id="bt_cerrarAyuda" alignment="CENTER" layoutX="230.0" layoutY="323.0" mnemonicParsing="false" onAction="#cerrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Cerrar">
-        <font>
-            <Font size="15.0" />
-        </font>
-    </Button>
-
+        <!-- Botón cerrar -->
+        <Button id="bt_cerrarAyuda"
+                alignment="CENTER"
+                layoutX="230.0" layoutY="323.0"
+                mnemonicParsing="false"
+                onAction="#cerrarAyuda"
+                prefHeight="35.0" prefWidth="85.0"
+                text="Cerrar"
+                styleClass="button-secundario"/>
     </children>
 </AnchorPane>

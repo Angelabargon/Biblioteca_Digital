@@ -10,62 +10,96 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.ToggleGroup?>
-<AnchorPane prefHeight="770.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
-    <ImageView id="iv_fondoLogin" fitHeight="770.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+
+<AnchorPane prefHeight="770.0" prefWidth="1410.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario"
+            stylesheets="@../../estilo/estilo.css"
+            styleClass="panel">
+
+    <!-- Fondo -->
+    <ImageView id="iv_fondoLogin"
+               fitHeight="770.0" fitWidth="1410.0"
+               layoutY="-6.0"
+               pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../imagenes/fondo-biblioteca.png" />
+            <Image url="@../../imagenes/fondo-biblioteca.png"/>
         </image>
     </ImageView>
-    <Label layoutX="269.0" layoutY="34.0" prefHeight="54.0" prefWidth="269.0" text="Biblioteca Digital">
-    <font>
-        <Font size="36.0" />
-    </font>
-</Label>
-    <HBox id="hb_tbg" alignment="CENTER" layoutX="122.0" layoutY="171.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+
+    <!-- Título -->
+    <Label layoutX="269.0" layoutY="34.0"
+           prefHeight="54.0" prefWidth="269.0"
+           text="Biblioteca Digital"
+           styleClass="titulo"/>
+
+    <!-- Menú de navegación -->
+    <HBox id="hb_tbg"
+          alignment="CENTER"
+          layoutX="122.0" layoutY="171.0">
+
         <children>
             <ToggleButton fx:id="tbt_MENU"
-                          prefHeight="35.0"
-                          prefWidth="150.0"
+                          prefHeight="35.0" prefWidth="150.0"
                           text="Catálogo"
-                          onAction="#handleCatalogo">
+                          onAction="#handleCatalogo"
+                          styleClass="toggle-button">
                 <toggleGroup>
-                    <ToggleGroup fx:id="menuGroup" />
+                    <ToggleGroup fx:id="menuGroup"/>
                 </toggleGroup>
             </ToggleButton>
 
             <ToggleButton fx:id="tbt_PRESTAMOS"
-                          prefHeight="35.0"
-                          prefWidth="150.0"
+                          prefHeight="35.0" prefWidth="150.0"
                           text="Mis préstamos"
                           toggleGroup="$menuGroup"
-                          onAction="#handlePrestamos"/>
+                          onAction="#handlePrestamos"
+                          styleClass="toggle-button"/>
 
             <ToggleButton fx:id="tbt_FAVORITOS"
-                          prefHeight="35.0"
-                          prefWidth="150.0"
+                          prefHeight="35.0" prefWidth="150.0"
                           text="Mis favoritos"
                           toggleGroup="$menuGroup"
-                          onAction="#handleFavoritos"/>
+                          onAction="#handleFavoritos"
+                          styleClass="toggle-button"/>
         </children>
     </HBox>
 
-<AnchorPane fx:id="contenedor" layoutX="0" layoutY="237.0" prefHeight="548.0" prefWidth="1400.0">
-</AnchorPane>
-    <ImageView fx:id="iv_iconoUsuario" fitHeight="106.0" fitWidth="217.0" layoutX="142.0" layoutY="34.0" onMouseClicked="#abrirPerfil" pickOnBounds="true" preserveRatio="true">
+    <!-- Contenedor dinámico -->
+    <AnchorPane fx:id="contenedor"
+                layoutX="0" layoutY="237.0"
+                prefHeight="548.0" prefWidth="1400.0"
+                styleClass="panel"/>
+
+    <!-- Icono usuario -->
+    <ImageView fx:id="iv_iconoUsuario"
+               fitHeight="106.0" fitWidth="217.0"
+               layoutX="142.0" layoutY="34.0"
+               onMouseClicked="#abrirPerfil"
+               pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../imagenes/IconoUsuario.png" />
+            <Image url="@../../imagenes/IconoUsuario.png"/>
         </image>
     </ImageView>
-   <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="1293.0" layoutY="25.0" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
-      <font>
-         <Font size="15.0" />
-      </font>
-      <graphic>
-         <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../imagenes/IconoInterrogacion.png" />
-            </image>
-         </ImageView>
-      </graphic>
-   </Button>
+
+    <!-- Botón ayuda -->
+    <Button fx:id="bt_ayuda"
+            alignment="CENTER"
+            layoutX="1293.0" layoutY="25.0"
+            mnemonicParsing="false"
+            onAction="#mostrarAyuda"
+            prefHeight="35.0" prefWidth="85.0"
+            text="Ayuda"
+            styleClass="button-secundario">
+        <graphic>
+            <ImageView id="iv_iconoAyuda"
+                       fitHeight="20.0" fitWidth="15.0"
+                       pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../imagenes/IconoInterrogacion.png"/>
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
 </AnchorPane>

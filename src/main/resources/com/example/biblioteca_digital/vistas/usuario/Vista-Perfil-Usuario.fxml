@@ -7,78 +7,111 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="527.5" prefWidth="450.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPerfilUsuario">
+<AnchorPane prefHeight="527.5" prefWidth="450.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPerfilUsuario"
+            stylesheets="@../../estilo/estilo.css"
+            styleClass="panel">
 
     <children>
 
-      <ImageView fx:id="iv_icono" fitHeight="85.0" fitWidth="85.0" layoutX="168.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
-       <image>
-           <Image url="@../../imagenes/IconoUsuario.png" />
-       </image>
-      </ImageView>
+        <!-- Icono usuario -->
+        <ImageView fx:id="iv_icono"
+                   fitHeight="85.0" fitWidth="85.0"
+                   layoutX="168.0" layoutY="51.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../imagenes/IconoUsuario.png"/>
+            </image>
+        </ImageView>
 
-        <Label fx:id="lb_nombreUsuario" layoutX="0.0" layoutY="174.0" prefWidth="450.0" alignment="CENTER" text="Label">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
+        <!-- Labels de información -->
+        <Label fx:id="lb_nombreUsuario"
+               layoutX="0.0" layoutY="174.0"
+               prefWidth="450.0"
+               alignment="CENTER"
+               text="Label"
+               styleClass="subtitulo"/>
 
-        <Label fx:id="lb_nombreReal" layoutX="0.0" layoutY="214.0" prefWidth="450.0" alignment="CENTER" text="Label">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
+        <Label fx:id="lb_nombreReal"
+               layoutX="0.0" layoutY="214.0"
+               prefWidth="450.0"
+               alignment="CENTER"
+               text="Label"
+               styleClass="subtitulo"/>
 
-        <Label fx:id="lb_favoritos" layoutX="0.0" layoutY="251.0" prefWidth="450.0" alignment="CENTER" text="Label">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
+        <Label fx:id="lb_favoritos"
+               layoutX="0.0" layoutY="251.0"
+               prefWidth="450.0"
+               alignment="CENTER"
+               text="Label"
+               styleClass="subtitulo"/>
 
-        <Label fx:id="lb_prestamos" layoutX="0.0" layoutY="290.0" prefWidth="450.0" alignment="CENTER" text="Label">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
+        <Label fx:id="lb_prestamos"
+               layoutX="0.0" layoutY="290.0"
+               prefWidth="450.0"
+               alignment="CENTER"
+               text="Label"
+               styleClass="subtitulo"/>
 
-      <Button fx:id="bt_cambioContrasena" layoutX="137.0" layoutY="344.0" mnemonicParsing="false" onAction="#cambiarContrasena" prefHeight="35.0" prefWidth="155.0" text="Cambiar Contraseña">
-          <font>
-              <Font size="15.0" />
-          </font>
-      </Button>
+        <!-- Botones principales -->
+        <Button fx:id="bt_cambioContrasena"
+                layoutX="137.0" layoutY="344.0"
+                mnemonicParsing="false"
+                onAction="#cambiarContrasena"
+                prefHeight="35.0" prefWidth="155.0"
+                text="Cambiar Contraseña"
+                styleClass="button-principal"/>
 
-      <Button fx:id="bt_cerrarSesion" layoutX="137.0" layoutY="400.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="35.0" prefWidth="155.0" text="Cerrar Sesión">
-          <font>
-              <Font size="15.0" />
-          </font>
-      </Button>
+        <Button fx:id="bt_cerrarSesion"
+                layoutX="137.0" layoutY="400.0"
+                mnemonicParsing="false"
+                onAction="#cerrarSesion"
+                prefHeight="35.0" prefWidth="155.0"
+                text="Cerrar Sesión"
+                styleClass="button-principal"/>
 
-        <Button fx:id="bt_cerrar" alignment="CENTER" layoutX="31.0" layoutY="456.0" mnemonicParsing="false" onAction="#cerrarPerfil" prefHeight="35.0" prefWidth="85.0" text="Cerrar">
-            <font>
-                <Font size="15.0" />
-            </font>
+        <!-- Botón cerrar perfil -->
+        <Button fx:id="bt_cerrar"
+                alignment="CENTER"
+                layoutX="31.0" layoutY="456.0"
+                mnemonicParsing="false"
+                onAction="#cerrarPerfil"
+                prefHeight="35.0" prefWidth="85.0"
+                text="Cerrar"
+                styleClass="button-secundario">
             <graphic>
-                <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="iv_iconoAtras"
+                           fitHeight="20.0" fitWidth="15.0"
+                           pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../imagenes/icono-volver.png" />
+                        <Image url="@../../imagenes/icono-volver.png"/>
                     </image>
                 </ImageView>
             </graphic>
         </Button>
 
-        <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="314.0" layoutY="33.0" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
-            <font>
-                <Font size="15.0" />
-            </font>
+        <!-- Botón ayuda -->
+        <Button fx:id="bt_ayuda"
+                alignment="CENTER"
+                layoutX="314.0" layoutY="33.0"
+                mnemonicParsing="false"
+                onAction="#mostrarAyuda"
+                prefHeight="35.0" prefWidth="85.0"
+                text="Ayuda"
+                styleClass="button-secundario">
             <graphic>
-                <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="iv_iconoAyuda"
+                           fitHeight="20.0" fitWidth="15.0"
+                           pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../imagenes/IconoInterrogacion.png" />
+                        <Image url="@../../imagenes/IconoInterrogacion.png"/>
                     </image>
                 </ImageView>
             </graphic>
         </Button>
 
-   </children>
+    </children>
 
 </AnchorPane>

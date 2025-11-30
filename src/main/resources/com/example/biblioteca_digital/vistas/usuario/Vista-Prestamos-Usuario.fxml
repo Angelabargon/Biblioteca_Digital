@@ -9,17 +9,35 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<AnchorPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPrestamosUsuario">
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-          prefHeight="200.0" prefWidth="100.0">
 
-        <Label fx:id="labelTituloSeccion" text="Mis Préstamos Activos"/>
+<AnchorPane prefHeight="548.0" prefWidth="1410.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPrestamosUsuario"
+            stylesheets="@../../estilo/estilo.css"
+            styleClass="panel">
 
-        <ScrollPane VBox.vgrow="ALWAYS">
-            <VBox fx:id="contenedorPrestamos">
-                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-                <spacing>15</spacing>
+    <VBox AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0"
+          prefHeight="200.0" prefWidth="100.0"
+          spacing="15">
+
+        <!-- Título sección -->
+        <Label fx:id="labelTituloSeccion"
+               text="Mis Préstamos Activos"
+               styleClass="titulo"/>
+
+        <!-- Contenedor de préstamos -->
+        <ScrollPane VBox.vgrow="ALWAYS"
+                    styleClass="scroll-pane">
+            <VBox fx:id="contenedorPrestamos"
+                  spacing="15"
+                  styleClass="flow-pane">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
             </VBox>
         </ScrollPane>
     </VBox>

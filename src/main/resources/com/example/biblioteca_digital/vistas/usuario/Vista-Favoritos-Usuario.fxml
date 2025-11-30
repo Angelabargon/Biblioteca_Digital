@@ -12,47 +12,68 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.FlowPane?>
-<AnchorPane prefHeight="548.0" prefWidth="1410.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
+
+<AnchorPane prefHeight="548.0" prefWidth="1410.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario"
+            stylesheets="@../../estilo/estilo.css"
+            styleClass="panel">
+
+    <!-- Fondo -->
     <ImageView id="iv_fondoLogin" fitHeight="548.0" fitWidth="1410.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../imagenes/fondo-biblioteca.png" />
         </image>
     </ImageView>
-    <VBox AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" spacing="15">
 
-        <Label text="Mis Libros Favoritos" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+    <!-- Contenido principal -->
+    <VBox AnchorPane.topAnchor="20.0"
+          AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0"
+          spacing="15">
+
+        <!-- Título -->
+        <Label text="Mis Libros Favoritos" styleClass="titulo"/>
 
         <GridPane hgap="20.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0" /> <ColumnConstraints hgrow="NEVER" percentWidth="40.0" />  </columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0"/>
+                <ColumnConstraints hgrow="NEVER" percentWidth="40.0"/>
+            </columnConstraints>
 
+            <!-- Lista de favoritos -->
             <VBox GridPane.columnIndex="0" VBox.vgrow="ALWAYS" spacing="5">
-                <Label text="Libros marcados como Favoritos:" style="-fx-font-weight: bold;" />
+                <Label text="Libros marcados como Favoritos:" styleClass="subtitulo"/>
 
-                <ScrollPane VBox.vgrow="ALWAYS" prefHeight="400.0">
-                    <FlowPane fx:id="contenedorFavoritos" hgap="15" vgap="15">
+                <ScrollPane VBox.vgrow="ALWAYS" prefHeight="400.0" styleClass="scroll-pane">
+                    <FlowPane fx:id="contenedorFavoritos"
+                              hgap="15" vgap="15"
+                              styleClass="flow-pane">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
                     </FlowPane>
                 </ScrollPane>
             </VBox>
+
+            <!-- Detalles del libro seleccionado -->
             <VBox GridPane.columnIndex="1" spacing="15.0">
-                <Label text="Detalles del Libro Seleccionado" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                <Label text="Detalles del Libro Seleccionado" styleClass="subtitulo"/>
 
                 <GridPane hgap="10.0" vgap="10.0">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="35.0" />
-                        <ColumnConstraints percentWidth="65.0" />
+                        <ColumnConstraints percentWidth="35.0"/>
+                        <ColumnConstraints percentWidth="65.0"/>
                     </columnConstraints>
 
-                    <Label text="Título:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <Label text="Título:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="subtitulo"/>
                     <Label fx:id="tituloLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1" wrapText="true"/>
 
-                    <Label text="Autor:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <Label text="Autor:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="subtitulo"/>
                     <Label fx:id="autorLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="Género:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <Label text="Género:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="subtitulo"/>
                     <Label fx:id="categoriaLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
                 </GridPane>
             </VBox>

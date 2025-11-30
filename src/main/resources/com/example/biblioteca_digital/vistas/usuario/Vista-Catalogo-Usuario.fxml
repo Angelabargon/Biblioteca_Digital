@@ -8,10 +8,21 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
 <BorderPane prefHeight="548.0" prefWidth="1410.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario"
+            stylesheets="@../../estilo/estilo.css"
+            styleClass="panel">
 
     <!-- Fondo -->
     <ImageView fitHeight="548" fitWidth="1410" pickOnBounds="true" preserveRatio="true">
@@ -20,13 +31,9 @@
         </image>
     </ImageView>
 
-    <stylesheets>
-        <URL value="@../../estilo/estilo.css"/>
-    </stylesheets>
-
     <!-- ZONA DE FILTROS -->
     <top>
-        <VBox style="-fx-background-color: #f8f6f2;">
+        <VBox styleClass="panel">
             <padding>
                 <Insets top="10" bottom="10" left="20" right="20"/>
             </padding>
@@ -34,7 +41,7 @@
             <children>
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Filters"/>
+                    <Label text="Filtros" styleClass="titulo"/>
                     <HBox HBox.hgrow="ALWAYS"/>
                 </HBox>
 
@@ -46,36 +53,34 @@
                     <children>
 
                         <!-- FILTRO TÍTULO -->
-                        <HBox alignment="CENTER_LEFT"
-                              style="-fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: white; -fx-padding: 5 5 5 10;">
+                        <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
-                                <Label style="-fx-font-size: 14px;" text="🔍"/>
+                                <Label text="🔍" styleClass="subtitulo"/>
                                 <TextField fx:id="filtroTitulo"
                                            promptText="Buscar por título..."
-                                           style="-fx-background-color: transparent; -fx-pref-width: 150;"/>
+                                           styleClass="text-field"/>
                             </children>
                         </HBox>
 
                         <!-- FILTRO AUTOR -->
-                        <HBox alignment="CENTER_LEFT"
-                              style="-fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: white; -fx-padding: 5 5 5 10;">
+                        <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
-                                <Label style="-fx-font-size: 14px;" text="🔍"/>
+                                <Label text="🔍" styleClass="subtitulo"/>
                                 <TextField fx:id="filtroAutor"
                                            promptText="Buscar por autor..."
-                                           style="-fx-background-color: transparent; -fx-pref-width: 150;"/>
+                                           styleClass="text-field"/>
                             </children>
                         </HBox>
 
                         <!-- FILTRO GÉNERO -->
                         <ChoiceBox fx:id="filtroGenero"
                                    prefWidth="150"
-                                   style="-fx-background-color: white; -fx-border-color: lightgray; -fx-border-radius: 5;"/>
+                                   styleClass="combo-box"/>
 
                         <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Button style="-fx-background-color: #e0d8c7; -fx-background-radius: 5;"
-                                        text="Mostrar Favoritos"/>
+                                <Button text="Mostrar Favoritos"
+                                        styleClass="button-secundario"/>
                             </children>
                         </HBox>
 
@@ -93,20 +98,21 @@
             <Label text="Catálogo de Libros"
                    layoutX="50"
                    layoutY="25"
-                   style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+                   styleClass="titulo"/>
 
             <ScrollPane AnchorPane.leftAnchor="20.0"
                         AnchorPane.rightAnchor="20.0"
                         AnchorPane.topAnchor="70.0"
                         AnchorPane.bottomAnchor="20.0"
                         hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
-                        style="-fx-background-color: transparent;">
+                        styleClass="scroll-pane">
                 <content>
                     <FlowPane fx:id="contenedorLibros"
                               prefWidth="1300"
                               hgap="20"
                               vgap="20"
-                              alignment="TOP_LEFT">
+                              alignment="TOP_LEFT"
+                              styleClass="flow-pane">
                         <padding>
                             <Insets top="20" right="20" bottom="20" left="20"/>
                         </padding>

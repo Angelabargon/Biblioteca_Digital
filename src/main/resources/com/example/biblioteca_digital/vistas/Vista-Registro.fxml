@@ -12,63 +12,111 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="770.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorRegistro">
-   <children>
-      <ImageView fitHeight="792.0" fitWidth="1422.0" pickOnBounds="true" preserveRatio="true">
-       <image>
-           <Image url="@../imagenes/fondo-biblioteca.png" />
-       </image>
-      </ImageView>
-      <Label layoutX="467.0" layoutY="27.0" prefHeight="83.0" prefWidth="821.0" text="Registro de nuevos usuarios">
-         <font>
-            <Font size="46.0" />
-         </font>
-      </Label>
-      <VBox layoutX="618.0" layoutY="113.0" prefHeight="578.0" prefWidth="255.0" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="534.8000000000001" AnchorPane.topAnchor="113.0">
-         <children>
-            <Label prefHeight="39.0" prefWidth="255.0" text="Nombre de usuario" />
-            <TextField fx:id="nombreUsuario" prefHeight="41.0" prefWidth="226.0" />
-            <Label prefHeight="39.0" prefWidth="228.0" text="Nombre" />
-            <TextField fx:id="nombre" prefHeight="41.0" prefWidth="226.0" />
-            <Label prefHeight="39.0" prefWidth="228.0" text="Primer Apellido" />
-            <TextField fx:id="primerApellido" prefHeight="41.0" prefWidth="226.0" />
-            <Label prefHeight="39.0" prefWidth="228.0" text="Correo electrónico" />
-            <TextField fx:id="correo" prefHeight="41.0" prefWidth="226.0" />
-            <Label prefHeight="39.0" prefWidth="254.0" text="Contraseña" />
-            <PasswordField fx:id="contrasena" prefHeight="41.0" prefWidth="226.0" />
-            <Label prefHeight="39.0" prefWidth="254.0" text="Repita contraseña" />
-            <PasswordField fx:id="repetirContrasena" prefHeight="41.0" prefWidth="226.0" />
-            <Region prefHeight="44.0" prefWidth="255.0" />
-            <Button fx:id="registrar" mnemonicParsing="false" onAction="#guardarRegistro" prefHeight="42.0" prefWidth="256.0" text="Guardar y registrar" />
-             <Label fx:id="mensajeError" layoutX="620" layoutY="680" prefWidth="400" textFill="red" wrapText="true" />
-         </children>
-      </VBox>
-      <CheckBox fx:id="aceptoTerminos" layoutX="623.0" layoutY="730.0" mnemonicParsing="false" text="Aceptar los Términos de Privacidad" />
-      <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="1203.0" layoutY="110.0" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" text="Ayuda">
-          <font>
-              <Font size="15.0" />
-          </font>
-          <graphic>
-              <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                      <Image url="@../imagenes/IconoInterrogacion.png" />
-                  </image>
-              </ImageView>
-          </graphic>
-      </Button>
+<AnchorPane prefHeight="770.0" prefWidth="1400.0"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.ControladorRegistro"
+            stylesheets="@../estilo/estilo.css"
+            styleClass="panel">
 
-       <Button fx:id="bt_volver" alignment="CENTER" layoutX="424.0" layoutY="691.0" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" text="Volver">
-           <font>
-               <Font size="15.0" />
-           </font>
-           <graphic>
-               <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                   <image>
-                       <Image url="@../imagenes/icono-volver.png" />
-                   </image>
-               </ImageView>
-           </graphic>
-       </Button>
+    <children>
+        <!-- Fondo -->
+        <ImageView fitHeight="792.0" fitWidth="1422.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../imagenes/fondo-biblioteca.png"/>
+            </image>
+        </ImageView>
 
-   </children>
+        <!-- Título -->
+        <Label layoutX="467.0" layoutY="27.0"
+               prefHeight="83.0" prefWidth="821.0"
+               text="Registro de nuevos usuarios"
+               styleClass="titulo"/>
+
+        <!-- Formulario -->
+        <VBox layoutX="618.0" layoutY="113.0"
+              prefHeight="578.0" prefWidth="255.0"
+              AnchorPane.leftAnchor="618.0"
+              AnchorPane.rightAnchor="534.8"
+              AnchorPane.topAnchor="113.0"
+              spacing="8">
+
+            <children>
+                <Label text="Nombre de usuario" styleClass="subtitulo"/>
+                <TextField fx:id="nombreUsuario" styleClass="text-field"/>
+
+                <Label text="Nombre" styleClass="subtitulo"/>
+                <TextField fx:id="nombre" styleClass="text-field"/>
+
+                <Label text="Primer Apellido" styleClass="subtitulo"/>
+                <TextField fx:id="primerApellido" styleClass="text-field"/>
+
+                <Label text="Correo electrónico" styleClass="subtitulo"/>
+                <TextField fx:id="correo" styleClass="text-field"/>
+
+                <Label text="Contraseña" styleClass="subtitulo"/>
+                <PasswordField fx:id="contrasena" styleClass="password-field"/>
+
+                <Label text="Repita contraseña" styleClass="subtitulo"/>
+                <PasswordField fx:id="repetirContrasena" styleClass="password-field"/>
+
+                <Region prefHeight="20.0"/>
+
+                <Button fx:id="registrar"
+                        text="Guardar y registrar"
+                        onAction="#guardarRegistro"
+                        styleClass="button-principal"/>
+
+                <Label fx:id="mensajeError"
+                       prefWidth="400"
+                       wrapText="true"
+                       styleClass="mensaje-error"/>
+            </children>
+        </VBox>
+
+        <!-- CheckBox términos -->
+        <CheckBox fx:id="aceptoTerminos"
+                  layoutX="623.0" layoutY="730.0"
+                  text="Aceptar los Términos de Privacidad"
+                  styleClass="check-box"/>
+
+        <!-- Botón ayuda -->
+        <Button fx:id="bt_ayuda"
+                alignment="CENTER"
+                layoutX="1203.0" layoutY="110.0"
+                onAction="#mostrarAyuda"
+                prefHeight="35.0" prefWidth="85.0"
+                text="Ayuda"
+                styleClass="button-secundario">
+            <graphic>
+                <ImageView id="iv_iconoAyuda"
+                           fitHeight="20.0" fitWidth="15.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imagenes/IconoInterrogacion.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <!-- Botón volver -->
+        <Button fx:id="bt_volver"
+                alignment="CENTER"
+                layoutX="424.0" layoutY="691.0"
+                onAction="#volverAtras"
+                prefHeight="35.0" prefWidth="85.0"
+                text="Volver"
+                styleClass="button-secundario">
+            <graphic>
+                <ImageView id="iv_iconoAtras"
+                           fitHeight="20.0" fitWidth="15.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imagenes/icono-volver.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
 </AnchorPane>

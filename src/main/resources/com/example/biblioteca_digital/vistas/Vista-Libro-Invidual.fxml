@@ -8,34 +8,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefWidth="850" prefHeight="600" xmlns="http://javafx.com/javafx"
+<AnchorPane prefWidth="850" prefHeight="600"
+            xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual">
+            fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual"
+            stylesheets="@../estilo/estilo.css"
+            styleClass="panel">
 
-    <HBox spacing="30" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
-          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+    <HBox spacing="30"
+          AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20"
+          AnchorPane.topAnchor="20"
+          AnchorPane.bottomAnchor="20">
 
         <!-- IMAGEN DEL LIBRO -->
-        <ImageView fx:id="imagenLibro" fitHeight="380" fitWidth="260"
-                   style="-fx-effect: dropshadow(gaussian, #444, 10, 0, 0, 3);" />
+        <ImageView fx:id="imagenLibro"
+                   fitHeight="380" fitWidth="260"
+                   styleClass="imagen-libro"/>
 
         <!-- PANEL DE INFORMACIÓN -->
         <VBox spacing="12">
-            <Label fx:id="tituloLibro" style="-fx-font-size: 26px; -fx-font-weight: bold;" />
-            <Label fx:id="autorLibro" style="-fx-font-size: 16px; -fx-text-fill: #555;" />
-            <Label fx:id="categoriaLibro" style="-fx-background-color: #d4a373; -fx-text-fill: white;
-                                                  -fx-padding: 3 9; -fx-background-radius: 6;" />
-            <Label fx:id="isbnLibro" style="-fx-font-size: 14px;" />
-            <Label fx:id="disponiblesLibro" style="-fx-font-size: 14px;" />
-            <Label fx:id="descripcionLibro" wrapText="true" maxWidth="420"
-                   style="-fx-font-size: 15px; -fx-text-fill: #333;" />
 
-            <Button text="Leer Libro" fx:id="btnLeerLibro"
-                    style="-fx-background-color: #c19a6b; -fx-text-fill: white;
-                            -fx-font-size: 16px; -fx-background-radius: 8;
-                            -fx-padding: 10 20;" />
+            <Label fx:id="tituloLibro" styleClass="titulo"/>
+            <Label fx:id="autorLibro" styleClass="subtitulo"/>
+            <Label fx:id="categoriaLibro" styleClass="badge-categoria"/>
+            <Label fx:id="isbnLibro" styleClass="texto-detalle"/>
+            <Label fx:id="disponiblesLibro" styleClass="texto-detalle"/>
+            <Label fx:id="descripcionLibro"
+                   wrapText="true"
+                   maxWidth="420"
+                   styleClass="texto-descripcion"/>
+
+            <Button fx:id="btnLeerLibro"
+                    text="Leer Libro"
+                    styleClass="button-principal"/>
         </VBox>
 
     </HBox>
-
 </AnchorPane>
