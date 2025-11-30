@@ -5,6 +5,13 @@
     -fx-background-color: #ffffff;
 }
 
+.titulo-principal {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8B5E3C;
+    -fx-alignment: center;
+}
+
 .titulo {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
@@ -35,6 +42,7 @@
 }
 
 .toggle-button {
+    -fx-font-size: 15px;
     -fx-background-color: #f0f0f0;
     -fx-text-fill: #333;
     -fx-background-radius: 6;

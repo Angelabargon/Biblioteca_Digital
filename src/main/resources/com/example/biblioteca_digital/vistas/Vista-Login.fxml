@@ -94,9 +94,6 @@
                              </image>
                         </ImageView>
                      </graphic>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
                   </ToggleButton>
 
                   <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" text="Admin" styleClass="toggle-opcion">
@@ -107,9 +104,7 @@
                          </image>
                         </ImageView>
                      </graphic>
-                     <font>
-                        <Font size="15.0" />
-                     </font></ToggleButton>
+                     </ToggleButton>
 
                </children>
 

@@ -32,7 +32,7 @@
     <Label layoutX="269.0" layoutY="34.0"
            prefHeight="54.0" prefWidth="269.0"
            text="Biblioteca Digital"
-           styleClass="titulo"/>
+           styleClass="titulo-principal"/>
 
     <!-- Menú de navegación -->
     <HBox id="hb_tbg"

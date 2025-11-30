@@ -52,7 +52,7 @@
                textOverrun="CENTER_WORD_ELLIPSIS"
                AnchorPane.leftAnchor="627.0"
                AnchorPane.topAnchor="261.0"
-               styleClass="titulo"/>
+               styleClass="titulo-principal"/>
 
         <!-- Línea decorativa -->
         <Line layoutX="982.0" layoutY="452.0"
