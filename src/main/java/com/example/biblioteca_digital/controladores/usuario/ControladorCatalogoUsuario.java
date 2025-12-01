@@ -71,10 +71,10 @@ public class ControladorCatalogoUsuario
     @FXML
     public void initialize()
     {
-        cargarFiltroGeneros();
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null)  filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
+        cargarFiltroGeneros();
     }
 
     /**
@@ -97,7 +97,8 @@ public class ControladorCatalogoUsuario
      */
     private void cargarFiltroGeneros()
     {
-        if (filtroGenero != null) {
+        if (filtroGenero != null)
+        {
             filtroGenero.setItems(FXCollections.observableArrayList(GENEROS_ESTATICOS));
             filtroGenero.getSelectionModel().selectFirst();
         }
@@ -107,17 +108,16 @@ public class ControladorCatalogoUsuario
      * Método para filtrar por los filtros de Título, Autor y Género llamando al DAO.
      */
     @FXML
-    public void mostrarLibrosFiltrados() {
+    public void mostrarLibrosFiltrados()
+    {
         if (contenedorLibros == null) return;
         contenedorLibros.getChildren().clear();
-
         String titulo = filtroTitulo.getText();
         String autor = filtroAutor.getText();
         String generoSeleccionado = filtroGenero.getValue();
-
         List<Libro> librosFiltrados = catalogoDAO.cargarCatalogo(titulo, autor, generoSeleccionado);
-
-        for (Libro libro : librosFiltrados) {
+        for (Libro libro : librosFiltrados)
+        {
             contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
         }
     }
