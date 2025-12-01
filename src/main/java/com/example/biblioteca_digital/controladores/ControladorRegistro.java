@@ -128,7 +128,7 @@ public class ControladorRegistro {
             mensajeError.setText("Todos los campos son obligatorios.");
             return;
         }
-        if (contrasena.getCharacters().length() <= 8) {
+        if (contrasena.getCharacters().length() < 8) {
             mensajeError.setText("La contraseña debe de tener al menos 8 caracteres");
             return;
         }
