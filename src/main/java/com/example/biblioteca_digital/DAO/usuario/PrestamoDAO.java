@@ -89,16 +89,6 @@ public class PrestamoDAO
     }
 
     /**
-     * Método  que guarad el préstamo en la base de datos
-     * @param prestamo Objeto Prestamo con idUsuario y idLibro.
-     * @return true si la transacción fue exitosa, false en caso contrario.
-     */
-    public boolean guardarPrestamo(Prestamo prestamo)
-    {
-        return crearPrestamo(prestamo.getUsuario().getId(), prestamo.getLibro().getId());
-    }
-
-    /**
      * Método que obtiene todos los préstamos activos de un usuario, incluyendo los datos completos del Libro y Usuario.
      */
     public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)

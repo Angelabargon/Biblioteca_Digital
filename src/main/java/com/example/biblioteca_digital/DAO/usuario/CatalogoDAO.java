@@ -181,7 +181,6 @@ public class CatalogoDAO
      */
     public String obtenerAutorPorIdLibro(int idLibro)
     {
-        // ... (Este método se mantiene igual, ya que estaba correcto)
         String autor = null;
         String sql = "SELECT autor FROM libros WHERE id = ?";
         try (Connection conn = conectar();

@@ -3,7 +3,6 @@ package com.example.biblioteca_digital.controladores.usuario;
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.controladores.ControladorAyuda;
-import com.example.biblioteca_digital.controladores.Navegacion;
 import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
@@ -22,8 +21,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-
-import static com.example.biblioteca_digital.modelos.Rol.usuario;
 
 public class ControladorMenuInicioUsuario {
 
@@ -82,9 +79,8 @@ public class ControladorMenuInicioUsuario {
     /**
      * Método genérico para cargar FXML, pasándole el Usuario al controlador.
      * @param fxmlPath Ruta del archivo FXML.
-     * @param controllerClass Clase del controlador asociado para la inyección.
      */
-    private void cargarVista(String fxmlPath, Class<?> controllerClass) {
+    private void cargarVista(String fxmlPath) {
         try
         {
             URL fxmlUrl = getClass().getResource(fxmlPath);
@@ -98,20 +94,16 @@ public class ControladorMenuInicioUsuario {
             AnchorPane.setBottomAnchor(vista, 0.0);
             contenedor.getChildren().add(vista);
             Object controller = loader.getController();
-
-            if (controller instanceof ControladorCatalogoUsuario)
+            if (controller instanceof ControladorCatalogoUsuario a)
             {
-                ControladorCatalogoUsuario a = (ControladorCatalogoUsuario) controller;
                 a.setUsuario(usuarioSesion);
             }
-            else if (controller instanceof ControladorPrestamosUsuario)
+            else if (controller instanceof ControladorPrestamosUsuario b)
             {
-                ControladorPrestamosUsuario b = (ControladorPrestamosUsuario) controller;
                 b.setUsuario(usuarioSesion);
             }
-            else if (controller instanceof ControladorFavoritosUsuario)
+            else if (controller instanceof ControladorFavoritosUsuario c)
             {
-                ControladorFavoritosUsuario c = (ControladorFavoritosUsuario) controller;
                 c.setUsuario(usuarioSesion);
             }
         }
@@ -179,7 +171,7 @@ public class ControladorMenuInicioUsuario {
      */
     @FXML
     private void handleCatalogo() {
-        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml", ControladorCatalogoUsuario.class);
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Catalogo-Usuario.fxml");
     }
 
     /**
@@ -187,7 +179,7 @@ public class ControladorMenuInicioUsuario {
      */
     @FXML
     private void handlePrestamos() {
-        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamos-Usuario.fxml", ControladorPrestamosUsuario.class);
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamos-Usuario.fxml");
     }
 
     /**
@@ -195,6 +187,6 @@ public class ControladorMenuInicioUsuario {
      */
     @FXML
     private void handleFavoritos() {
-        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Favoritos-Usuario.fxml", ControladorFavoritosUsuario.class);
+        cargarVista("/com/example/biblioteca_digital/vistas/usuario/Vista-Favoritos-Usuario.fxml");
     }
 }

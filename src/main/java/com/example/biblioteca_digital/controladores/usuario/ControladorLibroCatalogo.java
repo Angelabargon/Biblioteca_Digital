@@ -39,6 +39,13 @@ public class ControladorLibroCatalogo
         this.usuarioActual = usuario;
         this.controladorPadre = padre;
 
+        if (usuarioActual == null) {
+            System.err.println("Advertencia: Usuario no definido.");
+            btnPedirPrestado.setDisable(true);
+            btnFavorito.setDisable(true);
+            return;
+        }
+
         lblTitulo.setText(libro.getTitulo());
         lblAutor.setText(libro.getAutor());
         lblGenero.setText(libro.getGenero());
@@ -143,6 +150,12 @@ public class ControladorLibroCatalogo
      */
     private void actualizarBotonFavorito()
     {
+        if (usuarioActual == null) {
+            System.err.println("Advertencia: Usuario no definido.");
+            btnPedirPrestado.setDisable(true);
+            btnFavorito.setDisable(true);
+            return;
+        }
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
         if (esFavorito)
         {

@@ -14,7 +14,7 @@
     <!-- Fondo -->
     <ImageView id="iv_fondoLogin" fitHeight="798.0" fitWidth="1410.0" layoutX="7.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@../../imagenes/fondo-biblioteca.png" />
+            <Image url="@../../imagenes/fondomenu.png" />
         </image>
     </ImageView>
 

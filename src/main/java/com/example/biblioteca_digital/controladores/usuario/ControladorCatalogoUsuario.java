@@ -46,15 +46,12 @@ public class ControladorCatalogoUsuario
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        if (usuarioActual != null)
+        if (labelBienvenida != null && usuario != null)
         {
             labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
-            cargarDatosIniciales();
         }
-        if (filtroGenero != null)
-        {
-        filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-        }
+        cargarFiltroGeneros();
+        mostrarLibrosFiltrados();
     }
 
     /**
@@ -63,10 +60,7 @@ public class ControladorCatalogoUsuario
     private void cargarDatosIniciales()
     {
         actualizarContadorPrestamos();
-        if (contenedorLibros.getChildren().isEmpty())
-        {
-            mostrarLibrosFiltrados();
-        }
+        mostrarLibrosFiltrados();
     }
     /**
      * Método que inicializa el controlador con el usuario actual.
@@ -77,7 +71,6 @@ public class ControladorCatalogoUsuario
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null)  filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-        cargarFiltroGeneros();
     }
 
     /**
@@ -119,10 +112,14 @@ public class ControladorCatalogoUsuario
         String autor = filtroAutor.getText();
         String generoSeleccionado = filtroGenero.getValue();
         List<Libro> librosFiltrados = catalogoDAO.cargarCatalogo(titulo, autor, generoSeleccionado);
+        if (librosFiltrados.size() > 0) {
+            System.out.println("SE OBTUVIERON LIBROS. INTENTANDO MOSTRAR EN LA VISTA.");
+        }
         for (Libro libro : librosFiltrados)
         {
             contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
         }
+
     }
 
     //Lógica entre vistas
