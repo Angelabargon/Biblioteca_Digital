@@ -54,7 +54,8 @@ public class ControladorRegistro {
          * Guarda el usuario en la base de datos.
          * @param usuario
          */
-        public void guardarUsuario(Usuario usuario) {
+        public void guardarUsuario(Usuario usuario)
+        {
             String sql = "INSERT INTO Usuarios (id, nombre_usuario , nombre, primer_apellido, correo, contrasena, rol, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection conn = ConexionBD.getConexion();
                  PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
@@ -89,6 +90,30 @@ public class ControladorRegistro {
                     return false;
                 }
                 stmt.setString(1, nombre);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1) > 0;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al verificar existencia de usuario (SQL o Conexión): " + e.getMessage());
+            }
+            return false;
+        }
+        /**
+         * Verifica si ya existe un usuario en la base de datos con el nombre proporcionado.
+         * @param correo
+         * @return
+         */
+        public boolean existeUsuarioPorCoreo(String correo) {
+            String sql = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
+            try (Connection conn = ConexionBD.getConexion();
+                 PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
+                if (stmt == null) {
+                    System.err.println("Error no se pudo verificar existencia en la base de datos ya que no hay conexión.");
+                    return false;
+                }
+                stmt.setString(1, correo);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         return rs.getInt(1) > 0;
@@ -140,6 +165,10 @@ public class ControladorRegistro {
             mensajeError.setText("Ya existe un usuario con ese nombre. Por favor, elige otro.");
             return;
         }
+        if (verificarCorreoExistente(correo1)) {
+            mensajeError.setText("Ya existe un usuario con ese correo. Por favor, inserte otro.");
+            return;
+        }
         if (!verificarCheckboxTickeado()) {
             mensajeError.setText("Debes aceptar los términos y condiciones.");
             return;
@@ -171,6 +200,9 @@ public class ControladorRegistro {
     }
     private boolean verificarUsuarioExistente(String nombreUsuario) {
         return consultas.existeUsuarioPorNombre(nombreUsuario);
+    }
+    private boolean verificarCorreoExistente(String correoUsuario) {
+        return consultas.existeUsuarioPorCoreo(correoUsuario);
     }
     private boolean verificarCheckboxTickeado()
     {
