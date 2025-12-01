@@ -6,6 +6,7 @@ import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -45,13 +46,15 @@ public class ControladorCatalogoUsuario
     public void setUsuario(Usuario usuario)
     {
         this.usuarioActual = usuario;
-        if (usuarioActual != null) {
+        if (usuarioActual != null)
+        {
             labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
             cargarDatosIniciales();
-        }if (filtroGenero != null) {
+        }
+        if (filtroGenero != null)
+        {
         filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
-    }
-
+        }
     }
 
     /**
