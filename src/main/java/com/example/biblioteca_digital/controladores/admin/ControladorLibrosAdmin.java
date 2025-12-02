@@ -78,6 +78,10 @@ public class ControladorLibrosAdmin {
         configurarAccionesCellFactory();
 
         cargarLibros();
+
+        if (txtBuscar != null) {
+            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarLibro());
+        }
     }
 
     /**
@@ -88,20 +92,18 @@ public class ControladorLibrosAdmin {
             @Override
             protected void updateItem(String genero, boolean empty) {
                 super.updateItem(genero, empty);
+
                 if (empty || genero == null) {
                     setGraphic(null);
                     return;
                 }
+
                 Label tag = new Label(genero);
                 tag.setStyle("-fx-background-color: #c99b68; -fx-text-fill: white; " +
                         "-fx-padding: 4 10; -fx-background-radius: 10;");
                 setGraphic(tag);
             }
         });
-
-        if (txtBuscar != null) {
-            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarLibro());
-        }
     }
 
     /**

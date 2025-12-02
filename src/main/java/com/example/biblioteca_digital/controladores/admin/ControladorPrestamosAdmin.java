@@ -1,6 +1,8 @@
 package com.example.biblioteca_digital.controladores.admin;
 
+import com.example.biblioteca_digital.DAO.admin.LibroAdminDAO;
 import com.example.biblioteca_digital.DAO.admin.PrestamoAdminDAO;
+import com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO;
 import com.example.biblioteca_digital.modelos.Prestamo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -192,18 +195,18 @@ public class ControladorPrestamosAdmin {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml"));
             Parent root = loader.load();
-            com.example.biblioteca_digital.controladores.admin.ControladorEditarPrestamo ctrl = loader.getController();
+            ControladorEditarPrestamo ctrl = loader.getController();
 
             // cargar usuarios y libros existentes
-            ctrl.cargarDatos(new com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO().obtenerTodos(),
-                    new com.example.biblioteca_digital.DAO.admin.LibroAdminDAO().obtenerTodos());
+            ctrl.cargarDatos(new UsuarioAdminDAO().obtenerTodos(),
+                    new LibroAdminDAO().obtenerTodos());
 
             Stage st = new Stage();
             st.initOwner(tablaPrestamos.getScene().getWindow());
             st.initModality(Modality.APPLICATION_MODAL);
             ctrl.setStage(st);
             ctrl.setOnGuardarCallback(() -> {
-                com.example.biblioteca_digital.modelos.Prestamo p = ctrl.getPrestamoResultado();
+                Prestamo p = ctrl.getPrestamoResultado();
                 boolean ok = prestamoAdminDAO.crearPrestamo(p);
                 if (!ok) {
                     Alert a = new Alert(Alert.AlertType.ERROR, "No se pudo crear el préstamo");
@@ -212,7 +215,7 @@ public class ControladorPrestamosAdmin {
                 refrescarTabla();
             });
 
-            st.setScene(new javafx.scene.Scene(root));
+            st.setScene(new Scene(root));
             st.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();

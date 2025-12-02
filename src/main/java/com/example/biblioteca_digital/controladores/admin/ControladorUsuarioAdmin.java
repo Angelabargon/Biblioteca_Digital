@@ -83,6 +83,10 @@ public class ControladorUsuarioAdmin {
         if (colAcciones != null) configurarAccionesCellFactory();
 
         cargarUsuarios();
+
+        if (txtBuscar != null) {
+            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarUsuario());
+        }
     }
 
     /**
@@ -112,10 +116,6 @@ public class ControladorUsuarioAdmin {
                 }
             }
         });
-
-        if (txtBuscar != null) {
-            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarUsuario());
-        }
     }
 
     /**
