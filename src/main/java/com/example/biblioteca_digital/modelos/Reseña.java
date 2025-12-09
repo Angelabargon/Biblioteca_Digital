@@ -6,8 +6,7 @@ import java.util.Date;
 /*
  *Clase Reseña
  */
-public class Reseña
-{
+public class Reseña {
     /*
      *Atributos de una reseña
      */
@@ -19,6 +18,12 @@ public class Reseña
     Date fecha;
     String contenido;
     int calificacion;
+
+    /**
+     * Atributos extra para la interfaz.
+     */
+    private String nombreUsuario;
+    private String tituloLibro;
 
     /*
      *Constructor reseña vacío
@@ -63,6 +68,15 @@ public class Reseña
     public void setFecha(Date fecha) {this.fecha = fecha;}
     public void setContenido(String contenido) {this.contenido = contenido;}
     public void setCalificacion(int calificacion) {this.calificacion = calificacion;}
+
+    /**
+     * Getters y Setters extra.
+     */
+    public String getNombreUsuario() { return nombreUsuario;}
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario;}
+
+    public String getTituloLibro() { return tituloLibro;}
+    public void setTituloLibro(String tituloLibro) { this.tituloLibro = tituloLibro;}
 
     /*
      *ToString de una reseña
