@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/24.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.biblioteca_digital.controladores.ControladorReseñas"
+      fx:id="vb_contenedorResenas"
+      alignment="CENTER" prefHeight="380.0" prefWidth="260.0">
+
+    <children>
+        <Label fx:id="lb_tituloResenas" text="Reseñas" />
+
+        <ScrollPane fx:id="sp_resenas" prefHeight="200.0" prefWidth="200.0">
+            <content>
+                <VBox fx:id="ap_resenasScroll" spacing="10" />
+            </content>
+        </ScrollPane>
+
+        <Label fx:id="lb_agregarResena" text="Agregar Reseña" />
+
+        <TextArea fx:id="ta_textoresena" prefHeight="70.0" prefWidth="260.0" />
+
+        <ComboBox fx:id="cb_puntuacion" prefWidth="150.0" />
+
+        <Button fx:id="bt_publicarResena" alignment="CENTER" text="Publicar Reseña" />
+    </children>
+</VBox>

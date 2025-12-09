@@ -32,21 +32,9 @@
         </VBox>
    
           <Line endX="-99.8" endY="3.0" startX="-100.0" startY="380.0" styleClass="linea-decorativa" />
-      <VBox alignment="CENTER" prefHeight="380.0" prefWidth="260.0">
-         <children>
-            <Label text="Reseñas" />
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
-            <Label text="Agregar Reseña" />
-            <TextArea prefHeight="70.0" prefWidth="260.0" />
-            <ComboBox prefWidth="150.0" />
-            <Button alignment="CENTER" mnemonicParsing="false" text="Publicar Reseña" />
-         </children>
-      </VBox>
 
+        <!-- Apartado de Reseñas -->
+        <fx:include source="usuario/Vista-Reseñas.fxml" fx:id="vb_contenedorResenas"/>
     </HBox>
 
 </AnchorPane>
