@@ -86,7 +86,7 @@ public class ControladorMenuInicioUsuario {
             URL fxmlUrl = getClass().getResource(fxmlPath);
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent vista = loader.load();
-            Usuario usuarioSesion = Sesion.getInstancia().getUsuario(); //Cogemos el usuario real
+            Usuario usuarioSesion = Sesion.getInstancia().getUsuario();
             contenedor.getChildren().clear();
             AnchorPane.setLeftAnchor(vista, 0.0);
             AnchorPane.setRightAnchor(vista, 0.0);

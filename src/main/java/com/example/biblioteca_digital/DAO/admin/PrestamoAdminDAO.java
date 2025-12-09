@@ -117,7 +117,7 @@ public class PrestamoAdminDAO {
             con = ConexionBD.getConexion();
             con.setAutoCommit(false);
 
-            // 🔒 Bloquear fila del libro
+            // Bloquear fila del libro
             try (PreparedStatement ps = con.prepareStatement(bloquearLibro)) {
                 ps.setInt(1, prestamo.getLibro().getId());
                 ResultSet rs = ps.executeQuery();

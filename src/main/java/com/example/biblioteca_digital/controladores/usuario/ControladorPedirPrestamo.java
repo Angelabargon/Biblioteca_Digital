@@ -18,7 +18,7 @@ public class ControladorPedirPrestamo
     // Atributos internos
     private Prestamo prestamoActual;
     private Consumer<Prestamo> leerLibroHandler;
-    private final CatalogoDAO catalogoDAO = new CatalogoDAO(); // Para obtener el autor
+    private final CatalogoDAO catalogoDAO = new CatalogoDAO();
 
     /**
      * Método que establece los datos y el manejador de eventos para esta tarjeta de préstamo.

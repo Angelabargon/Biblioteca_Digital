@@ -103,7 +103,7 @@ public class ControladorLibroCatalogo
 
             btnPedirPrestado.setDisable(false);
             btnPedirPrestado.getStyleClass().remove("btn-prestar-disabled");
-            btnPedirPrestado.getStyleClass().add("btn-prestar"); // Clase activa
+            btnPedirPrestado.getStyleClass().add("btn-prestar");
         }
         actualizarBotonFavorito();
     }

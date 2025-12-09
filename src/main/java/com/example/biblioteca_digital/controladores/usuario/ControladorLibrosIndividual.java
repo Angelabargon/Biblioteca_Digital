@@ -50,7 +50,7 @@ public class ControladorLibrosIndividual
             imagenLibro.setImage(new Image(libro.getFoto()));
 
         btnPedirPrestado.setDisable(libro.getCantidad() <= 0);
-        actualizarBotonFavorito(); // Nuevo método para mostrar el estado
+        actualizarBotonFavorito();
     }
     /**
      * Método de actualización de favoritos

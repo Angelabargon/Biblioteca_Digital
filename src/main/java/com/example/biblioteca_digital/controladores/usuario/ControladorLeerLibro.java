@@ -11,9 +11,9 @@ public class ControladorLeerLibro
 {
     @FXML private Label lblTitulo;
     @FXML private Label lblAutor;
-    @FXML private Label lblDiasRestantes; // El contador en la esquina superior
+    @FXML private Label lblDiasRestantes;
     @FXML private TextArea areaContenido;
-    @FXML private HBox headerBar; // Para la barra de color y el botón de cerrar
+    @FXML private HBox headerBar;
 
     /**
      * Método que carga el contenido del préstamo en la vista de lectura.

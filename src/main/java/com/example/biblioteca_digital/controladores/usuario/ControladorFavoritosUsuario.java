@@ -12,9 +12,9 @@ import javafx.scene.layout.FlowPane;
 import java.io.IOException;
 import java.util.List;
 
-public class ControladorFavoritosUsuario {
-
-    // --- Atributos FXML ---
+public class ControladorFavoritosUsuario
+{
+    // Atributos FXML
     @FXML
     private ListView<Libro> listaFavoritos;
     @FXML
@@ -35,7 +35,7 @@ public class ControladorFavoritosUsuario {
 
     //Atributos de Lógica
     private Usuario usuarioActual;
-    private final FavoritosDAO favoritosDAO = new FavoritosDAO(); // Instancia del DAO
+    private final FavoritosDAO favoritosDAO = new FavoritosDAO();
     /**
      * Método que inicializa el controlador con el usuario actual.
      */
