@@ -21,12 +21,12 @@
         <!-- PANEL DE INFORMACIÓN -->
         <VBox prefWidth="153.2" spacing="12">
 
-            <Label fx:id="tituloLibro" styleClass="titulo" />
-            <Label fx:id="autorLibro" styleClass="subtitulo" />
-            <Label fx:id="categoriaLibro" styleClass="badge-categoria" />
-            <Label fx:id="isbnLibro" styleClass="texto-detalle" />
-            <Label fx:id="disponiblesLibro" styleClass="texto-detalle" />
-            <Label fx:id="descripcionLibro" maxWidth="420" styleClass="texto-descripcion" wrapText="true" />
+            <Label fx:id="tituloLabel" styleClass="titulo" />
+            <Label fx:id="autorLabel" styleClass="subtitulo" />
+            <Label fx:id="categoriaLabel" styleClass="badge-categoria" />
+            <Label fx:id="isbnLabel" styleClass="texto-detalle" />
+            <Label fx:id="disponiblesLabel" styleClass="texto-detalle" />
+            <TextArea fx:id="descripcionArea" maxWidth="420" styleClass="texto-descripcion" wrapText="true" />
 
             <Button fx:id="btnLeerLibro" styleClass="button-principal" text="Leer Libro" />
         </VBox>
