@@ -61,6 +61,9 @@ public class ControladorMenuInicioUsuario {
                 mostrarAlertaError("Error de Navegación", "No se pudo cargar la vista de perfil: " + e.getMessage());
             }
         });
+
+        tbt_MENU.setSelected(true);
+        handleCatalogo();
     }
     /**
      * Metodo que establece el usuario actual y carga sus libros favoritos.
