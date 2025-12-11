@@ -73,6 +73,9 @@ public class ControladorLogin {
                     }
                 }
             });
+
+            tf_email.setOnAction(event -> iniciarSesion(event));
+            pf_contraseña.setOnAction(event -> iniciarSesion(event));
         }
 
     /**
