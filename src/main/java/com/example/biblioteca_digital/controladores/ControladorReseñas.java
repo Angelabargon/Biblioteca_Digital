@@ -37,13 +37,22 @@ public class ControladorReseñas {
         List<Reseña> reseñas = reseñasDAO.obtenerReseñasPorLibro(idLibro);
 
         for (Reseña r : reseñas) {
-            Label nombre = new Label(r.getNombreUsuario() + " (" + r.getFecha() + ")");
-            Label contenido = new Label(r.getContenido());
-            Label calificacion = new Label("⭐ " + r.getCalificacion());
 
-            VBox bloque = new VBox(nombre, contenido, calificacion);
+            String estrellas = "⭐".repeat(r.getCalificacion());
+
+            Label nombre = new Label(r.getNombreUsuario() + " / " + estrellas);
+            Label contenido = new Label(r.getContenido());
+            Label fecha = new Label(String.valueOf(r.getFecha()));
+
+            VBox bloque = new VBox(nombre, contenido, fecha);
             bloque.setSpacing(5);
             bloque.setStyle("-fx-padding: 10; -fx-background-color: #f4f4f4; -fx-border-color: #ccc;");
+
+            bloque.setMaxWidth(Double.MAX_VALUE);
+
+            nombre.setMaxWidth(Double.MAX_VALUE);
+            contenido.setMaxWidth(Double.MAX_VALUE);
+            fecha.setMaxWidth(Double.MAX_VALUE);
 
             ap_resenasScroll.getChildren().add(bloque);
         }
