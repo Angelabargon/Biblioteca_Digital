@@ -38,7 +38,7 @@
         <Label id="lb_ayuda1"
                layoutX="45.0" layoutY="100.0"
                prefWidth="450.0"
-               text="⚫ Desde el menú de usuario puedes navegar entre las secciones principales: Catálogo, Préstamos, Favoritos y Perfil."
+               text="⚫ Desde el menú de usuario puedes entrar en las secciones principales: Catálogo, Préstamos, Favoritos y Perfil."
                textAlignment="JUSTIFY"
                wrapText="true"
                styleClass="subtitulo"/>
@@ -46,7 +46,7 @@
         <Label id="lb_ayuda2"
                layoutX="45.0" layoutY="170.0"
                prefWidth="450.0"
-               text="⚫ Cada sección te permite consultar y gestionar tus libros: explorar el catálogo, revisar préstamos activos y guardar favoritos."
+               text="⚫ Cada sección te permitirá gestionar tus libros: ver el catálogo, revisar préstamos activos y guardar favoritos."
                textAlignment="JUSTIFY"
                wrapText="true"
                styleClass="subtitulo"/>

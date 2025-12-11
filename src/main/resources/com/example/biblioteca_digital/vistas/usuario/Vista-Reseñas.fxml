@@ -13,13 +13,10 @@
     <children>
         <Label fx:id="lb_tituloResenas" styleClass="titulo" text="Reseñas" />
 
-        <ScrollPane fx:id="sp_resenas" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane">
+        <ScrollPane fx:id="sp_resenas" prefHeight="200.0" styleClass="scroll-pane" fitToWidth="true">
             <content>
                 <VBox fx:id="ap_resenasScroll" spacing="10" />
             </content>
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
         </ScrollPane>
 
         <Label fx:id="lb_agregarResena" styleClass="subtitulo" text="Agregar Reseña">
