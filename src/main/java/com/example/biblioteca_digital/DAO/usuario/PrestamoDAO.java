@@ -99,7 +99,8 @@ public class PrestamoDAO
              PreparedStatement pst = conn.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
-            try (ResultSet rs = pst.executeQuery())
+            ResultSet rs = pst.executeQuery();
+            try
             {
                 while (rs.next())
                 {
@@ -126,6 +127,13 @@ public class PrestamoDAO
                     p.setUsuario(usuarioCompleto);
 
                     prestamos.add(p);
+                }
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    rs.close();
                 }
             }
 
