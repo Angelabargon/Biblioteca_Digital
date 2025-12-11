@@ -31,14 +31,17 @@ public class ConexionBD {
      * @return objeto {@link Connection} activo contra la base de datos
      */
     public static Connection getConexion() {
+
         try {
             if (conexion == null || conexion.isClosed()) {
                 conexion = DriverManager.getConnection(URL, Usuario, Contrasena);
                 System.out.println("Conexion establecida.");
             }
+
         } catch (SQLException e) {
-            System.out.println("Error al conectar con la base de datos.");
+            System.out.println("Error en la conexión con la base de datos.");
         }
+
         return conexion;
     }
 
@@ -47,11 +50,13 @@ public class ConexionBD {
      * Libera los recursos asociados a la conexión.
      */
     public static void cerrarConexion() {
+
         try {
             if (conexion != null && !conexion.isClosed()) {
                 conexion.close();
                 System.out.println("Conexión cerrada.");
             }
+
         } catch (SQLException e) {
             System.out.println("Error al cerrar la conexión.");
         }

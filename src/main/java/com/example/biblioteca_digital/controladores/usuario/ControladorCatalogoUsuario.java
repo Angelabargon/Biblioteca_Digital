@@ -1,13 +1,14 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+/**
+ * Imports de clase ControladorCatalogoUsuario.
+ */
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
-import com.example.biblioteca_digital.controladores.ControladorReseñas;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,22 +16,31 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class ControladorCatalogoUsuario {
 
+    /** Ruta del FXML que diseña cada tarjeta individual de libro. */
     private static final String FXML_CARD_PATH = "/com/example/biblioteca_digital/vistas/usuario/Vista-Tarjeta-Libro.fxml";
+
+    /** Lista de géneros disponibles para el filtro. */
     private static final List<String> GENEROS_ESTATICOS = Arrays.asList("Todas", "Ficción", "Clásicos", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía");
 
+    /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
+
+    /** Número de préstamos activos del usuario. */
     private int prestamosActivos = 0;
 
+    /** DAO encargado de obtener libros del catálogo. */
     private final CatalogoDAO catalogoDAO = new CatalogoDAO();
+
+    /** DAO encargado de gestionar préstamos. */
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
+    // Elementos de la vista referenciados.
     @FXML private Label labelBienvenida;
     @FXML private Label labelContadorPrestamos;
     @FXML private FlowPane contenedorLibros;
@@ -39,12 +49,14 @@ public class ControladorCatalogoUsuario {
     @FXML private ChoiceBox<String> filtroGenero;
 
     /**
-     * Metodo que establece el usuario actual y carga sus libros favoritos.
+     * Metodo que establece el usuario actual y carga los libros de catálogo.
+     *
      * @param usuario El objeto Usuario actualmente logueado.
      */
     public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
 
+        // Aparecerá un mensaje de bienvenida.
         if (labelBienvenida != null && usuario != null) {
             labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
         }
@@ -54,7 +66,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método que carga los datos iniciales de la base de datos
+     * Metodo que carga los datos iniciales de la base de datos
      */
     private void cargarDatosIniciales() {
         actualizarContadorPrestamos();
@@ -62,7 +74,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método que inicializa el controlador con el usuario actual.
+     * Metodo que actualiza el catálogo en tiempo real.
      */
     @FXML
     public void initialize() {
@@ -72,7 +84,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para actualiza los préstamos tras pedir uno ptrestado
+     * Metodo para actualiza los préstamos tras pedir uno ptrestado
      */
     private void actualizarContadorPrestamos() {
 
@@ -86,7 +98,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para cargar los géneros
+     * Metodo para cargar los géneros
      */
     private void cargarFiltroGeneros() {
 
@@ -97,7 +109,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para filtrar por los filtros de Título, Autor y Género llamando al DAO.
+     * Metodo para aislar y mostrar por los filtros de Título, Autor y Género llamando al DAO.
      */
     @FXML
     public void mostrarLibrosFiltrados() {
@@ -116,14 +128,14 @@ public class ControladorCatalogoUsuario {
         for (Libro libro : librosFiltrados) {
             contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
         }
-
     }
 
-    //Lógica entre vistas
+    // Lógica entre vistas.
 
     /**
      * Maneja el evento de click en el botón "Pedir Prestado" de la tarjeta de libro.
      * Es llamado por el ControladorLibroCatalogo.
+     *
      * @param libro El libro que el usuario desea prestar.
      */
     public void clickPedirPrestamo(Libro libro) {
@@ -144,8 +156,9 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para ver la cartilla de los libros individualmente ( aun no está completo)
-     * @param libro
+     * Metodo que abre una ventana modal con los detalles individuales del libro.
+     *
+     * @param libro Libro seleccionado.
      */
     public void clickVer(Libro libro) {
 
@@ -170,8 +183,10 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método que maneja las mini tarjetas de libros (son individuales)
-     * @param libro
+     * metodo que crea la tarjeta visual de un libro cargando su FXML correspondiente.
+     *
+     * @param libro Libro a representar.
+     * @return Nodo gráfico que representa la tarjeta.
      * @return
      */
     private Node crearVistaLibroItem(Libro libro) {
@@ -191,9 +206,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para alertas de información para mostrar el mensaje al usuario como una ventana
-     * @param titulo
-     * @param mensaje
+     * Metodo para mostrar una alerta informativa.
      */
     private void mostrarAlerta(String titulo, String mensaje) {
 
@@ -205,9 +218,7 @@ public class ControladorCatalogoUsuario {
     }
 
     /**
-     * Método para alertas de errores para mostrar el mensaje al usuario como una ventana
-     * @param titulo
-     * @param mensaje
+     * Muestra una alerta de error.
      */
     private void mostrarAlertaError(String titulo, String mensaje) {
 
