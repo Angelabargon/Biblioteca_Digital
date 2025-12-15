@@ -109,6 +109,7 @@ public class ControladorPerfilUsuario {
 
         dialog.showAndWait().ifPresent(nuevaPass -> {
             boolean ok = PerfilUsuarioDAO.actualizarContrasena(usuarioActual.getId(), nuevaPass);
+
             if (ok) {
                 usuarioActual.setContrasena(nuevaPass);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Contraseña actualizada correctamente.");
@@ -128,7 +129,6 @@ public class ControladorPerfilUsuario {
      */
     @FXML
     private void cerrarSesion(ActionEvent event) {
-
         Sesion.cerrarSesion();
 
         try {

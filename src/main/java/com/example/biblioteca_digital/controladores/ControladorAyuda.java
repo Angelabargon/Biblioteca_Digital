@@ -26,6 +26,7 @@ public class ControladorAyuda {
      * @param titulo   título descriptivo que se mostrará en la ventana.
      */
     public static void mostrarAyuda(String rutaFXML, String titulo) {
+
         try {
             FXMLLoader loader = new FXMLLoader(ControladorAyuda.class.getResource(rutaFXML));
             Parent root = loader.load();
@@ -49,7 +50,6 @@ public class ControladorAyuda {
      */
     @FXML
     private void cerrarAyuda(ActionEvent event) {
-
         Navegacion.cerrarVentana(event);
 
     }
