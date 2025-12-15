@@ -93,7 +93,7 @@ public class ControladorRegistro {
          * @return true si existe, false si no.
          */
         public boolean existeUsuarioPorNombre(String nombre) {
-            String sql = "SELECT COUNT(*) FROM usuarios WHERE nombre = ?";
+            String sql = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = ?";
 
             try (Connection conn = ConexionBD.getConexion();
                  PreparedStatement stmt = (conn != null) ? conn.prepareStatement(sql) : null) {
@@ -124,7 +124,7 @@ public class ControladorRegistro {
          * @param correo Correo a verificar.
          * @return true si existe, false si no.
          */
-        public boolean existeUsuarioPorCoreo(String correo) {
+        public boolean existeUsuarioPorCorreo(String correo) {
             String sql = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
 
             try (Connection conn = ConexionBD.getConexion();
@@ -235,7 +235,7 @@ public class ControladorRegistro {
 
     /** Construye un objeto Usuario con los datos proporcionados. */
     private Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
-        return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, usuario, fechaRegistro);
+        return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, rol, fechaRegistro);
     }
 
     /** Compara dos contraseñas. */
@@ -250,7 +250,7 @@ public class ControladorRegistro {
 
     /** Verifica si existe un usuario con ese correo. */
     private boolean verificarCorreoExistente(String correoUsuario) {
-        return consultas.existeUsuarioPorCoreo(correoUsuario);
+        return consultas.existeUsuarioPorCorreo(correoUsuario);
     }
 
     /** Verifica si el usuario ha aceptado los términos. */

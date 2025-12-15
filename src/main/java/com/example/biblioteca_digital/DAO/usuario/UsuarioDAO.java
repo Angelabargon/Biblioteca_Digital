@@ -49,7 +49,6 @@ public class UsuarioDAO {
                     usuario.setId(rs.getInt("id"));
                     usuario.setNombre(rs.getString("nombre"));
                     usuario.setNombreUsuario(rs.getString("nombre_usuario"));
-                    usuario.setCorreo(rs.getString("correo"));
                 }
             }
 
