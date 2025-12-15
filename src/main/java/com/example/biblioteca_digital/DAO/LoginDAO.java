@@ -18,13 +18,13 @@ import java.util.Optional;
 public class LoginDAO {
 
     /**
-     * Este método se encarga de verificar que el usuario que está iniciando sesión existe en la BDD.
+     * Este metodo se encarga de verificar que el usuario que está iniciando sesión existe en la BDD.
      *
-     * @param correo Correo electrónico del usuario.
-     * @param contrasena Contraseña del usuario.
-     * @param rol Rol del usuario (ej. "usuario" o "admin").
-     * @return Un Optional con el usuario autenticado si las credenciales son correctas,
-     * Optional.empty() si no se encuentra coincidencia.
+     * @param correo      Correo electrónico del usuario.
+     * @param contrasena  Contraseña del usuario.
+     * @param rol         Rol esperado (ej. "usuario" o "admin").
+     * @return Optional con el usuario autenticado si existe coincidencia,
+     * Optional.empty() si no se encuentra ningún usuario válido.
      */
     public static Optional<Usuario> autenticar(String correo, String contrasena, String rol) {
 
@@ -32,11 +32,15 @@ public class LoginDAO {
 
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Se asignan parámetros a la consulta.
             stmt.setString(1, correo);
             stmt.setString(2, contrasena);
             stmt.setString(3, rol);
+
             ResultSet rs = stmt.executeQuery();
 
+            // De existir un usuario con esas credenciales, se construye el objeto.
             if (rs.next()) {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
@@ -47,6 +51,7 @@ public class LoginDAO {
                 usuario.setContrasena(rs.getString("contrasena"));
                 usuario.setRol(Rol.valueOf(rs.getString("rol")));
                 usuario.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
+
                 return Optional.of(usuario);
             }
 
@@ -54,6 +59,7 @@ public class LoginDAO {
             System.out.println("Error al autenticar: " + e.getMessage());
         }
 
+        // Si no se encontró coincidencia, se devuelve Optional vacío.
         return Optional.empty();
     }
 }

@@ -1,17 +1,28 @@
 package com.example.biblioteca_digital.DAO.usuario;
 
+/**
+ * Imports necesarios.
+ */
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Reseña;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO encargado de gestionar las operaciones relacionadas con las reseñas
+ * en la base de datos.
+ *
+ * Este DAO se utiliza desde ControladorReseñas y desde la vista individual del libro.
+ */
 public class ReseñasDAO {
 
     /**
      * Inserta una nueva reseña en la base de datos.
      * Usa CURRENT_DATE para la fecha.
+     *
+     *  @param reseña Objeto Reseña con los datos a guardar.
+     *  @return true si la inserción fue exitosa, false si ocurrió un error.
      */
     public boolean guardarReseña(Reseña reseña) {
         String sql = "INSERT INTO resenas (id_usuario, id_libro, contenido, calificacion, fecha) " +
@@ -27,6 +38,7 @@ public class ReseñasDAO {
 
             int filas = ps.executeUpdate();
 
+            // Al insertarse, se obtendrá el ID generado.
             if (filas > 0) {
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) reseña.setId(keys.getInt(1));
@@ -44,6 +56,9 @@ public class ReseñasDAO {
     /**
      * Obtiene todas las reseñas de un libro, incluyendo nombre de usuario y título del libro.
      * Ordenadas por fecha descendente.
+     *
+     * @param idLibro ID del libro.
+     * @return Lista de reseñas del libro.
      */
     public List<Reseña> obtenerReseñasPorLibro(int idLibro) {
         List<Reseña> lista = new ArrayList<>();
@@ -61,7 +76,10 @@ public class ReseñasDAO {
             ps.setInt(1, idLibro);
 
             try (ResultSet rs = ps.executeQuery()) {
+
                 while (rs.next()) {
+
+                    // Construcción del objeto reseña con los datos principales.
                     Reseña r = new Reseña(
                             rs.getInt("id"),
                             rs.getInt("id_libro"),
@@ -70,7 +88,8 @@ public class ReseñasDAO {
                             rs.getString("contenido"),
                             rs.getInt("calificacion")
                     );
-                    // Rellenamos los campos extra del modelo
+
+                    // Rellenamos los campos extra del modelo.
                     r.setNombreUsuario(rs.getString("nombre_usuario"));
                     r.setTituloLibro(rs.getString("titulo"));
 
@@ -87,6 +106,9 @@ public class ReseñasDAO {
 
     /**
      * Elimina una reseña por ID.
+     *
+     * @param idReseña ID de la reseña a eliminar.
+     * @return true si se eliminó correctamente, false si ocurrió un error.
      */
     public boolean eliminarReseña(int idReseña) {
         String sql = "DELETE FROM resenas WHERE id = ?";
