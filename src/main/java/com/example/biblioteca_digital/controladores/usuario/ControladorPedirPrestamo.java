@@ -1,5 +1,8 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+/**
+ * Imports necesarios.
+ */
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO; // Necesitas el DAO de Catálogo
 import com.example.biblioteca_digital.modelos.Prestamo;
 import javafx.fxml.FXML;
@@ -7,8 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.util.function.Consumer;
 
-public class ControladorPedirPrestamo
-{
+public class ControladorPedirPrestamo {
+
     // Componentes FXML de la tarjeta individual
     @FXML private Label lblTitulo;
     @FXML private Label lblAutor;
@@ -21,10 +24,9 @@ public class ControladorPedirPrestamo
     private final CatalogoDAO catalogoDAO = new CatalogoDAO();
 
     /**
-     * Método que establece los datos y el manejador de eventos para esta tarjeta de préstamo.
+     * Metodo que establece los datos y el manejador de eventos para esta tarjeta de préstamo.
      */
-    public void setPrestamo(Prestamo prestamo, String tiempoRestante, Consumer<Prestamo> handler)
-    {
+    public void setPrestamo(Prestamo prestamo, String tiempoRestante, Consumer<Prestamo> handler) {
         this.prestamoActual = prestamo;
         this.leerLibroHandler = handler;
 
@@ -35,20 +37,18 @@ public class ControladorPedirPrestamo
 
         lblDiasRestantes.setText(tiempoRestante);
 
-        if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy"))
-        {
+        if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy")) {
             btnLeerLibro.setDisable(true);
         }
     }
 
     /**
-     * Método que lleva a la vista de contenido del libro para leer
+     * Metodo que lleva a la vista de contenido del libro para leer
      */
     @FXML
-    private void handleBotonLeer()
-    {
-        if (leerLibroHandler != null)
-        {
+    private void handleBotonLeer() {
+
+        if (leerLibroHandler != null) {
             leerLibroHandler.accept(prestamoActual);
         }
     }

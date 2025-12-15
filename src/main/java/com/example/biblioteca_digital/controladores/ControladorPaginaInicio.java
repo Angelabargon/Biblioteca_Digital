@@ -7,10 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
- * Controlador de la vista de página de inicio.
+ * Clase que rige de controlador de la vista de página de inicio.
  *
- * Gestiona la navegación inicial del usuario, permitiéndole
- * acceder a la pantalla de Login o a la pantalla de Registro.
+ * Gestiona la navegación inicial del usuario,
+ * accediendo a la pantalla de Login o a la pantalla de Registro.
  */
 public class ControladorPaginaInicio {
 
@@ -20,7 +20,7 @@ public class ControladorPaginaInicio {
     /** Botón que redirige a la vista de Login. */
     @FXML private Button login;
 
-    /** Constructor vacío requerido por JavaFX. */
+    /** Constructor vacío. */
     public ControladorPaginaInicio() {}
 
     /**

@@ -108,12 +108,14 @@ public class ControladorPerfilUsuario {
         dialog.setContentText("Contraseña:");
 
         dialog.showAndWait().ifPresent(nuevaPass -> {
+
             boolean ok = PerfilUsuarioDAO.actualizarContrasena(usuarioActual.getId(), nuevaPass);
 
             if (ok) {
                 usuarioActual.setContrasena(nuevaPass);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Contraseña actualizada correctamente.");
                 alert.showAndWait();
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error al actualizar la contraseña.");
                 alert.showAndWait();
