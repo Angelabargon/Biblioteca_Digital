@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<!-- Imports para la vista -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
+<!-- Nodo Raíz -->
 <AnchorPane id="ap_ayudaRegistro"
             prefHeight="400.0" prefWidth="546.0"
             xmlns="http://javafx.com/javafx/24.0.1"
@@ -28,6 +25,8 @@
                wrapText="true"
                styleClass="titulo">
             <graphic>
+
+                <!-- Icono de la ayuda -->
                 <ImageView id="iv_iconoAyuda"
                            fitHeight="30.0" fitWidth="25.0"
                            pickOnBounds="true" preserveRatio="true">
@@ -72,5 +71,7 @@
                 prefHeight="35.0" prefWidth="85.0"
                 text="Cerrar"
                 styleClass="button-secundario"/>
+
     </children>
+
 </AnchorPane>

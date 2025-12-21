@@ -35,6 +35,7 @@ public class ControladorAyuda {
             stage.setTitle("Ayuda " + titulo);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             stage.showAndWait();
 
         } catch (Exception e) {
