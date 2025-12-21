@@ -19,7 +19,7 @@ public class PerfilUsuarioDAO {
      * @param idUsuario Identificador del usuario.
      * @return Cantidad de favoritos del usuario.
      */
-    public static int contarFavoritos(int idUsuario) {
+    public int contarFavoritos(int idUsuario) {
         String sql = "SELECT COUNT(*) FROM favoritos WHERE id_usuario = ?";
 
         try (Connection con = ConexionBD.getConexion();
@@ -38,7 +38,7 @@ public class PerfilUsuarioDAO {
      * @param idUsuario Identificador del usuario.
      * @return Cantidad de préstamos del usuario.
      */
-    public static int contarPrestamos(int idUsuario) {
+    public int contarPrestamos(int idUsuario) {
 
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ?";
         try (Connection con = ConexionBD.getConexion();
@@ -58,7 +58,7 @@ public class PerfilUsuarioDAO {
      * @param nuevaPass   Nueva contraseña.
      * @return true si la actualización fue exitosa, false en caso contrario.
      */
-    public static boolean actualizarContrasena(int idUsuario, String nuevaPass) {
+    public boolean actualizarContrasena(int idUsuario, String nuevaPass) {
         String sql = "UPDATE usuarios SET contrasena = ? WHERE id = ?";
 
         try (Connection con = ConexionBD.getConexion();
