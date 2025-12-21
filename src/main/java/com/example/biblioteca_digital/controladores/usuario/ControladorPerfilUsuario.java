@@ -10,13 +10,17 @@ import com.example.biblioteca_digital.modelos.Sesion;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 /**
  * Controlador de la vista de perfil de usuario.
@@ -129,12 +133,29 @@ public class ControladorPerfilUsuario {
     private void cerrarSesion(ActionEvent event) {
         Sesion.cerrarSesion();
 
-        Navegacion.cambiarVista(event, "/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml", "Página de Inicio");
+        try {
 
-        Stage perfilStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Stage menuStage = (Stage) perfilStage.getOwner();
-        if (menuStage != null) menuStage.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
+            Parent root = loader.load();
 
+            Stage nuevaStage = new Stage();
+            nuevaStage.setTitle("Página de Inicio");
+            nuevaStage.setScene(new Scene(root));
+            nuevaStage.show();
+
+            Stage perfilStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            perfilStage.close();
+
+            Stage menuStage = (Stage) perfilStage.getOwner();
+            if (menuStage != null) {
+                menuStage.close();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo cargar la página de inicio.");
+            alert.showAndWait();
+        }
     }
 
     /**
