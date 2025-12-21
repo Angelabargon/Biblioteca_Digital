@@ -1,23 +1,31 @@
 package com.example.biblioteca_digital.modelos;
-/*
- *Imports de la clase Reseña
+
+/**
+ * Imports de la clase Reseña.
  */
 import java.util.Date;
-/*
- *Clase Reseña
+
+/**
+ * Creamos la clase Reseña que representará la opinión de los usuarios sobre un libro.
  */
 public class Reseña {
-    /*
-     *Atributos de una reseña
+
+    /**
+     * Atributos de una reseña:
+     *
+     * id
+     * idLibro
+     * idUsuario
+     * fecha
+     * contenido
+     * calificacion
      */
-    Libro libro;
-    Usuario usuario;
-    int id;
-    int id_libro;
-    int id_usuario;
-    Date fecha;
-    String contenido;
-    int calificacion;
+    private int id;
+    private int id_libro;
+    private int id_usuario;
+    private Date fecha;
+    private String contenido;
+    private int calificacion;
 
     /**
      * Atributos extra para la interfaz.
@@ -25,19 +33,20 @@ public class Reseña {
     private String nombreUsuario;
     private String tituloLibro;
 
-    /*
-     *Constructor reseña vacío
+    /**
+     * Constructor reseña vacío
      */
     public Reseña() {}
 
-    /*
-     *Constructor de reseña con atributos:
-     *@param ID
-     *@param ID_Libro
-     *@param ID_Usuario
-     *@param Fecha
-     *@param Contenido
-     *@param Calificacion
+    /**
+     * Constructor de reseña.
+     *
+     * @param id
+     * @param id_libro
+     * @param id_usuario
+     * @param fecha
+     * @param contenido
+     * @param calificacion
      */
     public Reseña(int id, int id_libro, int id_usuario, Date fecha, String contenido, int calificacion) {
         this.id = id;
@@ -48,9 +57,8 @@ public class Reseña {
         this.calificacion = calificacion;
     }
 
-    /*
-     *Getters de los atributos
-     *@return
+    /**
+     * Getters de los atributos.
      */
     public int getId() {return id;}
     public int getId_libro() {return id_libro;}
@@ -59,8 +67,8 @@ public class Reseña {
     public String getContenido() {return contenido;}
     public int getCalificacion() {return calificacion;}
 
-    /*
-     *Setters de los atributos
+    /**
+     * Setters de los atributos.
      */
     public void setId(int id) {this.id = id;}
     public void setId_libro(int id_libro) {this.id_libro = id_libro;}
@@ -78,9 +86,8 @@ public class Reseña {
     public String getTituloLibro() { return tituloLibro;}
     public void setTituloLibro(String tituloLibro) { this.tituloLibro = tituloLibro;}
 
-    /*
-     *ToString de una reseña
-     *@return
+    /**
+     * ToString de una reseña
      */
     @Override
     public String toString() {

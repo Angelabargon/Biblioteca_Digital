@@ -1,27 +1,26 @@
 package com.example.biblioteca_digital.modelos;
 
-/*
-Importamos lo necesario para usuario.
+/**
+ * Importamos lo necesario para usuario.
  */
-import java.awt.*;
 import java.time.LocalDate;
 
-/*
-Creamos la clas Usuario que representará a los clientes que entren a esta aplicación.
+/**
+ * Creamos la clas Usuario que representará a los clientes que entren a esta aplicación.
  */
 public class Usuario {
 
-    /*
-    Definimos los atributos del usuario:
-    
-    * id
-    * nombre
-    * nombreUsuario
-    * primerApellido
-    * correo
-    * contrasena
-    * rol
-    * fechaRegistro
+    /**
+     *Definimos los atributos del usuario:
+     *
+     * id
+     * nombre
+     * nombreUsuario
+     * primerApellido
+     * correo
+     * contrasena
+     * rol
+     * fechaRegistro
      */
     private int id;
     private String nombre;
@@ -32,17 +31,17 @@ public class Usuario {
     private Rol rol;
     private LocalDate fechaRegistro;
 
-    /*
-    Creamos el constructor e iniciamos sus atributos:
-    
-    * id
-    * nombre
-    * nombreUsuario
-    * primerApellido
-    * correo
-    * contrasena
-    * rol
-    * fechaRegistro
+    /**
+     * Creamos el constructor e iniciamos sus atributos.
+     *
+     * id
+     * nombre
+     * nombreUsuario
+     * primerApellido
+     * correo
+     * contrasena
+     * rol
+     * fechaRegistro
      */
     public Usuario(int id, String nombre, String nombreUsuario, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
 
@@ -57,27 +56,24 @@ public class Usuario {
 
     }
 
-    /*
-    Creamos un segundo constructor vacío por si acaso.
+    /**
+     * Creamos un segundo constructor vacío por si acaso.
      */
     public Usuario() {
 
     }
 
-    public Usuario(int id, TextField nombreUsuario, TextField primerApellido, TextField correo, TextField contrasena, String usuario, LocalDate now) {
-    }
-
-    /*
-    Generamos los getters y setters:
-    
-    * getId y setId
-    * getNombre y setNombre
-    * getPrimerApellido y setPrimerApellido
-    * getNombreUsuario y setNombreUsuario
-    * getCorreo y setCorreo
-    * getContrasena y setContrasena
-    * getRol y setRol
-    * getFechaRegistro y setFechaRegistro
+    /**
+     * Generamos los getters y setters:
+     *
+     * getId y setId
+     * getNombre y setNombre
+     * getPrimerApellido y setPrimerApellido
+     * getNombreUsuario y setNombreUsuario
+     * getCorreo y setCorreo
+     * getContrasena y setContrasena
+     * getRol y setRol
+     * getFechaRegistro y setFechaRegistro
      */
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
@@ -96,16 +92,16 @@ public class Usuario {
     public LocalDate getFechaRegistro() {return fechaRegistro;}
     public void setFechaRegistro(LocalDate fechaRegistro) {this.fechaRegistro = fechaRegistro;}
 
-    /*
-    Creamos un toString para mostrar los datos.
+    /**
+     * Creamos un toString para mostrar los datos.
      */
     @Override
     public String toString() {
 
         return "Usuario: " + id +
                 "\nNombre: " + nombre +
-                "\nNomrbre de usuario: " + nombreUsuario +
-                "\nPrimer Apellido " + primerApellido +
+                "\nNombre de usuario: " + nombreUsuario +
+                "\nPrimer Apellido: " + primerApellido +
                 "\nCorreo: " + correo +
                 "\nContraseña: " + contrasena +
                 "\nRol: " + rol +
