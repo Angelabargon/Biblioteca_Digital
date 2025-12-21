@@ -16,28 +16,18 @@ import java.sql.*;
 public class UsuarioDAO {
 
     /**
-     * Metodo auxiliar para la conexión a la base de datos.
+     * Obtiene un usuario por su ID.
      *
-     * @return conexión activa o null si falla.
+     * @param idUsuario Identificador del usuario.
+     * @return Objeto Usuario con los datos cargados o null si no existe.
      */
-    private static Connection conectar()
-    {
-        return ConexionBD.getConexion();
-    }
-
-    /**
-     * Metodo que obtiene todos los detalles de un usuario dado su ID.
-     *
-     * @param idUsuario ID del usuario a buscar.
-     * @return Objeto Usuario con los datos cargados, o null si no existe.
-     */
-    public static Usuario obtenerUsuarioPorId(int idUsuario) {
+    public Usuario obtenerUsuarioPorId(int idUsuario) {
 
         Usuario usuario = null;
 
         String sql = "SELECT id, nombre, nombre_usuario, correo FROM usuarios WHERE id = ?";
 
-        try (Connection conn = conectar();
+        try (Connection conn = ConexionBD.getConexion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idUsuario);
@@ -49,6 +39,7 @@ public class UsuarioDAO {
                     usuario.setId(rs.getInt("id"));
                     usuario.setNombre(rs.getString("nombre"));
                     usuario.setNombreUsuario(rs.getString("nombre_usuario"));
+                    usuario.setCorreo(rs.getString("correo"));
                 }
             }
 

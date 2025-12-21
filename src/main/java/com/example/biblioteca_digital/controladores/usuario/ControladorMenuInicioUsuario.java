@@ -26,6 +26,7 @@ import java.net.URL;
 
 /**
  * Controlador principal del menú de inicio del usuario.
+ *
  * También se encarga de cargar dinámicamente las vistas dentro del contenedor central.
  */
 public class ControladorMenuInicioUsuario {
