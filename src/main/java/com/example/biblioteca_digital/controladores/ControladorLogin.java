@@ -44,6 +44,9 @@ public class ControladorLogin {
     /** Botón para volver a la página de inicio. */
     @FXML private Button bt_volver;
 
+    /** Instancia del DAO. */
+    private final LoginDAO loginDAO = new LoginDAO();
+
     /**
      * Inicializa el controlador configurando el grupo de roles
      * y ajustando los textos y placeholders según el rol seleccionado.
@@ -66,6 +69,7 @@ public class ControladorLogin {
                         tf_email.setPromptText("Email de Administrador");
                         pf_contraseña.setPromptText("Contraseña de Administrador");
                         bt_inicioUsuario.setText("Iniciar Sesión como Administrador");
+
                     } else {
                         tf_email.setPromptText("Email");
                         pf_contraseña.setPromptText("Contraseña");
@@ -91,7 +95,7 @@ public class ControladorLogin {
     /**
      * Verifica la existencia del usuario con los datos introducidos.
      *
-     * Si las credenciales son correctas, guarda la sesión y navega
+     * Si las credenciales son correctas, guarda la sesión y envía el usuario
      * al menú correspondiente (usuario o administrador).
      *
      * @param event evento de acción generado al pulsar el botón de inicio de sesión.
@@ -107,7 +111,7 @@ public class ControladorLogin {
             return;
         }
 
-        Optional<Usuario> cuentaAutenticada = LoginDAO.autenticar(email, contraseña, rol);
+        Optional<Usuario> cuentaAutenticada = loginDAO.autenticar(email, contraseña, rol);
         if (cuentaAutenticada.isPresent()) {
             Sesion.setUsuario(cuentaAutenticada.get());
 
@@ -116,6 +120,7 @@ public class ControladorLogin {
                     : "/com/example/biblioteca_digital/vistas/admin/Vista-Administrador.fxml";
 
             Navegacion.cambiarVista(event, vistaDestino, "Bienvenido");
+
         } else {
             System.out.println("Credenciales incorrectas, comprueba tu email o contraseña.");
             mostrarAlertaErrorLogin();

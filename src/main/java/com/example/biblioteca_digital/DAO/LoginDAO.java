@@ -26,7 +26,7 @@ public class LoginDAO {
      * @return Optional con el usuario autenticado si existe coincidencia,
      * Optional.empty() si no se encuentra ningún usuario válido.
      */
-    public static Optional<Usuario> autenticar(String correo, String contrasena, String rol) {
+    public Optional<Usuario> autenticar(String correo, String contrasena, String rol) {
 
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ? AND rol = ?";
 

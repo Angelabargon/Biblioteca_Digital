@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Imports para la vista -->
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,16 +16,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<!-- Nodo Raíz -->
 <AnchorPane id="ap_login" prefHeight="770.0" prefWidth="1400.0" stylesheets="@../estilo/estilo.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorLogin">
 
     <children>
 
+        <!-- Fondo -->
       <ImageView id="iv_fondo" fitHeight="796.0" fitWidth="1400.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
           <image>
-           <Image url="@../imagenes/fondo-biblioteca.png" />
+              <Image url="@../imagenes/fondo-biblioteca.png" />
           </image>
       </ImageView>
 
+        <!-- Contenedor -->
       <VBox id="vb_login" alignment="TOP_CENTER" layoutX="427.0" layoutY="91.0" prefHeight="600.0" prefWidth="546.0" styleClass="panel">
 
           <children>
@@ -35,6 +39,7 @@
 
                   <Region id="region1" prefHeight="200.0" prefWidth="195.0" />
 
+                   <!-- Icono de la app -->
                    <ImageView id="iv_icono" fitHeight="150.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
                        <image>
                            <Image url="@../imagenes/icono-app-login.png" />
@@ -43,6 +48,7 @@
 
                    <Region id="region2" maxWidth="67.0" prefHeight="100.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
 
+                   <!-- Botón de ayuda -->
                    <Button fx:id="bt_ayuda" alignment="CENTER" mnemonicParsing="false" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="85.0" styleClass="button-secundario" text="Ayuda">
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -51,11 +57,14 @@
                         <Font size="15.0" />
                      </font>
                      <graphic>
+
+                         <!-- Icono de ayuda -->
                         <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../imagenes/IconoInterrogacion.png" />
                             </image>
                         </ImageView>
+
                      </graphic>
                   </Button>
 
@@ -63,17 +72,20 @@
 
             </HBox>
 
+              <!-- Título de sitio web -->
             <Label id="lb_titulo" alignment="CENTER" prefHeight="40.0" prefWidth="311.0" styleClass="titulo" text="BIBLIOTECA DIGITAL">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
 
+              <!-- Pequeño slogan -->
             <Label id="lb_subtitulo" alignment="CENTER" styleClass="subtitulo" text="El conocimiento al alcance de tus manos">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Label>
 
+              <!-- Contenedor de togglebutton -->
             <HBox id="hb_tbg" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                <VBox.margin>
                   <Insets top="30.0" />
@@ -81,6 +93,7 @@
 
                <children>
 
+                   <!-- Botón para usuario -->
                   <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" selected="true" styleClass="toggle-opcion" text="Usuario">
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -91,6 +104,7 @@
                      </graphic>
                   </ToggleButton>
 
+                   <!-- Botón para admin -->
                   <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-opcion" text="Admin">
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -105,33 +119,40 @@
 
             </HBox>
 
+              <!-- Campo de email -->
             <TextField fx:id="tf_email" maxHeight="35.0" maxWidth="300.0" prefHeight="35.0" promptText="Email" styleClass="text-field">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </TextField>
 
+              <!-- Campo de contraseña cesurado -->
              <PasswordField fx:id="pf_contraseña" maxWidth="300.0" prefHeight="35.0" promptText="Contraseña" styleClass="password-field">
                  <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </PasswordField>
 
+              <!-- Botón para iniciar sesión -->
             <Button fx:id="bt_inicioUsuario" alignment="CENTER" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="35.0" prefWidth="250.0" styleClass="button-principal" text="Iniciar Sesión como Usuario">
                 <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </Button>
 
+              <!-- Contenedor de botón volver -->
             <HBox id="hb_volver" prefWidth="200.0">
 
                <children>
 
+                   <!-- Botón volver -->
                   <Button fx:id="bt_volver" alignment="CENTER" mnemonicParsing="false" onAction="#volverAtras" prefHeight="35.0" prefWidth="85.0" styleClass="button-secundario" text="Volver">
                      <font>
                         <Font size="15.0" />
                      </font>
                      <graphic>
+
+                         <!-- Icono de volver -->
                         <ImageView id="iv_iconoAtras" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../imagenes/icono-volver.png" />
@@ -145,6 +166,7 @@
 
                </children>
 
+                <!-- Separación -->
                <padding>
                   <Insets top="20.0" />
                </padding>
@@ -153,6 +175,7 @@
 
          </children>
 
+          <!-- Separación -->
          <padding>
             <Insets top="40.0" />
          </padding>
