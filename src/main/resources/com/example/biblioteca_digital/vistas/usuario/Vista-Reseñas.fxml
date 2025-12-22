@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Imports para la vista -->
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -8,32 +9,40 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 
+<!-- Nodo Raíz -->
 <VBox fx:id="vb_contenedorResenas" alignment="CENTER" prefHeight="380.0" prefWidth="260.0" styleClass="panel" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.ControladorReseñas">
 
     <children>
+
+        <!-- Título -->
         <Label fx:id="lb_tituloResenas" styleClass="titulo" text="Reseñas" />
 
+        <!-- Scroll para ver las reseñas -->
         <ScrollPane fx:id="sp_resenas" prefHeight="200.0" styleClass="scroll-pane" fitToWidth="true">
             <content>
                 <VBox fx:id="ap_resenasScroll" spacing="10" />
             </content>
         </ScrollPane>
 
+        <!-- Etiqueta -->
         <Label fx:id="lb_agregarResena" styleClass="subtitulo" text="Agregar Reseña">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin></Label>
 
+        <!-- Campo de texto de reseña -->
         <TextArea fx:id="ta_textoresena" prefHeight="70.0" prefWidth="260.0" styleClass="text-field">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin></TextArea>
 
+        <!-- Selector de puntuación -->
         <ComboBox fx:id="cb_puntuacion" promptText="Puntuación" styleClass="combo-box">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin></ComboBox>
 
+        <!-- Botón de publicar reseña -->
         <Button fx:id="bt_publicarResena" alignment="CENTER" onAction="#publicarResena" styleClass="button-principal" text="Publicar Reseña">
          <VBox.margin>
             <Insets top="10.0" />

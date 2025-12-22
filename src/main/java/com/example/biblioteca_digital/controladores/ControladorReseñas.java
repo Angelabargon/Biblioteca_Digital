@@ -71,7 +71,7 @@ public class ControladorReseñas {
 
         for (Reseña r : reseñas) {
 
-            // de esta forma convertimos la calificación en estrellas.
+            // De esta forma convertimos la calificación en estrellas.
             String estrellas = "⭐".repeat(r.getCalificacion());
 
             Label nombre = new Label(r.getNombreUsuario() + " / " + estrellas);

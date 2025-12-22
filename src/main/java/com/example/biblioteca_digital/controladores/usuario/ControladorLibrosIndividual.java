@@ -3,7 +3,6 @@ package com.example.biblioteca_digital.controladores.usuario;
 /**
  * Imports necesarios de la clase.
  */
-import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO;
 import com.example.biblioteca_digital.controladores.ControladorReseñas;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -15,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Controlador encargado de gestionar la vista individual de un libro.
+ * Muestra la información del libro seleccionado y carga sus reseñas.
  */
 public class ControladorLibrosIndividual {
 
@@ -54,11 +54,8 @@ public class ControladorLibrosIndividual {
     /** Usuario que está visualizando el libro. */
     private Usuario usuarioActual;
 
-    /** DAO para gestionar favoritos (reservado para futuras funciones). */
-    private final FavoritosDAO favoritosDAO = new FavoritosDAO();
-
     /**
-     * Metodo de elección de libros.
+     * Carga los datos del libro seleccionado en la vista.
      *
      * @param libro   Libro cuyos detalles se van a mostrar.
      * @param usuario Usuario actualmente logueado.
@@ -68,27 +65,30 @@ public class ControladorLibrosIndividual {
         this.libroActual = libro;
         this.usuarioActual = usuario;
 
+        // Portada de libro.
         String nombreArchivo = libro.getFoto();
 
         if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
             String rutaBase = "/com/example/biblioteca_digital/imagenes/libros/";
             String rutaCompleta = rutaBase + nombreArchivo;
 
-            // El nombre del libro es clave para el mensaje de error.
+            // El mensaje de error.
             String tituloLibro = (libro != null && libro.getTitulo() != null) ? libro.getTitulo() : "Libro Desconocido";
 
-            // Carga con el nombre de archivo exacto que está en la BD.
             try {
                 Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
+
                 if (!portada.isError()) {
                     imagenLibro.setImage(portada);
                 }
 
             } catch (Exception e) {
                 System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + tituloLibro + ". Ruta esperada: " + rutaCompleta + "." + e);
+                e.printStackTrace();
             }
         }
 
+        // Mostramos los datos principales del libro.
         tituloLabel.setText(libro.getTitulo());
         autorLabel.setText(libro.getAutor());
         categoriaLabel.setText(libro.getGenero());
