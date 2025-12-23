@@ -81,7 +81,10 @@ public class ControladorReseñas {
             // Creamos un bloque visal parecido a una tarjeta, para cada reseña.
             VBox bloque = new VBox(nombre, contenido, fecha);
             bloque.setSpacing(5);
-            bloque.setStyle("-fx-padding: 10; -fx-background-color: #f4f4f4; -fx-border-color: #ccc;");
+            bloque.getStyleClass().add("resena-card");
+            nombre.getStyleClass().add("resena-nombre");
+            contenido.getStyleClass().add("resena-contenido");
+            fecha.getStyleClass().add("resena-fecha");
 
             // Se ajusta el ancho para que ocupe completamente el contenedor.
             bloque.setMaxWidth(Double.MAX_VALUE);

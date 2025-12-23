@@ -14,18 +14,20 @@
 
     <children>
 
-        <!-- Título -->
+        <!-- Título de la sección-->
         <Label fx:id="lb_tituloResenas" styleClass="titulo" text="Reseñas" />
 
-        <!-- Scroll para ver las reseñas -->
-        <ScrollPane fx:id="sp_resenas" prefHeight="200.0" styleClass="scroll-pane" fitToWidth="true">
+        <!-- Scroll deslizable para ver las reseñas -->
+        <ScrollPane fx:id="sp_resenas" prefHeight="200.0" styleClass="scroll-resenas" fitToWidth="true">
             <content>
+
+                <!-- Contenedor de tarjetas de reseñas-->
                 <VBox fx:id="ap_resenasScroll" spacing="10" />
             </content>
         </ScrollPane>
 
         <!-- Etiqueta -->
-        <Label fx:id="lb_agregarResena" styleClass="subtitulo" text="Agregar Reseña">
+        <Label fx:id="lb_agregarResena" styleClass="subtitulo" text="Comparte tu opinión:">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin></Label>

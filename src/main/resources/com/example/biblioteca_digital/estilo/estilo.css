@@ -240,3 +240,37 @@
     -fx-text-fill: #333;
     -fx-font-size: 14px;
 }
+
+/* =========================
+   RESEÑAS
+   ========================= */
+.resena-nombre {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.resena-contenido {
+    -fx-text-fill: #444;
+}
+
+.resena-fecha {
+    -fx-text-fill: #777;
+    -fx-font-size: 12px;
+}
+
+.scroll-resenas {
+    -fx-background-color: #fdf6e3;
+    -fx-effect: dropshadow(gaussian, #ccc, 8, 0.3, 0, 2);
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.resena-card {
+    -fx-padding: 10;
+    -fx-background-color: #f5f0e6;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
