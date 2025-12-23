@@ -27,7 +27,7 @@
    BOTONES
    ========================= */
 .button-principal {
-    -fx-background-color: #8B5E3C;   /* marrón oscuro */
+    -fx-background-color: #8B5E3C;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 6;
@@ -35,7 +35,7 @@
 }
 
 .button-secundario {
-    -fx-background-color: #A67B5B;   /* marrón medio para contraste */
+    -fx-background-color: #A67B5B;
     -fx-text-fill: white;
     -fx-background-radius: 6;
     -fx-padding: 6 12;
@@ -52,27 +52,27 @@
 }
 
 .toggle-button:selected {
-    -fx-background-color: #8B5E3C;   /* marrón oscuro */
+    -fx-background-color: #8B5E3C;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .btn-prestar {
-    -fx-background-color: #8B5E3C;   /* mismo marrón oscuro */
+    -fx-background-color: #8B5E3C;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 6;
 }
 
 .btn-ver {
-    -fx-background-color: #A67B5B;   /* marrón medio */
+    -fx-background-color: #A67B5B;
     -fx-text-fill: white;
     -fx-background-radius: 6;
 }
 
 .btn-fav-overlay {
     -fx-background-color: transparent;
-    -fx-text-fill: #e63946;   /* rojo vivo */
+    -fx-text-fill: #e63946;
     -fx-font-size: 18px;
 }
 
@@ -90,7 +90,7 @@
 .titulo {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333333;   /* gris oscuro consistente */
+    -fx-text-fill: #333333;
 }
 
 .combo-box {
@@ -176,7 +176,7 @@
 
 .card-stock {
     -fx-font-size: 13px;
-    -fx-text-fill: #10B981; /* verde */
+    -fx-text-fill: #10B981;
 }
 
 .btn-ver {
