@@ -10,15 +10,10 @@ import java.util.List;
 
 public class PrestamoDAO
 {
-    // Instancias de DAO necesarias para obtener objetos completos
+    // Inicializo los DAOs utilizados
     private CatalogoDAO catalogoDAO = new CatalogoDAO();
-
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    public void setCatalogoDAO(CatalogoDAO catalogoDAO)
-    {
-        this.catalogoDAO = catalogoDAO;
-    }
     /**
      * Método que crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica
      * @param idUsuario ID del usuario
@@ -37,13 +32,15 @@ public class PrestamoDAO
         {
             conn = ConexionBD.getConexion();
             conn.setAutoCommit(false);
-            // Crear el Préstamo
+
+            // 1. Crear el Préstamo
             try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
                 ps.executeUpdate();
             }
-            // Restar Stock del Libro
+
+            // 2. Restar Stock del Libro
             try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock)) {
                 ps2.setInt(1, idLibro);
                 int filasAfectadas = ps2.executeUpdate();
@@ -89,54 +86,49 @@ public class PrestamoDAO
     }
 
     /**
-     * Método que obtiene todos los préstamos activos de un usuario, incluyendo los datos completos del Libro y Usuario.
+     * Método que obtiene todos los préstamos activos de un usuario.
      */
     public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)
     {
         List<Prestamo> prestamos = new ArrayList<>();
-        String sql = "SELECT * FROM prestamos WHERE id_usuario = ?";
+        String sql = """
+        SELECT 
+            p.id AS idPrestamo, p.fecha_inicio, p.fecha_fin, p.estado,
+            l.id AS idLibro, l.titulo AS tituloLibro,
+            u.id AS idUsuario, u.nombre AS nombreUsuario
+        FROM prestamos p
+        JOIN libros l ON p.id_libro = l.id
+        JOIN usuarios u ON p.id_usuario = u.id
+        WHERE p.id_usuario = ? AND p.estado = 'activo'
+        """;
+        // Abrir Connection y PreparedStatement usando try-with-resources
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement pst = conn.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
-            ResultSet rs = pst.executeQuery();
-            try
+            try (ResultSet rs = pst.executeQuery())
             {
                 while (rs.next())
                 {
-                    int idLibro = rs.getInt("id_libro");
-                    int id_usuario_actual = rs.getInt("id_usuario");
                     Prestamo p = new Prestamo();
-                    p.setId(rs.getInt("id"));
-                    if (p.getUsuario() == null) {
-                        p.setUsuario(new com.example.biblioteca_digital.modelos.Usuario());
-                    }
-                    if (p.getLibro() == null) {
-                        p.setLibro(new com.example.biblioteca_digital.modelos.Libro());
-                    }
-                    p.getUsuario().setId(id_usuario_actual);
-                    p.getLibro().setId(idLibro);
+                    p.setId(rs.getInt("idPrestamo"));
                     p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
                     p.setFecha_fin(rs.getDate("fecha_fin").toLocalDate());
                     p.setEstado(rs.getString("estado"));
 
-                    Libro libroCompleto = catalogoDAO.obtenerLibroPorId(idLibro);
-                    Usuario usuarioCompleto = usuarioDAO.obtenerUsuarioPorId(id_usuario_actual);
+                    Libro libro = new Libro();
+                    libro.setId(rs.getInt("idLibro"));
+                    libro.setTitulo(rs.getString("tituloLibro"));
+                    p.setLibro(libro);
 
-                    p.setLibro(libroCompleto);
-                    p.setUsuario(usuarioCompleto);
+                    Usuario usuario = new Usuario();
+                    usuario.setId(rs.getInt("idUsuario"));
+                    usuario.setNombre(rs.getString("nombreUsuario"));
+                    p.setUsuario(usuario);
 
                     prestamos.add(p);
                 }
             }
-            finally
-            {
-                if (rs != null)
-                {
-                    rs.close();
-                }
-            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -170,5 +162,80 @@ public class PrestamoDAO
             e.printStackTrace();
         }
         return false;
+    }
+    public void setCatalogoDAO(CatalogoDAO catalogoDAO)
+    {
+        this.catalogoDAO = catalogoDAO;
+    }
+
+    public void eliminarPrestamo(int idPrestamo) throws SQLException
+    {
+        String sqlObtenerLibro =
+                "SELECT id_libro FROM prestamos WHERE id = ?";
+        String sqlActualizarPrestamo =
+                "UPDATE prestamos SET estado = 'devuelto' WHERE id = ?";
+        String sqlActualizarStock =
+                "UPDATE libros SET cantidad_disponible = cantidad_disponible + 1 WHERE id = ?";
+        Connection conn = null;
+        try
+        {
+            conn = ConexionBD.getConexion();
+            conn.setAutoCommit(false);
+            int idLibro;
+            try (PreparedStatement pst = conn.prepareStatement(sqlObtenerLibro))
+            {
+                pst.setInt(1, idPrestamo);
+                try (ResultSet rs = pst.executeQuery())
+                {
+                    if (!rs.next())
+                    {
+                        throw new SQLException("No se encontró el préstamo con id " + idPrestamo);
+                    }
+                    idLibro = rs.getInt("id_libro");
+                }
+            }
+            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarPrestamo))
+            {
+                pst.setInt(1, idPrestamo);
+                pst.executeUpdate();
+            }
+            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarStock))
+            {
+                pst.setInt(1, idLibro);
+                pst.executeUpdate();
+            }
+            conn.commit();
+        }
+        catch (SQLException e)
+        {
+            if (conn != null)
+            {
+                try
+                {
+                    conn.rollback();
+                }
+                catch (SQLException rollbackEx)
+                {
+                    rollbackEx.addSuppressed(e);
+                    throw rollbackEx;
+                }
+            }
+            throw e;
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                try
+                {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+                catch (SQLException closeEx)
+                {
+                    throw closeEx;
+                }
+            }
+        }
     }
 }

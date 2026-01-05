@@ -95,7 +95,7 @@ public class ControladorLibrosIndividual {
         isbnLabel.setText(libro.getIsbn());
 
         // Disponibilidad actual.
-        String disponiblesText = String.format("Disponibles: %d/%d", libro.getCantidadDisponible(), libro.getCantidad());
+        String disponiblesText = String.format("Disponibles: %d/%d", libro.getCantidad(), libro.getCantidadDisponible());
         disponiblesLabel.setText(disponiblesText);
 
         // Descripción del libro.

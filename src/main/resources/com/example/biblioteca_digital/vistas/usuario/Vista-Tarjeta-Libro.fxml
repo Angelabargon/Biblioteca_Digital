@@ -28,7 +28,7 @@
                 alignment="CENTER"
                 onAction="#handleAlternarFavorito"
                 text="♡"
-                styleClass="btn-fav-overlay"
+                styleClass="btn-fav"
                 StackPane.alignment="TOP_RIGHT">
             <StackPane.margin>
                 <Insets top="10.0" right="10.0"/>
