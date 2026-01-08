@@ -21,10 +21,10 @@
         </ImageView>
 
         <!-- Botón hacia Registro -->
-        <Button fx:id="registro" mnemonicParsing="false" onAction="#irARegistro" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Registro" AnchorPane.leftAnchor="935.0" AnchorPane.topAnchor="362.4" />
+        <Button fx:id="registro" mnemonicParsing="false" onAction="#irARegistro" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Registro" style="-fx-font-size: 18px;" AnchorPane.leftAnchor="935.0" AnchorPane.topAnchor="362.4" />
 
         <!-- Botón hacia Login -->
-        <Button fx:id="login" mnemonicParsing="false" onAction="#irALogin" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Login" AnchorPane.leftAnchor="668.0" AnchorPane.topAnchor="362.0" />
+        <Button fx:id="login" mnemonicParsing="false" onAction="#irALogin" prefHeight="67.0" prefWidth="166.0" styleClass="button-principal" text="Login" style="-fx-font-size: 18px;" AnchorPane.leftAnchor="668.0" AnchorPane.topAnchor="362.0" />
 
         <!-- Título -->
         <Label layoutX="574.0" layoutY="263.0" prefHeight="58.0" prefWidth="655.0" styleClass="titulo-principal" text="¡BIENVENIDO A TU BIBLIOTECA DIGITAL!" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="574.0" AnchorPane.topAnchor="263.0" />
