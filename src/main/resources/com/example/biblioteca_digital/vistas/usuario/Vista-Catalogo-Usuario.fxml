@@ -20,17 +20,11 @@
             xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">
     <!-- Fondo -->
-    <background>
-        <Background>
-            <fills>
-                <BackgroundFill>
-                    <fill>
-                        .fondo
-                    </fill>
-                </BackgroundFill>
-            </fills>
-        </Background>
-    </background>
+    <ImageView fitHeight="548" fitWidth="1410" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../imagenes/fondomenu.png" />
+        </image>
+    </ImageView>
 
     <!-- ZONA DE FILTROS -->
     <top>
