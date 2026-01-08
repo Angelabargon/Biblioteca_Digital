@@ -3,6 +3,7 @@ package com.example.biblioteca_digital.controladores.usuario;
 /**
  * Imports necesarios de la clase.
  */
+import com.example.biblioteca_digital.DAO.usuario.ReseñasDAO;
 import com.example.biblioteca_digital.controladores.ControladorReseñas;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -101,6 +102,14 @@ public class ControladorLibrosIndividual {
         // Descripción del libro.
         String isbnText = String.format("ISBN: %s", libro.getDescripcion());
         descripcionArea.setText(isbnText);
+
+        // Calificación media de reseñas.
+        ReseñasDAO reseñasDAO = new ReseñasDAO();
+        double media = reseñasDAO.obtenerPuntuacionMedia(libro.getId()); if (media > 0) {
+            calificacionMedia.setText(String.format("Puntuación media: %.1f / 5", media));
+        } else {
+            calificacionMedia.setText("Puntuación media: Sin reseñas");
+        }
 
         // Se pasa el ID del libro y el usuario actual al controlador de reseñas.
         vb_contenedorResenasController.setContexto(libro.getId(), usuarioActual);
