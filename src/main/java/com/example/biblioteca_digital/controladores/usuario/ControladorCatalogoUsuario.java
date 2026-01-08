@@ -26,7 +26,7 @@ public class ControladorCatalogoUsuario {
     private static final String FXML_CARD_PATH = "/com/example/biblioteca_digital/vistas/usuario/Vista-Tarjeta-Libro.fxml";
 
     /** Lista de géneros disponibles para el filtro. */
-    private static final List<String> GENEROS_ESTATICOS = Arrays.asList("Todas", "Ficción", "Clásicos", "Tragedia", "Romance", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía");
+    private static final List<String> GENEROS_ESTATICOS = Arrays.asList("Todas", "Ficción", "Clásicos", "Tragedia", "Terror", "Romance", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía");
 
     /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
