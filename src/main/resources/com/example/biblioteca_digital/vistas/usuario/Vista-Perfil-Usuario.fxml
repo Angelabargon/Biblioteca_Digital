@@ -81,7 +81,7 @@
                 mnemonicParsing="false"
                 onAction="#cerrarPerfil"
                 prefHeight="35.0" prefWidth="85.0"
-                text="Cerrar"
+                text="Volver"
                 styleClass="button-secundario">
             <graphic>
 
