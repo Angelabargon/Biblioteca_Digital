@@ -41,10 +41,18 @@ public class ControladorLeerLibro {
 
         // Muestra los datos del libro.
         lblTitulo.setText(prestamo.getLibro().getTitulo());
-        lblAutor.setText("por " + prestamo.getLibro().getAutor());
+        lblAutor.setText(
+                prestamo.getLibro().getAutor() != null
+                        ? "por " + prestamo.getLibro().getAutor()
+                        : "Autor desconocido"
+        );
 
         // Muestra el contenido del libro.
-        areaContenido.setText(prestamo.getLibro().getContenido());
+        areaContenido.setText(
+                prestamo.getLibro().getContenido() != null
+                        ? prestamo.getLibro().getContenido()
+                        : "Este libro no tiene contenido disponible."
+        );
 
         // Calcula los días que quedan del préstamo.
         long dias = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(), prestamo.getFecha_fin());

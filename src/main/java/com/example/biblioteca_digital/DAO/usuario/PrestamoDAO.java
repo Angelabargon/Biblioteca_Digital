@@ -93,9 +93,18 @@ public class PrestamoDAO
         List<Prestamo> prestamos = new ArrayList<>();
         String sql = """
         SELECT 
-            p.id AS idPrestamo, p.fecha_inicio, p.fecha_fin, p.estado,
-            l.id AS idLibro, l.titulo AS tituloLibro,
-            u.id AS idUsuario, u.nombre AS nombreUsuario
+            p.id AS idPrestamo,
+            p.fecha_inicio,
+            p.fecha_fin,
+            p.estado,
+        
+            l.id AS idLibro,
+            l.titulo AS tituloLibro,
+            l.autor AS autorLibro,
+            l.contenido AS contenidoLibro,
+        
+            u.id AS idUsuario,
+            u.nombre AS nombreUsuario
         FROM prestamos p
         JOIN libros l ON p.id_libro = l.id
         JOIN usuarios u ON p.id_usuario = u.id
@@ -119,6 +128,8 @@ public class PrestamoDAO
                     Libro libro = new Libro();
                     libro.setId(rs.getInt("idLibro"));
                     libro.setTitulo(rs.getString("tituloLibro"));
+                    libro.setAutor(rs.getString("autorLibro"));
+                    libro.setContenido(rs.getString("contenidoLibro"));
                     p.setLibro(libro);
 
                     Usuario usuario = new Usuario();
