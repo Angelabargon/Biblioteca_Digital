@@ -1,5 +1,8 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+/**
+ * Imports necesarios de la clase.
+ */
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.modelos.Prestamo;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -10,20 +13,24 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.Node; // Importación directa para mayor claridad
-
+import javafx.scene.Node;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+/**
+ * Controlador encargado de gestionar los préstamos
+ * del usuario.
+ */
 public class ControladorPrestamosUsuario
 {
-
+    /** Contenedor donde se muestran los préstamos del usuario que está logueado. */
     @FXML private VBox contenedorPrestamos;
-
+    /** Variable privada que guarda el usuario logueado */
     private Usuario usuarioActual;
+    /** Variable para acceder a los préstamos de la base de datos y sus funciones */
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
     /**
@@ -66,7 +73,6 @@ public class ControladorPrestamosUsuario
         contenedorPrestamos.getChildren().clear();
         // Carga los préstamos
         List<Prestamo> prestamos = prestamoDAO.obtenerPrestamosDeUsuario(usuarioActual.getId());
-
         if (prestamos.isEmpty())
         {
             contenedorPrestamos.getChildren().add(new Label("No tienes préstamos activos en este momento."));
@@ -89,16 +95,10 @@ public class ControladorPrestamosUsuario
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamo-Item.fxml"));
-            // Usar Node de javafx.scene.Node para la importación directa.
             Node item = loader.load();
             ControladorPedirPrestamo controlador = loader.getController();
-
             String tiempoRestante = calcularTiempoRestante(prestamo.getFecha_fin());
-
-            // Asumiendo que el método handleLeerLibro está en esta clase.
-            // Si el nombre del controlador es correcto, esta línea es la que propaga los datos.
             controlador.setPrestamo(prestamo, tiempoRestante, this::handleLeerLibro, this::handleQuitarLibro);
-
             return item;
         }
         catch (IOException e)
@@ -118,7 +118,7 @@ public class ControladorPrestamosUsuario
         long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
         if (dias > 0)
         {
-            return dias + " días restantes"; // Cambio: Mostrar los días restantes directamente para ser más explícito
+            return dias + " días restantes";
         } else if (dias == 0)
         {
             return "Vence Hoy";
@@ -144,7 +144,7 @@ public class ControladorPrestamosUsuario
             controlador.cargarContenido(prestamo);
             javafx.stage.Stage stage = new javafx.stage.Stage();
             String titulo = (prestamo.getLibro() != null) ? prestamo.getLibro().getTitulo() : "Libro";
-            stage.setTitle("Leyendo: " + titulo); // Añadir un prefijo al título.
+            stage.setTitle("Leyendo: " + titulo);
             stage.setScene(new javafx.scene.Scene(root));
             stage.show();
         }

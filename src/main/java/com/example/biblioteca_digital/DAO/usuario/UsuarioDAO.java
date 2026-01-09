@@ -1,7 +1,7 @@
 package com.example.biblioteca_digital.DAO.usuario;
 
 /**
- * Imports necesarios.
+ * Imports necesarios de la clase.
  */
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -9,11 +9,11 @@ import java.sql.*;
 
 /**
  * DAO encargado de gestionar operaciones relacionadas con los usuarios.
- *
  * Este DAO se utiliza en vistas donde se necesita mostrar información
  * del usuario sin cargar toda la sesión completa.
  */
-public class UsuarioDAO {
+public class UsuarioDAO
+{
 
     /**
      * Obtiene un usuario por su ID.

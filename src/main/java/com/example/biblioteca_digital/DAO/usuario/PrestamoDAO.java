@@ -1,5 +1,8 @@
 package com.example.biblioteca_digital.DAO.usuario;
 
+/**
+ * Imports necesarios de la clase.
+ */
 import com.example.biblioteca_digital.conexion.ConexionBD;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Prestamo;
@@ -8,11 +11,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO encargado de gestionar operaciones relacionadas con los libros en los préstamos del usuario.
+ * Este DAO se utiliza en la vista de mis préstamos
+ */
 public class PrestamoDAO
 {
-    // Inicializo los DAOs utilizados
+    /** Variable de inicialización del DAO de catálogo */
     private CatalogoDAO catalogoDAO = new CatalogoDAO();
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+    public void setCatalogoDAO(CatalogoDAO catalogoDAO)
+    {
+        this.catalogoDAO = catalogoDAO;
+    }
 
     /**
      * Método que crea un nuevo préstamo y decrementa el stock del libro en una transacción atómica
@@ -25,43 +35,42 @@ public class PrestamoDAO
         String sqlPrestamo = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
                 "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL (SELECT duracion_prestamo FROM libros WHERE id = ?) DAY), 'activo')";
         String sqlUpdateStock = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ? AND cantidad_disponible > 0";
-
         Connection conn = null;
-
         try
         {
             conn = ConexionBD.getConexion();
             conn.setAutoCommit(false);
-
-            // 1. Crear el Préstamo
-            try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
+            // Crea el Préstamo
+            try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo))
+            {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
                 ps.setInt(3, idLibro);
                 ps.executeUpdate();
             }
-
-            // 2. Restar Stock del Libro
-            try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock)) {
+            // Resta Stock del Libro
+            try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock))
+            {
                 ps2.setInt(1, idLibro);
                 int filasAfectadas = ps2.executeUpdate();
-
                 if (filasAfectadas == 0)
                 {
                     throw new SQLException("Error: No se pudo restar el stock del libro o no hay unidades disponibles.");
                 }
             }
-
             conn.commit();
             return true;
-
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             System.err.println("Error en la transacción de préstamo. Realizando rollback: " + e.getMessage());
-            if (conn != null) {
-                try {
+            if (conn != null)
+            {
+                try
+                {
                     conn.rollback();
-                } catch (SQLException rollbackException)
+                }
+                catch (SQLException rollbackException)
                 {
                     System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
                 }
@@ -94,16 +103,16 @@ public class PrestamoDAO
         List<Prestamo> prestamos = new ArrayList<>();
         String sql = """
         SELECT 
-        p.id AS idPrestamo, p.fecha_inicio, p.fecha_fin, p.estado,
-        l.id AS idLibro, l.titulo AS tituloLibro, l.autor AS autorLibro, 
-        l.contenido AS contenidoLibro, l.duracion_prestamo, -- Añadimos la columna
-        u.id AS idUsuario, u.nombre AS nombreUsuario
-    FROM prestamos p
-    JOIN libros l ON p.id_libro = l.id
-    JOIN usuarios u ON p.id_usuario = u.id
-    WHERE p.id_usuario = ? AND p.estado = 'activo'
-    """;
-        // Abrir Connection y PreparedStatement usando try-with-resources
+            p.id AS idPrestamo, p.fecha_inicio, p.fecha_fin, p.estado,
+            l.id AS idLibro, l.titulo AS tituloLibro, l.autor AS autorLibro, 
+            l.contenido AS contenidoLibro, l.duracion_prestamo, -- Añadimos la columna
+            u.id AS idUsuario, u.nombre AS nombreUsuario
+        FROM prestamos p
+        JOIN libros l ON p.id_libro = l.id
+        JOIN usuarios u ON p.id_usuario = u.id
+        WHERE p.id_usuario = ? AND p.estado = 'activo'
+        """;
+        // Abrir Connection y PreparedStatement usando try con condicion
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement pst = conn.prepareStatement(sql))
         {
@@ -134,7 +143,9 @@ public class PrestamoDAO
                     prestamos.add(p);
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         return prestamos;
@@ -168,11 +179,12 @@ public class PrestamoDAO
         }
         return false;
     }
-    public void setCatalogoDAO(CatalogoDAO catalogoDAO)
-    {
-        this.catalogoDAO = catalogoDAO;
-    }
 
+    /**
+     * Método para quitar el préstamp de la lista
+     * @param idPrestamo
+     * @throws SQLException
+     */
     public void eliminarPrestamo(int idPrestamo) throws SQLException
     {
         String sqlObtenerLibro =

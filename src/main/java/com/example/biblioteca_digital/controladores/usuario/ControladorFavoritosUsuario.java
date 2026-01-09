@@ -3,7 +3,7 @@ package com.example.biblioteca_digital.controladores.usuario;
 /**
  * Imports necesarios de la clase.
  */
-import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO; // Importar la nueva clase DAO
+import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
@@ -14,38 +14,33 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Controlador encargado de gestionar la vista de libros favoritos del usuario.
+ * Controlador encargado de gestionar la vista de los
+ * libros favoritos del usuario.
  */
 public class ControladorFavoritosUsuario
 {
     /** Contenedor donde se muestran las tarjetas de libros favoritos. */
     @FXML private FlowPane contenedorFavoritos;
-
     /** Ruta del FXML que representa cada tarjeta individual de libro. */
     private static final String FXML_CARD_PATH = "/com/example/biblioteca_digital/vistas/usuario/Vista-Tarjeta-Libro.fxml";
-
     /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
-
     /** DAO encargado de obtener los libros favoritos del usuario. */
     private final FavoritosDAO favoritosDAO = new FavoritosDAO();
 
     /**
      * Metodo que inicializa el controlador con el usuario actual.
      */
-    public void initialize() {
-
-        if (contenedorFavoritos != null) {
-
-            // Espacio vertical entre tarjetas.
+    public void initialize()
+    {
+        if (contenedorFavoritos != null)
+        {
+            //Espacio entre las tarjetas
             contenedorFavoritos.setVgap(15);
-
-            // Espacio horizontal entre tarjetas.
             contenedorFavoritos.setHgap(15);
         }
     }
@@ -55,10 +50,11 @@ public class ControladorFavoritosUsuario
      *
      * @param usuario El objeto Usuario actualmente logueado.
      */
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario)
+    {
         this.usuarioActual = usuario;
-
-        if (usuarioActual != null) {
+        if (usuarioActual != null)
+        {
             cargarFavoritos();
         }
     }
@@ -66,17 +62,19 @@ public class ControladorFavoritosUsuario
     /**
      * Metodo que carga la lista de favoritos en la ListView usando el DAO.
      */
-    private void cargarFavoritos() {
-
+    private void cargarFavoritos()
+    {
         if (usuarioActual == null) return;
         contenedorFavoritos.getChildren().clear();
         List<Libro> librosFavoritos = favoritosDAO.obtenerFavoritos(usuarioActual.getId());
-
-        if (librosFavoritos.isEmpty()) {
+        if (librosFavoritos.isEmpty())
+        {
             contenedorFavoritos.getChildren().add(new Label("Aún no tienes libros marcados como favoritos."));
-        } else {
-
-            for (Libro libro : librosFavoritos) {
+        }
+        else
+        {
+            for (Libro libro : librosFavoritos)
+            {
                 contenedorFavoritos.getChildren().add(crearVistaLibroItem(libro));
             }
         }
@@ -93,10 +91,8 @@ public class ControladorFavoritosUsuario
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Invidual.fxml"));
             Parent root = loader.load();
-
             ControladorLibrosIndividual controlador = loader.getController();
             controlador.setLibro(libro, usuarioActual);
-
             Stage stage = new Stage();
             stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
             stage.setTitle("Detalles de: " + libro.getTitulo());

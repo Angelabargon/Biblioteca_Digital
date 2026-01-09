@@ -1,5 +1,8 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
+/**
+ * Imports necesarios de la clase.
+ */
 import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.modelos.Libro;
@@ -10,101 +13,151 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class ControladorLibroCatalogo {
-
+/**
+ * Controlador de los libros tanto en el catálogo
+ * como en los favoritos, permite ver, pedir prestado
+ * y ver algunos detalles de los libros
+ */
+public class ControladorLibroCatalogo
+{
+    /** Etiqueta que muestra el título del libro. */
     @FXML private Label lblTitulo;
+    /** Etiqueta que muestra el autor del libro. */
     @FXML private Label lblAutor;
+    /** Etiqueta que muestra el género del libro. */
     @FXML private Label lblGenero;
+    /** Etiqueta que muestra la portada del libro. */
     @FXML private ImageView imgPortada;
+    /** Etiqueta que muestra la disponibilidad del libro. */
     @FXML private Label lblDisponibles;
+    /** Botón que permite pedir prestado el libro. */
     @FXML private Button btnPedirPrestado;
+    /** Etiqueta que muestra que el libro no está disponible. */
     @FXML private Label lblNoDisponibleTag;
-    @FXML private Button btnVer;
+    /** Botón que permite agregar a favoritos el libro. */
     @FXML private Button btnFavorito;
-
+    /** Variable privada para acceder al libro */
     private Libro libroActual;
+    /** Variable privada del usuario */
     private Usuario usuarioActual;
-
-    // Referencias a los posibles padres
+    /** Variable privada para utilizar el botón de ver en el catálogo de usuario */
     private ControladorCatalogoUsuario controladorPadre1;
+    /** Variable privada para utilizar el botón de ver en el apartado de favoritos de usuario */
     private ControladorFavoritosUsuario controladorPadre2;
-
+    /** Variable privada para utilizar los métodos privados de la parte de favoritos */
     private final FavoritosDAO favoritosDAO = new FavoritosDAO();
+    /** Variable privada para utilizar los métodos privados de la parte de prestamos */
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
     /**
-     * Configuración para el CATÁLOGO GENERAL
+     * Configuración para el CATÁLOGO
      */
-    public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre) {
+    public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre)
+    {
         this.controladorPadre1 = padre;
         this.controladorPadre2 = null; // Aseguramos que el otro sea null
         inicializarComun(libro, usuario);
     }
 
     /**
-     * Configuración para la vista de FAVORITOS
+     * Configuración para los FAVORITOS
      */
-    public void setDatos(Libro libro, Usuario usuario, ControladorFavoritosUsuario padre) {
+    public void setDatos(Libro libro, Usuario usuario, ControladorFavoritosUsuario padre)
+    {
         this.controladorPadre2 = padre;
-        this.controladorPadre1 = null; // Aseguramos que el otro sea null
+        this.controladorPadre1 = null;
         inicializarComun(libro, usuario);
     }
 
     /**
-     * Lógica compartida para rellenar la tarjeta (evita duplicar código)
+     * Método para rellenar la tarjeta
+     * @param libro
+     * @param usuario
      */
-    private void inicializarComun(Libro libro, Usuario usuario) {
+    private void inicializarComun(Libro libro, Usuario usuario)
+    {
         this.libroActual = libro;
         this.usuarioActual = usuario;
-
-        if (usuarioActual == null) {
+        if (usuarioActual == null)
+        {
             btnPedirPrestado.setDisable(true);
             btnFavorito.setDisable(true);
             return;
         }
-
         // Rellenar textos
         lblTitulo.setText(libro.getTitulo());
         lblAutor.setText(libro.getAutor());
         lblGenero.setText(libro.getGenero());
-
+        if (libro.getTitulo() != null && !libro.getTitulo().trim().isEmpty() && libro.getAutor() != null && !libro.getAutor().trim().isEmpty())
+        {
+            //Si se crea vacío
+            lblTitulo.setText("Sin Nombre");
+            lblAutor.setText("Anonimo");
+        }
         // Cargar Imagen
         cargarImagen(libro);
-
         // Lógica de disponibilidad y préstamos
         actualizarEstadoDisponibilidad();
-
         // Actualizar icono corazón
         actualizarBotonFavorito();
     }
 
-    private void cargarImagen(Libro libro) {
-        if (libro.getFoto() != null && !libro.getFoto().isEmpty()) {
-            String ruta = "/com/example/biblioteca_digital/imagenes/libros/" + libro.getFoto();
-            try {
-                Image portada = new Image(getClass().getResourceAsStream(ruta));
-                if (!portada.isError()) imgPortada.setImage(portada);
-            } catch (Exception e) {
-                System.err.println("Error cargando imagen: " + ruta);
+    /**
+     * Método que carga la imagen de libro si la hay, si no hay imágen de libro se utiliza una imagen genérica
+     * @param libro
+     */
+    private void cargarImagen(Libro libro)
+    {
+        String ruta;
+        //Si no existe la imagen
+        if (libro.getFoto() != null && !libro.getFoto().trim().isEmpty())
+        {
+            ruta = "/com/example/biblioteca_digital/imagenes/libros/" + libro.getFoto();
+        }
+        else
+        {
+            ruta = "/com/example/biblioteca_digital/imagenes/libros/generica.jpg";
+        }
+        try
+        {
+            Image portada = new Image(getClass().getResourceAsStream(ruta));
+            if (portada.isError())
+            {
+                System.err.println("No se encontró el archivo: " + ruta);
+                ruta = "/com/example/biblioteca_digital/imagenes/libros/generica.jpg";
+                portada = new Image(getClass().getResourceAsStream(ruta));
             }
+            imgPortada.setImage(portada);
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error crítico cargando imagen: " + e.getMessage());
         }
     }
 
-    private void actualizarEstadoDisponibilidad() {
+    /**
+     * Método que actualiza la disponibilidad de un libro cuando lo pides prestado
+     */
+    private void actualizarEstadoDisponibilidad()
+    {
         int disponibles = libroActual.getCantidadDisponible();
         boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libroActual.getId());
-
-        if (disponibles <= 0 || yaEstaPrestado) {
+        if (disponibles <= 0 || yaEstaPrestado)
+        {
             lblDisponibles.setText("No disponible");
-            if (lblNoDisponibleTag != null) {
+            if (lblNoDisponibleTag != null)
+            {
                 lblNoDisponibleTag.setText(yaEstaPrestado ? "Ya Prestado" : "Agotado");
                 lblNoDisponibleTag.setVisible(true);
                 lblNoDisponibleTag.setManaged(true);
             }
             btnPedirPrestado.setDisable(true);
-        } else {
+        }
+        else
+        {
             lblDisponibles.setText(String.format("Disponibles: %d/%d", disponibles, libroActual.getCantidad()));
-            if (lblNoDisponibleTag != null) {
+            if (lblNoDisponibleTag != null)
+            {
                 lblNoDisponibleTag.setVisible(false);
                 lblNoDisponibleTag.setManaged(false);
             }
@@ -112,47 +165,64 @@ public class ControladorLibroCatalogo {
         }
     }
 
+
+    /**
+     *Método para ver los detalles de un libro ya sea en catálogo o en favoritos (Donde esté el usuario)
+     */
     @FXML
-    private void handleVerDetalles() {
-        // Ejecuta el método clickVer del padre que esté activo
-        if (controladorPadre1 != null) {
+    private void handleVerDetalles()
+    {
+        if (controladorPadre1 != null)
+        {
             controladorPadre1.clickVer(libroActual);
-        } else if (controladorPadre2 != null) {
+        }
+        else if (controladorPadre2 != null)
+        {
             controladorPadre2.clickVer(libroActual);
         }
     }
 
+    /**
+     * Método para el botón de pedir prestado
+     */
     @FXML
-    private void handlePedirPrestado() {
-        if (controladorPadre1 != null) {
+    private void handlePedirPrestado()
+    {
+        if (controladorPadre1 != null)
+        {
             controladorPadre1.clickPedirPrestamo(libroActual);
         }
-        // Nota: Si quieres que se pueda pedir desde favoritos,
-        // deberías implementar clickPedirPrestamo en ControladorFavoritosUsuario también.
     }
 
+    /**
+     * Metodo del botón de favoritos
+     */
     @FXML
-    private void handleAlternarFavorito() {
-        if (libroActual != null && usuarioActual != null) {
+    private void handleAlternarFavorito()
+    {
+        if (libroActual != null && usuarioActual != null)
+        {
             favoritosDAO.alternarFavorito(usuarioActual.getId(), libroActual.getId());
             actualizarBotonFavorito();
-
-            // Opcional: Si estamos en la vista de favoritos, refrescar al quitar
-            if (controladorPadre2 != null) {
-                // Podrías llamar a un método del padre para que refresque la lista
-                // controladorPadre2.cargarFavoritos();
-            }
         }
     }
 
-    private void actualizarBotonFavorito() {
+    /**
+     * Método de la lógica actualización del botón de favoritos
+     */
+    private void actualizarBotonFavorito()
+    {
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
         btnFavorito.setText("❤");
-        if (esFavorito) {
-            if (!btnFavorito.getStyleClass().contains("favorito-activo")) {
+        if (esFavorito)
+        {
+            if (!btnFavorito.getStyleClass().contains("favorito-activo"))
+            {
                 btnFavorito.getStyleClass().add("favorito-activo");
             }
-        } else {
+        }
+        else
+        {
             btnFavorito.getStyleClass().remove("favorito-activo");
         }
     }

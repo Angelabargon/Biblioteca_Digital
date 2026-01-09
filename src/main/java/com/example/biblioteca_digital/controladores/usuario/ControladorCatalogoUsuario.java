@@ -1,7 +1,7 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
 /**
- * Imports de clase ControladorCatalogoUsuario.
+ * Imports necesarios de la clase.
  */
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
@@ -20,26 +20,26 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controlador del catálogo en el menú del usuario.
+ * Muestra los libros existentes, tanto disponibles
+ * como no disponibles, con sus respectivos filtros
+ * posibles.
+ */
 public class ControladorCatalogoUsuario
 {
     /** Ruta del FXML que diseña cada tarjeta individual de libro. */
     private static final String FXML_CARD_PATH = "/com/example/biblioteca_digital/vistas/usuario/Vista-Tarjeta-Libro.fxml";
-
     /** Lista de géneros disponibles para el filtro. */
     private static final List<String> GENEROS_ESTATICOS = Arrays.asList("Todas", "Ficción", "Clásicos", "Tragedia", "Terror", "Romance", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía");
-
     /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
-
     /** Número de préstamos activos del usuario. */
     private int prestamosActivos = 0;
-
     /** DAO encargado de obtener libros del catálogo. */
     private final CatalogoDAO catalogoDAO = new CatalogoDAO();
-
     /** DAO encargado de gestionar préstamos. */
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
-
     /** Elementos de la vista referenciados.*/
     @FXML private Label labelBienvenida;
     @FXML private Label labelContadorPrestamos;
