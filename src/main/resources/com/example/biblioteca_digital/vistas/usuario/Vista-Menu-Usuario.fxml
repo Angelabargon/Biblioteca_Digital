@@ -55,14 +55,14 @@
     </Button>
    <Line endX="99.99998474121094" endY="17.0" layoutX="147.0" layoutY="171.0" startX="99.99998474121094" startY="-99.20000457763672" styleClass="linea-decorativa" />
 
-      <ToggleButton fx:id="tbt_MENU" layoutX="260.0" layoutY="146.0" onAction="#handleCatalogo" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-opcion" text="Catálogo">
+      <ToggleButton fx:id="tbt_MENU" layoutX="260.0" layoutY="146.0" onAction="#handleCatalogo" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-button" text="Catálogo">
           <toggleGroup>
               <ToggleGroup fx:id="menuGroup" />
           </toggleGroup>
       </ToggleButton>
 
-      <ToggleButton fx:id="tbt_PRESTAMOS" layoutX="410.0" layoutY="146.0" onAction="#handlePrestamos" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-opcion" text="Mis préstamos" toggleGroup="$menuGroup" />
+      <ToggleButton fx:id="tbt_PRESTAMOS" layoutX="410.0" layoutY="146.0" onAction="#handlePrestamos" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-button" text="Mis préstamos" toggleGroup="$menuGroup" />
 
-      <ToggleButton fx:id="tbt_FAVORITOS" layoutX="561.0" layoutY="146.0" onAction="#handleFavoritos" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-opcion" text="Mis favoritos" toggleGroup="$menuGroup" />
+      <ToggleButton fx:id="tbt_FAVORITOS" layoutX="561.0" layoutY="146.0" onAction="#handleFavoritos" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-button" text="Mis favoritos" toggleGroup="$menuGroup" />
 
 </AnchorPane>

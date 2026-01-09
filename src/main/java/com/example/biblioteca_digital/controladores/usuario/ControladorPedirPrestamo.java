@@ -52,9 +52,14 @@ public class ControladorPedirPrestamo
         String autor = catalogoDAO.obtenerAutorPorIdLibro(prestamo.getLibro().getId());
         lblAutor.setText(autor != null ? autor : "Autor Desconocido");
         lblDiasRestantes.setText(tiempoRestante);
-        if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy"))
-        {
+
+        if (tiempoRestante.startsWith("Vencido") || tiempoRestante.startsWith("Vence Hoy")) {
+            lblDiasRestantes.getStyleClass().removeAll("badge-aviso");
+            lblDiasRestantes.getStyleClass().add("badge-vencido");
             btnLeerLibro.setDisable(true);
+        } else {
+            lblDiasRestantes.getStyleClass().removeAll("badge-vencido");
+            lblDiasRestantes.getStyleClass().add("badge-aviso");
         }
     }
 

@@ -61,7 +61,7 @@
                <children>
 
                    <!-- Botón para usuario -->
-                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" selected="true" styleClass="toggle-opcion" text="Usuario">
+                  <ToggleButton fx:id="tbt_usuario" prefHeight="35.0" prefWidth="100.0" selected="true" styleClass="toggle-button" text="Usuario">
                      <graphic>
                         <ImageView id="iv_iconoUsuario" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                              <image>
@@ -72,7 +72,7 @@
                   </ToggleButton>
 
                    <!-- Botón para admin -->
-                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-opcion" text="Admin">
+                  <ToggleButton fx:id="tbt_admin" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-button" text="Admin">
                      <graphic>
                         <ImageView id="iv_iconoAdmin" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                          <image>

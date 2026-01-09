@@ -84,16 +84,19 @@ public class ControladorLibrosIndividual
         String isbnText = String.format("ISBN: %s", libro.getDescripcion());
         descripcionArea.setText(isbnText);
         // Calificación media de reseñas.
+
+        actualizarMedia();
+
+        vb_contenedorResenasController.setContexto(libro.getId(), usuarioActual);
+        vb_contenedorResenasController.setActualizarMediaCallback(this::actualizarMedia);
+    } private void actualizarMedia() {
         ReseñasDAO reseñasDAO = new ReseñasDAO();
-        double media = reseñasDAO.obtenerPuntuacionMedia(libro.getId()); if (media > 0)
-        {
+        double media = reseñasDAO.obtenerPuntuacionMedia(libroActual.getId());
+
+        if (media > 0) {
             calificacionMedia.setText(String.format("Puntuación media: %.1f / 5", media));
-        }
-        else
-        {
+        } else {
             calificacionMedia.setText("Puntuación media: Sin reseñas");
         }
-        // Se pasa el ID del libro y el usuario actual al controlador de reseñas.
-        vb_contenedorResenasController.setContexto(libro.getId(), usuarioActual);
     }
 }

@@ -9,26 +9,19 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="548.0" prefWidth="1410.0" styleClass="panel" stylesheets="@../../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
-
-    <!-- Fondo -->
-    <ImageView id="iv_fondoLogin" fitHeight="798.0" fitWidth="1410.0" layoutX="7.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../../imagenes/fondomenu.png" />
-        </image>
-    </ImageView>
+<AnchorPane prefHeight="548.0" prefWidth="1410.0" styleClass="fondo-secundario" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
 
     <!-- Contenido principal -->
-    <VBox spacing="15" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+    <VBox spacing="15" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" >
 
         <!-- Título -->
-        <Label styleClass="titulo" text="Mis Libros Favoritos" />
+        <Label styleClass="titulo-principal" text="Mis Libros Favoritos" />
 
          <!-- Lista de favoritos -->
          <VBox prefHeight="663.0" prefWidth="956.0" spacing="5" VBox.vgrow="ALWAYS">
 
-             <ScrollPane prefHeight="400.0" prefWidth="973.0" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
-                 <FlowPane fx:id="contenedorFavoritos" hgap="15" styleClass="flow-pane" vgap="15">
+             <ScrollPane fitToWidth="true" prefHeight="400.0" prefWidth="973.0" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+                 <FlowPane fx:id="contenedorFavoritos" hgap="15" styleClass="flow-pane" vgap="15" prefWrapLength="900">
                      <padding>
                          <Insets bottom="10" left="10" right="10" top="10" />
                      </padding>
