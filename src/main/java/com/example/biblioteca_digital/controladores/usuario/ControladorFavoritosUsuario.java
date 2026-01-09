@@ -9,31 +9,20 @@ import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.List;
 
 /**
  * Controlador encargado de gestionar la vista de libros favoritos del usuario.
  */
-public class ControladorFavoritosUsuario {
-
-    /** Lista de favoritos. */
-    @FXML private ListView<Libro> listaFavoritos;
-
-    /** Etiquetas que muestran los detalles del libro seleccionado. */
-    @FXML private Label tituloLabel;
-    @FXML private Label autorLabel;
-    @FXML private Label categoriaLabel;
-
-
-    /** Botón para eliminar un libro de favoritos. */
-    @FXML private Button btnEliminar;
-
-    /** ScrollPane que contiene el FlowPane de tarjetas. */
-    @FXML private ScrollPane scrollPaneFavoritos;
-
+public class ControladorFavoritosUsuario
+{
     /** Contenedor donde se muestran las tarjetas de libros favoritos. */
     @FXML private FlowPane contenedorFavoritos;
 
@@ -94,21 +83,31 @@ public class ControladorFavoritosUsuario {
     }
 
     /**
-     * Metodo que muestra los detalles del libro seleccionado en las etiquetas.
-     * (parte del clickver)
+     * Metodo que abre una ventana modal con los detalles individuales del libro.
+     *
+     * @param libro Libro seleccionado.
      */
-    public void mostrarDetalles(Libro libro) {
+    public void clickVer(Libro libro)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Invidual.fxml"));
+            Parent root = loader.load();
 
-        if (libro == null) {
-            tituloLabel.setText("");
-            autorLabel.setText("");
-            categoriaLabel.setText("");
-            return;
+            ControladorLibrosIndividual controlador = loader.getController();
+            controlador.setLibro(libro, usuarioActual);
+
+            Stage stage = new Stage();
+            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.setTitle("Detalles de: " + libro.getTitulo());
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
         }
-
-        tituloLabel.setText(libro.getTitulo());
-        autorLabel.setText(libro.getAutor());
-        categoriaLabel.setText(libro.getGenero());
+        catch (IOException e)
+        {
+            mostrarAlertaError("Error de Vista", "No se pudo cargar la vista individual del libro.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -116,18 +115,32 @@ public class ControladorFavoritosUsuario {
      *
      * @param libro Libro seleccionado.
      */
-    private Node crearVistaLibroItem(Libro libro) {
-
-        try {
+    private Node crearVistaLibroItem(Libro libro)
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_CARD_PATH));
             Node item = loader.load();
             ControladorLibroCatalogo controlador = loader.getController();
-            controlador.setDatos(libro, usuarioActual, null);
+            controlador.setDatos(libro, usuarioActual, this);
             return item;
-
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             return new Label("Error al cargar item: " + libro.getTitulo());
         }
+    }
+
+    /**
+     * Muestra una alerta de error.
+     */
+    private void mostrarAlertaError(String titulo, String mensaje)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

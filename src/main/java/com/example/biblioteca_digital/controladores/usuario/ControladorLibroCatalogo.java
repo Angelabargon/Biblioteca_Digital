@@ -1,9 +1,6 @@
 package com.example.biblioteca_digital.controladores.usuario;
 
-/**
- * Imports necesarios.
- */
-import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO; // Necesitas un DAO de Favoritos
+import com.example.biblioteca_digital.DAO.usuario.FavoritosDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
@@ -13,9 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**
- * Controlador encargado de gestionar la tarjeta visual de un libro dentro del catálogo.
- */
 public class ControladorLibroCatalogo {
 
     @FXML private Label lblTitulo;
@@ -28,148 +22,132 @@ public class ControladorLibroCatalogo {
     @FXML private Button btnVer;
     @FXML private Button btnFavorito;
 
-    /** Libro representado por esta tarjeta. */
     private Libro libroActual;
-
-    /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
 
-    /** Controlador padre que maneja el catálogo completo. */
-    private ControladorCatalogoUsuario controladorPadre;
+    // Referencias a los posibles padres
+    private ControladorCatalogoUsuario controladorPadre1;
+    private ControladorFavoritosUsuario controladorPadre2;
 
-    /** DAO para gestionar favoritos. */
     private final FavoritosDAO favoritosDAO = new FavoritosDAO();
-
-    /** DAO para gestionar préstamos. */
     private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
     /**
-     * Configura la tarjeta con los datos del libro y del usuario.
-     *
-     * @param libro  Libro que se mostrará en la tarjeta.
-     * @param usuario Usuario actual.
-     * @param padre Controlador padre para delegar acciones.
+     * Configuración para el CATÁLOGO GENERAL
      */
     public void setDatos(Libro libro, Usuario usuario, ControladorCatalogoUsuario padre) {
+        this.controladorPadre1 = padre;
+        this.controladorPadre2 = null; // Aseguramos que el otro sea null
+        inicializarComun(libro, usuario);
+    }
+
+    /**
+     * Configuración para la vista de FAVORITOS
+     */
+    public void setDatos(Libro libro, Usuario usuario, ControladorFavoritosUsuario padre) {
+        this.controladorPadre2 = padre;
+        this.controladorPadre1 = null; // Aseguramos que el otro sea null
+        inicializarComun(libro, usuario);
+    }
+
+    /**
+     * Lógica compartida para rellenar la tarjeta (evita duplicar código)
+     */
+    private void inicializarComun(Libro libro, Usuario usuario) {
         this.libroActual = libro;
         this.usuarioActual = usuario;
-        this.controladorPadre = padre;
 
-        // De no haber usuario, se deshabilitan las acciones.
         if (usuarioActual == null) {
-            System.err.println("Advertencia: Usuario no definido.");
             btnPedirPrestado.setDisable(true);
             btnFavorito.setDisable(true);
             return;
         }
 
-        // Se muestran datos básicos del libro.
+        // Rellenar textos
         lblTitulo.setText(libro.getTitulo());
         lblAutor.setText(libro.getAutor());
         lblGenero.setText(libro.getGenero());
 
-        String nombreArchivo = libro.getFoto();
+        // Cargar Imagen
+        cargarImagen(libro);
 
-        if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
-            String rutaBase = "/com/example/biblioteca_digital/imagenes/libros/";
-            String rutaCompleta = rutaBase + nombreArchivo;
+        // Lógica de disponibilidad y préstamos
+        actualizarEstadoDisponibilidad();
 
-            // El nombre del libro es clave para el mensaje de error.
-            String tituloLibro = (libro != null && libro.getTitulo() != null) ? libro.getTitulo() : "Libro Desconocido";
+        // Actualizar icono corazón
+        actualizarBotonFavorito();
+    }
 
-            // Carga con el nombre de archivo exacto que está en la BD.
+    private void cargarImagen(Libro libro) {
+        if (libro.getFoto() != null && !libro.getFoto().isEmpty()) {
+            String ruta = "/com/example/biblioteca_digital/imagenes/libros/" + libro.getFoto();
             try {
-                Image portada = new Image(getClass().getResourceAsStream(rutaCompleta));
-                if (!portada.isError()) {
-                    imgPortada.setImage(portada);
-                }
+                Image portada = new Image(getClass().getResourceAsStream(ruta));
+                if (!portada.isError()) imgPortada.setImage(portada);
             } catch (Exception e) {
-                System.err.println("Advertencia: No se pudo cargar la imagen para el libro " + tituloLibro + ". Ruta esperada: " + rutaCompleta + "." + e);
+                System.err.println("Error cargando imagen: " + ruta);
             }
         }
+    }
 
-        int disponibles = libro.getCantidadDisponible();
-        int stockTotal = libro.getCantidad();
-        boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libro.getId());
+    private void actualizarEstadoDisponibilidad() {
+        int disponibles = libroActual.getCantidadDisponible();
+        boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libroActual.getId());
 
-        String disponiblesText = String.format("Disponibles: %d/%d", disponibles, stockTotal);
-        lblDisponibles.setText(disponiblesText);
-
-        // Mira si está disponible o no el libro y si el usuario lo tiene prestado ya o no.
         if (disponibles <= 0 || yaEstaPrestado) {
             lblDisponibles.setText("No disponible");
-
             if (lblNoDisponibleTag != null) {
                 lblNoDisponibleTag.setText(yaEstaPrestado ? "Ya Prestado" : "Agotado");
                 lblNoDisponibleTag.setVisible(true);
                 lblNoDisponibleTag.setManaged(true);
             }
             btnPedirPrestado.setDisable(true);
-            btnPedirPrestado.getStyleClass().add("btn-prestar-disabled");
-
         } else {
-            lblDisponibles.setVisible(true);
-            lblDisponibles.setManaged(true);
-
+            lblDisponibles.setText(String.format("Disponibles: %d/%d", disponibles, libroActual.getCantidad()));
             if (lblNoDisponibleTag != null) {
                 lblNoDisponibleTag.setVisible(false);
                 lblNoDisponibleTag.setManaged(false);
             }
             btnPedirPrestado.setDisable(false);
-            btnPedirPrestado.getStyleClass().remove("btn-prestar-disabled");
-            btnPedirPrestado.getStyleClass().add("btn-prestar");
-        }
-        // Actualiza el icono de favorito.
-        actualizarBotonFavorito();
-    }
-
-    /**
-     * Metodo de botón pedir prestado.
-     */
-    @FXML
-    private void handlePedirPrestado() {
-
-        if (libroActual != null && controladorPadre != null) {
-            controladorPadre.clickPedirPrestamo(libroActual);
         }
     }
 
-    /**
-     * Metodo de botón ver detalles.
-     */
     @FXML
     private void handleVerDetalles() {
-
-        if (libroActual != null && controladorPadre != null) {
-            controladorPadre.clickVer(libroActual);
+        // Ejecuta el método clickVer del padre que esté activo
+        if (controladorPadre1 != null) {
+            controladorPadre1.clickVer(libroActual);
+        } else if (controladorPadre2 != null) {
+            controladorPadre2.clickVer(libroActual);
         }
     }
 
-    /**
-     * Metodo de botón añadir o eliminar de favoritos.
-     */
+    @FXML
+    private void handlePedirPrestado() {
+        if (controladorPadre1 != null) {
+            controladorPadre1.clickPedirPrestamo(libroActual);
+        }
+        // Nota: Si quieres que se pueda pedir desde favoritos,
+        // deberías implementar clickPedirPrestamo en ControladorFavoritosUsuario también.
+    }
+
     @FXML
     private void handleAlternarFavorito() {
-
         if (libroActual != null && usuarioActual != null) {
             favoritosDAO.alternarFavorito(usuarioActual.getId(), libroActual.getId());
             actualizarBotonFavorito();
+
+            // Opcional: Si estamos en la vista de favoritos, refrescar al quitar
+            if (controladorPadre2 != null) {
+                // Podrías llamar a un método del padre para que refresque la lista
+                // controladorPadre2.cargarFavoritos();
+            }
         }
     }
 
-    /**
-     * Metodo de actualización de favorito.
-     */
     private void actualizarBotonFavorito() {
-        if (usuarioActual == null) {
-            btnFavorito.setDisable(true);
-            return;
-        }
-
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
-
         btnFavorito.setText("❤");
-
         if (esFavorito) {
             if (!btnFavorito.getStyleClass().contains("favorito-activo")) {
                 btnFavorito.getStyleClass().add("favorito-activo");
