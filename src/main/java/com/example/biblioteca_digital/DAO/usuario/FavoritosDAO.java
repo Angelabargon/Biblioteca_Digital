@@ -46,7 +46,8 @@ public class FavoritosDAO
                         rs.getInt("cantidad_disponible"),
                         rs.getInt("cantidad"),
                         rs.getBoolean("disponible"),
-                        rs.getString("contenido")
+                        rs.getString("contenido"),
+                        rs.getInt("duracion_prestamo")
                 );
                 lista.add(libro);
             }

@@ -77,7 +77,8 @@ public class CatalogoDAO
                             rs.getInt("cantidad_disponible"),
                             rs.getInt("cantidad"),
                             rs.getBoolean("disponible"),
-                            rs.getString("contenido")
+                            rs.getString("contenido"),
+                            rs.getInt("duracion_prestamo")
                     );
                     libros.add(libro);
                 }
@@ -132,7 +133,8 @@ public class CatalogoDAO
                             rs.getInt("cantidad_disponible"),
                             rs.getInt("cantidad"),
                             rs.getBoolean("disponible"),
-                            rs.getString("contenido")
+                            rs.getString("contenido"),
+                            rs.getInt("duracion_prestamo")
                     );
                 }
             }

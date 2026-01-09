@@ -23,7 +23,7 @@ public class PrestamoDAO
     public boolean crearPrestamo(int idUsuario, int idLibro)
     {
         String sqlPrestamo = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
-                "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL 15 DAY), 'activo')";
+                "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL (SELECT duracion_prestamo FROM libros WHERE id = ?) DAY), 'activo')";
         String sqlUpdateStock = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ? AND cantidad_disponible > 0";
 
         Connection conn = null;
@@ -37,6 +37,7 @@ public class PrestamoDAO
             try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
+                ps.setInt(3, idLibro);
                 ps.executeUpdate();
             }
 
@@ -93,23 +94,15 @@ public class PrestamoDAO
         List<Prestamo> prestamos = new ArrayList<>();
         String sql = """
         SELECT 
-            p.id AS idPrestamo,
-            p.fecha_inicio,
-            p.fecha_fin,
-            p.estado,
-        
-            l.id AS idLibro,
-            l.titulo AS tituloLibro,
-            l.autor AS autorLibro,
-            l.contenido AS contenidoLibro,
-        
-            u.id AS idUsuario,
-            u.nombre AS nombreUsuario
-        FROM prestamos p
-        JOIN libros l ON p.id_libro = l.id
-        JOIN usuarios u ON p.id_usuario = u.id
-        WHERE p.id_usuario = ? AND p.estado = 'activo'
-        """;
+        p.id AS idPrestamo, p.fecha_inicio, p.fecha_fin, p.estado,
+        l.id AS idLibro, l.titulo AS tituloLibro, l.autor AS autorLibro, 
+        l.contenido AS contenidoLibro, l.duracion_prestamo, -- Añadimos la columna
+        u.id AS idUsuario, u.nombre AS nombreUsuario
+    FROM prestamos p
+    JOIN libros l ON p.id_libro = l.id
+    JOIN usuarios u ON p.id_usuario = u.id
+    WHERE p.id_usuario = ? AND p.estado = 'activo'
+    """;
         // Abrir Connection y PreparedStatement usando try-with-resources
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement pst = conn.prepareStatement(sql))
@@ -130,6 +123,7 @@ public class PrestamoDAO
                     libro.setTitulo(rs.getString("tituloLibro"));
                     libro.setAutor(rs.getString("autorLibro"));
                     libro.setContenido(rs.getString("contenidoLibro"));
+                    libro.setDuracion(rs.getInt("duracion_prestamo"));
                     p.setLibro(libro);
 
                     Usuario usuario = new Usuario();

@@ -15,7 +15,7 @@ public class Libro {
     private int id, cantidad;
     private String titulo, autor, genero, isbn, foto, descripcion, contenido;
     private boolean disponible;
-    private int cantidadDisponible;
+    private int cantidadDisponible, duracion;
 
 
     /**
@@ -36,8 +36,9 @@ public class Libro {
      * @param cantidad
      * @param disponible
      * @param contenido
+     * @param duracion
      */
-    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, int cantidadDisponible, boolean disponible, String contenido) {
+    public Libro (int id ,String titulo, String autor, String genero, String descripcion, String isbn, String foto, int cantidad, int cantidadDisponible, boolean disponible, String contenido, int duracion) {
 
         this.id = id;
         this.titulo = titulo;
@@ -50,6 +51,7 @@ public class Libro {
         this.cantidadDisponible = cantidadDisponible;
         this.disponible = disponible;
         this.contenido = contenido;
+        this.duracion = duracion;
     }
 
     public Libro(int idLibro, String tituloLibro) {
@@ -72,6 +74,7 @@ public class Libro {
     public boolean getDisponible() { return disponible; }
     public int getCantidadDisponible() {return cantidadDisponible;}
     public String getContenido() {return contenido; }
+    public int getDuracion() {return duracion;}
 
     /**
      * Setters de los atributos de un libro
@@ -87,6 +90,8 @@ public class Libro {
     public void setDisponible(boolean disponible) { this.disponible = disponible; }
     public void setCantidadDisponible(int cantidadDisponible) {this.cantidadDisponible = cantidadDisponible; }
     public void setContenido(String contenido) {this.contenido = contenido; }
+    public void setDuracion(int duracion) {this.duracion = duracion;}
+
     /**
      * ToString para imprimir la clase y sus atributos
      * @return
