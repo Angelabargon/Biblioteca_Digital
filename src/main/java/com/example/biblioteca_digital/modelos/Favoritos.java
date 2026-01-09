@@ -29,7 +29,7 @@ public class Favoritos {
         this.id_usuario = id_usuario;
     }
 
-    /*
+    /**
      *Constructor de libro favorito con los objetos
      *@param id
      *@param id_libro
@@ -43,7 +43,7 @@ public class Favoritos {
         this.libro = libro;
     }
 
-    /*
+    /**
      *Getters de los atributos de un libro favorito
      *@return
      */
