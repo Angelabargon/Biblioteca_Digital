@@ -78,27 +78,46 @@ public class ControladorLibroCatalogo
     {
         this.libroActual = libro;
         this.usuarioActual = usuario;
+        // si el objeto libro es nulo, no se puede hacer nada
+        if (libro == null) return;
+        // Manejo de título
+        if (libro.getTitulo() != null && !libro.getTitulo().trim().isEmpty())
+        {
+            lblTitulo.setText(libro.getTitulo());
+        }
+        else
+        {
+            lblTitulo.setText("Sin Nombre");
+        }
+        // Manejo del autor
+        if (libro.getAutor() != null && !libro.getAutor().trim().isEmpty())
+        {
+            lblAutor.setText(libro.getAutor());
+        }
+        else
+        {
+            lblAutor.setText("Anónimo");
+        }
+        // Manejo del género
+        if (libro.getGenero() != null && !libro.getGenero().trim().isEmpty())
+        {
+            lblGenero.setText(libro.getGenero());
+        }
+        else
+        {
+            lblGenero.setText("General");
+        }
+        // Si no hay usuario, desactiva botones y paramos aquí
         if (usuarioActual == null)
         {
             btnPedirPrestado.setDisable(true);
             btnFavorito.setDisable(true);
+            cargarImagen(libro);
             return;
         }
-        // Rellenar textos
-        lblTitulo.setText(libro.getTitulo());
-        lblAutor.setText(libro.getAutor());
-        lblGenero.setText(libro.getGenero());
-        if (libro.getTitulo() != null && !libro.getTitulo().trim().isEmpty() && libro.getAutor() != null && !libro.getAutor().trim().isEmpty())
-        {
-            //Si se crea vacío
-            lblTitulo.setText("Sin Nombre");
-            lblAutor.setText("Anonimo");
-        }
-        // Cargar Imagen
+        // Carga el resto de componentes
         cargarImagen(libro);
-        // Lógica de disponibilidad y préstamos
         actualizarEstadoDisponibilidad();
-        // Actualizar icono corazón
         actualizarBotonFavorito();
     }
 
@@ -155,7 +174,7 @@ public class ControladorLibroCatalogo
         }
         else
         {
-            lblDisponibles.setText(String.format("Disponibles: %d/%d", disponibles, libroActual.getCantidad()));
+            lblDisponibles.setText(String.format("Disponibles: %d/%d", libroActual.getCantidad(), disponibles));
             if (lblNoDisponibleTag != null)
             {
                 lblNoDisponibleTag.setVisible(false);
