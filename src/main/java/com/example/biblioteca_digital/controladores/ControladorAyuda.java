@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +37,7 @@ public class ControladorAyuda {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
+            stage.getIcons().add(new Image(ControladorAyuda.class.getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
             stage.showAndWait();
 
         } catch (Exception e) {

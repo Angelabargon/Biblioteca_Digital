@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -170,6 +171,7 @@ public class ControladorMenuInicioUsuario
         perfilStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         perfilStage.setTitle("Perfil de Usuario");
         perfilStage.setScene(new Scene(root));
+        perfilStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
         perfilStage.showAndWait();
     }
 

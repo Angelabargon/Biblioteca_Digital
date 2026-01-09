@@ -5,6 +5,7 @@ package com.example.biblioteca_digital.controladores.usuario;
  */
 import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
 import com.example.biblioteca_digital.DAO.usuario.PrestamoDAO;
+import com.example.biblioteca_digital.controladores.ControladorAyuda;
 import com.example.biblioteca_digital.modelos.Libro;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -166,6 +168,7 @@ public class ControladorCatalogoUsuario
             stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
             stage.setTitle("Detalles de: " + libro.getTitulo());
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
             stage.showAndWait();
         }
         catch (IOException e)

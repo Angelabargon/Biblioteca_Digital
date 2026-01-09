@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -97,6 +98,7 @@ public class ControladorFavoritosUsuario
             stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
             stage.setTitle("Detalles de: " + libro.getTitulo());
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
             stage.showAndWait();
         }
         catch (IOException e)
