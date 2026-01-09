@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
+
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
@@ -10,7 +11,8 @@
 <?import javafx.scene.shape.Line?>
 
 <!-- Nodo Raíz -->
-<AnchorPane prefHeight="393.0" prefWidth="850" styleClass="panel" stylesheets="@../estilo/estilo.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual">
+
+<AnchorPane prefHeight="393.0" prefWidth="850" styleClass="panel" stylesheets="@../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLibrosIndividual">
 
     <!-- Contenedor organizador de la vista -->
     <HBox layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="810.0" spacing="30" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -28,7 +30,7 @@
             <Label fx:id="autorLabel" prefHeight="26.0" prefWidth="186.0" styleClass="subtitulo" />
 
             <!-- Categoría -->
-            <Label fx:id="categoriaLabel" prefHeight="24.0" prefWidth="186.0" styleClass="badge-categoria" />
+            <Label fx:id="categoriaLabel" prefHeight="24.0" styleClass="card-genre" />
 
             <!-- Descripción del libro -->
             <Label fx:id="descripcionArea" prefHeight="24.0" prefWidth="186.0" styleClass="texto-detalle" />

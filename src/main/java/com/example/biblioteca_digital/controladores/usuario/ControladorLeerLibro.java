@@ -57,17 +57,17 @@ public class ControladorLeerLibro {
         // Calcula los días que quedan del préstamo.
         long dias = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(), prestamo.getFecha_fin());
 
-        if (dias >= 0) {
-            lblDiasRestantes.setText(String.format("%d días restantes", dias));
-
-        } else {
-            lblDiasRestantes.setText(String.format("%d días restantes", dias));
-
-        } if (dias <= 0) {
-            lblDiasRestantes.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-padding: 5px; -fx-border-radius: 5px;");
-
-        } else {
+        if (dias > 0) {
+            lblDiasRestantes.setText(dias + " días restantes");
             lblDiasRestantes.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black; -fx-padding: 5px; -fx-border-radius: 5px;");
+
+        } else if (dias == 0) {
+            lblDiasRestantes.setText("Vence hoy");
+            lblDiasRestantes.setStyle("-fx-background-color: #ffc107; -fx-text-fill: black; -fx-padding: 5px; -fx-border-radius: 5px;");
+
+        } else {
+            lblDiasRestantes.setText("Vencido hace " + Math.abs(dias) + " días");
+            lblDiasRestantes.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-padding: 5px; -fx-border-radius: 5px;");
         }
     }
 

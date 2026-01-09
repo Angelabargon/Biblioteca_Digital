@@ -124,4 +124,22 @@ public class ReseñasDAO {
             return false;
         }
     }
+
+    public double obtenerPuntuacionMedia(int idLibro) {
+        String sql = "SELECT AVG(calificacion) FROM resenas WHERE id_libro = ?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idLibro);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getDouble(1); // devuelve la media
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return 0.0; // si no hay reseñas
+    }
 }

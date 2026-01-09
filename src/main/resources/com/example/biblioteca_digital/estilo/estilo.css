@@ -1,8 +1,13 @@
-/* =========================
-   ESTILOS GENERALES
-   ========================= */
+/* =======================
+    1. ESTILOS GENERALES
+ ======================= */
 .panel {
     -fx-background-color: #ffffff;
+}
+
+.linea-decorativa {
+-fx-stroke: #8B5E3C;
+-fx-stroke-width: 2;
 }
 
 .titulo-principal {
@@ -10,12 +15,19 @@
     -fx-font-weight: bold;
     -fx-text-fill: #8B5E3C;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0.2, 0, 2);
+
+    /* Subrayado */
+    -fx-padding: 0 0 6 0;
+    -fx-border-color: transparent transparent #8B5E3C transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-border-style: solid;
 }
 
 .titulo {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: #333333;
 }
 
 .subtitulo {
@@ -29,22 +41,36 @@
     -fx-background-size: cover;
 }
 
-/* =========================
-   BOTONES
-   ========================= */
+/* =======================
+    2. BOTONES
+ ======================= */
 .button-principal {
     -fx-background-color: #8B5E3C;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-background-radius: 6;
-    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0.2, 0, 2);
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.button-principal:hover {
+    -fx-background-color: #A67B5B;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.3, 0, 3);
 }
 
 .button-secundario {
     -fx-background-color: #A67B5B;
     -fx-text-fill: white;
-    -fx-background-radius: 6;
-    -fx-padding: 6 12;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.button-secundario:hover {
+    -fx-background-color: #8B5E3C;
 }
 
 .button-quitar {
@@ -70,17 +96,32 @@
     -fx-font-weight: bold;
 }
 
+/* Botones de tarjetas */
+.btn-ver,
 .btn-prestar {
-    -fx-background-color: #8B5E3C;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 6;
+    -fx-background-radius: 8;
+    -fx-padding: 8 14;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
 }
 
 .btn-ver {
-    -fx-background-color: #A67B5B;
+    -fx-background-color: #e0d8c7;
+    -fx-text-fill: #333;
+}
+
+.btn-ver:hover {
+    -fx-background-color: #d1c7b8;
+}
+
+.btn-prestar {
+    -fx-background-color: #c19a6b;
     -fx-text-fill: white;
-    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+}
+
+.btn-prestar:hover {
+    -fx-background-color: #a87a4f;
 }
 
 .btn-fav-overlay {
@@ -89,21 +130,17 @@
     -fx-font-size: 18px;
 }
 
-/* =========================
-   CAMPOS DE TEXTO
-   ========================= */
-.text-field, .password-field {
+/* =======================
+    3. CAMPOS DE TEXTO
+ ======================= */
+
+.text-field,
+.password-field {
     -fx-background-color: #fff;
     -fx-border-color: #ccc;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 6;
-}
-
-.titulo {
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333333;
 }
 
 .combo-box {
@@ -113,14 +150,40 @@
     -fx-background-radius: 5;
 }
 
-/* =========================
-   SCROLL Y CONTENEDORES
-   ========================= */
-.scroll-pane {
+/* =======================
+    4. SCROLLPANE
+ ======================= */
+
+ .scroll-pane {
     -fx-background-color: transparent;
 }
 
-.flow-pane {
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #c9b8a6;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #b89f87;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+/* =======================
+    5. CONTENEDORES
+ ======================= */
+
+ .flow-pane {
     -fx-padding: 10;
     -fx-hgap: 15;
     -fx-vgap: 15;
@@ -133,43 +196,27 @@
     -fx-padding: 5 10;
 }
 
-/* =========================
-   BADGES Y TAGS
-   ========================= */
-.badge-aviso {
-    -fx-background-color: #ffc107;
-    -fx-text-fill: black;
-    -fx-padding: 3 8;
-    -fx-background-radius: 5;
-}
+/* =======================
+    6. TARJETAS DE LIBROS
+ ======================= */
 
-.badge-categoria {
-    -fx-background-color: #d4a373;
-    -fx-text-fill: white;
-    -fx-padding: 3 9;
-    -fx-background-radius: 6;
-}
-
-.no-disponible-tag {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-    -fx-padding: 3 8;
-    -fx-background-radius: 6;
-}
-
-/* =========================
-   TARJETAS DE LIBRO
-   ========================= */
 .card {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 8;
-    -fx-border-color: #ddd;
-    -fx-border-radius: 8;
-    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 12;
+    -fx-border-color: #e5e5e5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 8, 0.2, 0, 2);
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 12, 0.3, 0, 3);
+    -fx-translate-y: -2;
 }
 
 .card-title {
-    -fx-font-size: 16px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
 }
@@ -181,10 +228,11 @@
 
 .card-genre {
     -fx-font-size: 13px;
-    -fx-background-color: #c99b68;
-    -fx-text-fill: white;
-    -fx-padding: 3 8;
-    -fx-background-radius: 6;
+    -fx-text-fill: #8B5E3C;
+    -fx-padding: 2 0; -fx-border-color: #8B5E3C;
+    -fx-border-width: 0 0 2 0; /* subrayado */
+    -fx-border-style: solid;
+    -fx-background-color: transparent;
 }
 
 .card-stock {
@@ -192,34 +240,21 @@
     -fx-text-fill: #10B981;
 }
 
-.btn-ver {
-    -fx-background-color: #e0d8c7;
-    -fx-text-fill: #333;
-    -fx-background-radius: 6;
-}
-
-.btn-prestar {
-    -fx-background-color: #c19a6b;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 6;
-}
-
 .btn-fav {
     -fx-background-color: rgba(255, 255, 255, 0.6);
-        -fx-background-radius: 50%;
-        -fx-border-radius: 50%;
-        -fx-text-fill: red;
-        -fx-font-size: 18px;
-        -fx-cursor: hand;
-        -fx-padding: 8px;
-        -fx-border-color: transparent;
-        -fx-border-width: 0;
-        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
-    }
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-text-fill: red;
+    -fx-font-size: 18px;
+    -fx-cursor: hand;
+    -fx-padding: 8px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
+}
 
 .boton-fav:hover {
-        -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-color: rgba(255, 255, 255, 0.8);
 }
 
 .boton-fav.activo {
@@ -232,9 +267,10 @@
     -fx-alignment: center-left;
 }
 
-/* =========================
-   LIBRO INDIVIDUAL
-   ========================= */
+/* =======================
+    7. LIBRO INDIVIDUAL
+ ======================= */
+
 .imagen-libro {
     -fx-effect: dropshadow(gaussian, #444, 10, 0, 0, 3);
 }
@@ -249,18 +285,19 @@
     -fx-text-fill: #333;
 }
 
-/* =========================
-   PÁGINA INICIO
-   ========================= */
-.linea-decorativa {
-    -fx-stroke: #333;
-    -fx-stroke-width: 2;
+/* =======================
+    8. FORMULARIOS
+ ======================= */
+
+.formulario {
+-fx-background-color: rgba(255, 255, 255, 0.92);
+-fx-background-radius: 12;
+-fx-padding: 25;
+-fx-spacing: 12;
+-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 12, 0.3, 0, 3);
 }
 
-/* =========================
-   FORMULARIOS
-   ========================= */
-.mensaje-error {
+ .mensaje-error {
     -fx-text-fill: red;
     -fx-font-size: 14px;
 }
@@ -270,10 +307,11 @@
     -fx-font-size: 14px;
 }
 
-/* =========================
-   RESEÑAS
-   ========================= */
-.resena-nombre {
+/* =======================
+    9. RESEÑAS
+ ======================= */
+
+ .resena-nombre {
     -fx-font-weight: bold;
     -fx-text-fill: #333;
 }

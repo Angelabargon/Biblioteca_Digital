@@ -27,10 +27,10 @@
         </ImageView>
 
         <!-- Título -->
-        <Label layoutX="562.0" layoutY="29.0" prefHeight="83.0" prefWidth="534.0" styleClass="titulo" text="Registro de nuevos usuarios" />
+        <Label layoutX="562.0" layoutY="29.0" prefHeight="83.0" prefWidth="534.0" styleClass="titulo" text="REGISTRO DE NUEVOS USUARIOS" />
 
         <!-- Formulario -->
-        <VBox layoutX="618.0" layoutY="113.0" prefHeight="578.0" prefWidth="255.0" spacing="8" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="534.8" AnchorPane.topAnchor="113.0">
+        <VBox layoutX="618.0" layoutY="113.0" prefHeight="578.0" prefWidth="546.0" spacing="8" styleClass="formulario" AnchorPane.leftAnchor="618.0" AnchorPane.rightAnchor="534.8" AnchorPane.topAnchor="113.0">
 
             <children>
                 <Label styleClass="subtitulo" text="Nombre de usuario*" />

@@ -76,7 +76,7 @@ public class PrestamoDAO
                 try
                 {
                     conn.setAutoCommit(true);
-                    conn.close();
+
                 }
                 catch (SQLException closeException)
                 {
@@ -234,7 +234,7 @@ public class PrestamoDAO
                 try
                 {
                     conn.setAutoCommit(true);
-                    conn.close();
+
                 }
                 catch (SQLException closeEx)
                 {
