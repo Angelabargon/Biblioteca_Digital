@@ -161,22 +161,20 @@ public class ControladorLibroCatalogo {
      * Metodo de actualización de favorito.
      */
     private void actualizarBotonFavorito() {
-
         if (usuarioActual == null) {
-            System.err.println("Advertencia: Usuario no definido.");
-            btnPedirPrestado.setDisable(true);
             btnFavorito.setDisable(true);
             return;
         }
 
         boolean esFavorito = favoritosDAO.esFavorito(usuarioActual.getId(), libroActual.getId());
 
-        if (esFavorito) {
-            btnFavorito.setText("❤");
-            btnFavorito.getStyleClass().add("favorito-activo");
+        btnFavorito.setText("❤");
 
+        if (esFavorito) {
+            if (!btnFavorito.getStyleClass().contains("favorito-activo")) {
+                btnFavorito.getStyleClass().add("favorito-activo");
+            }
         } else {
-            btnFavorito.setText("♡");
             btnFavorito.getStyleClass().remove("favorito-activo");
         }
     }

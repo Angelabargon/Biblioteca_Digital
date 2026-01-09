@@ -242,24 +242,21 @@
 
 .btn-fav {
     -fx-background-color: rgba(255, 255, 255, 0.6);
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
-    -fx-text-fill: red;
-    -fx-font-size: 18px;
+    -fx-background-radius: 40px;
+    -fx-padding: 5px 12px;
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
     -fx-cursor: hand;
-    -fx-padding: 8px;
     -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
 }
 
-.boton-fav:hover {
+.btn-fav:hover {
     -fx-background-color: rgba(255, 255, 255, 0.8);
 }
 
-.boton-fav.activo {
-    -fx-text-fill: #ff3333;
-    -fx-background-color: rgba(255, 255, 255, 0.8);
+.btn-fav.favorito-activo {
+    -fx-text-fill: #ff0000;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
 }
 
 .stock-container {
