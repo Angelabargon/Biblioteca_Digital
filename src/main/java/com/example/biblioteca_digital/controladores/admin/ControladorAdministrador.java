@@ -39,13 +39,13 @@ public class ControladorAdministrador {
     @FXML private Label lblPrestamosVencidos;
 
     /** DAO para operaciones relacionadas con libros. */
-    private final LibroAdminDAO LibroAdminDAO = new LibroAdminDAO();
+    private final LibroAdminDAO libroAdminDAO = new LibroAdminDAO();
 
     /** DAO para operaciones relacionadas con usuarios. */
-    private final UsuarioAdminDAO UsuarioAdminDAO = new UsuarioAdminDAO();
+    private final UsuarioAdminDAO usuarioAdminDAO = new UsuarioAdminDAO();
 
     /** DAO para operaciones relacionadas con préstamos. */
-    private final PrestamoAdminDAO PrestamoAdminDAO = new PrestamoAdminDAO();
+    private final PrestamoAdminDAO prestamoAdminDAO = new PrestamoAdminDAO();
 
     /**
      * Metodo inicializador automático.
@@ -63,11 +63,24 @@ public class ControladorAdministrador {
      * Obtiene las estadísticas actuales de la base de datos y actualiza
      * los labels visibles en la interfaz.
      */
-    private void cargarEstadisticas() {
-        lblTotalLibros.setText(String.valueOf(LibroAdminDAO.contarLibros()));
-        lblTotalUsuarios.setText(String.valueOf(UsuarioAdminDAO.contarUsuarios()));
-        lblPrestamosActivos.setText(String.valueOf(PrestamoAdminDAO.contarPrestamosActivos()));
-        lblPrestamosVencidos.setText(String.valueOf(PrestamoAdminDAO.contarPrestamosVencidos()));
+    public void cargarEstadisticas() {
+        lblTotalLibros.setText(String.valueOf(libroAdminDAO.contarLibros()));
+        lblTotalUsuarios.setText(String.valueOf(usuarioAdminDAO.contarUsuarios()));
+        lblPrestamosActivos.setText(String.valueOf(prestamoAdminDAO.contarPrestamosActivos()));
+        lblPrestamosVencidos.setText(String.valueOf(prestamoAdminDAO.contarPrestamosVencidos()));
+    }
+
+    /**
+     * Actualiza las estadísticas y recarga la vista actual del panel central.
+     * <p>
+     * Este método se puede llamar desde cualquier controlador de las vistas
+     * de administración después de añadir/editar/eliminar un libro, usuario o préstamo.
+     *
+     * @param recurso Nombre del FXML que estaba cargado (ej: "adminLibros.fxml")
+     */
+    public void actualizarPanel(String recurso) {
+        cargarEstadisticas();
+        cargarPanel(recurso);
     }
 
     /**

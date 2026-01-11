@@ -1,35 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorCatalogoAdmin">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-    <!-- BARRA DE BÚSQUEDA + BOTÓN -->
+<?import javafx.scene.layout.BackgroundFill?>
+<?import javafx.scene.layout.Background?>
+<?import javafx.scene.paint.ImagePattern?>
+<BorderPane prefWidth="1410.0" styleClass="panel" stylesheets="@../../estilo/estilo.css"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorCatalogoAdmin">
+    <!-- Fondo -->
+    <ImageView fitHeight="548" fitWidth="1410" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../imagenes/fondomenu.png" />
+        </image>
+    </ImageView>
+
+    <!-- ZONA DE FILTROS -->
     <top>
-        <HBox spacing="8" style="-fx-padding:8;">
+        <VBox styleClass="panel">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
 
-            <!-- Campo de texto para búsqueda -->
-            <TextField fx:id="txtBuscar" promptText="Buscar catálogo" HBox.hgrow="ALWAYS"/>
+            <children>
 
-            <!-- Botón de búsqueda, ejecuta el metodo buscarCatalogo() -->
-            <Button text="Buscar" onAction="#buscarCatalogo"/>
-        </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="titulo" text="Filtros" />
+                    <HBox HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="15" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets top="15" />
+                    </VBox.margin>
+
+                    <children>
+
+                        <!-- FILTRO TÍTULO -->
+                        <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
+                            <children>
+                                <Label styleClass="subtitulo" text="🔍" />
+                                <TextField fx:id="filtroTitulo" promptText="Buscar por título..." styleClass="text-field" />
+                            </children>
+                        </HBox>
+
+                        <!-- FILTRO AUTOR -->
+                        <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
+                            <children>
+                                <Label styleClass="subtitulo" text="🔍" />
+                                <TextField fx:id="filtroAutor" promptText="Buscar por autor..." styleClass="text-field" />
+                            </children>
+                        </HBox>
+
+                        <!-- FILTRO GÉNERO -->
+                        <ChoiceBox fx:id="filtroGenero" prefWidth="150" styleClass="combo-box" />
+
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
     </top>
 
-    <!-- LISTA DE LIBROS + DESCRIPCIÓN -->
+    <!-- LISTA DINÁMICA DE LIBROS -->
     <center>
-        <SplitPane>
+        <AnchorPane>
+            <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true"
+                       AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"> <image>
+                <Image url="@../../imagenes/fondo-biblioteca.png" />
+            </image>
+            </ImageView>
 
-            <!-- Lista de libros disponibles en el catálogo -->
-            <ListView fx:id="listLibros" prefWidth="360"/>
+            <Label layoutX="50" layoutY="25" styleClass="titulo" text="Catálogo de Libros" />
 
-            <!-- Panel derecho: muestra el detalle del libro -->
-            <VBox spacing="8" style="-fx-padding:12;">
-                <Label text="Detalle" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+            <ScrollPane hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="scroll-pane"
+                        AnchorPane.bottomAnchor="20.0"
+                        AnchorPane.leftAnchor="20.0"
+                        AnchorPane.rightAnchor="20.0"
+                        AnchorPane.topAnchor="70.0">
 
-                <!-- Área de texto que muestra la descripción del libro seleccionado -->
-                <TextArea fx:id="areaDescripcion" editable="false" wrapText="true" prefHeight="400"/>
-            </VBox>
-        </SplitPane>
+                <content>
+                    <FlowPane fx:id="contenedorLibros"
+                              alignment="TOP_LEFT"
+                              hgap="20"
+                              styleClass="flow-pane"
+                              vgap="20"
+                              prefWidth="1350" >
+                        <padding>
+                            <Insets bottom="50" left="20" right="20" top="20" />
+                        </padding>
+                    </FlowPane>
+                </content>
+            </ScrollPane>
+
+        </AnchorPane>
     </center>
+
 </BorderPane>

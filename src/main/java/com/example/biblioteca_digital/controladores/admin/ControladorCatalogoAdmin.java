@@ -1,71 +1,126 @@
 package com.example.biblioteca_digital.controladores.admin;
 
+import com.example.biblioteca_digital.DAO.usuario.CatalogoDAO;
+import com.example.biblioteca_digital.controladores.admin.ControladorLibroCatalogoAdmin;
 import com.example.biblioteca_digital.modelos.Libro;
-import com.example.biblioteca_digital.DAO.admin.LibroAdminDAO;
+import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
-/**
- * Controlador del catálogo visible por el administrador.
- * <p>
- * Permite visualizar todos los libros registrados, consultar su descripción
- * y realizar búsquedas por título, autor o género.
- */
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 public class ControladorCatalogoAdmin {
 
-    /** Lista donde se muestran los libros cargados desde la base de datos. */
-    @FXML private ListView<Libro> listLibros;
+    private static final String FXML_CARD_PATH =
+            "/com/example/biblioteca_digital/vistas/admin/VistaTarjetaLibroAdmin.fxml";
 
-    /** Área donde se muestra la descripción del libro seleccionado. */
-    @FXML private TextArea areaDescripcion;
+    private static final List<String> GENEROS_ESTATICOS = Arrays.asList(
+            "Todas", "Ficción", "Clásicos", "Tragedia", "Terror",
+            "Romance", "Ciencia Ficción", "Ciencia", "Misterio", "Fantasía"
+    );
 
-    /** Campo de texto utilizado para realizar la búsqueda en el catálogo. */
-    @FXML private TextField txtBuscar;
+    private Usuario usuarioActual;
 
-    /** Servicio que gestiona consultas relacionadas con libros. */
-    private final LibroAdminDAO libroServicio = new LibroAdminDAO();
+    private final CatalogoDAO catalogoDAO = new CatalogoDAO();
 
-    /** Lista observable que contiene todos los libros cargados. */
-    private final ObservableList<Libro> lista = FXCollections.observableArrayList();
+    @FXML private Label labelBienvenida;
+    @FXML private FlowPane contenedorLibros;
+    @FXML private TextField filtroTitulo;
+    @FXML private TextField filtroAutor;
+    @FXML private ChoiceBox<String> filtroGenero;
 
-    /**
-     * Método inicializador de JavaFX.
-     * <p>
-     * Carga todos los libros, los asigna a la lista y añade un listener
-     * para mostrar la descripción del libro seleccionado.
-     */
-    @FXML public void initialize() {
-        lista.setAll(libroServicio.obtenerTodos());
-        if (listLibros!=null) listLibros.setItems(lista);
-        if (listLibros!=null) listLibros.getSelectionModel().selectedItemProperty().addListener((obs,oldV,newV)->{
-            if (newV!=null && areaDescripcion!=null) areaDescripcion.setText(newV.getDescripcion());
-        });
+    public void setUsuario(Usuario usuario) {
+        this.usuarioActual = usuario;
+
+        if (labelBienvenida != null && usuario != null) {
+            labelBienvenida.setText("Administrador: " + usuario.getNombre());
+        }
+
+        cargarFiltroGeneros();
+        mostrarLibrosFiltrados();
     }
 
-    /**
-     * Realiza una búsqueda en el catálogo de libros.
-     * <p>
-     * Filtra los resultados según si el texto ingresado coincide parcial o totalmente
-     * con el título, autor o género de un libro.
-     * <p>
-     * Si el campo de búsqueda está vacío, se restablece la lista completa.
-     */
-    @FXML public void buscarCatalogo() {
-        String q = txtBuscar!=null? txtBuscar.getText().trim().toLowerCase() : "";
+    @FXML
+    public void initialize() {
 
-        // Si está vacío, restauramos la lista original
-        if (q.isEmpty()) { listLibros.setItems(lista); return; }
+        cargarFiltroGeneros();      // 🔥 ESTO ES LO QUE FALTABA
+        mostrarLibrosFiltrados();   // opcional pero recomendable
 
-        // Aplicar filtro
-        ObservableList<Libro> filt = lista.filtered(l ->
-                (l.getTitulo()!=null && l.getTitulo().toLowerCase().contains(q)) ||
-                        (l.getAutor()!=null && l.getAutor().toLowerCase().contains(q)) ||
-                        (l.getGenero()!=null && l.getGenero().toLowerCase().contains(q))
+        if (filtroTitulo != null)
+            filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
+
+        if (filtroAutor != null)
+            filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
+
+        if (filtroGenero != null)
+            filtroGenero.getSelectionModel()
+                    .selectedItemProperty()
+                    .addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
+    }
+
+
+    private void cargarFiltroGeneros() {
+        filtroGenero.setItems(FXCollections.observableArrayList(GENEROS_ESTATICOS));
+        filtroGenero.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void mostrarLibrosFiltrados() {
+
+        contenedorLibros.getChildren().clear();
+
+        List<Libro> libros = catalogoDAO.cargarCatalogo(
+                filtroTitulo.getText(),
+                filtroAutor.getText(),
+                filtroGenero.getValue()
         );
-        listLibros.setItems(filt);
+
+        for (Libro libro : libros) {
+            contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
+        }
+    }
+
+    private Node crearVistaLibroItem(Libro libro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_CARD_PATH));
+            Parent item = loader.load();
+
+            ControladorLibroCatalogoAdmin controlador = loader.getController();
+            controlador.setDatos(libro, this);
+
+            return item;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Label("Error cargando libro");
+        }
+    }
+
+    public void clickVer(Libro libro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/biblioteca_digital/vistas/admin/VistaLibroIndividualAdmin.fxml")
+            );
+            Parent root = loader.load();
+
+            ControladorLibroIndividualAdmin controlador = loader.getController();
+            controlador.setLibro(libro);
+
+            Stage stage = new Stage();
+            stage.setTitle(libro.getTitulo());
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

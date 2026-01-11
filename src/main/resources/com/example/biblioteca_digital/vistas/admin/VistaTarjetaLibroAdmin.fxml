@@ -1,0 +1,24 @@
+<VBox alignment="TOP_CENTER"
+      prefHeight="300" prefWidth="180"
+      spacing="10"
+      styleClass="card"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibroCatalogoAdmin"
+      stylesheets="@../../estilo/estilo.css">
+
+    <ImageView fx:id="imgPortada"
+               fitHeight="200" fitWidth="190"
+               preserveRatio="true"/>
+
+    <Label fx:id="lblTitulo" styleClass="card-title"/>
+    <Label fx:id="lblAutor" styleClass="card-author"/>
+    <Label fx:id="lblGenero" styleClass="card-genre"/>
+    <Label fx:id="lblDisponibles" styleClass="card-stock"/>
+
+    <Button fx:id="btnVer"
+            text="Ver"
+            onAction="#handleVerDetalles"
+            styleClass="btn-ver"/>
+
+</VBox>
