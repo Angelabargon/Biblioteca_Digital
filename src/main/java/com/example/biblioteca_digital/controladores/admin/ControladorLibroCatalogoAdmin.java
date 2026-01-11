@@ -28,7 +28,7 @@ public class ControladorLibroCatalogoAdmin {
         lblGenero.setText(libro.getGenero());
 
         lblDisponibles.setText(
-                "Disponibles: " + libro.getCantidadDisponible() + "/" + libro.getCantidad()
+                "Disponibles: " + libro.getCantidad() + "/" + libro.getCantidadDisponible()
         );
 
         String ruta;

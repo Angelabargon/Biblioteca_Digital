@@ -60,10 +60,10 @@
             <HBox>
                 <HBox spacing="6" style="-fx-background-color:#efe9e2; -fx-padding:6; -fx-background-radius:18;">
                     <!-- Botones: llamarán a los métodos del controlador -->
-                    <Button onAction="#mostrarLibros" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Libros" />
-                    <Button onAction="#mostrarUsuarios" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Usuarios" />
-                    <Button onAction="#mostrarPrestamos" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Préstamos" />
-                    <Button onAction="#mostrarCatalogo" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Catálogo" />
+                    <Button fx:id='btnLibrosAdmin' onAction="#mostrarLibros" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Libros" />
+                    <Button fx:id='btnUsuariosAdmin' onAction="#mostrarUsuarios" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Usuarios" />
+                    <Button fx:id='btnPrestamosAdmin' onAction="#mostrarPrestamos" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Préstamos" />
+                    <Button fx:id='btnCatalogoAdmin' onAction="#mostrarCatalogo" style="-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;" text="Catálogo" />
                 </HBox>
 
                 <Region HBox.hgrow="ALWAYS" />

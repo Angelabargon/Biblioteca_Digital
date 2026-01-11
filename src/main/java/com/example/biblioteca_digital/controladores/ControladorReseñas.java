@@ -8,6 +8,7 @@ import com.example.biblioteca_digital.modelos.Reseña;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import java.util.List;
 
@@ -84,8 +85,16 @@ public class ControladorReseñas {
             Label contenido = new Label(r.getContenido());
             Label fecha = new Label(String.valueOf(r.getFecha()));
 
+            // Ajustamos el contenedor al contenido del texto
+            contenido.setWrapText(true);
+
+            // Forzamos a que el Label use el ancho del contenedor para calcular su altura
+            contenido.setMaxWidth(Double.MAX_VALUE);
+
             // Creamos un bloque visal parecido a una tarjeta, para cada reseña.
             VBox bloque = new VBox(nombre, contenido, fecha);
+            bloque.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            bloque.setMinHeight(Region.USE_PREF_SIZE);
             bloque.setSpacing(5);
             bloque.getStyleClass().add("resena-card");
             nombre.getStyleClass().add("resena-nombre");
@@ -94,9 +103,6 @@ public class ControladorReseñas {
 
             // Se ajusta el ancho para que ocupe completamente el contenedor.
             bloque.setMaxWidth(Double.MAX_VALUE);
-            nombre.setMaxWidth(Double.MAX_VALUE);
-            contenido.setMaxWidth(Double.MAX_VALUE);
-            fecha.setMaxWidth(Double.MAX_VALUE);
 
             ap_resenasScroll.getChildren().add(bloque);
         }

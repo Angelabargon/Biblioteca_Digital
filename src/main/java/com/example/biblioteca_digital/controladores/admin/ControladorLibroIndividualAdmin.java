@@ -46,11 +46,8 @@ public class ControladorLibroIndividualAdmin {
         autorLabel.setText(libro.getAutor());
         categoriaLabel.setText(libro.getGenero());
         isbnLabel.setText("ISBN: " + libro.getIsbn());
-
-        disponiblesLabel.setText(
-                "Disponibles: " + libro.getCantidadDisponible() + "/" + libro.getCantidad()
-        );
-
+        String disponiblesText = String.format("Disponibles: %d/%d", libro.getCantidadDisponible(), libro.getCantidad());
+        disponiblesLabel.setText(disponiblesText);
         descripcionArea.setText(libro.getDescripcion());
 
         // Calificación

@@ -352,6 +352,7 @@
 
 .resena-contenido {
     -fx-text-fill: #444;
+    -fx-overflow-typed: show;
 }
 
 .resena-fecha {
