@@ -34,7 +34,7 @@ public class Reseña {
     private String tituloLibro;
 
     /**
-     * Constructor reseña vacío
+     * Constructor reseña vacío.
      */
     public Reseña() {}
 
@@ -87,7 +87,7 @@ public class Reseña {
     public void setTituloLibro(String tituloLibro) { this.tituloLibro = tituloLibro;}
 
     /**
-     * ToString de una reseña
+     * ToString de una reseña.
      */
     @Override
     public String toString() {

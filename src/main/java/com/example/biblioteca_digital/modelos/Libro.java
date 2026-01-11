@@ -1,30 +1,26 @@
 package com.example.biblioteca_digital.modelos;
-/**
- * Imports de la clase libro
- */
-import java.util.Date;
 
 /**
- * Clase libro
+ * Clase libro que representa un libro dentro del sistema de la biblioteca digital.
  */
 public class Libro {
 
     /**
-     * Atributos de un libro
+     * Atributos de un libro.
      */
     private int id, cantidad;
     private String titulo, autor, genero, isbn, foto, descripcion, contenido;
     private boolean disponible;
     private int cantidadDisponible, duracion;
 
-
     /**
-     * Constructor vacío de libro
+     * Constructor vacío de libro.
      */
     public Libro() {}
 
     /**
-     * Constructor de libro con atributos
+     * Constructor de libro con atributos.
+     *
      * @param id
      * @param titulo
      * @param autor
@@ -54,13 +50,14 @@ public class Libro {
         this.duracion = duracion;
     }
 
+    /** Constructor reducido con ID y título. */
     public Libro(int idLibro, String tituloLibro) {
         this.id = idLibro;
         this.titulo = tituloLibro;
     }
 
     /**
-     * Getters de los atributos de un libro
+     * Getters de los atributos de un libro.
      * @return
      */
     public int getId() { return id; }
@@ -77,7 +74,7 @@ public class Libro {
     public int getDuracion() {return duracion;}
 
     /**
-     * Setters de los atributos de un libro
+     * Setters de los atributos de un libro.
      */
     public void setId(int id) { this.id = id; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -93,7 +90,7 @@ public class Libro {
     public void setDuracion(int duracion) {this.duracion = duracion;}
 
     /**
-     * ToString para imprimir la clase y sus atributos
+     * ToString para imprimir la clase y sus atributos.
      * @return
      */
 
