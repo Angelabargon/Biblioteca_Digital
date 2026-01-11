@@ -40,6 +40,8 @@ public class ControladorReseñas {
     /** Usuario actualmente logueado. */
     private Usuario usuarioActual;
 
+    private Runnable actualizarMediaCallback;
+
     /**
      * Inicializa el controlador cargando las opciones de puntuación.
      * Se ejecuta automáticamente al cargar el FXML.
@@ -59,6 +61,10 @@ public class ControladorReseñas {
         this.idLibro = idLibro;
         this.usuarioActual = usuario;
         cargarReseñas();
+    }
+
+    public void setActualizarMediaCallback(Runnable callback) {
+        this.actualizarMediaCallback = callback;
     }
 
     /**
@@ -129,6 +135,10 @@ public class ControladorReseñas {
 
             // Se recargan las reseñas.
             cargarReseñas();
+
+            if (actualizarMediaCallback != null) {
+                actualizarMediaCallback.run();
+            }
 
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error al guardar la reseña.");

@@ -5,6 +5,7 @@ package com.example.biblioteca_digital;
  */
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -31,6 +32,9 @@ public class Application extends javafx.application.Application {
         // Aplicamos el título de la ventana.
         stage.setTitle("BIBLIOTECA DIGITAL");
         stage.setScene(scene);
+
+        // Mostraremos el icono en la ventana.
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
 
         // Mostramos la ventana.
         stage.show();

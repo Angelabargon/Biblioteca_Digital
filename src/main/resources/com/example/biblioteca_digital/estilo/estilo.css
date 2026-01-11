@@ -41,6 +41,16 @@
     -fx-background-size: cover;
 }
 
+.fondo-secundario {
+-fx-background-color: #f0f0f0;
+-fx-background-radius: 12;
+-fx-border-color: #c2b8a3;
+-fx-border-radius: 12;
+-fx-border-width: 1.5;
+-fx-padding: 15;
+-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 2);
+}
+
 /* =======================
     2. BOTONES
  ======================= */
@@ -148,6 +158,24 @@
     -fx-border-color: #ccc;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
+}
+
+.badge-aviso {
+-fx-background-color: #f7e36a; /* amarillo suave */
+-fx-text-fill: #5a4a1f; /* marrón oscuro para contraste */
+-fx-font-weight: bold;
+-fx-padding: 6 12 6 12;
+-fx-background-radius: 8;
+-fx-alignment: center;
+}
+
+.badge-vencido {
+-fx-background-color: #d94c4c; /* rojo fuerte */
+-fx-text-fill: white;
+-fx-font-weight: bold;
+-fx-padding: 6 12 6 12;
+-fx-background-radius: 8;
+-fx-alignment: center;
 }
 
 /* =======================
