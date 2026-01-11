@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Imports para la vista -->
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Nodo Raíz -->
+
+<VBox fx:id="vb_contenedorResenas" alignment="CENTER" prefHeight="380.0" prefWidth="260.0" styleClass="panel" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorReseñasAdmin">
+
+    <children>
+
+        <!-- Título de la sección-->
+        <Label fx:id="lb_tituloResenas" styleClass="titulo" text="Reseñas" />
+
+        <!-- Scroll deslizable para ver las reseñas -->
+        <ScrollPane fx:id="sp_resenas" fitToWidth="true" prefHeight="331.0" prefWidth="260.0" styleClass="scroll-resenas">
+            <content>
+
+                <!-- Contenedor de tarjetas de reseñas-->
+                <VBox fx:id="ap_resenasScroll" spacing="10" />
+            </content>
+        </ScrollPane>
+    </children>
+</VBox>
