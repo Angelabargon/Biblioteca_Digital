@@ -26,7 +26,7 @@
     </ImageView>
     <!-- Zona de filtros del catálogo -->
     <top>
-        <VBox styleClass="panel">
+        <VBox styleClass="fondo-secundario">
             <padding>
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
@@ -64,25 +64,15 @@
     <!-- Lista de libros ordenados por ID, es un panel que contiene las "tarjetas" de los libros -->
     <center>
         <AnchorPane>
-            <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true"
-                       AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"> <image>
+            <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> <image>
                 <Image url="@../../imagenes/fondo-biblioteca.png" />
             </image>
             </ImageView>
-            <Label layoutX="50" layoutY="25" styleClass="titulo" text="Catálogo de Libros" />
-            <ScrollPane hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="scroll-pane"
-                        AnchorPane.bottomAnchor="20.0"
-                        AnchorPane.leftAnchor="20.0"
-                        AnchorPane.rightAnchor="20.0"
-                        AnchorPane.topAnchor="70.0">
+            <Label layoutX="51.0" layoutY="11.0" styleClass="titulo-principal" text="Catálogo de Libros" />
+            <ScrollPane hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
 
                 <content>
-                    <FlowPane fx:id="contenedorLibros"
-                              alignment="TOP_LEFT"
-                              hgap="20"
-                              styleClass="flow-pane"
-                              vgap="20"
-                              prefWidth="1350" >
+                    <FlowPane fx:id="contenedorLibros" alignment="TOP_LEFT" hgap="20" prefWidth="1350" styleClass="flow-pane" vgap="20">
                         <padding>
                             <Insets bottom="50" left="20" right="20" top="20" />
                         </padding>
@@ -92,4 +82,3 @@
         </AnchorPane>
     </center>
 </BorderPane>
-
