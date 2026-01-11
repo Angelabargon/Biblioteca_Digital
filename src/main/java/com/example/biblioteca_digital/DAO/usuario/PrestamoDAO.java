@@ -15,8 +15,8 @@ import java.util.List;
  * DAO encargado de gestionar operaciones relacionadas con los libros en los préstamos del usuario.
  * Este DAO se utiliza en la vista de mis préstamos
  */
-public class PrestamoDAO
-{
+public class PrestamoDAO {
+
     /** Variable de inicialización del DAO de catálogo */
     private CatalogoDAO catalogoDAO = new CatalogoDAO();
     public void setCatalogoDAO(CatalogoDAO catalogoDAO)
@@ -30,48 +30,42 @@ public class PrestamoDAO
      * @param idLibro ID del libro
      * @return true si la transacción fue exitosa, false en caso contrario.
      */
-    public boolean crearPrestamo(int idUsuario, int idLibro)
-    {
+    public boolean crearPrestamo(int idUsuario, int idLibro) {
+
         String sqlPrestamo = "INSERT INTO prestamos (id_usuario, id_libro, fecha_inicio, fecha_fin, estado) " +
                 "VALUES (?, ?, NOW(), DATE_ADD(NOW(), INTERVAL (SELECT duracion_prestamo FROM libros WHERE id = ?) DAY), 'activo')";
         String sqlUpdateStock = "UPDATE libros SET cantidad_disponible = cantidad_disponible - 1 WHERE id = ? AND cantidad_disponible > 0";
         Connection conn = null;
-        try
-        {
+
+        try {
             conn = ConexionBD.getConexion();
             conn.setAutoCommit(false);
             // Crea el Préstamo
-            try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo))
-            {
+            try (PreparedStatement ps = conn.prepareStatement(sqlPrestamo)) {
                 ps.setInt(1, idUsuario);
                 ps.setInt(2, idLibro);
                 ps.setInt(3, idLibro);
                 ps.executeUpdate();
             }
+
             // Resta Stock del Libro
-            try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock))
-            {
+            try (PreparedStatement ps2 = conn.prepareStatement(sqlUpdateStock)) {
                 ps2.setInt(1, idLibro);
                 int filasAfectadas = ps2.executeUpdate();
-                if (filasAfectadas == 0)
-                {
+                if (filasAfectadas == 0) {
                     throw new SQLException("Error: No se pudo restar el stock del libro o no hay unidades disponibles.");
                 }
             }
             conn.commit();
             return true;
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             System.err.println("Error en la transacción de préstamo. Realizando rollback: " + e.getMessage());
-            if (conn != null)
-            {
-                try
-                {
+            if (conn != null) {
+                try {
                     conn.rollback();
-                }
-                catch (SQLException rollbackException)
-                {
+
+                } catch (SQLException rollbackException) {
                     System.err.println("Error al realizar rollback: " + rollbackException.getMessage());
                 }
             }
@@ -80,15 +74,11 @@ public class PrestamoDAO
         }
         finally
         {
-            if (conn != null)
-            {
-                try
-                {
+            if (conn != null) {
+                try {
                     conn.setAutoCommit(true);
 
-                }
-                catch (SQLException closeException)
-                {
+                } catch (SQLException closeException) {
                     System.err.println("Error al cerrar conexión: " + closeException.getMessage());
                 }
             }
@@ -98,8 +88,7 @@ public class PrestamoDAO
     /**
      * Método que obtiene todos los préstamos activos de un usuario.
      */
-    public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario)
-    {
+    public List<Prestamo> obtenerPrestamosDeUsuario(int idUsuario) {
         List<Prestamo> prestamos = new ArrayList<>();
         String sql = """
         SELECT 
@@ -112,15 +101,14 @@ public class PrestamoDAO
         JOIN usuarios u ON p.id_usuario = u.id
         WHERE p.id_usuario = ? AND p.estado = 'activo'
         """;
+
         // Abrir Connection y PreparedStatement usando try con condicion
         try (Connection conn = ConexionBD.getConexion();
              PreparedStatement pst = conn.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
-            try (ResultSet rs = pst.executeQuery())
-            {
-                while (rs.next())
-                {
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
                     Prestamo p = new Prestamo();
                     p.setId(rs.getInt("idPrestamo"));
                     p.setFecha_inicio(rs.getDate("fecha_inicio").toLocalDate());
@@ -143,9 +131,8 @@ public class PrestamoDAO
                     prestamos.add(p);
                 }
             }
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return prestamos;
@@ -157,24 +144,21 @@ public class PrestamoDAO
      * @param idLibro
      * @return
      */
-    public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro)
-    {
+    public boolean esLibroPrestadoPorUsuario(int idUsuario, int idLibro) {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND id_libro = ? AND estado = 'activo'";
+
         try (Connection con = ConexionBD.getConexion();
              PreparedStatement pst = con.prepareStatement(sql))
         {
             pst.setInt(1, idUsuario);
             pst.setInt(2, idLibro);
-            try (ResultSet rs = pst.executeQuery())
-            {
-                if (rs.next())
-                {
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
             }
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -185,8 +169,8 @@ public class PrestamoDAO
      * @param idPrestamo
      * @throws SQLException
      */
-    public void eliminarPrestamo(int idPrestamo) throws SQLException
-    {
+    public void eliminarPrestamo(int idPrestamo) throws SQLException {
+
         String sqlObtenerLibro =
                 "SELECT id_libro FROM prestamos WHERE id = ?";
         String sqlActualizarPrestamo =
@@ -194,45 +178,40 @@ public class PrestamoDAO
         String sqlActualizarStock =
                 "UPDATE libros SET cantidad_disponible = cantidad_disponible + 1 WHERE id = ?";
         Connection conn = null;
-        try
-        {
+
+        try {
             conn = ConexionBD.getConexion();
             conn.setAutoCommit(false);
             int idLibro;
-            try (PreparedStatement pst = conn.prepareStatement(sqlObtenerLibro))
-            {
+            try (PreparedStatement pst = conn.prepareStatement(sqlObtenerLibro)) {
                 pst.setInt(1, idPrestamo);
-                try (ResultSet rs = pst.executeQuery())
-                {
-                    if (!rs.next())
-                    {
+
+                try (ResultSet rs = pst.executeQuery()) {
+                    if (!rs.next()) {
                         throw new SQLException("No se encontró el préstamo con id " + idPrestamo);
                     }
                     idLibro = rs.getInt("id_libro");
                 }
             }
-            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarPrestamo))
-            {
+
+            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarPrestamo)) {
                 pst.setInt(1, idPrestamo);
                 pst.executeUpdate();
             }
-            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarStock))
-            {
+
+            try (PreparedStatement pst = conn.prepareStatement(sqlActualizarStock)) {
                 pst.setInt(1, idLibro);
                 pst.executeUpdate();
             }
             conn.commit();
-        }
-        catch (SQLException e)
-        {
-            if (conn != null)
-            {
-                try
-                {
+
+        } catch (SQLException e) {
+            if (conn != null) {
+
+                try {
                     conn.rollback();
-                }
-                catch (SQLException rollbackEx)
-                {
+
+                } catch (SQLException rollbackEx) {
                     rollbackEx.addSuppressed(e);
                     throw rollbackEx;
                 }
@@ -241,15 +220,12 @@ public class PrestamoDAO
         }
         finally
         {
-            if (conn != null)
-            {
-                try
-                {
+            if (conn != null) {
+
+                try {
                     conn.setAutoCommit(true);
 
-                }
-                catch (SQLException closeEx)
-                {
+                } catch (SQLException closeEx) {
                     throw closeEx;
                 }
             }

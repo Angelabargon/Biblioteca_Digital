@@ -16,8 +16,8 @@ import java.util.List;
  * DAO encargado de gestionar operaciones relacionadas con los libros en el catálogo.
  * Este DAO se utiliza en la vista del catálogo.
  */
-public class CatalogoDAO
-{
+public class CatalogoDAO {
+
     /** Variable para conectar con métodos del DAO de los préstamos */
     private PrestamoDAO prestamoDAO;
     public void setPrestamoDAO(PrestamoDAO dao)
@@ -35,37 +35,38 @@ public class CatalogoDAO
      * @param autor Filtro por autor (puede ser nulo o vacío).
      * @param genero Filtro por género (puede ser "Todas", nulo o vacío).
      */
-    public List<Libro> cargarCatalogo(String titulo, String autor, String genero)
-    {
+    public List<Libro> cargarCatalogo(String titulo, String autor, String genero) {
+
         List<Libro> libros = new ArrayList<>();
         StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM libros WHERE 1=1");
         List<Object> parametros = new ArrayList<>();
-        if (titulo != null && !titulo.trim().isEmpty())
-        {
+
+        if (titulo != null && !titulo.trim().isEmpty()) {
             sqlBuilder.append(" AND LOWER(titulo) LIKE LOWER(?)");
             parametros.add("%" + titulo.trim() + "%");
         }
-        if (autor != null && !autor.trim().isEmpty())
-        {
+
+        if (autor != null && !autor.trim().isEmpty()) {
             sqlBuilder.append(" AND LOWER(autor) LIKE LOWER(?)");
             parametros.add("%" + autor.trim() + "%");
         }
+
         if (genero != null && !genero.trim().isEmpty() && !genero.equalsIgnoreCase("Todas")) {
             sqlBuilder.append(" AND LOWER(genero) = LOWER(?)");
             parametros.add(genero);
         }
+
         sqlBuilder.append(" ORDER BY titulo");
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sqlBuilder.toString()))
         {
-            for (int i = 0; i < parametros.size(); i++)
-            {
+            for (int i = 0; i < parametros.size(); i++) {
                 ps.setObject(i + 1, parametros.get(i));
             }
-            try (ResultSet rs = ps.executeQuery())
-            {
-                while (rs.next())
-                {
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
                     Libro libro = new Libro(
                             rs.getInt("id"),
                             rs.getString("titulo"),
@@ -83,12 +84,12 @@ public class CatalogoDAO
                     libros.add(libro);
                 }
             }
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             System.err.println("Error al cargar el catálogo con filtros: " + e.getMessage());
             e.printStackTrace();
         }
+
         return libros;
     }
 
@@ -97,27 +98,26 @@ public class CatalogoDAO
      * @param idUsuario ID del usuario.
      * @return Número de préstamos activos.
      */
-    public int contarPrestamosActivos(int idUsuario)
-    {
+    public int contarPrestamosActivos(int idUsuario) {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM prestamos WHERE id_usuario = ? AND estado = 'activo'";
+
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {
             ps.setInt(1, idUsuario);
-            try (ResultSet rs = ps.executeQuery())
-            {
-                if (rs.next())
-                {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     count = rs.getInt(1);
                 }
             }
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             System.err.println("Error al contar préstamos activos: " + e.getMessage());
             e.printStackTrace();
         }
+
         return count;
     }
 
@@ -126,27 +126,26 @@ public class CatalogoDAO
      * @param idLibro ID del libro.
      * @return Nombre del autor o null si no se encuentra.
      */
-    public String obtenerAutorPorIdLibro(int idLibro)
-    {
+    public String obtenerAutorPorIdLibro(int idLibro) {
         String autor = null;
         String sql = "SELECT autor FROM libros WHERE id = ?";
+
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql))
         {
             ps.setInt(1, idLibro);
-            try (ResultSet rs = ps.executeQuery())
-            {
-                if (rs.next())
-                {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
                     autor = rs.getString("autor");
                 }
             }
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             System.err.println("Error al obtener autor por ID: " + e.getMessage());
             e.printStackTrace();
         }
+
         return autor;
     }
 }

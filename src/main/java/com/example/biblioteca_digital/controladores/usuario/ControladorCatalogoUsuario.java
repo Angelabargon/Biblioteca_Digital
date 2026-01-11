@@ -28,8 +28,8 @@ import java.util.List;
  * como no disponibles, con sus respectivos filtros
  * posibles.
  */
-public class ControladorCatalogoUsuario
-{
+public class ControladorCatalogoUsuario {
+
     /** Ruta del FXML que diseña cada tarjeta individual de libro. */
     private static final String FXML_CARD_PATH = "/com/example/biblioteca_digital/vistas/usuario/Vista-Tarjeta-Libro.fxml";
     /** Lista de géneros disponibles para el filtro. */
@@ -55,14 +55,14 @@ public class ControladorCatalogoUsuario
      *
      * @param usuario El objeto Usuario actualmente logueado.
      */
-    public void setUsuario(Usuario usuario)
-    {
+    public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
+
         /** Aparecerá un mensaje de bienvenida */
-        if (labelBienvenida != null && usuario != null)
-        {
+        if (labelBienvenida != null && usuario != null) {
             labelBienvenida.setText("Bienvenido, " + usuario.getNombre() + "!");
         }
+
         cargarFiltroGeneros();
         mostrarLibrosFiltrados();
     }
@@ -71,8 +71,7 @@ public class ControladorCatalogoUsuario
      * Metodo que actualiza el catálogo en tiempo real.
      */
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         if (filtroTitulo != null) filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroAutor != null) filtroAutor.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
         if (filtroGenero != null)  filtroGenero.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
@@ -81,13 +80,11 @@ public class ControladorCatalogoUsuario
     /**
      * Metodo para actualiza los préstamos tras pedir uno ptrestado
      */
-    private void actualizarContadorPrestamos()
-    {
-        if (usuarioActual != null)
-        {
+    private void actualizarContadorPrestamos() {
+
+        if (usuarioActual != null) {
             prestamosActivos = catalogoDAO.contarPrestamosActivos(usuarioActual.getId());
-            if (labelContadorPrestamos != null)
-            {
+            if (labelContadorPrestamos != null) {
                 labelContadorPrestamos.setText(String.valueOf(prestamosActivos));
             }
         }
@@ -96,10 +93,9 @@ public class ControladorCatalogoUsuario
     /**
      * Metodo para cargar los géneros
      */
-    private void cargarFiltroGeneros()
-    {
-        if (filtroGenero != null)
-        {
+    private void cargarFiltroGeneros() {
+
+        if (filtroGenero != null) {
             filtroGenero.setItems(FXCollections.observableArrayList(GENEROS_ESTATICOS));
             filtroGenero.getSelectionModel().selectFirst();
         }
@@ -109,8 +105,7 @@ public class ControladorCatalogoUsuario
      * Metodo para aislar y mostrar por los filtros de Título, Autor y Género llamando al DAO.
      */
     @FXML
-    public void mostrarLibrosFiltrados()
-    {
+    public void mostrarLibrosFiltrados() {
         contenedorLibros.getChildren().clear();
 
         List<Libro> libros = catalogoDAO.cargarCatalogo(
@@ -130,21 +125,19 @@ public class ControladorCatalogoUsuario
      *
      * @param libro El libro que el usuario desea prestar.
      */
-    public void clickPedirPrestamo(Libro libro)
-    {
-        if (usuarioActual == null)
-        {
+    public void clickPedirPrestamo(Libro libro) {
+
+        if (usuarioActual == null) {
             mostrarAlertaError("Error de Sesión", "Debe iniciar sesión para realizar un préstamo.");
             return;
         }
-        if (prestamoDAO.crearPrestamo(usuarioActual.getId(), libro.getId()))
-        {
+
+        if (prestamoDAO.crearPrestamo(usuarioActual.getId(), libro.getId())) {
             mostrarAlerta("Préstamo Exitoso", "Has pedido prestado '" + libro.getTitulo() + "'. ¡Disfruta la lectura!");
             actualizarContadorPrestamos();
             mostrarLibrosFiltrados();
-        }
-        else
-        {
+
+        } else {
 
             mostrarAlertaError("Error de Préstamo", "No se pudo completar el préstamo. El libro puede haberse agotado o ocurrió un error en la base de datos.");
         }
@@ -155,10 +148,9 @@ public class ControladorCatalogoUsuario
      *
      * @param libro Libro seleccionado.
      */
-    public void clickVer(Libro libro)
-    {
-        try
-        {
+    public void clickVer(Libro libro) {
+
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Libro-Invidual.fxml"));
             Parent root = loader.load();
 
@@ -171,9 +163,8 @@ public class ControladorCatalogoUsuario
             stage.setScene(new Scene(root));
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
             stage.showAndWait();
-        }
-        catch (IOException e)
-        {
+
+        } catch (IOException e) {
             mostrarAlertaError("Error de Vista", "No se pudo cargar la vista individual del libro.");
             e.printStackTrace();
         }
