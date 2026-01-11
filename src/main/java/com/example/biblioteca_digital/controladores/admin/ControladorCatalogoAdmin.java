@@ -52,8 +52,8 @@ public class ControladorCatalogoAdmin {
     @FXML
     public void initialize() {
 
-        cargarFiltroGeneros();      // 🔥 ESTO ES LO QUE FALTABA
-        mostrarLibrosFiltrados();   // opcional pero recomendable
+        cargarFiltroGeneros();
+        mostrarLibrosFiltrados();
 
         if (filtroTitulo != null)
             filtroTitulo.textProperty().addListener((obs, oldV, newV) -> mostrarLibrosFiltrados());
