@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -16,29 +15,33 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- Nodo Raíz -->
-
 <BorderPane prefWidth="1410.0" styleClass="panel" stylesheets="@../../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorCatalogoUsuario">
+
     <!-- Fondo -->
     <ImageView fitHeight="548" fitWidth="1410" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../imagenes/fondomenu.png" />
         </image>
     </ImageView>
+
     <!-- Zona de filtros del catálogo -->
     <top>
         <VBox styleClass="fondo-secundario">
             <padding>
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
+
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="titulo" text="Filtros:" />
                     <HBox HBox.hgrow="ALWAYS" />
                 </HBox>
+
                 <HBox alignment="CENTER_LEFT" spacing="15" VBox.vgrow="NEVER">
                     <VBox.margin>
                         <Insets top="15" />
                     </VBox.margin>
+
                     <children>
                         <!-- Filtro del título -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
@@ -47,6 +50,7 @@
                                 <TextField fx:id="filtroTitulo" promptText="Buscar por título..." styleClass="text-field" />
                             </children>
                         </HBox>
+
                         <!-- Filtro del autor -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
@@ -54,21 +58,31 @@
                                 <TextField fx:id="filtroAutor" promptText="Buscar por autor..." styleClass="text-field" />
                             </children>
                         </HBox>
+
                         <!-- Filtro del Género -->
                         <ChoiceBox fx:id="filtroGenero" prefWidth="150" styleClass="combo-box" />
                     </children>
+
                 </HBox>
+
             </children>
+
         </VBox>
+
     </top>
+
     <!-- Lista de libros ordenados por ID, es un panel que contiene las "tarjetas" de los libros -->
     <center>
+
         <AnchorPane>
+
             <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> <image>
                 <Image url="@../../imagenes/fondo-biblioteca.png" />
             </image>
             </ImageView>
+
             <Label layoutX="51.0" layoutY="11.0" styleClass="titulo-principal" text="Catálogo de Libros" />
+
             <ScrollPane hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
 
                 <content>
@@ -78,6 +92,7 @@
                         </padding>
                     </FlowPane>
                 </content>
+
             </ScrollPane>
         </AnchorPane>
     </center>

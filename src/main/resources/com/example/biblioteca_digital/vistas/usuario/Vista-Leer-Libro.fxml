@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,22 +12,24 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Nodo Raíz -->
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #f7f3ed;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorLeerLibro">
     <children>
         <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
+
                 <!-- HEADER BAR - Contiene el Título, Autor, y los días Restantes del préstamo -->
                 <HBox fx:id="headerBar" alignment="CENTER_LEFT" prefHeight="70.0" style="-fx-background-color: #f7f3ed; -fx-border-color: #d1b499; -fx-border-width: 0 0 1px 0;">
                     <children>
                         <VBox HBox.hgrow="ALWAYS">
                             <children>
+
                                 <!-- Título del Libro -->
                                 <Label fx:id="lblTitulo" style="-fx-text-fill: #333333;">
                                     <font>
                                         <Font name="System Bold" size="24.0" />
                                     </font>
                                 </Label>
+
                                 <!-- Autor del Libro -->
                                 <Label fx:id="lblAutor" style="-fx-text-fill: #666666;">
                                     <font>
@@ -37,15 +38,18 @@
                                 </Label>
                             </children>
                         </VBox>
+
                         <!-- StackPane para agrupar el Label de los Días Restantes y el Botón de Cerrar -->
                         <StackPane alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                             <children>
+
                                 <!-- Días Restantes -->
                                 <Label fx:id="lblDiasRestantes" alignment="CENTER" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 5px;">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
+
                                 <!-- Botón de Cerrar -->
                                 <Button mnemonicParsing="false" onAction="#cerrarVentana" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-font-size: 18px; -fx-text-fill: #333333;" text="✕" StackPane.alignment="TOP_RIGHT" />
                             </children>
@@ -58,6 +62,7 @@
                         <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                     </padding>
                 </HBox>
+
                 <!-- Área de Contenido del Libro -->
                 <TextArea fx:id="areaContenido" editable="false" prefHeight="2000.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-control-inner-background: #f7f3ed; -fx-highlight-fill: #d1b499; -fx-font-size: 18px; -fx-text-fill: #333333;" wrapText="true" VBox.vgrow="ALWAYS">
                     <font>

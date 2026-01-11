@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- Nodo Raíz -->
-
 <AnchorPane prefHeight="548.0" prefWidth="1410.0" styleClass="fondo-secundario" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorFavoritosUsuario">
 
     <!-- Contenedor principal -->

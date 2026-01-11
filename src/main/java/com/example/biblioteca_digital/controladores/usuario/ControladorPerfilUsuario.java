@@ -26,18 +26,23 @@ import java.io.IOException;
  * para cambiar la contraseña, cerrar sesión, cerrar la ventana
  * o acceder a la ayuda.
  */
-public class ControladorPerfilUsuario
-{
+public class ControladorPerfilUsuario {
+
     /** Label que muestra el nombre de usuario. */
     @FXML private Label lb_nombreUsuario;
+
     /** Label que muestra el nombre real del usuario. */
     @FXML private Label lb_nombreReal;
+
     /** Label que muestra el número de favoritos del usuario. */
     @FXML private Label lb_favoritos;
+
     /** Label que muestra el número de préstamos del usuario. */
     @FXML private Label lb_prestamos;
+
     /** Usuario actualmente logueado en la sesión. */
     private Usuario usuarioActual;
+
     /** DAO para operaciones del perfil del usuario. */
     private final PerfilUsuarioDAO perfilUsuarioDAO = new PerfilUsuarioDAO();
 
@@ -46,8 +51,7 @@ public class ControladorPerfilUsuario
      * Obtiene el usuario actual de la sesión y carga sus datos.
      */
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         usuarioActual = Sesion.getInstancia().getUsuario();
         cargarDatosPerfil();
     }
@@ -56,13 +60,15 @@ public class ControladorPerfilUsuario
      * Carga los datos del perfil del usuario en los labels.
      * Muestra nombre de usuario, nombre real, número de favoritos y número de préstamos.
      */
-    private void cargarDatosPerfil()
-    {
+    private void cargarDatosPerfil() {
+
         if (usuarioActual == null) return;
         lb_nombreUsuario.setText("Nombre de Usuario: " + usuarioActual.getNombreUsuario());
         lb_nombreReal.setText("Nombre: " + usuarioActual.getNombre());
+
         int numFavoritos = perfilUsuarioDAO.contarFavoritos(usuarioActual.getId());
         int numPrestamos = perfilUsuarioDAO.contarPrestamos(usuarioActual.getId());
+
         lb_favoritos.setText("Favoritos: " + numFavoritos);
         lb_prestamos.setText("Préstamos: " + numPrestamos);
 
@@ -75,24 +81,22 @@ public class ControladorPerfilUsuario
      * @param event evento de acción generado al pulsar el botón
      */
     @FXML
-    private void cambiarContrasena(ActionEvent event)
-    {
+    private void cambiarContrasena(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog();
+
         dialog.setTitle("Cambiar Contraseña");
         dialog.setHeaderText("Introduce tu nueva contraseña:");
         dialog.setContentText("Contraseña:");
-        dialog.showAndWait().ifPresent(nuevaPass ->
-        {
+
+        dialog.showAndWait().ifPresent(nuevaPass -> {
             boolean ok = perfilUsuarioDAO.actualizarContrasena(usuarioActual.getId(), nuevaPass);
-            if (ok)
-            {
+
+            if (ok) {
                 usuarioActual.setContrasena(nuevaPass);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Contraseña actualizada correctamente.");
                 alert.showAndWait();
 
-            }
-            else
-            {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error al actualizar la contraseña.");
                 alert.showAndWait();
             }
@@ -105,11 +109,10 @@ public class ControladorPerfilUsuario
      * @param event evento de acción generado al pulsar el botón.
      */
     @FXML
-    private void cerrarSesion(ActionEvent event)
-    {
+    private void cerrarSesion(ActionEvent event) {
         Sesion.cerrarSesion();
-        try
-        {
+
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/Vista-Pagina-Inicio.fxml"));
             Parent root = loader.load();
             Stage nuevaStage = new Stage();
@@ -119,14 +122,12 @@ public class ControladorPerfilUsuario
             Stage perfilStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             perfilStage.close();
             Stage menuStage = (Stage) perfilStage.getOwner();
-            if (menuStage != null)
-            {
+
+            if (menuStage != null) {
                 menuStage.close();
             }
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "No se pudo cargar la página de inicio.");
             alert.showAndWait();
@@ -148,8 +149,7 @@ public class ControladorPerfilUsuario
      * @param event evento de acción generado al pulsar el botón.
      */
     @FXML
-    private void mostrarAyuda(ActionEvent event)
-    {
+    private void mostrarAyuda(ActionEvent event) {
         ControladorAyuda.mostrarAyuda("/com/example/biblioteca_digital/vistas/usuario/Vista-Ayuda-PerfilUsuario.fxml", "Perfil Usuario");
     }
 }

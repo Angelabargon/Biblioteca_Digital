@@ -13,8 +13,8 @@ import java.util.function.Consumer;
 /**
  * Controlador de la opción de pedir prestado un libro en la tarjeta individual y la detallada.
  */
-public class ControladorPedirPrestamo
-{
+public class ControladorPedirPrestamo {
+
     /** Etiqueta que muestra el título del libro. */
     @FXML private Label lblTitulo;
     /** Etiqueta que muestra el autor del libro. */
@@ -67,10 +67,8 @@ public class ControladorPedirPrestamo
      * Método utilizado para el botón de leer
      */
     @FXML
-    private void handleBotonLeer()
-    {
-        if (leerLibroHandler != null)
-        {
+    private void handleBotonLeer() {
+        if (leerLibroHandler != null) {
             leerLibroHandler.accept(prestamoActual);
         }
     }
@@ -79,10 +77,8 @@ public class ControladorPedirPrestamo
      * Método utilizado para el botón de quitar libro de préstamos
      */
     @FXML
-    private void handleBotonQuitar()
-    {
-        if (quitarLibroHandler != null)
-        {
+    private void handleBotonQuitar() {
+        if (quitarLibroHandler != null) {
             quitarLibroHandler.accept(prestamoActual);
         }
     }

@@ -25,8 +25,8 @@ import java.util.List;
  * Controlador encargado de gestionar los préstamos
  * del usuario.
  */
-public class ControladorPrestamosUsuario
-{
+public class ControladorPrestamosUsuario {
+
     /** Contenedor donde se muestran los préstamos del usuario que está logueado. */
     @FXML private VBox contenedorPrestamos;
     /** Variable privada que guarda el usuario logueado */
@@ -38,11 +38,10 @@ public class ControladorPrestamosUsuario
      * Método que inicializa el controlador.
      */
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
+
         // El FXML ya define VBox spacing y padding, se podría omitir aquí o usar solo para asegurar.
-        if (contenedorPrestamos != null)
-        {
+        if (contenedorPrestamos != null) {
             // Solo para asegurar, aunque el FXML ya lo define.
             contenedorPrestamos.setSpacing(15);
             contenedorPrestamos.setPadding(new Insets(10));
@@ -53,15 +52,13 @@ public class ControladorPrestamosUsuario
      * Metodo que establece el usuario actual y carga sus préstamos.
      * @param usuario El objeto Usuario actualmente logueado.
      */
-    public void setUsuario(Usuario usuario)
-    {
+    public void setUsuario(Usuario usuario) {
         this.usuarioActual = usuario;
-        if (usuarioActual != null)
-        {
+
+        if (usuarioActual != null) {
             cargarPrestamosUsuario();
-        }
-        else
-        {
+
+        } else {
             System.err.println("Usuario nulo en ControladorPrestamosUsuario.");
         }
     }
@@ -69,19 +66,16 @@ public class ControladorPrestamosUsuario
     /**
      * Método que carga la lista de préstamos activos y genera la vista dinámica.
      */
-    private void cargarPrestamosUsuario()
-    {
+    private void cargarPrestamosUsuario() {
         contenedorPrestamos.getChildren().clear();
+
         // Carga los préstamos
         List<Prestamo> prestamos = prestamoDAO.obtenerPrestamosDeUsuario(usuarioActual.getId());
-        if (prestamos.isEmpty())
-        {
+        if (prestamos.isEmpty()) {
             contenedorPrestamos.getChildren().add(new Label("No tienes préstamos activos en este momento."));
-        }
-        else
-        {
-            for (Prestamo prestamo : prestamos)
-            {
+
+        } else {
+            for (Prestamo prestamo : prestamos) {
                 contenedorPrestamos.getChildren().add(crearVistaPrestamoItem(prestamo));
             }
         }
@@ -92,10 +86,9 @@ public class ControladorPrestamosUsuario
     /**
      * Método que crea y configura un Node para un único préstamo.
      */
-    private Node crearVistaPrestamoItem(Prestamo prestamo)
-    {
-        try
-        {
+    private Node crearVistaPrestamoItem(Prestamo prestamo) {
+
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/example/biblioteca_digital/vistas/usuario/Vista-Prestamo-Item.fxml"));
             Node item = loader.load();
@@ -103,9 +96,8 @@ public class ControladorPrestamosUsuario
             String tiempoRestante = calcularTiempoRestante(prestamo.getFecha_fin());
             controlador.setPrestamo(prestamo, tiempoRestante, this::handleLeerLibro, this::handleQuitarLibro);
             return item;
-        }
-        catch (IOException e)
-        {
+
+        } catch (IOException e) {
             e.printStackTrace();
             return new Label("Error al cargar préstamo: " + e.getMessage());
         }
@@ -116,18 +108,16 @@ public class ControladorPrestamosUsuario
      * @param fechaFin La fecha de fin del préstamo.
      * @return String que indica los días restantes o si está vencido.
      */
-    private String calcularTiempoRestante(LocalDate fechaFin)
-    {
+    private String calcularTiempoRestante(LocalDate fechaFin) {
         long dias = ChronoUnit.DAYS.between(LocalDate.now(), fechaFin);
-        if (dias > 0)
-        {
+
+        if (dias > 0) {
             return dias + " días restantes";
-        } else if (dias == 0)
-        {
+
+        } else if (dias == 0) {
             return "Vence Hoy";
-        }
-        else
-        {
+
+        } else {
             return "Vencido hace " + Math.abs(dias) + " días";
         }
     }
@@ -136,10 +126,9 @@ public class ControladorPrestamosUsuario
      * Método que lleva a la ventana para leer el libro
      * @param prestamo El préstamo a leer.
      */
-    private void handleLeerLibro(Prestamo prestamo)
-    {
-        try
-        {
+    private void handleLeerLibro(Prestamo prestamo) {
+
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/example/biblioteca_digital/vistas/usuario/Vista-Leer-Libro.fxml"));
             Parent root = loader.load();
@@ -151,21 +140,20 @@ public class ControladorPrestamosUsuario
             stage.setScene(new javafx.scene.Scene(root));
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/biblioteca_digital/imagenes/icono-app-login.png")));
             stage.show();
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
             System.err.println("Error al abrir ventana de lectura.");
             e.printStackTrace();
         }
     }
+
     /**
      * Método que elimina el préstamo de la lista
      * @param prestamo El préstamo a quitar.
      */
-    private void handleQuitarLibro(Prestamo prestamo)
-    {
-        try
-        {
+    private void handleQuitarLibro(Prestamo prestamo) {
+
+        try {
             prestamoDAO.eliminarPrestamo(prestamo.getId());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Préstamo eliminado");
@@ -176,9 +164,8 @@ public class ControladorPrestamosUsuario
             );
             alert.showAndWait();
             cargarPrestamosUsuario();
-        }
-        catch (SQLException e)
-        {
+
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("No se pudo eliminar el préstamo");
@@ -187,5 +174,4 @@ public class ControladorPrestamosUsuario
             e.printStackTrace();
         }
     }
-
 }

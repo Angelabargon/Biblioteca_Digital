@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
@@ -14,7 +13,6 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Nodo Raíz -->
-
 <AnchorPane prefHeight="770.0" prefWidth="1400.0" styleClass="panel" stylesheets="@../../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorMenuInicioUsuario">
 
     <!-- Fondo -->
@@ -49,10 +47,12 @@
                 </image>
             </ImageView>
         </graphic>
+
       <font>
          <Font size="15.0" />
       </font>
     </Button>
+
    <Line endX="99.99998474121094" endY="17.0" layoutX="147.0" layoutY="171.0" startX="99.99998474121094" startY="-99.20000457763672" styleClass="linea-decorativa" />
 
     <!-- Botones de selección de parte del menú -->
