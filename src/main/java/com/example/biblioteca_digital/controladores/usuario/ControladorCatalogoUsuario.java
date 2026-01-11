@@ -111,18 +111,18 @@ public class ControladorCatalogoUsuario
     @FXML
     public void mostrarLibrosFiltrados()
     {
-        if (contenedorLibros == null) return;
         contenedorLibros.getChildren().clear();
-        String titulo = filtroTitulo.getText();
-        String autor = filtroAutor.getText();
-        String generoSeleccionado = filtroGenero.getValue();
-        List<Libro> librosFiltrados = catalogoDAO.cargarCatalogo(titulo, autor, generoSeleccionado);
-        for (Libro libro : librosFiltrados)
-        {
+
+        List<Libro> libros = catalogoDAO.cargarCatalogo(
+                filtroTitulo.getText(),
+                filtroAutor.getText(),
+                filtroGenero.getValue()
+        );
+
+        for (Libro libro : libros) {
             contenedorLibros.getChildren().add(crearVistaLibroItem(libro));
         }
     }
-    // --------------------- Lógica entre vistas --------------------------
 
     /**
      * Maneja el evento de click en el botón "Pedir Prestado" de la tarjeta de libro.
@@ -145,6 +145,7 @@ public class ControladorCatalogoUsuario
         }
         else
         {
+
             mostrarAlertaError("Error de Préstamo", "No se pudo completar el préstamo. El libro puede haberse agotado o ocurrió un error en la base de datos.");
         }
     }

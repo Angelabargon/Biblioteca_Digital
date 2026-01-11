@@ -85,6 +85,8 @@ public class ControladorPrestamosUsuario
                 contenedorPrestamos.getChildren().add(crearVistaPrestamoItem(prestamo));
             }
         }
+        contenedorPrestamos.applyCss();
+        contenedorPrestamos.layout();
     }
 
     /**

@@ -24,28 +24,22 @@
             <Image url="@../../imagenes/fondomenu.png" />
         </image>
     </ImageView>
-
     <!-- Zona de filtros del catálogo -->
     <top>
-        <VBox styleClass="fondo-secundario">
+        <VBox styleClass="panel">
             <padding>
                 <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
-
             <children>
-
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="titulo" text="Filtros:" />
                     <HBox HBox.hgrow="ALWAYS" />
                 </HBox>
-
                 <HBox alignment="CENTER_LEFT" spacing="15" VBox.vgrow="NEVER">
                     <VBox.margin>
                         <Insets top="15" />
                     </VBox.margin>
-
                     <children>
-
                         <!-- Filtro del título -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
@@ -53,7 +47,6 @@
                                 <TextField fx:id="filtroTitulo" promptText="Buscar por título..." styleClass="text-field" />
                             </children>
                         </HBox>
-
                         <!-- Filtro del autor -->
                         <HBox alignment="CENTER_LEFT" styleClass="filtro-box">
                             <children>
@@ -61,39 +54,42 @@
                                 <TextField fx:id="filtroAutor" promptText="Buscar por autor..." styleClass="text-field" />
                             </children>
                         </HBox>
-
                         <!-- Filtro del Género -->
                         <ChoiceBox fx:id="filtroGenero" prefWidth="150" styleClass="combo-box" />
-
                     </children>
                 </HBox>
-
             </children>
         </VBox>
     </top>
-
     <!-- Lista de libros ordenados por ID, es un panel que contiene las "tarjetas" de los libros -->
     <center>
         <AnchorPane>
-            <ImageView fitHeight="770.0" fitWidth="1410.0" pickOnBounds="true" preserveRatio="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> <image>
+            <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true"
+                       AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"> <image>
                 <Image url="@../../imagenes/fondo-biblioteca.png" />
             </image>
             </ImageView>
-
-            <Label layoutX="35.0" layoutY="14.0" prefHeight="56.0" prefWidth="307.0" styleClass="titulo-principal" text="Catálogo de Libros" />
-
-            <ScrollPane hbarPolicy="NEVER" styleClass="scroll-pane" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+            <Label layoutX="50" layoutY="25" styleClass="titulo" text="Catálogo de Libros" />
+            <ScrollPane hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="scroll-pane"
+                        AnchorPane.bottomAnchor="20.0"
+                        AnchorPane.leftAnchor="20.0"
+                        AnchorPane.rightAnchor="20.0"
+                        AnchorPane.topAnchor="70.0">
 
                 <content>
-                    <FlowPane fx:id="contenedorLibros" alignment="TOP_LEFT" hgap="20" prefWidth="1350" styleClass="flow-pane" vgap="20">
+                    <FlowPane fx:id="contenedorLibros"
+                              alignment="TOP_LEFT"
+                              hgap="20"
+                              styleClass="flow-pane"
+                              vgap="20"
+                              prefWidth="1350" >
                         <padding>
                             <Insets bottom="50" left="20" right="20" top="20" />
                         </padding>
                     </FlowPane>
                 </content>
             </ScrollPane>
-
         </AnchorPane>
     </center>
-
 </BorderPane>
+

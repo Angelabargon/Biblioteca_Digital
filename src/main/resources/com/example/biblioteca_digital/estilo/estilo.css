@@ -134,6 +134,11 @@
     -fx-background-color: #a87a4f;
 }
 
+.btn-prestar:disabled {
+    -fx-opacity: 0.5;
+    -fx-cursor: default;
+}
+
 .btn-fav-overlay {
     -fx-background-color: transparent;
     -fx-text-fill: #e63946;
@@ -222,6 +227,10 @@
     -fx-border-radius: 5;
     -fx-background-color: white;
     -fx-padding: 5 10;
+}
+
+#contenedorPrestamos {
+    -fx-background-color: transparent;
 }
 
 /* =======================
