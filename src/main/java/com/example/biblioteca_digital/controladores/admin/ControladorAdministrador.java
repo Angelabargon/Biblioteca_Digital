@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -28,6 +29,10 @@ public class ControladorAdministrador {
     @FXML private Label lblTotalUsuarios;
     @FXML private Label lblPrestamosActivos;
     @FXML private Label lblPrestamosVencidos;
+    @FXML private Button btnLibrosAdmin;
+    @FXML private Button btnUsuariosAdmin;
+    @FXML private Button btnPrestamosAdmin;
+    @FXML private Button btnCatalogoAdmin;
 
     private final LibroAdminDAO libroAdminDAO = new LibroAdminDAO();
     private final UsuarioAdminDAO usuarioAdminDAO = new UsuarioAdminDAO();
@@ -79,13 +84,37 @@ public class ControladorAdministrador {
         }
     }
 
-    @FXML public void mostrarLibros() { cargarPanel("adminLibros.fxml"); }
+    @FXML public void mostrarLibros() {
+        cargarPanel("adminLibros.fxml");
+        btnLibrosAdmin.setStyle("-fx-background-color: transparent;  -fx-padding:8 18; -fx-text-fill: #8B5E3C; -fx-font-weight: bold;");
+        btnUsuariosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnPrestamosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnCatalogoAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+    }
 
-    @FXML public void mostrarUsuarios() { cargarPanel("adminUsuarios.fxml"); }
+    @FXML public void mostrarUsuarios() {
+        cargarPanel("adminUsuarios.fxml");
+        btnUsuariosAdmin.setStyle("-fx-background-color: transparent;  -fx-padding:8 18; -fx-text-fill: #8B5E3C; -fx-font-weight: bold;");
+        btnLibrosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnPrestamosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnCatalogoAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+    }
 
-    @FXML public void mostrarPrestamos() { cargarPanel("adminPrestamos.fxml"); }
+    @FXML public void mostrarPrestamos() {
+        cargarPanel("adminPrestamos.fxml");
+        btnPrestamosAdmin.setStyle("-fx-background-color: transparent;  -fx-padding:8 18; -fx-text-fill: #8B5E3C; -fx-font-weight: bold;");
+        btnUsuariosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnLibrosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnCatalogoAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+    }
 
-    @FXML public void mostrarCatalogo() { cargarPanel("adminCatalogo.fxml"); }
+    @FXML public void mostrarCatalogo() {
+        cargarPanel("adminCatalogo.fxml");
+        btnCatalogoAdmin.setStyle("-fx-background-color: transparent;  -fx-padding:8 18; -fx-text-fill: #8B5E3C; -fx-font-weight: bold;");
+        btnUsuariosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnLibrosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+        btnPrestamosAdmin.setStyle("-fx-background-color:transparent; -fx-padding:8 18; -fx-font-weight:600;");
+    }
 
     @FXML
     public void cerrarSesion() {
