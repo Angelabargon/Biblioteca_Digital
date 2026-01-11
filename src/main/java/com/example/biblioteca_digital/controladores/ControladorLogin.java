@@ -51,36 +51,36 @@ public class ControladorLogin {
      * Inicializa el controlador configurando el grupo de roles
      * y ajustando los textos y placeholders según el rol seleccionado.
      */
-        @FXML
-        public void initialize() {
+    @FXML
+    public void initialize() {
 
-            grupoRol = new ToggleGroup();
-            tbt_usuario.setToggleGroup(grupoRol);
-            tbt_admin.setToggleGroup(grupoRol);
-            tbt_usuario.setSelected(true);
+        grupoRol = new ToggleGroup();
+        tbt_usuario.setToggleGroup(grupoRol);
+        tbt_admin.setToggleGroup(grupoRol);
+        tbt_usuario.setSelected(true);
 
-            grupoRol.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+        grupoRol.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
 
-                if (newToggle != null) {
-                    ToggleButton seleccionado = (ToggleButton) newToggle;
-                    String rol = seleccionado.getText().toLowerCase();
+            if (newToggle != null) {
+                ToggleButton seleccionado = (ToggleButton) newToggle;
+                String rol = seleccionado.getText().toLowerCase();
 
-                    if (rol.equals("admin")) {
-                        tf_email.setPromptText("Email de Administrador");
-                        pf_contraseña.setPromptText("Contraseña de Administrador");
-                        bt_inicioUsuario.setText("Iniciar Sesión como Administrador");
+                if (rol.equals("admin")) {
+                    tf_email.setPromptText("Email de Administrador");
+                    pf_contraseña.setPromptText("Contraseña de Administrador");
+                    bt_inicioUsuario.setText("Iniciar Sesión como Administrador");
 
-                    } else {
-                        tf_email.setPromptText("Email");
-                        pf_contraseña.setPromptText("Contraseña");
-                        bt_inicioUsuario.setText("Iniciar Sesión como Usuario");
-                    }
+                } else {
+                    tf_email.setPromptText("Email");
+                    pf_contraseña.setPromptText("Contraseña");
+                    bt_inicioUsuario.setText("Iniciar Sesión como Usuario");
                 }
-            });
+            }
+        });
 
-            tf_email.setOnAction(event -> iniciarSesion(event));
-            pf_contraseña.setOnAction(event -> iniciarSesion(event));
-        }
+        tf_email.setOnAction(event -> iniciarSesion(event));
+        pf_contraseña.setOnAction(event -> iniciarSesion(event));
+    }
 
     /**
      * Muestra la ventana de ayuda sobre la actual.

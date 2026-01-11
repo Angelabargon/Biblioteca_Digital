@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Imports para la vista -->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -65,7 +64,7 @@
 
         </VBox>
 
-              <!-- Botón ayuda -->
+        <!-- Botón ayuda -->
         <Button fx:id="bt_ayuda" alignment="CENTER" layoutX="967.0" layoutY="131.0" onAction="#mostrarAyuda" prefHeight="35.0" prefWidth="95.0" styleClass="button-secundario" text="Ayuda">
             <graphic>
                 <ImageView id="iv_iconoAyuda" fitHeight="20.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
@@ -88,9 +87,11 @@
                     </image>
                 </ImageView>
             </graphic>
+
          <font>
             <Font size="15.0" />
          </font>
+
         </Button>
     </children>
 </AnchorPane>
