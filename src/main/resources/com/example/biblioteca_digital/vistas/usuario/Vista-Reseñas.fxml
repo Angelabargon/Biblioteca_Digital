@@ -22,7 +22,7 @@
             <content>
 
                 <!-- Contenedor de tarjetas de reseñas-->
-                <VBox fx:id="ap_resenasScroll" spacing="10" />
+                <VBox fx:id="ap_resenasScroll" spacing="10" prefHeight="-1.0" />
             </content>
         </ScrollPane>
 
