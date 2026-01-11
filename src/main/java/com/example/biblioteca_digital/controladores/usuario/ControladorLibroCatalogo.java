@@ -159,7 +159,7 @@ public class ControladorLibroCatalogo
      */
     private void actualizarEstadoDisponibilidad()
     {
-        int disponibles = libroActual.getCantidad();
+        int disponibles = libroActual.getCantidadDisponible();
         boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libroActual.getId());
         if (disponibles <= 0 || yaEstaPrestado)
         {
