@@ -53,7 +53,7 @@
         <Line endX="-99.8" endY="3.0" startX="-100.0" startY="380.0" styleClass="linea-decorativa" />
 
         <!-- Apartado de reseñas -->
-        <fx:include fx:id="vb_contenedorResenas" source="../usuario/Vista-Reseñas.fxml" />
+        <fx:include fx:id="vb_contenedorResenas" source="VistaReseñasAdmin.fxml" />
     </HBox>
 
 </AnchorPane>
