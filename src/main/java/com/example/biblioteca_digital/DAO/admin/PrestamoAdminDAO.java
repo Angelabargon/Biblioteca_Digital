@@ -159,7 +159,29 @@ public class PrestamoAdminDAO {
         }
     }
 
+    public boolean actualizarPrestamo(Prestamo p) {
+        String sql = """
+        UPDATE prestamos
+        SET id_usuario = ?, id_libro = ?, fecha_fin = ?, estado = ?
+        WHERE id = ?
+    """;
 
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, p.getUsuario().getId());
+            ps.setInt(2, p.getLibro().getId());
+            ps.setDate(3, Date.valueOf(p.getFecha_fin()));
+            ps.setString(4, p.getEstado());
+            ps.setInt(5, p.getId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Elimina un préstamo existente y devuelve automáticamente el libro,

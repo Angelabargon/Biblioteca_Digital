@@ -108,21 +108,32 @@ public class ControladorPrestamosAdmin {
             protected void updateItem(String estado, boolean empty) {
                 super.updateItem(estado, empty);
 
-                if (empty || getTableRow() == null) {
+                if (empty || getIndex() < 0) {
                     setGraphic(null);
                     setText(null);
                     return;
                 }
 
                 Prestamo p = getTableView().getItems().get(getIndex());
-                boolean vencido = p.getFecha_fin().isBefore(LocalDate.now());
+                Label badge = new Label();
 
-                Label badge = new Label(vencido ? "Vencido" : "Vigente");
-                badge.setStyle(
-                        vencido
+                switch (p.getEstado()) {
+                    case "bloqueado" -> {
+                        badge.setText("Bloqueado");
+                        badge.setStyle("-fx-background-color:#7c2d12; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                    }
+                    case "devuelto" -> {
+                        badge.setText("Devuelto");
+                        badge.setStyle("-fx-background-color:#6b7280; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                    }
+                    default -> {
+                        boolean vencido = p.getFecha_fin().isBefore(LocalDate.now());
+                        badge.setText(vencido ? "Vencido" : "Vigente");
+                        badge.setStyle(vencido
                                 ? "-fx-background-color:#ef4444; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;"
-                                : "-fx-background-color:#10B981; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;"
-                );
+                                : "-fx-background-color:#10B981; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                    }
+                }
 
                 setGraphic(badge);
                 setText(null);
@@ -132,22 +143,32 @@ public class ControladorPrestamosAdmin {
         // Celda personalizada para botones de acciones
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
+            private final Button btnEditar = new Button("✎");
             private final Button btnEliminar = new Button("🗑");
-            private final HBox contenedor = new HBox(8);
+            private final HBox contenedor = new HBox(8, btnEditar, btnEliminar);
 
             {
+                btnEditar.setStyle(
+                        "-fx-background-color:#fff6ee; -fx-text-fill:#3B3027; " +
+                                "-fx-background-radius:6; -fx-padding:6 8;"
+                );
+
                 btnEliminar.setStyle(
                         "-fx-background-color:#ef4444; -fx-text-fill:white; " +
-                                "-fx-border-radius:8; -fx-background-radius:8; -fx-padding:6;"
+                                "-fx-background-radius:6; -fx-padding:6 8;"
                 );
+
+                btnEditar.setOnAction(e -> {
+                    Prestamo p = getTableView().getItems().get(getIndex());
+                    editarPrestamo(p);
+                });
 
                 btnEliminar.setOnAction(e -> {
                     Prestamo p = getTableView().getItems().get(getIndex());
                     eliminarPrestamo(p);
                 });
 
-                contenedor.setPadding(new Insets(4, 0, 4, 0));
-                contenedor.getChildren().add(btnEliminar);
+                contenedor.setStyle("-fx-alignment: center;");
             }
 
             @Override
@@ -228,7 +249,37 @@ public class ControladorPrestamosAdmin {
      * @param p préstamo a editar
      */
     private void editarPrestamo(Prestamo p) {
-        System.out.println("Editar préstamo: " + p.getId());
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml")
+            );
+            Parent root = loader.load();
+            ControladorEditarPrestamo ctrl = loader.getController();
+
+            ctrl.cargarDatos(
+                    new UsuarioAdminDAO().obtenerTodos(),
+                    new LibroAdminDAO().obtenerTodos()
+            );
+
+            ctrl.setPrestamoEditar(p);
+
+            Stage st = new Stage();
+            st.initOwner(tablaPrestamos.getScene().getWindow());
+            st.initModality(Modality.APPLICATION_MODAL);
+            ctrl.setStage(st);
+
+            ctrl.setOnGuardarCallback(() -> {
+                Prestamo actualizado = ctrl.getPrestamoResultado();
+                prestamoAdminDAO.actualizarPrestamo(actualizado);
+                refrescarTabla();
+            });
+
+            st.setScene(new Scene(root));
+            st.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
