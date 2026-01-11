@@ -160,8 +160,9 @@ public class ControladorLibroCatalogo
     private void actualizarEstadoDisponibilidad()
     {
         int disponibles = libroActual.getCantidadDisponible();
+        int cantidad = libroActual.getCantidad();
         boolean yaEstaPrestado = prestamoDAO.esLibroPrestadoPorUsuario(usuarioActual.getId(), libroActual.getId());
-        if (disponibles <= 0 || yaEstaPrestado)
+        if (cantidad <= 0 || yaEstaPrestado)
         {
             lblDisponibles.setText("No disponible");
             if (lblNoDisponibleTag != null)
@@ -174,7 +175,7 @@ public class ControladorLibroCatalogo
         }
         else
         {
-            lblDisponibles.setText(String.format("Disponibles: %d/%d", libroActual.getCantidad(), disponibles));
+            lblDisponibles.setText(String.format("Disponibles: %d/%d", cantidad, disponibles));
             if (lblNoDisponibleTag != null)
             {
                 lblNoDisponibleTag.setVisible(false);
