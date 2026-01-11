@@ -16,7 +16,7 @@
       fx:controller="com.example.biblioteca_digital.controladores.usuario.ControladorPedirPrestamo"
       spacing="10">
 
-
+    <!-- Nodos que contienen los préstamos del usuario -->
 
     <VBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
         <Label fx:id="lblTitulo" styleClass="titulo" wrapText="true" />

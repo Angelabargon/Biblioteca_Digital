@@ -12,7 +12,7 @@
 
 <!-- Nodo Raíz -->
 
-<AnchorPane prefHeight="393.0" prefWidth="850" styleClass="panel" stylesheets="@../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibroIndividualAdmin">
+<AnchorPane prefHeight="393.0" prefWidth="850" styleClass="panel" stylesheets="@../../estilo/estilo.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.biblioteca_digital.controladores.admin.ControladorLibroIndividualAdmin">
 
     <!-- Contenedor organizador de la vista -->
     <HBox layoutX="20.0" layoutY="20.0" prefHeight="380.0" prefWidth="810.0" spacing="30" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -53,7 +53,7 @@
         <Line endX="-99.8" endY="3.0" startX="-100.0" startY="380.0" styleClass="linea-decorativa" />
 
         <!-- Apartado de reseñas -->
-        <fx:include fx:id="vb_contenedorResenas" source="usuario/Vista-Reseñas.fxml" />
+        <fx:include fx:id="vb_contenedorResenas" source="../usuario/Vista-Reseñas.fxml" />
     </HBox>
 
 </AnchorPane>

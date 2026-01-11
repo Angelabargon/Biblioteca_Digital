@@ -16,7 +16,7 @@
 
     <children>
 
-        <!-- Tístulo -->
+        <!-- Título -->
         <Label id="lb_tituloAyuda"
                layoutX="45.0" layoutY="40.0"
                prefWidth="450.0"
