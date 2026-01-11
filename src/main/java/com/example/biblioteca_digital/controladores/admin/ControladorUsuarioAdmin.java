@@ -1,6 +1,5 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.DAO.admin.LibroAdminDAO;
 import com.example.biblioteca_digital.DAO.admin.UsuarioAdminDAO;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,60 +22,81 @@ import java.util.Date;
 import java.util.Optional;
 
 /**
- * Controlador encargado de gestionar el módulo de administración de usuarios.
- * Permite listar, buscar, agregar, editar y eliminar usuarios dentro del sistema.
+ * Controlador encargado de la gestión de usuarios desde el panel
+ * de administración.
  *
- * Este controlador interactúa con {@link UsuarioAdminDAO} para obtener y modificar datos,
- * y utiliza varias celdas personalizadas para mejorar la visualización en la tabla.
+ * <p>
+ * Permite listar, buscar, crear, editar y eliminar usuarios del sistema.
+ * Utiliza una tabla con celdas personalizadas para mejorar la
+ * visualización de roles, fechas y acciones disponibles.
+ * </p>
+ *
+ * <p>
+ * Se apoya en {@link UsuarioAdminDAO} para todas las operaciones
+ * de acceso a datos.
+ * </p>
  */
 public class ControladorUsuarioAdmin {
 
-    /** Tabla principal donde se muestran los usuarios disponibles. */
+    /** Tabla principal donde se muestran los usuarios. */
     @FXML private TableView<Usuario> tablaUsuarios;
 
-    /** Columna que muestra la id del usuario. (no hace falta pero por si
-     * acaso para un futuro
-     */
+    /** Columna que muestra el identificador del usuario. */
     @FXML private TableColumn<Usuario, Integer> colId;
 
     /** Columna que muestra el nombre de usuario. */
     @FXML private TableColumn<Usuario, String> colUsuario;
 
-    /** Columna que muestra el correo del usuario. */
+    /** Columna que muestra el correo electrónico del usuario. */
     @FXML private TableColumn<Usuario, String> colCorreo;
 
     /** Columna que muestra el rol del usuario. */
     @FXML private TableColumn<Usuario, String> colRol;
 
-    /** Columna que muestra la fecha de creacion del usuario. */
+    /** Columna que muestra la fecha de registro del usuario. */
     @FXML private TableColumn<Usuario, Object> colFecha;
 
-    /** Columna que contiene los botones de acciones (editar, eliminar). */
+    /** Columna que contiene los botones de acciones (editar / eliminar). */
     @FXML private TableColumn<Usuario, Void> colAcciones;
 
-    /** Campo de texto para realizar búsquedas en tiempo real. */
+    /** Campo de texto para búsqueda en tiempo real. */
     @FXML private TextField txtBuscar;
 
-    /** Servicio de acceso a datos para la gestión de usuarios. */
+    /** DAO encargado de la gestión de usuarios. */
     private final UsuarioAdminDAO usuarioServicio = new UsuarioAdminDAO();
 
-    /** Lista observable utilizada para poblar la tabla de usuarios. */
-    private final ObservableList<Usuario> lista = FXCollections.observableArrayList();
+    /** Lista observable utilizada para poblar la tabla. */
+    private final ObservableList<Usuario> lista =
+            FXCollections.observableArrayList();
 
-    /** Formateador de fechas para mostrar la fecha de registro. */
-    private final DateTimeFormatter fechaFmt = DateTimeFormatter.ofPattern("d/M/yyyy");
+    /** Formato de fecha utilizado en la tabla. */
+    private final DateTimeFormatter fechaFmt =
+            DateTimeFormatter.ofPattern("d/M/yyyy");
 
     /**
-     * Inicializa la tabla configurando columnas, cell factories
-     * y carga inicial de los usuarios registrados.
+     * Inicializa el controlador configurando columnas,
+     * celdas personalizadas y carga inicial de datos.
      */
     @FXML
     public void initialize() {
 
-        if (colUsuario != null) colUsuario.setCellValueFactory(new PropertyValueFactory<>("nombreUsuario"));
-        if (colCorreo != null) colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        if (colRol != null) colRol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRol().toString()));
-        if (colFecha != null) colFecha.setCellValueFactory(new PropertyValueFactory<>("fechaRegistro"));
+        if (colUsuario != null)
+            colUsuario.setCellValueFactory(
+                    new PropertyValueFactory<>("nombreUsuario"));
+
+        if (colCorreo != null)
+            colCorreo.setCellValueFactory(
+                    new PropertyValueFactory<>("correo"));
+
+        if (colRol != null)
+            colRol.setCellValueFactory(cell ->
+                    new SimpleStringProperty(
+                            cell.getValue().getRol().toString()
+                    ));
+
+        if (colFecha != null)
+            colFecha.setCellValueFactory(
+                    new PropertyValueFactory<>("fechaRegistro"));
 
         if (colRol != null) configurarRolCellFactory();
         if (colFecha != null) configurarFechaCellFactory();
@@ -85,78 +105,100 @@ public class ControladorUsuarioAdmin {
         cargarUsuarios();
 
         if (txtBuscar != null) {
-            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarUsuario());
+            txtBuscar.textProperty()
+                    .addListener((obs, oldV, newV) -> buscarUsuario());
         }
     }
 
     /**
-     * Configura la celda donde se muestra el rol del usuario,
-     * aplicando estilos visuales distintos para administradores y usuarios normales.
+     * Configura la columna de rol mostrando una etiqueta visual
+     * distinta para administradores y usuarios normales.
      */
     private void configurarRolCellFactory() {
-        colRol.setCellFactory(col -> new TableCell<Usuario, String>() {
+        colRol.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(String rol, boolean empty) {
                 super.updateItem(rol, empty);
+
                 if (empty || rol == null) {
                     setGraphic(null);
                     setText(null);
-                } else {
-
-                    Label badge = new Label(rol.equalsIgnoreCase("admin") || rol.equalsIgnoreCase("administrador") ? "Administrador" : "Usuario");
-
-                    if (rol.equalsIgnoreCase("admin") || rol.equalsIgnoreCase("administrador") || rol.equalsIgnoreCase("admin_principal")) {
-                        badge.setStyle("-fx-background-color:#8b4b2e; -fx-text-fill:white; -fx-padding:6 12; -fx-background-radius:8; -fx-font-weight:bold;");
-                    } else {
-                        badge.setStyle("-fx-background-color:#d6b48a; -fx-text-fill:#3B3027; -fx-padding:6 12; -fx-background-radius:8; -fx-font-weight:600;");
-                    }
-
-                    setGraphic(badge);
-                    setText(null);
+                    return;
                 }
+
+                Label badge = new Label(
+                        rol.equalsIgnoreCase("admin") ||
+                                rol.equalsIgnoreCase("administrador")
+                                ? "Administrador"
+                                : "Usuario"
+                );
+
+                if (rol.equalsIgnoreCase("admin")
+                        || rol.equalsIgnoreCase("administrador")
+                        || rol.equalsIgnoreCase("admin_principal")) {
+
+                    badge.setStyle(
+                            "-fx-background-color:#8b4b2e; " +
+                                    "-fx-text-fill:white; " +
+                                    "-fx-padding:6 12; " +
+                                    "-fx-background-radius:8; " +
+                                    "-fx-font-weight:bold;"
+                    );
+                } else {
+                    badge.setStyle(
+                            "-fx-background-color:#d6b48a; " +
+                                    "-fx-text-fill:#3B3027; " +
+                                    "-fx-padding:6 12; " +
+                                    "-fx-background-radius:8; " +
+                                    "-fx-font-weight:600;"
+                    );
+                }
+
+                setGraphic(badge);
+                setText(null);
             }
         });
     }
 
     /**
-     * Configura la celda donde se muestra la fecha del usuario,
-     * formateando correctamente distintos tipos de objetos fecha.
+     * Configura la columna de fecha permitiendo mostrar
+     * correctamente distintos tipos de fecha.
      */
     private void configurarFechaCellFactory() {
-        colFecha.setCellFactory(col -> new TableCell<Usuario, Object>() {
+        colFecha.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Object item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    String s = formatDateObject(item);
-                    setText(s);
+                    setText(formatDateObject(item));
                 }
             }
         });
     }
 
     /**
-     * Intenta convertir un objeto de tipo fecha en un String legible.
+     * Convierte distintos tipos de fecha en una representación
+     * legible para el usuario.
      *
-     * @param obj objeto de fecha a formatear.
-     * @return fecha formateada como String.
+     * @param obj objeto fecha a formatear
+     * @return fecha formateada como texto
      */
     private String formatDateObject(Object obj) {
         try {
-            if (obj instanceof LocalDate) {
-                return ((LocalDate) obj).format(fechaFmt);
-            } else if (obj instanceof java.sql.Date) {
-                LocalDate ld = ((java.sql.Date) obj).toLocalDate();
+            if (obj instanceof LocalDate ld) {
                 return ld.format(fechaFmt);
-            } else if (obj instanceof java.util.Date) {
-                Instant ins = ((Date) obj).toInstant();
-                LocalDate ld = ins.atZone(ZoneId.systemDefault()).toLocalDate();
+            } else if (obj instanceof java.sql.Date sql) {
+                return sql.toLocalDate().format(fechaFmt);
+            } else if (obj instanceof Date util) {
+                Instant ins = util.toInstant();
+                LocalDate ld =
+                        ins.atZone(ZoneId.systemDefault()).toLocalDate();
                 return ld.format(fechaFmt);
             } else {
-                // si ya es String, o cualquier otro, lo devolvemos tal cual
                 return obj.toString();
             }
         } catch (Exception e) {
@@ -165,172 +207,255 @@ public class ControladorUsuarioAdmin {
     }
 
     /**
-     * Configura la columna de acciones agregando botones de edición y eliminación
-     * para cada usuario en la tabla.
+     * Configura la columna de acciones añadiendo botones
+     * para editar y eliminar usuarios.
      */
     private void configurarAccionesCellFactory() {
-        colAcciones.setCellFactory(new Callback<TableColumn<Usuario, Void>, TableCell<Usuario, Void>>() {
-            @Override
-            public TableCell<Usuario, Void> call(final TableColumn<Usuario, Void> param) {
-                return new TableCell<Usuario, Void>() {
-                    private final Button btnEdit = new Button("✎");
-                    private final Button btnDelete = new Button("🗑");
-                    private final HBox box = new HBox(8, btnEdit, btnDelete);
-
-                    {
-                        btnEdit.setStyle("-fx-background-color:#fff6ee; -fx-text-fill:#3B3027; -fx-background-radius:6; -fx-padding:6 8;");
-                        btnDelete.setStyle("-fx-background-color:#e04f44; -fx-text-fill:white; -fx-background-radius:6; -fx-padding:6 8;");
-
-                        btnEdit.setOnAction(e -> {
-                            Usuario u = getTableView().getItems().get(getIndex());
-                            if (u != null) editarUsuario(u);
-                        });
-
-                        btnDelete.setOnAction(e -> {
-                            Usuario u = getTableView().getItems().get(getIndex());
-                            if (u != null) eliminarUsuario(u);
-                        });
-
-                        box.setStyle("-fx-alignment: center;");
-                    }
-
+        colAcciones.setCellFactory(
+                new Callback<>() {
                     @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(box);
-                        }
+                    public TableCell<Usuario, Void> call(
+                            TableColumn<Usuario, Void> param) {
+
+                        return new TableCell<>() {
+
+                            private final Button btnEdit =
+                                    new Button("✎");
+                            private final Button btnDelete =
+                                    new Button("🗑");
+
+                            private final HBox box =
+                                    new HBox(8, btnEdit, btnDelete);
+
+                            {
+                                btnEdit.setStyle(
+                                        "-fx-background-color:#fff6ee; " +
+                                                "-fx-text-fill:#3B3027; " +
+                                                "-fx-background-radius:6; " +
+                                                "-fx-padding:6 8;"
+                                );
+
+                                btnDelete.setStyle(
+                                        "-fx-background-color:#e04f44; " +
+                                                "-fx-text-fill:white; " +
+                                                "-fx-background-radius:6; " +
+                                                "-fx-padding:6 8;"
+                                );
+
+                                btnEdit.setOnAction(e -> {
+                                    Usuario u =
+                                            getTableView().getItems()
+                                                    .get(getIndex());
+                                    if (u != null) editarUsuario(u);
+                                });
+
+                                btnDelete.setOnAction(e -> {
+                                    Usuario u =
+                                            getTableView().getItems()
+                                                    .get(getIndex());
+                                    if (u != null) eliminarUsuario(u);
+                                });
+
+                                box.setStyle("-fx-alignment: center;");
+                            }
+
+                            @Override
+                            protected void updateItem(
+                                    Void item, boolean empty) {
+
+                                super.updateItem(item, empty);
+                                setGraphic(empty ? null : box);
+                            }
+                        };
                     }
-                };
-            }
-        });
+                });
     }
 
     /**
-     * Carga todos los usuarios desde la base de datos y los muestra en la tabla.
+     * Carga todos los usuarios desde la base de datos
+     * y los muestra en la tabla.
      */
     private void cargarUsuarios() {
         lista.setAll(usuarioServicio.obtenerTodos());
-        if (tablaUsuarios != null) tablaUsuarios.setItems(lista);
+        tablaUsuarios.setItems(lista);
     }
 
     /**
-     * Realiza una búsqueda filtrando por nombre de usuario, nombre personal o correo.
+     * Filtra usuarios por nombre de usuario, nombre real
+     * o correo electrónico.
      */
     @FXML
     public void buscarUsuario() {
-        String q = txtBuscar!=null? txtBuscar.getText().trim().toLowerCase() : "";
-        if (q.isEmpty()) { cargarUsuarios(); return; }
-        ObservableList<Usuario> filt = lista.filtered(u ->
-                (u.getNombreUsuario()!=null && u.getNombreUsuario().toLowerCase().contains(q)) ||
-                        (u.getNombre()!=null && u.getNombre().toLowerCase().contains(q)) ||
-                        (u.getCorreo()!=null && u.getCorreo().toLowerCase().contains(q))
-        );
-        tablaUsuarios.setItems(filt);
+        String q = txtBuscar != null
+                ? txtBuscar.getText().trim().toLowerCase()
+                : "";
+
+        if (q.isEmpty()) {
+            cargarUsuarios();
+            return;
+        }
+
+        ObservableList<Usuario> filtrado =
+                lista.filtered(u ->
+                        (u.getNombreUsuario() != null &&
+                                u.getNombreUsuario()
+                                        .toLowerCase().contains(q)) ||
+                                (u.getNombre() != null &&
+                                        u.getNombre()
+                                                .toLowerCase().contains(q)) ||
+                                (u.getCorreo() != null &&
+                                        u.getCorreo()
+                                                .toLowerCase().contains(q))
+                );
+
+        tablaUsuarios.setItems(filtrado);
     }
 
-    /** Abre el editor en modo "crear usuario". */
+    /** Abre el editor en modo creación de usuario. */
     @FXML
-    public void abrirAgregarUsuario() { abrirEditor(null); }
+    public void abrirAgregarUsuario() {
+        abrirEditor(null);
+    }
 
     /**
-     * Abre el editor usando la selección actual de la tabla.
-     * Muestra una alerta si no hay un usuario seleccionado.
+     * Abre el editor con el usuario seleccionado en la tabla.
      */
     @FXML
     public void editarUsuario() {
-        Usuario sel = tablaUsuarios.getSelectionModel().getSelectedItem();
-        if (sel==null) { mostrarAlerta("Selecciona un usuario"); return; }
+        Usuario sel =
+                tablaUsuarios.getSelectionModel().getSelectedItem();
+
+        if (sel == null) {
+            mostrarAlerta("Selecciona un usuario");
+            return;
+        }
+
         abrirEditor(sel);
     }
 
     /**
      * Abre el editor para el usuario indicado.
      *
-     * @param u usuario a editar.
+     * @param u usuario a editar
      */
     public void editarUsuario(Usuario u) {
         abrirEditor(u);
     }
 
     /**
-     * Elimina el usuario seleccionado actualmente en la tabla.
+     * Elimina el usuario seleccionado en la tabla.
      */
     @FXML
     public void eliminarUsuario() {
-        Usuario sel = tablaUsuarios.getSelectionModel().getSelectedItem();
-        if (sel==null) { mostrarAlerta("Selecciona un usuario"); return; }
+        Usuario sel =
+                tablaUsuarios.getSelectionModel().getSelectedItem();
+
+        if (sel == null) {
+            mostrarAlerta("Selecciona un usuario");
+            return;
+        }
+
         confirmarYEliminar(sel);
     }
 
     /**
      * Elimina directamente el usuario indicado.
      *
-     * @param u usuario a eliminar.
+     * @param u usuario a eliminar
      */
     public void eliminarUsuario(Usuario u) {
         confirmarYEliminar(u);
     }
 
     /**
-     * Solicita confirmación al administrador antes de eliminar un usuario.
+     * Solicita confirmación antes de eliminar un usuario.
      *
-     * @param u usuario a eliminar.
+     * @param u usuario a eliminar
      */
     private void confirmarYEliminar(Usuario u) {
-        Alert a=new Alert(Alert.AlertType.CONFIRMATION,"Eliminar usuario \"" + u.getNombreUsuario() + "\"?", ButtonType.OK,ButtonType.CANCEL);
+        Alert a = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Eliminar usuario \"" +
+                        u.getNombreUsuario() + "\"?",
+                ButtonType.OK,
+                ButtonType.CANCEL
+        );
+
         a.setHeaderText(null);
-        Optional<ButtonType> r=a.showAndWait();
-        if (r.isPresent() && r.get()==ButtonType.OK) {
-            boolean ok = usuarioServicio.eliminarUsuario(u.getId());
+
+        Optional<ButtonType> r = a.showAndWait();
+
+        if (r.isPresent() && r.get() == ButtonType.OK) {
+            boolean ok =
+                    usuarioServicio.eliminarUsuario(u.getId());
+
             if (!ok) mostrarAlerta("No se pudo eliminar.");
+
             cargarUsuarios();
         }
     }
 
     /**
-     * Abre la ventana de creación/edición de usuarios
-     * y gestiona la lógica de guardado correspondiente.
+     * Abre la ventana de creación o edición de usuarios
+     * y gestiona el guardado correspondiente.
      *
-     * @param u usuario a editar, o null para crear uno nuevo.
+     * @param u usuario a editar o null para crear uno nuevo
      */
     private void abrirEditor(Usuario u) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarUsuario.fxml"));
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(
+                            "/com/example/biblioteca_digital/vistas/admin/editarUsuario.fxml"));
+
             Parent root = loader.load();
-            com.example.biblioteca_digital.controladores.admin.ControladorEditarUsuario ctrl = loader.getController();
+
+            ControladorEditarUsuario ctrl =
+                    loader.getController();
+
             Stage st = new Stage();
             st.initOwner(tablaUsuarios.getScene().getWindow());
             st.initModality(Modality.APPLICATION_MODAL);
+
             ctrl.setStage(st);
+
             if (u != null) ctrl.setUsuario(u);
+
             ctrl.setOnGuardarCallback(() -> {
                 Usuario res = ctrl.getUsuarioResultado();
+
                 if (u == null) {
-                    boolean ok = usuarioServicio.agregarUsuario(res);
+                    boolean ok =
+                            usuarioServicio.agregarUsuario(res);
                     if (!ok) mostrarAlerta("No se pudo crear.");
                 } else {
                     res.setId(u.getId());
-                    boolean ok = usuarioServicio.actualizarUsuario(res);
-                    if (!ok) mostrarAlerta("No se pudo actualizar.");
+                    boolean ok =
+                            usuarioServicio.actualizarUsuario(res);
+                    if (!ok)
+                        mostrarAlerta("No se pudo actualizar.");
                 }
+
                 cargarUsuarios();
             });
+
             st.setScene(new javafx.scene.Scene(root));
             st.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Error abrir editor usuario");
+            mostrarAlerta("Error al abrir el editor");
         }
     }
 
     /**
-     * Muestra una alerta sencilla con el mensaje indicado.
+     * Muestra una alerta informativa simple.
      *
-     * @param t texto del mensaje.
+     * @param texto mensaje a mostrar
      */
-    private void mostrarAlerta(String t) { Alert a=new Alert(Alert.AlertType.WARNING); a.setHeaderText(null); a.setContentText(t); a.showAndWait(); }
-
+    private void mostrarAlerta(String texto) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setHeaderText(null);
+        a.setContentText(texto);
+        a.showAndWait();
+    }
 }

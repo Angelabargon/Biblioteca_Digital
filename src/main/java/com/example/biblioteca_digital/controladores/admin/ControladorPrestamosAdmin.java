@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,86 +20,116 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Controlador encargado de gestionar los préstamos dentro del panel de administración.
- * Permite listar, filtrar, crear y eliminar préstamos asociados a usuarios y libros.
+ * Controlador encargado de gestionar los préstamos dentro del panel
+ * de administración de la biblioteca.
  *
- * Se apoya en {@link PrestamoAdminDAO} para el acceso a datos y utiliza una tabla con
- * celdas personalizadas para mejorar la visualización del estado del préstamo.
+ * <p>
+ * Permite listar, buscar, crear, editar y eliminar préstamos,
+ * mostrando la información en una tabla con estados visuales
+ * personalizados.
+ * </p>
+ *
+ * <p>
+ * Utiliza {@link PrestamoAdminDAO} para el acceso a datos
+ * y controla la apertura de ventanas modales para la creación
+ * y edición de préstamos.
+ * </p>
  */
 public class ControladorPrestamosAdmin {
 
-    /** Tabla principal que muestra los préstamos registrados. */
+    /** Tabla principal que contiene los préstamos. */
     @FXML private TableView<Prestamo> tablaPrestamos;
 
-    /** Columna que muestra el nombre del usuario asociado al préstamo. */
+    /** Columna con el nombre del usuario del préstamo. */
     @FXML private TableColumn<Prestamo, String> colUsuario;
 
-    /** Columna que muestra el título del libro prestado. */
+    /** Columna con el título del libro prestado. */
     @FXML private TableColumn<Prestamo, String> colLibro;
 
-    /** Columna que muestra la fecha de inicio del préstamo. */
+    /** Columna con la fecha de inicio del préstamo. */
     @FXML private TableColumn<Prestamo, String> colFechaPrestamo;
 
-    /** Columna que muestra la fecha de vencimiento del préstamo. */
+    /** Columna con la fecha de vencimiento del préstamo. */
     @FXML private TableColumn<Prestamo, String> colFechaVencimiento;
 
-    /** Columna que muestra el estado del préstamo. */
+    /** Columna que representa el estado del préstamo. */
     @FXML private TableColumn<Prestamo, String> colEstado;
 
-    /** Columna que contiene acciones como eliminar el préstamo. */
+    /** Columna que contiene los botones de acciones. */
     @FXML private TableColumn<Prestamo, Void> colAcciones;
 
-    /** Campo de búsqueda para filtrar préstamos por usuario o libro. */
+    /** Campo de texto para buscar préstamos por usuario o libro. */
     @FXML private TextField txtBuscar;
 
-    /** Objeto DAO que gestiona el acceso a datos de préstamos. */
+    /** DAO para la gestión de préstamos. */
     private final PrestamoAdminDAO prestamoAdminDAO = new PrestamoAdminDAO();
 
-    /** Lista observable utilizada para poblar la tabla. */
-    private final ObservableList<Prestamo> listaPrestamos = FXCollections.observableArrayList();
+    /** Lista observable utilizada como fuente de datos de la tabla. */
+    private final ObservableList<Prestamo> listaPrestamos =
+            FXCollections.observableArrayList();
 
-    /** Formato de fecha utilizado en la visualización. */
-    private final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    /** Formato de fecha utilizado en la tabla. */
+    private final DateTimeFormatter formato =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     /**
-     * Inicializa el controlador configurando las columnas, cargando los datos
-     * y activando la búsqueda en tiempo real.
+     * Inicializa el controlador.
+     * <p>
+     * Configura las columnas de la tabla, carga los préstamos
+     * desde la base de datos y activa la búsqueda en tiempo real.
+     * </p>
      */
     @FXML
     public void initialize() {
         cargarColumnas();
         refrescarTabla();
-        // buscar en tiempo real al escribir
+
         if (txtBuscar != null) {
-            txtBuscar.textProperty().addListener((obs, oldVal, newVal) -> buscarPrestamo());
+            txtBuscar.textProperty().addListener(
+                    (obs, oldVal, newVal) -> buscarPrestamo()
+            );
         }
     }
 
     /**
-     * Configura las columnas de la tabla, incluyendo celdas personalizadas
-     * para estado y acciones (eliminar).
+     * Configura todas las columnas de la tabla,
+     * incluyendo celdas personalizadas para estados
+     * y botones de acción.
      */
     private void cargarColumnas() {
 
         // Usuario
         colUsuario.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getUsuario().getNombreUsuario()));
+                new SimpleStringProperty(
+                        data.getValue().getUsuario().getNombreUsuario()
+                )
+        );
 
         // Libro
         colLibro.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getLibro().getTitulo()));
+                new SimpleStringProperty(
+                        data.getValue().getLibro().getTitulo()
+                )
+        );
 
-        // Fecha Prestamo
+        // Fecha inicio
         colFechaPrestamo.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getFecha_inicio().format(formato)));
+                new SimpleStringProperty(
+                        data.getValue().getFecha_inicio().format(formato)
+                )
+        );
 
-        // Fecha Vencimiento
+        // Fecha fin
         colFechaVencimiento.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getFecha_fin().format(formato)));
+                new SimpleStringProperty(
+                        data.getValue().getFecha_fin().format(formato)
+                )
+        );
 
         // Estado
         colEstado.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getEstado()));
+                new SimpleStringProperty(data.getValue().getEstado())
+        );
 
         colEstado.setCellFactory(col -> new TableCell<>() {
 
@@ -120,18 +149,37 @@ public class ControladorPrestamosAdmin {
                 switch (p.getEstado()) {
                     case "bloqueado" -> {
                         badge.setText("Bloqueado");
-                        badge.setStyle("-fx-background-color:#7c2d12; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                        badge.setStyle(
+                                "-fx-background-color:#7c2d12;" +
+                                        "-fx-text-fill:white;" +
+                                        "-fx-padding:4 10;" +
+                                        "-fx-background-radius:8;"
+                        );
                     }
                     case "devuelto" -> {
                         badge.setText("Devuelto");
-                        badge.setStyle("-fx-background-color:#6b7280; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                        badge.setStyle(
+                                "-fx-background-color:#6b7280;" +
+                                        "-fx-text-fill:white;" +
+                                        "-fx-padding:4 10;" +
+                                        "-fx-background-radius:8;"
+                        );
                     }
                     default -> {
-                        boolean vencido = p.getFecha_fin().isBefore(LocalDate.now());
+                        boolean vencido =
+                                p.getFecha_fin().isBefore(LocalDate.now());
+
                         badge.setText(vencido ? "Vencido" : "Vigente");
                         badge.setStyle(vencido
-                                ? "-fx-background-color:#ef4444; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;"
-                                : "-fx-background-color:#10B981; -fx-text-fill:white; -fx-padding:4 10; -fx-background-radius:8;");
+                                ? "-fx-background-color:#ef4444;"
+                                + "-fx-text-fill:white;"
+                                + "-fx-padding:4 10;"
+                                + "-fx-background-radius:8;"
+                                : "-fx-background-color:#10B981;"
+                                + "-fx-text-fill:white;"
+                                + "-fx-padding:4 10;"
+                                + "-fx-background-radius:8;"
+                        );
                     }
                 }
 
@@ -140,35 +188,42 @@ public class ControladorPrestamosAdmin {
             }
         });
 
-        // Celda personalizada para botones de acciones
+        // Acciones
         colAcciones.setCellFactory(col -> new TableCell<>() {
 
             private final Button btnEditar = new Button("✎");
             private final Button btnEliminar = new Button("🗑");
-            private final HBox contenedor = new HBox(8, btnEditar, btnEliminar);
+            private final HBox contenedor =
+                    new HBox(8, btnEditar, btnEliminar);
 
             {
                 btnEditar.setStyle(
-                        "-fx-background-color:#fff6ee; -fx-text-fill:#3B3027; " +
-                                "-fx-background-radius:6; -fx-padding:6 8;"
+                        "-fx-background-color:#fff6ee;" +
+                                "-fx-text-fill:#3B3027;" +
+                                "-fx-background-radius:6;" +
+                                "-fx-padding:6 8;"
                 );
 
                 btnEliminar.setStyle(
-                        "-fx-background-color:#ef4444; -fx-text-fill:white; " +
-                                "-fx-background-radius:6; -fx-padding:6 8;"
+                        "-fx-background-color:#ef4444;" +
+                                "-fx-text-fill:white;" +
+                                "-fx-background-radius:6;" +
+                                "-fx-padding:6 8;"
                 );
 
-                btnEditar.setOnAction(e -> {
-                    Prestamo p = getTableView().getItems().get(getIndex());
-                    editarPrestamo(p);
-                });
+                btnEditar.setOnAction(e ->
+                        editarPrestamo(
+                                getTableView().getItems().get(getIndex())
+                        )
+                );
 
-                btnEliminar.setOnAction(e -> {
-                    Prestamo p = getTableView().getItems().get(getIndex());
-                    eliminarPrestamo(p);
-                });
+                btnEliminar.setOnAction(e ->
+                        eliminarPrestamo(
+                                getTableView().getItems().get(getIndex())
+                        )
+                );
 
-                contenedor.setStyle("-fx-alignment: center;");
+                contenedor.setStyle("-fx-alignment:center;");
             }
 
             @Override
@@ -180,7 +235,8 @@ public class ControladorPrestamosAdmin {
     }
 
     /**
-     * Recarga la tabla con la información más reciente desde la base de datos.
+     * Recarga los préstamos desde la base de datos
+     * y actualiza la tabla.
      */
     public void refrescarTabla() {
         listaPrestamos.setAll(prestamoAdminDAO.obtenerTodos());
@@ -188,8 +244,8 @@ public class ControladorPrestamosAdmin {
     }
 
     /**
-     * Filtra los préstamos según el texto ingresado en el buscador.
-     * Se puede buscar por nombre de usuario o nombre de libro.
+     * Filtra los préstamos según el texto introducido,
+     * buscando por nombre de usuario o título del libro.
      */
     @FXML
     private void buscarPrestamo() {
@@ -200,58 +256,27 @@ public class ControladorPrestamosAdmin {
             return;
         }
 
-        ObservableList<Prestamo> filtrado = listaPrestamos.filtered(p ->
-                p.getUsuario().getNombreUsuario().toLowerCase().contains(texto) ||
-                        p.getLibro().getTitulo().toLowerCase().contains(texto)
-        );
+        ObservableList<Prestamo> filtrado =
+                listaPrestamos.filtered(p ->
+                        p.getUsuario().getNombreUsuario()
+                                .toLowerCase().contains(texto)
+                                || p.getLibro().getTitulo()
+                                .toLowerCase().contains(texto)
+                );
 
         tablaPrestamos.setItems(filtrado);
     }
 
     /**
-     * Abre la ventana para crear un nuevo préstamo y guarda el resultado si es válido.
+     * Abre la ventana para crear un nuevo préstamo.
      */
     @FXML
     private void nuevoPrestamo() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml"));
-            Parent root = loader.load();
-            ControladorEditarPrestamo ctrl = loader.getController();
-
-            // cargar usuarios y libros existentes
-            ctrl.cargarDatos(new UsuarioAdminDAO().obtenerTodos(),
-                    new LibroAdminDAO().obtenerTodos());
-
-            Stage st = new Stage();
-            st.initOwner(tablaPrestamos.getScene().getWindow());
-            st.initModality(Modality.APPLICATION_MODAL);
-            ctrl.setStage(st);
-            ctrl.setOnGuardarCallback(() -> {
-                Prestamo p = ctrl.getPrestamoResultado();
-                boolean ok = prestamoAdminDAO.crearPrestamo(p);
-                if (!ok) {
-                    Alert a = new Alert(Alert.AlertType.ERROR, "No se pudo crear el préstamo");
-                    a.showAndWait();
-                }
-                refrescarTabla();
-            });
-
-            st.setScene(new Scene(root));
-            st.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Metodo reservado para una futura implementación de edición de préstamos.
-     *
-     * @param p préstamo a editar
-     */
-    private void editarPrestamo(Prestamo p) {
-        try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml")
+                    getClass().getResource(
+                            "/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml"
+                    )
             );
             Parent root = loader.load();
             ControladorEditarPrestamo ctrl = loader.getController();
@@ -261,16 +286,15 @@ public class ControladorPrestamosAdmin {
                     new LibroAdminDAO().obtenerTodos()
             );
 
-            ctrl.setPrestamoEditar(p);
-
             Stage st = new Stage();
             st.initOwner(tablaPrestamos.getScene().getWindow());
             st.initModality(Modality.APPLICATION_MODAL);
-            ctrl.setStage(st);
 
+            ctrl.setStage(st);
             ctrl.setOnGuardarCallback(() -> {
-                Prestamo actualizado = ctrl.getPrestamoResultado();
-                prestamoAdminDAO.actualizarPrestamo(actualizado);
+                prestamoAdminDAO.crearPrestamo(
+                        ctrl.getPrestamoResultado()
+                );
                 refrescarTabla();
             });
 
@@ -283,8 +307,49 @@ public class ControladorPrestamosAdmin {
     }
 
     /**
-     * Elimina el préstamo indicado tras una confirmación,
-     * devolviendo automáticamente el libro asociado.
+     * Abre la ventana de edición para un préstamo existente.
+     *
+     * @param p préstamo a editar
+     */
+    private void editarPrestamo(Prestamo p) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/biblioteca_digital/vistas/admin/editarPrestamo.fxml"
+                    )
+            );
+            Parent root = loader.load();
+            ControladorEditarPrestamo ctrl = loader.getController();
+
+            ctrl.cargarDatos(
+                    new UsuarioAdminDAO().obtenerTodos(),
+                    new LibroAdminDAO().obtenerTodos()
+            );
+            ctrl.setPrestamoEditar(p);
+
+            Stage st = new Stage();
+            st.initOwner(tablaPrestamos.getScene().getWindow());
+            st.initModality(Modality.APPLICATION_MODAL);
+
+            ctrl.setStage(st);
+            ctrl.setOnGuardarCallback(() -> {
+                prestamoAdminDAO.actualizarPrestamo(
+                        ctrl.getPrestamoResultado()
+                );
+                refrescarTabla();
+            });
+
+            st.setScene(new Scene(root));
+            st.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Elimina un préstamo tras confirmación,
+     * devolviendo automáticamente el libro.
      *
      * @param p préstamo a eliminar
      */
@@ -294,15 +359,10 @@ public class ControladorPrestamosAdmin {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("¿Eliminar préstamo?");
         alert.setContentText("Esto devolverá el libro automáticamente.");
+
         alert.showAndWait().ifPresent(btn -> {
             if (btn == ButtonType.OK) {
-                boolean ok = prestamoAdminDAO.eliminarPrestamo(p.getId());
-
-                if (!ok) {
-                    new Alert(Alert.AlertType.ERROR,
-                            "No se pudo eliminar el préstamo").showAndWait();
-                }
-
+                prestamoAdminDAO.eliminarPrestamo(p.getId());
                 refrescarTabla();
             }
         });
