@@ -31,14 +31,30 @@ public class ControladorLibroCatalogoAdmin {
                 "Disponibles: " + libro.getCantidadDisponible() + "/" + libro.getCantidad()
         );
 
-        if (libro.getFoto() != null && !libro.getFoto().isEmpty()) {
-            try {
-                imgPortada.setImage(new Image(
-                        getClass().getResourceAsStream(
-                                "/com/example/biblioteca_digital/imagenes/libros/" + libro.getFoto()
-                        )
-                ));
-            } catch (Exception ignored) {}
+        String ruta;
+        //Si no existe la imagen
+        if (libro.getFoto() != null && !libro.getFoto().trim().isEmpty())
+        {
+            ruta = "/com/example/biblioteca_digital/imagenes/libros/" + libro.getFoto();
+        }
+        else
+        {
+            ruta = "/com/example/biblioteca_digital/imagenes/libros/generica.jpg";
+        }
+        try
+        {
+            Image portada = new Image(getClass().getResourceAsStream(ruta));
+            if (portada.isError())
+            {
+                System.err.println("No se encontró el archivo: " + ruta);
+                ruta = "/com/example/biblioteca_digital/imagenes/libros/generica.jpg";
+                portada = new Image(getClass().getResourceAsStream(ruta));
+            }
+            imgPortada.setImage(portada);
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error crítico cargando imagen: " + e.getMessage());
         }
     }
 

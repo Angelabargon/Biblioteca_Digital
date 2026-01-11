@@ -55,6 +55,7 @@
     </Button>
    <Line endX="99.99998474121094" endY="17.0" layoutX="147.0" layoutY="171.0" startX="99.99998474121094" startY="-99.20000457763672" styleClass="linea-decorativa" />
 
+    <!-- Botones de selección de parte del menú -->
       <ToggleButton fx:id="tbt_MENU" layoutX="260.0" layoutY="146.0" onAction="#handleCatalogo" prefHeight="35.0" prefWidth="150.0" styleClass="toggle-button" text="Catálogo">
           <toggleGroup>
               <ToggleGroup fx:id="menuGroup" />
