@@ -52,10 +52,6 @@ public class ControladorEditarPrestamo {
      */
     private Runnable onGuardarCallback;
 
-    /* ===============================
-       INIT
-       =============================== */
-
     /**
      * Inicializa la vista configurando los desplegables
      * y los conversores de texto para mostrar solo la
@@ -94,10 +90,6 @@ public class ControladorEditarPrestamo {
         });
     }
 
-    /* ===============================
-       CARGA LISTAS
-       =============================== */
-
     /**
      * Carga los listados de usuarios y libros disponibles
      * en los desplegables correspondientes.
@@ -110,10 +102,6 @@ public class ControladorEditarPrestamo {
         comboLibro.getItems().setAll(libros);
     }
 
-    /* ===============================
-       MODO CREAR
-       =============================== */
-
     /**
      * Prepara la vista para la creación de un nuevo préstamo,
      * inicializando los textos y creando una nueva instancia
@@ -124,10 +112,6 @@ public class ControladorEditarPrestamo {
         btnGuardar.setText("Crear Préstamo");
         prestamoEditar = new Prestamo();
     }
-
-    /* ===============================
-       MODO EDITAR
-       =============================== */
 
     /**
      * Configura la vista en modo edición cargando los datos
@@ -157,10 +141,6 @@ public class ControladorEditarPrestamo {
         comboUsuario.setDisable(true);
         comboLibro.setDisable(true);
     }
-
-    /* ===============================
-       GUARDAR
-       =============================== */
 
     /**
      * Guarda los cambios realizados en el préstamo.
@@ -195,10 +175,6 @@ public class ControladorEditarPrestamo {
     private void cancelar() {
         stage.close();
     }
-
-    /* ===============================
-       HELPERS
-       =============================== */
 
     /**
      * Establece la ventana actual del editor.

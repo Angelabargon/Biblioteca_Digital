@@ -80,9 +80,6 @@ public class ControladorLibroIndividualAdmin {
     public void setLibro(Libro libro) {
         this.libroActual = libro;
 
-        /* ===============================
-           IMAGEN DEL LIBRO
-           =============================== */
         String ruta = "/com/example/biblioteca_digital/imagenes/libros/" +
                 (libro.getFoto() != null && !libro.getFoto().isEmpty()
                         ? libro.getFoto()
@@ -94,9 +91,6 @@ public class ControladorLibroIndividualAdmin {
             System.err.println("Error cargando imagen: " + ruta);
         }
 
-        /* ===============================
-           DATOS GENERALES
-           =============================== */
         tituloLabel.setText(libro.getTitulo());
         autorLabel.setText(libro.getAutor());
         categoriaLabel.setText(libro.getGenero());
@@ -111,9 +105,6 @@ public class ControladorLibroIndividualAdmin {
 
         descripcionArea.setText(libro.getDescripcion());
 
-        /* ===============================
-           CALIFICACIÓN MEDIA
-           =============================== */
         ReseñasDAO dao = new ReseñasDAO();
         double media = dao.obtenerPuntuacionMedia(libro.getId());
 
@@ -125,9 +116,6 @@ public class ControladorLibroIndividualAdmin {
             calificacionMedia.setText("Puntuación media: Sin reseñas");
         }
 
-        /* ===============================
-           RESEÑAS (SOLO LECTURA)
-           =============================== */
         vb_contenedorResenasController.setContexto(libro.getId(), null);
     }
 }
