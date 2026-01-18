@@ -1,9 +1,20 @@
 package com.example.biblioteca_digital.modelos;
 
 import java.time.LocalDate;
-
+/**
+ * Creamos la clase Prestamo que representará la posibilidad de leer los libros para los usuarios.
+ */
 public class Prestamo {
-
+    /**
+     * Atributos de un prestamo:
+     *
+     * id
+     * fecha_inicio
+     * fecha_fin
+     * estado
+     * usuario
+     * libro
+     */
     private int id;
     private LocalDate fecha_inicio;
     private LocalDate fecha_fin;
@@ -12,9 +23,19 @@ public class Prestamo {
     private Usuario usuario;
     private Libro libro;
 
+    /**
+     * Constructor prestamo vacío.
+     */
     public Prestamo() {}
 
-
+    /**
+     * Constructor de prestamo.
+     *
+     * @param id
+     * @param fecha_inicio
+     * @param fecha_fin
+     * @param estado
+     */
     public Prestamo(int id, LocalDate fecha_inicio, LocalDate fecha_fin, Estado estado) {
         this.id = id;
         this.fecha_inicio = fecha_inicio;
@@ -22,14 +43,9 @@ public class Prestamo {
         this.estado = estado;
     }
 
-    public Prestamo(int idU, int idL)
-    {
-        this.usuario = new com.example.biblioteca_digital.modelos.Usuario();
-        this.libro = new com.example.biblioteca_digital.modelos.Libro();
-    }
-
-    // GETTERS
-
+    /**
+     * Getters de los atributos.
+     */
     public int getId() { return id; }
     public LocalDate getFecha_inicio() { return fecha_inicio; }
     public LocalDate getFecha_fin() { return fecha_fin; }
@@ -38,7 +54,9 @@ public class Prestamo {
     public Usuario getUsuario() { return usuario; }
     public Libro getLibro() { return libro; }
 
-    // SETTERS
+    /**
+     * Setters de los atributos.
+     */
 
     public void setId(int id) { this.id = id; }
     public void setFecha_inicio(LocalDate fecha_inicio) { this.fecha_inicio = fecha_inicio; }
