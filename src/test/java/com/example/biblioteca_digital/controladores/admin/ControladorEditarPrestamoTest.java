@@ -1,6 +1,5 @@
 package com.example.biblioteca_digital.controladores.admin;
 
-import com.example.biblioteca_digital.controladores.admin.ControladorEditarPrestamo;
 import com.example.biblioteca_digital.modelos.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
