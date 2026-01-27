@@ -11,12 +11,12 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ControladorRegistroTest {
-
+class ControladorRegistroTest
+{
     private ControladorRegistro controlador;
-
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         controlador = new ControladorRegistro();
         controlador.aceptoTerminos = new CheckBox();
     }
