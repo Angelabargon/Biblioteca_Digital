@@ -1,5 +1,6 @@
-package com.example.biblioteca_digital.controladores;
+package com.example.biblioteca_digital.controladores.usuario;
 
+import com.example.biblioteca_digital.controladores.ControladorRegistro;
 import com.example.biblioteca_digital.modelos.Rol;
 import com.example.biblioteca_digital.modelos.Usuario;
 import javafx.scene.control.CheckBox;

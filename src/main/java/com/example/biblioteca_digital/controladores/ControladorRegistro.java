@@ -28,7 +28,7 @@ public class ControladorRegistro {
     @FXML private PasswordField contrasena;
     @FXML private PasswordField repetirContrasena;
     @FXML
-    CheckBox aceptoTerminos;
+    public CheckBox aceptoTerminos;
     @FXML private Label mensajeError;
 
     /** DAO encargado de las consultas SQL del registro. */
@@ -97,23 +97,23 @@ public class ControladorRegistro {
     }
 
     /** Construye un objeto Usuario con los datos proporcionados. */
-    Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
+    public Usuario construirObjetoUsuario(int id, String nombreUsuario, String nombre, String primerApellido, String correo, String contrasena, Rol rol, LocalDate fechaRegistro) {
         return new Usuario(id, nombreUsuario, nombre, primerApellido, correo, contrasena, rol, fechaRegistro);
     }
 
     /** Compara dos contraseñas. */
-    boolean compararContrasenas(String contrasena, String repetir)
+    public boolean compararContrasenas(String contrasena, String repetir)
     {
         return contrasena.equals(repetir);
     }
 
     /** Verifica si el usuario ha aceptado los términos. */
-    boolean verificarCheckboxTickeado() {
+    public boolean verificarCheckboxTickeado() {
         return aceptoTerminos != null && aceptoTerminos.isSelected();
     }
 
     /** Verifica que ningún campo esté vacío. */
-    boolean validarCamposNoVacios(String... campos) {
+    public boolean validarCamposNoVacios(String... campos) {
         for (String campo : campos) {
             if (campo == null || campo.isEmpty()) {
                 return false;
