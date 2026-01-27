@@ -1,0 +1,10 @@
+module:com.example.biblioteca_digital
+com.example.biblioteca_digital
+com.example.biblioteca_digital.conexion
+com.example.biblioteca_digital.controladores
+com.example.biblioteca_digital.controladores.admin
+com.example.biblioteca_digital.controladores.usuario
+com.example.biblioteca_digital.DAO
+com.example.biblioteca_digital.DAO.admin
+com.example.biblioteca_digital.DAO.usuario
+com.example.biblioteca_digital.modelos
