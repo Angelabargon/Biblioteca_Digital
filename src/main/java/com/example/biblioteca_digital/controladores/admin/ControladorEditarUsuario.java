@@ -17,22 +17,28 @@ import javafx.stage.Stage;
 public class ControladorEditarUsuario {
 
     /** Campo de texto para el nombre de usuario. */
-    @FXML private TextField txtUsuario;
+    @FXML
+    TextField txtUsuario;
 
     /** Campo de texto para el nombre del usuario. */
-    @FXML private TextField txtNombre;
+    @FXML
+    TextField txtNombre;
 
     /** Campo de texto para el primer apellido del usuario. */
-    @FXML private TextField txtPrimerApellido;
+    @FXML
+    TextField txtPrimerApellido;
 
     /** Campo de texto para el correo del usuario. */
-    @FXML private TextField txtCorreo;
+    @FXML
+    TextField txtCorreo;
 
     /** Campo de texto para introducir la contraseña del usuario. */
-    @FXML private PasswordField txtContrasena;
+    @FXML
+    PasswordField txtContrasena;
 
     /** ComboBox que muestra la lista de roles disponibles. */
-    @FXML private ComboBox<Rol> comboRol;
+    @FXML
+    ComboBox<Rol> comboRol;
 
     /** Usuario que se está editando o creando. */
     private Usuario usuario;
@@ -50,7 +56,8 @@ public class ControladorEditarUsuario {
      * Inicializa el controlador y carga los roles disponibles en el ComboBox.
      * Este metodo se ejecuta automáticamente al cargar el FXML.
      */
-    @FXML private void initialize() { comboRol.getItems().setAll(Rol.values()); }
+    @FXML
+    void initialize() { comboRol.getItems().setAll(Rol.values()); }
 
     /**
      * Asigna la ventana actual para poder cerrarla desde el controlador.
@@ -98,7 +105,8 @@ public class ControladorEditarUsuario {
      * Ejecuta el callback de guardado y cierra la ventana actual.
      * Este metodo se llama al pulsar el botón "Guardar".
      */
-    @FXML private void guardar() { if (onGuardarCallback!=null) onGuardarCallback.run(); if (stage!=null) stage.close(); }
+    @FXML
+    void guardar() { if (onGuardarCallback!=null) onGuardarCallback.run(); if (stage!=null) stage.close(); }
 
     /**
      * Cierra la ventana sin realizar cambios. Se ejecuta al pulsar "Cancelar".

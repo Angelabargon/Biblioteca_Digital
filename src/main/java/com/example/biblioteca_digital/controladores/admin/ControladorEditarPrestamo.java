@@ -23,22 +23,28 @@ import java.util.List;
 public class ControladorEditarPrestamo {
 
     /** Etiqueta que muestra el título de la ventana (crear o editar). */
-    @FXML private Label lblTitulo;
+    @FXML
+    public Label lblTitulo;
 
     /** Botón principal para guardar los cambios del préstamo. */
-    @FXML private Button btnGuardar;
+    @FXML
+    public Button btnGuardar;
 
     /** Desplegable para seleccionar el usuario del préstamo. */
-    @FXML private ComboBox<Usuario> comboUsuario;
+    @FXML
+    public ComboBox<Usuario> comboUsuario;
 
     /** Desplegable para seleccionar el libro del préstamo. */
-    @FXML private ComboBox<Libro> comboLibro;
+    @FXML
+    public ComboBox<Libro> comboLibro;
 
     /** Selector de fecha para la fecha de vencimiento del préstamo. */
-    @FXML private DatePicker fechaFin;
+    @FXML
+    public DatePicker fechaFin;
 
     /** Desplegable para seleccionar el estado del préstamo. */
-    @FXML private ComboBox<String> comboEstado;
+    @FXML
+    public ComboBox<String> comboEstado;
 
     /** Préstamo que se está creando o editando. */
     private Prestamo prestamoEditar;
@@ -150,7 +156,7 @@ public class ControladorEditarPrestamo {
      * </p>
      */
     @FXML
-    private void guardar() {
+    void guardar() {
 
         if (fechaFin.getValue() == null || comboEstado.getValue() == null) {
             new Alert(Alert.AlertType.ERROR, "Todos los campos son obligatorios").show();
