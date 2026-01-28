@@ -24,22 +24,24 @@ public class ControladorReseñas {
     @FXML private VBox ap_resenasScroll;
 
     /** Área de texto donde el usuario escribe su reseña. */
-    @FXML private TextArea ta_textoresena;
+    @FXML
+    public TextArea ta_textoresena;
 
     /** ComboBox para seleccionar la puntuación (1 a 5 estrellas). */
-    @FXML private ComboBox<Integer> cb_puntuacion;
+    @FXML
+    public ComboBox<Integer> cb_puntuacion;
 
     /** Botón para publicar la reseña. */
     @FXML private Button bt_publicarResena;
 
     /** DAO encargado de gestionar las reseñas en la base de datos. */
-    private final ReseñasDAO reseñasDAO = new ReseñasDAO();
+    public ReseñasDAO reseñasDAO = new ReseñasDAO();
 
     /** ID del libro al que pertenecen las reseñas. */
-    private int idLibro;
+    public int idLibro;
 
     /** Usuario actualmente logueado. */
-    private Usuario usuarioActual;
+    public Usuario usuarioActual;
 
     private Runnable actualizarMediaCallback;
 
@@ -113,7 +115,7 @@ public class ControladorReseñas {
      * Valida los campos, guarda la reseña y recarga la lista.
      */
     @FXML
-    private void publicarResena() {
+    public void publicarResena() {
 
         String texto = ta_textoresena.getText();
         Integer puntuacion = cb_puntuacion.getValue();

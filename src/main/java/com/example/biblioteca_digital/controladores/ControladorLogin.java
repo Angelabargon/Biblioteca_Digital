@@ -21,19 +21,23 @@ import java.util.Optional;
 public class ControladorLogin {
 
     /** ToggleButton para seleccionar el rol de usuario. */
-    @FXML private ToggleButton tbt_usuario;
+    @FXML
+    public ToggleButton tbt_usuario;
 
     /** ToggleButton para seleccionar el rol de administrador. */
-    @FXML private ToggleButton tbt_admin;
+    @FXML
+    public ToggleButton tbt_admin;
 
     /** Grupo que une ambos ToggleButton para que sean excluyentes. */
     @FXML private ToggleGroup grupoRol;
 
     /** Campo de texto para introducir el correo electrónico. */
-    @FXML private TextField tf_email;
+    @FXML
+    public TextField tf_email;
 
     /** Campo de contraseña para introducir la clave de acceso. */
-    @FXML private PasswordField pf_contraseña;
+    @FXML
+    public PasswordField pf_contraseña;
 
     /** Botón para iniciar sesión con las credenciales introducidas. */
     @FXML private Button bt_inicioUsuario;
@@ -45,7 +49,7 @@ public class ControladorLogin {
     @FXML private Button bt_volver;
 
     /** Instancia del DAO. */
-    private final LoginDAO loginDAO = new LoginDAO();
+    public LoginDAO loginDAO = new LoginDAO();
 
     /**
      * Inicializa el controlador configurando el grupo de roles
@@ -101,7 +105,7 @@ public class ControladorLogin {
      * @param event evento de acción generado al pulsar el botón de inicio de sesión.
      */
     @FXML
-    private void iniciarSesion(ActionEvent event) {
+    public void iniciarSesion(ActionEvent event) {
         String email = tf_email.getText().trim();
         String contraseña = pf_contraseña.getText().trim();
         String rol = tbt_usuario.isSelected() ? "usuario" : "admin";
